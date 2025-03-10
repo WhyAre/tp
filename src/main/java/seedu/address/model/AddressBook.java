@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,7 +60,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
-        setTutorials(newData.getTutorialList());
     }
 
     //// person-level operations
@@ -116,18 +114,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean hasTutorial(Tutorial tutorial) {
         requireNonNull(tutorial);
         return tutorials.contains(tutorial);
-    }
-
-    /**
-     * Replaces the contents of the tutorial list with {@code tutorials}.
-     * {@code tutorials} must not contain duplicate tutorials.
-     */
-    public void setTutorials(List<Tutorial> tutorials) {
-        requireNonNull(tutorials);
-
-        tutorials.stream()
-                .filter(Predicate.not(this::hasTutorial))
-                .forEach(this::addTutorial);
     }
 
     //// util methods

@@ -1,0 +1,13 @@
+IndentWidth: 4
+ColumnLimit: 120
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+
+SpaceAfterCStyleCast: true
+BreakBeforeBinaryOperators: NonAssignment
+BracedInitializerIndentWidth: 4
+ContinuationIndentWidth: 8
+AlignTrailingComments:
+  Kind: Never
+
+ReflowComments: false

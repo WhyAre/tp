@@ -1,0 +1,39 @@
+name: Format code
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          java-package: jdk+fx
+
+      - run: sudo apt-get install clang-format-18
+
+      - name: Format code
+        run: ./gradlew spotlessApply
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: Format code
+          committer_name: GitHub Actions
+          committer_email: actions@github.com
