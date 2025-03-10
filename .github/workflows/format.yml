@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
@@ -21,7 +21,7 @@ jobs:
           java-version: '17'
           java-package: jdk+fx
 
-      - run: apt-get install clang-format-18
+      - run: sudo apt-get install clang-format-18
 
       - name: Format code
         run: ./gradlew spotlessApply
