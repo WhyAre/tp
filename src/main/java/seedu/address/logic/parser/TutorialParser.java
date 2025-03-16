@@ -18,7 +18,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class TutorialParser implements Parser<Command> {
 
     private final Map<String, Parser<? extends Command>> subcmds;
-    private final String USAGE;
+    private final String usage;
 
     TutorialParser() {
         subcmds = new HashMap<>();
@@ -26,7 +26,7 @@ public class TutorialParser implements Parser<Command> {
         subcmds.put(ListTutorialCommand.COMMAND_WORD, new ListTutorialCommandParser());
         subcmds.put(DeleteTutorialCommand.COMMAND_WORD, new DeleteTutorialCommandParser());
 
-        USAGE = """
+        usage = """
                         Usage: tutorial COMMAND
 
                         COMMAND:
@@ -42,7 +42,7 @@ public class TutorialParser implements Parser<Command> {
         var rest = Arrays.stream(cmd).skip(1).collect(Collectors.joining(" "));
 
         if (!subcmds.containsKey(cmd[0])) {
-            throw new ParseException(Messages.MESSAGE_INVALID_COMMAND_FORMAT.formatted(USAGE));
+            throw new ParseException(Messages.MESSAGE_INVALID_COMMAND_FORMAT.formatted(usage));
         }
 
         return subcmds.get(cmd[0]).parse(rest);
