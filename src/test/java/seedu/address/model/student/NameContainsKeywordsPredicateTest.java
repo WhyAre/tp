@@ -2,6 +2,8 @@ package seedu.address.model.student;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -22,21 +24,21 @@ public class NameContainsKeywordsPredicateTest {
         NameContainsKeywordsPredicate firstPredicate = new NameContainsKeywordsPredicate(firstPredicateKeywordList);
         NameContainsKeywordsPredicate secondPredicate = new NameContainsKeywordsPredicate(secondPredicateKeywordList);
 
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
+        // same object -> ok
+        assertEquals(firstPredicate, firstPredicate);
 
-        // same values -> returns true
+        // same values -> ok
         NameContainsKeywordsPredicate firstPredicateCopy = new NameContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
+        assertEquals(firstPredicate, firstPredicateCopy);
 
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
+        // different types -> fail
+        assertNotEquals(firstPredicate, 1);
 
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        // null -> fail
+        assertNotNull(firstPredicate);
 
-        // different student -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
+        // different student -> fail
+        assertNotEquals(firstPredicate, secondPredicate);
     }
 
     @Test

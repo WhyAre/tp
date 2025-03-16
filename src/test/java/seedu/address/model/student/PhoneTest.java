@@ -1,6 +1,9 @@
 package seedu.address.model.student;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -45,19 +48,19 @@ public class PhoneTest {
     public void equals() {
         Phone phone = new Phone("999");
 
-        // same values -> returns true
-        assertTrue(phone.equals(new Phone("999")));
+        // same values -> ok
+        assertEquals(phone, new Phone("999"));
 
-        // same object -> returns true
-        assertTrue(phone.equals(phone));
+        // same object -> ok
+        assertEquals(phone, phone);
 
-        // null -> returns false
-        assertFalse(phone.equals(null));
+        // null -> fail
+        assertNotNull(phone);
 
-        // different types -> returns false
-        assertFalse(phone.equals(5.0f));
+        // different types -> fail
+        assertNotEquals(phone, 5.0f);
 
-        // different values -> returns false
-        assertFalse(phone.equals(new Phone("995")));
+        // different values -> fail
+        assertNotEquals(phone, new Phone("995"));
     }
 }

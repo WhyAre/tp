@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -84,21 +85,21 @@ public class DeleteCommandTest {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
 
-        // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        // same object -> ok
+        assertEquals(deleteFirstCommand, deleteFirstCommand);
 
-        // same values -> returns true
+        // same values -> ok
         DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        assertEquals(deleteFirstCommand, deleteFirstCommandCopy);
 
-        // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        // different types -> fail
+        assertNotEquals(deleteFirstCommand, 1);
 
-        // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        // null -> fail
+        assertNotNull(deleteFirstCommand);
 
-        // different student -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        // different student -> fail
+        assertNotEquals(deleteFirstCommand, deleteSecondCommand);
     }
 
     @Test
