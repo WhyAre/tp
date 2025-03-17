@@ -38,11 +38,11 @@ public class DeleteTutorialCommand extends Command {
         requireNonNull(model);
 
         if (!model.hasTutorial(toDelete)) {
-            throw new CommandException(String.format(MESSAGE_TUTORIAL_DOES_NOT_EXIST, toDelete));
+            throw new CommandException(MESSAGE_TUTORIAL_DOES_NOT_EXIST.formatted(toDelete));
         }
 
         model.deleteTutorial(toDelete);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toDelete), NavigationMode.TUTORIAL);
+        return new CommandResult(MESSAGE_SUCCESS.formatted(toDelete), NavigationMode.TUTORIAL);
     }
 
     @Override

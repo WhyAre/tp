@@ -24,7 +24,7 @@ public class DeleteTutorialCommandTest {
         CommandResult commandResult = new DeleteTutorialCommand(t).execute(modelStub);
         var tutorials = modelStub.getAddressBook().getTutorialList();
 
-        assertEquals(String.format(DeleteTutorialCommand.MESSAGE_SUCCESS, t), commandResult.getFeedbackToUser());
+        assertEquals(DeleteTutorialCommand.MESSAGE_SUCCESS.formatted(t), commandResult.getFeedbackToUser());
         assertFalse(tutorials.contains(t));
     }
 
@@ -33,7 +33,7 @@ public class DeleteTutorialCommandTest {
         var t = new Tutorial("Tutorial_3");
         var cmd = new DeleteTutorialCommand(t);
 
-        assertThrows(CommandException.class, String.format(DeleteTutorialCommand.MESSAGE_TUTORIAL_DOES_NOT_EXIST, t), (
+        assertThrows(CommandException.class, DeleteTutorialCommand.MESSAGE_TUTORIAL_DOES_NOT_EXIST.formatted(t), (
         ) -> cmd.execute(modelStub));
     }
 }
