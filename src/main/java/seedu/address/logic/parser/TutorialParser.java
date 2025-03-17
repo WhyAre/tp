@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.AddStudentToTutorialCommand;
 import seedu.address.logic.commands.AddTutorialCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteTutorialCommand;
@@ -22,9 +23,14 @@ public class TutorialParser implements Parser<Command> {
 
     TutorialParser() {
         subcmds = new HashMap<>();
+
+        // Add/List/Delete tutorials.
         subcmds.put(AddTutorialCommand.COMMAND_WORD, new AddTutorialCommandParser());
         subcmds.put(ListTutorialCommand.COMMAND_WORD, new ListTutorialCommandParser());
         subcmds.put(DeleteTutorialCommand.COMMAND_WORD, new DeleteTutorialCommandParser());
+
+        // Edit tutorials.
+        subcmds.put(AddStudentToTutorialCommand.COMMAND_WORD, new AddStudentToTutorialCommandParser());
 
         usage = """
                         Usage: tutorial COMMAND
