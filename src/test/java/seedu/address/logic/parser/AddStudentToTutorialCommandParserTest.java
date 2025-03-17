@@ -31,9 +31,6 @@ public class AddStudentToTutorialCommandParserTest {
 
         // no tutorial name specified
         assertParseFailure(parser, "s/1", MESSAGE_INVALID_FORMAT);
-
-        // no tutorial name specified
-        assertParseFailure(parser, "s/1", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
