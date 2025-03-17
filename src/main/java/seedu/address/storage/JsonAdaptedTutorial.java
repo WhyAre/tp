@@ -32,7 +32,7 @@ public class JsonAdaptedTutorial {
     public Tutorial toModelType() throws IllegalValueException {
         if (!Tutorial.isValidName(name)) {
             throw new IllegalValueException("Tutorial name is not valid.");
-        } ;
+        }
         return new Tutorial(name);
     }
 }

@@ -31,7 +31,8 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book";
-    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student is added to does not exist";
+    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
+                    + "is added to does not exist";
 
     private final Student toAdd;
 
