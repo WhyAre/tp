@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -20,8 +22,8 @@ public class AddStudentToTutorialCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        assertParseSuccess(parser, VALID_TUTORIAL_1 + " s/5",
-                        new AddStudentToTutorialCommand(Index.fromOneBased(5), new Tutorial(VALID_TUTORIAL_1)));
+        assertParseSuccess(parser, VALID_TUTORIAL_1 + " s/5", new AddStudentToTutorialCommand(
+                        List.of(Index.fromOneBased(5)), new Tutorial(VALID_TUTORIAL_1)));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,25 +24,23 @@ public class AddStudentToTutorialCommand extends Command {
 
     public static final String MESSAGE_USAGE = "Usage: tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX";
 
-    public static final String MESSAGE_SUCCESS = "Student added to tutorial: %1$s";
-    public static final String MESSAGE_INVALID_NAME = """
-                    The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
+    public static final String MESSAGE_SUCCESS = "Students added to tutorial!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
 
-    private final Index index;
+    private final List<Index> indices;
     private final Tutorial tutorial;
 
     /**
      * Creates an {@link AddStudentToTutorialCommand} to add the specified
      * {@code Tutorial}
      */
-    public AddStudentToTutorialCommand(Index index, Tutorial tutorial) {
-        requireNonNull(index);
+    public AddStudentToTutorialCommand(List<Index> indices, Tutorial tutorial) {
+        requireNonNull(indices);
         requireNonNull(tutorial);
 
-        this.index = index;
+        this.indices = indices;
         this.tutorial = tutorial;
     }
 
@@ -56,21 +53,22 @@ public class AddStudentToTutorialCommand extends Command {
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        for (Index index : indices) {
+            // Check that index is in bounds.
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            Student studentToEdit = lastShownList.get(index.getZeroBased());
+            Student editedStudent = studentToEdit.clone();
+            Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
+            tutorials.add(tutorial);
+            editedStudent.setTutorials(tutorials);
+
+            model.setStudent(studentToEdit, editedStudent);
         }
 
-        Student studentToEdit = lastShownList.get(index.getZeroBased());
-        Student editedStudent = studentToEdit.clone();
-        Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-        tutorials.add(tutorial);
-        editedStudent.setTutorials(tutorials);
-
-        model.setStudent(studentToEdit, editedStudent);
-
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
-
-        return new CommandResult(MESSAGE_SUCCESS.formatted(editedStudent), NavigationMode.TUTORIAL);
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.TUTORIAL);
     }
 
     @Override
@@ -84,11 +82,11 @@ public class AddStudentToTutorialCommand extends Command {
             return false;
         }
 
-        return index.equals(otherAddCommand.index) && tutorial.equals(otherAddCommand.tutorial);
+        return indices.equals(otherAddCommand.indices) && tutorial.equals(otherAddCommand.tutorial);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("index", index).add("tutorial", tutorial).toString();
+        return new ToStringBuilder(this).add("indices", indices).add("tutorial", tutorial).toString();
     }
 }

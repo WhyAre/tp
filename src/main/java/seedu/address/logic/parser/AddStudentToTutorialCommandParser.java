@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
+import java.util.ArrayList;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddStudentToTutorialCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -31,11 +33,20 @@ public class AddStudentToTutorialCommandParser implements Parser<AddStudentToTut
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStudentToTutorialCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_INDEX);
+        ArrayList<Index> indices = new ArrayList<>();
+        for (String indexString : argMultimap.getAllValues(PREFIX_INDEX)) {
+            indices.add(ParserUtil.parseIndex(indexString));
+        }
 
-        Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
-        Tutorial tutorial = new Tutorial(argMultimap.getPreamble());
+        String tutorialString = argMultimap.getPreamble();
+        // Throw parse error if no tutorial is specified.
+        if (tutorialString.isEmpty()) {
+            throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStudentToTutorialCommand.MESSAGE_USAGE));
+        }
 
-        return new AddStudentToTutorialCommand(index, tutorial);
+        Tutorial tutorial = new Tutorial(tutorialString);
+
+        return new AddStudentToTutorialCommand(indices, tutorial);
     }
 }
