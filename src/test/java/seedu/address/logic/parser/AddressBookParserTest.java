@@ -113,6 +113,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_tutorial_noSubCommand() {
+        var cmd = "tutorial";
+
+        assertThrows(ParseException.class, (
+        ) -> parser.parseCommand(cmd));
+    }
+
+    @Test
     public void parseCommand_tutorialAddCommand_success() throws ParseException {
         var tutorialName = "Tutorial-_-Name1";
         var cmd = "%s %s %s".formatted(TutorialCommand.COMMAND_WORD, AddTutorialCommand.COMMAND_WORD, tutorialName);
