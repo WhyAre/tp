@@ -24,6 +24,14 @@ public class AddStudentToTutorialCommandParserTest {
     public void parse_allFieldsPresent_success() {
         assertParseSuccess(parser, VALID_TUTORIAL_1 + " s/5", new AddStudentToTutorialCommand(
                         List.of(Index.fromOneBased(5)), new Tutorial(VALID_TUTORIAL_1)));
+
+        assertParseSuccess(parser, VALID_TUTORIAL_1 + " s/5 s/10", new AddStudentToTutorialCommand(
+                        List.of(Index.fromOneBased(5), Index.fromOneBased(10)), new Tutorial(VALID_TUTORIAL_1)));
+    }
+
+    @Test
+    public void parse_incompleteCommand_failure() {
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
