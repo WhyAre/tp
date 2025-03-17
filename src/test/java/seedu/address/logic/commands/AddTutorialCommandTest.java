@@ -30,7 +30,7 @@ public class AddTutorialCommandTest {
         CommandResult commandResult = new AddTutorialCommand(t).execute(modelStub);
         var tutorials = modelStub.getAddressBook().getTutorialList();
 
-        assertEquals(AddTutorialCommand.MESSAGE_SUCCESS.formatted(t), commandResult.getFeedbackToUser());
+        assertEquals(String.format(AddTutorialCommand.MESSAGE_SUCCESS, t), commandResult.getFeedbackToUser());
         assertTrue(tutorials.contains(t));
     }
 

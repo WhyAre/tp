@@ -24,16 +24,16 @@ public class DeleteTutorialCommandTest {
         CommandResult commandResult = new DeleteTutorialCommand(t).execute(modelStub);
         var tutorials = modelStub.getAddressBook().getTutorialList();
 
-        assertEquals(DeleteTutorialCommand.MESSAGE_SUCCESS.formatted(t), commandResult.getFeedbackToUser());
+        assertEquals(String.format(DeleteTutorialCommand.MESSAGE_SUCCESS, t), commandResult.getFeedbackToUser());
         assertFalse(tutorials.contains(t));
     }
 
     @Test
     public void execute_tutorialDoesNotExist_throwsCommandException() {
-        var cmd = new DeleteTutorialCommand(new Tutorial("Tutorial_3"));
+        var t = new Tutorial("Tutorial_3");
+        var cmd = new DeleteTutorialCommand(t);
 
-        assertThrows(CommandException.class,
-                        DeleteTutorialCommand.MESSAGE_TUTORIAL_DOES_NOT_EXIST.formatted("Tutorial[name=Tutorial_3]"), (
-                        ) -> cmd.execute(modelStub));
+        assertThrows(CommandException.class, String.format(DeleteTutorialCommand.MESSAGE_TUTORIAL_DOES_NOT_EXIST, t), (
+        ) -> cmd.execute(modelStub));
     }
 }
