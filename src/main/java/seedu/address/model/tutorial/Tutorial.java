@@ -13,4 +13,9 @@ public record Tutorial(String name) {
 
         return name.matches(pattern);
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
