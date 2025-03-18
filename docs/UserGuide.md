@@ -203,7 +203,7 @@ Examples:
 
 ### Deleting a student to a tutorial: `tutorial delete-student`
 
-Deletes a student to a tutorial slot
+Deletes a student from a tutorial slot
 
 Format: `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
@@ -211,8 +211,8 @@ Format: `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
 Examples:
 
-- `list` then `tutorial add-student cs2103-f15 s/1`:
-  Adds the 1st student in the list to the tutorial slot `cs2103-f15`.
+- `list` then `tutorial delete-student cs2103-f15 s/1`:
+  Deletes the 1st student in the list from the tutorial slot `cs2103-f15`.
 
 ### Clearing all entries : `clear`
 
