@@ -114,6 +114,25 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+In addition to having simple single-word command,
+our app supports commands with multiple words (e.g. `tutorial add`, `tutorial delete`).
+Our implementation is similar to that of a Recursive Descent Parser.
+
+Here is a (partial) diagram showing how the recursive parsing works
+(classes not involved are omitted):
+
+<img src="images/TutorialClassDiagram.png" width="600"/>
+
+How the parsing works:
+
+1. The `AddressBookParser` will match the first word,
+   and match against a `Command` object, or another `Parser` object
+    - The algorithm terminates if it maps to a `Command` object.
+1. If it maps to a `Parser` object,
+   then it will call `Parser#parse` of that object
+    - The `parse` method will map the next word to either a `Command` or `Parser` object.
+    - The process repeats recursively until it eventually resolves to a `Command` object.
+
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
@@ -581,14 +600,16 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to view overall attendance
 2. System displays a summary of overall attendance
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there is no attendance data available
-  - 2a1. System displays a message indicating no attendance data
-  - 2a2. Use case ends
+    - 2a1. System displays a message indicating no attendance data
+    - 2a2. Use case ends
 
 ---
 
@@ -598,14 +619,16 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to export the student contact list
 2. System exports the contact list to a file
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there is an error during the export process
-  - 2a1. System displays an error message
-  - 2a2. Use case ends
+    - 2a1. System displays an error message
+    - 2a2. Use case ends
 
 ---
 
@@ -615,6 +638,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User selects students to receive an announcement
 2. System prompts for the email content
 3. User enters the announcement content
@@ -622,25 +646,27 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
-- 2a. If no students are selected
-  - 2a1. System displays a message indicating no students selected
-  - 2a2. Use case ends
-- 4a. If there is an error sending the email
-  - 4a1. System displays an error message
-  - 4a2. Use case ends
 
+- 2a. If no students are selected
+    - 2a1. System displays a message indicating no students selected
+    - 2a2. Use case ends
+- 4a. If there is an error sending the email
+    - 4a1. System displays an error message
+    - 4a2. Use case ends
 
 ### Non-Functional Requirements
 
-1.  The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  The system should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  The system should respond within 2 seconds.
-5.  The system should only be for a single user.
-6.  The system's data should be stored locally.
-7.  The system should work without requiring an installer.
-8.  The system should not require a remote server.
-9.  The system's GUI should work well for standard screen resolutions 1920x1080 and higher.
+1. The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. The system should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical
+   usage.
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse.
+4. The system should respond within 2 seconds.
+5. The system should only be for a single user.
+6. The system's data should be stored locally.
+7. The system should work without requiring an installer.
+8. The system should not require a remote server.
+9. The system's GUI should work well for standard screen resolutions 1920x1080 and higher.
 10. The system should be easy to use for a user who has no experience using an address book software.
 11. The system should not interfere with other software.
 12. The system should save data automatically after each modification in the address book.
@@ -651,43 +677,71 @@ _{Explain here how the data archiving feature will be implemented}_
 17. The system's commands should not cause confusion (i.e. not ambiguous).
 18. The system should be at most 100MB in size.
 19. The system should only require one JAR file.
-20. A user who has not used the software for a while should be able to use it efficiently immediately after returning to it.
+20. A user who has not used the software for a while should be able to use it efficiently immediately after returning to
+    it.
 21. The User Guide and Developer Guide should be PDF-friendly.
 22. The system should be able to read a save file provided it is in the correct path and has the correct name.
 
 ### Glossary
 
 #### A
+
 * **Address Book**: The system that manages student contacts and administrative tasks for TAs.
 * **Assignment Entry**: A record representing an assignment with an associated deadline.
+
 #### C
+
 * **CLI (Command-Line Interface)**: A text-based interface that allows users to interact with the system via commands.
 * **Command**: A specific instruction given by the user in the CLI to perform an action.
 * **Contact Details**: Information related to a student such as name, student ID, email, and notes.
+
 #### D
+
 * **Deadline**: The due date associated with an assignment entry.
-* **Desktop Application**: A software application designed to run on a computer rather than a web browser or mobile device.
+* **Desktop Application**: A software application designed to run on a computer rather than a web browser or mobile
+  device.
+
 #### E
+
 * **Error Message**: A notification displayed when a user inputs invalid or incorrect data.
+
 #### G
-* **GUI (Graphical User Interface)**: A visual interface allowing users to interact with the system using a mouse, windows, and icons. Not preferred by the target user.
+
+* **GUI (Graphical User Interface)**: A visual interface allowing users to interact with the system using a mouse,
+  windows, and icons. Not preferred by the target user.
 * **Group**: A collection of students managed together, typically for tutorial purposes.
+
 #### I
+
 * **Invalid Command**: A user-entered command that TAskbook does not recognize or process correctly.
+
 #### L
-* **Local Storage**: The method by which TAskbook saves and retrieves data on the user's device rather than using a remote server.
+
+* **Local Storage**: The method by which TAskbook saves and retrieves data on the user's device rather than using a
+  remote server.
+
 #### M
+
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
+
 #### N
+
 * **Notes**: Additional information that a TA can attach to a student’s record.
+
 #### P
+
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+
 #### S
+
 * **Save File**: A file containing stored student data that TAskbook can read and write to.
 * **Student**: An entity in TAskbook representing an individual that a TA manages.
 * **Student ID**: A unique identifier assigned to each student by the school / institution.
+
 #### T
-* **TA (Teaching Assistant)**: The primary user of TAskbook, responsible for managing student contacts and administrative tasks.
+
+* **TA (Teaching Assistant)**: The primary user of TAskbook, responsible for managing student contacts and
+  administrative tasks.
 * **Tabular Format**: A structured way of displaying student data in rows and columns.
 * **Tutorial Slot**: A scheduled session that students can be assigned to and managed by the TA.
 
@@ -706,15 +760,16 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be
+       optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
@@ -722,207 +777,230 @@ testers are expected to do more *exploratory* testing.
 ### Adding a student
 
 1. Adding a student
-   1. Prerequisites: None.
-   1. Test case: `add John Doe`<br>
-      Expected: A new student named "John Doe" is added to the student list. A success message confirming the addition is displayed.
+    1. Prerequisites: None.
+    1. Test case: `add John Doe`<br>
+       Expected: A new student named "John Doe" is added to the student list. A success message confirming the addition
+       is displayed.
 
-   1. Test case: `add`<br>
-      Expected: Error message indicating that student details are incomplete. The system should ask for both first name and last name.
+    1. Test case: `add`<br>
+       Expected: Error message indicating that student details are incomplete. The system should ask for both first name
+       and last name.
 
-   1. Test case: `add 12345`<br>
-      Expected: Error message indicating that the student name is invalid (numeric values are not allowed).
+    1. Test case: `add 12345`<br>
+       Expected: Error message indicating that the student name is invalid (numeric values are not allowed).
 
 ### Listing all students
 
 1. Listing all students
-   1. Prerequisites: At least one student should be added to the list (e.g., `add John Doe`).
-   1. Test case: `list`<br>
-      Expected: A list of all students in the system is displayed.
+    1. Prerequisites: At least one student should be added to the list (e.g., `add John Doe`).
+    1. Test case: `list`<br>
+       Expected: A list of all students in the system is displayed.
 
-   1. Test case: `list` with no students<br>
-      Expected: A message saying "No students available" is displayed if the list is empty.
+    1. Test case: `list` with no students<br>
+       Expected: A message saying "No students available" is displayed if the list is empty.
 
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
-   1. Prerequisites: List all students using the `list` command. There must be multiple students in the list (e.g., `add John Doe` and `add Jane Doe`).
-   1. Test case: `delete 1`<br>
-      Expected: The student with ID 1 (John Doe) is deleted from the list. A success message with the student details is shown.
+    1. Prerequisites: List all students using the `list` command. There must be multiple students in the list (e.g.,
+       `add John Doe` and `add Jane Doe`).
+    1. Test case: `delete 1`<br>
+       Expected: The student with ID 1 (John Doe) is deleted from the list. A success message with the student details
+       is shown.
 
-   1. Test case: `delete 0`<br>
-      Expected: No student is deleted. An error message is shown indicating that the student ID 0 is invalid.
+    1. Test case: `delete 0`<br>
+       Expected: No student is deleted. An error message is shown indicating that the student ID 0 is invalid.
 
-   1. Test case: `delete x` (where x is larger than the list size)<br>
-      Expected: Error message indicating that the student ID `x` does not exist.
+    1. Test case: `delete x` (where x is larger than the list size)<br>
+       Expected: Error message indicating that the student ID `x` does not exist.
 
 ### Adding a tutorial slot
 
 1. Adding a tutorial slot
-   1. Prerequisites: None.
-   1. Test case: `tutorial add cs2103-f15`<br>
-      Expected: A new tutorial slot `cs2103-f15` is added. The list of tutorial slots is updated and the new slot appears at the bottom of the list. A success message is displayed confirming the addition.
+    1. Prerequisites: None.
+    1. Test case: `tutorial add cs2103-f15`<br>
+       Expected: A new tutorial slot `cs2103-f15` is added. The list of tutorial slots is updated and the new slot
+       appears at the bottom of the list. A success message is displayed confirming the addition.
 
-   1. Test case: `tutorial add cs2103+f15`<br>
-      Expected: Error message indicating that the slot name contains invalid characters (e.g., "+" is not allowed).
+    1. Test case: `tutorial add cs2103+f15`<br>
+       Expected: Error message indicating that the slot name contains invalid characters (e.g., "+" is not allowed).
 
 ### Creating a tutorial slot with a duplicate name
 
-1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`. If not, create it using `tutorial add cs2103-f15`.
-   1. Test case: `tutorial add cs2103-f15`<br>
-      Expected: Error message indicating that a tutorial slot with the name `cs2103-f15` already exists.
+1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`. If not, create it using
+   `tutorial add cs2103-f15`.
+    1. Test case: `tutorial add cs2103-f15`<br>
+       Expected: Error message indicating that a tutorial slot with the name `cs2103-f15` already exists.
 
 ### Adding students to tutorial group slots
 
 1. Adding students to a tutorial group slot
-   1. Prerequisites: A tutorial slot should already exist (e.g., `tutorial add cs2103-f15`) and at least one student should be in the system (e.g., `add John Doe`).
-   1. Test case: `addToSlot cs2103-f15 1`<br>
-      Expected: Student with ID 1 (John Doe) is added to the "cs2103-f15" tutorial slot. A success message is displayed confirming the addition.
+    1. Prerequisites: A tutorial slot should already exist (e.g., `tutorial add cs2103-f15`) and at least one student
+       should be in the system (e.g., `add John Doe`).
+    1. Test case: `addToSlot cs2103-f15 1`<br>
+       Expected: Student with ID 1 (John Doe) is added to the "cs2103-f15" tutorial slot. A success message is displayed
+       confirming the addition.
 
-   1. Test case: `addToSlot cs2103-f15`<br>
-      Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
+    1. Test case: `addToSlot cs2103-f15`<br>
+       Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
 
-   1. Test case: `addToSlot cs9999-f15 1`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+    1. Test case: `addToSlot cs9999-f15 1`<br>
+       Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
 
 ### Deleting a student from a tutorial slot
 
 1. Deleting a student from a tutorial group slot
-   1. Prerequisites: A tutorial slot should already have at least one student (e.g., `addToSlot cs2103-f15 1`).
-   1. Test case: `deleteFromSlot cs2103-f15 1`<br>
-      Expected: Student with ID 1 (John Doe) is removed from the "cs2103-f15" tutorial slot. A success message confirming the removal is shown.
+    1. Prerequisites: A tutorial slot should already have at least one student (e.g., `addToSlot cs2103-f15 1`).
+    1. Test case: `deleteFromSlot cs2103-f15 1`<br>
+       Expected: Student with ID 1 (John Doe) is removed from the "cs2103-f15" tutorial slot. A success message
+       confirming the removal is shown.
 
-   1. Test case: `deleteFromSlot cs2103-f15`<br>
-      Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
+    1. Test case: `deleteFromSlot cs2103-f15`<br>
+       Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
 
-   1. Test case: `deleteFromSlot cs9999-f15 1`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+    1. Test case: `deleteFromSlot cs9999-f15 1`<br>
+       Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
 
 ### Deleting tutorial group slots
 
 1. Deleting a tutorial slot
-   1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `tutorial delete cs2103-f15`<br>
-      Expected: The tutorial slot `cs2103-f15` is deleted from the system. A success message confirming the deletion is shown.
+    1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
+    1. Test case: `tutorial delete cs2103-f15`<br>
+       Expected: The tutorial slot `cs2103-f15` is deleted from the system. A success message confirming the deletion is
+       shown.
 
-   1. Test case: `tutorial delete cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+    1. Test case: `tutorial delete cs9999-f15`<br>
+       Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
 
 ### Listing tutorial slots
 
 1. Listing tutorial slots
-   1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `tutorial list`<br>
-      Expected: A list of all tutorial slots is displayed.
+    1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
+    1. Test case: `tutorial list`<br>
+       Expected: A list of all tutorial slots is displayed.
 
-   1. Test case: `tutorial list` with no tutorial slots<br>
-      Expected: Message indicating that no tutorial slots are available.
+    1. Test case: `tutorial list` with no tutorial slots<br>
+       Expected: Message indicating that no tutorial slots are available.
 
 ### Retrieve and Save to file
 
 1. Saving data automatically
-   1. Prerequisites: Data must exist (e.g., at least one student or tutorial slot).
-   1. Test case: System automatically saves data when changes are made (e.g., adding or deleting a student).
-      Expected: Data is automatically saved to the file. No additional user action is needed. There should be no error message unless there's an issue.
+    1. Prerequisites: Data must exist (e.g., at least one student or tutorial slot).
+    1. Test case: System automatically saves data when changes are made (e.g., adding or deleting a student).
+       Expected: Data is automatically saved to the file. No additional user action is needed. There should be no error
+       message unless there's an issue.
 
 1. Retrieving data from the file
 
-   1. Prerequisites: A valid file with data exists (e.g., after a previous session or when data was previously saved).
-   1. Test case: Upon starting the application, the system automatically loads the data from the saved file.
-      Expected: Data from the saved file should be loaded correctly. All students, tutorial slots, and other saved information should be available without any errors.
+    1. Prerequisites: A valid file with data exists (e.g., after a previous session or when data was previously saved).
+    1. Test case: Upon starting the application, the system automatically loads the data from the saved file.
+       Expected: Data from the saved file should be loaded correctly. All students, tutorial slots, and other saved
+       information should be available without any errors.
 
-   1. Test case: The system successfully loads data from the file after a crash or unexpected shutdown.
-      Expected: When the system restarts, data should be restored from the last successfully saved state. The system should display the correct student and tutorial information.
+    1. Test case: The system successfully loads data from the file after a crash or unexpected shutdown.
+       Expected: When the system restarts, data should be restored from the last successfully saved state. The system
+       should display the correct student and tutorial information.
 
 1. Dealing with missing/corrupted data files
 
-   1. Prerequisites: Ensure that the file path provided is either missing or the file is corrupted.
+    1. Prerequisites: Ensure that the file path provided is either missing or the file is corrupted.
 
-   1. Test case: Attempt to retrieve data from a missing file (e.g., manually delete the file or simulate a missing file path).
-      Expected: The system should display an error message indicating that the file is missing. It should prompt the user to specify a valid file path. No data should be loaded, and the system should be in an empty state.
+    1. Test case: Attempt to retrieve data from a missing file (e.g., manually delete the file or simulate a missing
+       file path).
+       Expected: The system should display an error message indicating that the file is missing. It should prompt the
+       user to specify a valid file path. No data should be loaded, and the system should be in an empty state.
 
-   1. Test case: Attempt to retrieve data from a corrupted file (e.g., corrupt the file manually by altering its content).
-      Expected: The system should display an error message indicating the file is corrupted or unreadable. The system should not crash and should either load an empty state or prompt the user to correct the file.
+    1. Test case: Attempt to retrieve data from a corrupted file (e.g., corrupt the file manually by altering its
+       content).
+       Expected: The system should display an error message indicating the file is corrupted or unreadable. The system
+       should not crash and should either load an empty state or prompt the user to correct the file.
 
-   1. Test case: Attempt to retrieve data from a file with incorrect format (e.g., the file has invalid content or format).
-      Expected: The system should display an error message indicating that the file format is invalid or cannot be read. The system should ask the user to provide a valid file format.
+    1. Test case: Attempt to retrieve data from a file with incorrect format (e.g., the file has invalid content or
+       format).
+       Expected: The system should display an error message indicating that the file format is invalid or cannot be
+       read. The system should ask the user to provide a valid file format.
 
-   1. Test case: Retrieve data from a file with insufficient permissions (e.g., a read-only file or directory).
-      Expected: The system should display an error message indicating that the application does not have permission to read from the file. It should prompt the user to adjust permissions.
+    1. Test case: Retrieve data from a file with insufficient permissions (e.g., a read-only file or directory).
+       Expected: The system should display an error message indicating that the application does not have permission to
+       read from the file. It should prompt the user to adjust permissions.
 
-   1. Test case: Attempt to retrieve data when the system’s storage is full or unavailable.
-      Expected: The system should display an error message indicating that the system cannot access or load data due to a storage issue. The user should be prompted to free up space or resolve the issue.
-
+    1. Test case: Attempt to retrieve data when the system’s storage is full or unavailable.
+       Expected: The system should display an error message indicating that the system cannot access or load data due to
+       a storage issue. The user should be prompted to free up space or resolve the issue.
 
 ### Searching for students
 
 1. Searching for a student
-   1. Prerequisites: At least one student must be added (e.g., `add John Doe`).
-   1. Test case: `search John`<br>
-      Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
+    1. Prerequisites: At least one student must be added (e.g., `add John Doe`).
+    1. Test case: `search John`<br>
+       Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
 
-   1. Test case: `search abc`<br>
-      Expected: Message indicating that no students were found matching the search term.
+    1. Test case: `search abc`<br>
+       Expected: Message indicating that no students were found matching the search term.
 
 ### Creating a lesson under tutorial slot for each student
 
 1. Creating a lesson
-   1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `createLesson cs2103-f15`<br>
-      Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the creation.
+    1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
+    1. Test case: `createLesson cs2103-f15`<br>
+       Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the
+       creation.
 
-   1. Test case: `createLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+    1. Test case: `createLesson cs9999-f15`<br>
+       Expected: Error message indicating that the tutorial slot does not exist.
 
 ### Marking lesson attendance
 
 1. Marking attendance for a lesson
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the tutorial slot.
-   1. Test case: `markAttendance cs2103-f15 1 present`<br>
-      Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
+    1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the
+       tutorial slot.
+    1. Test case: `markAttendance cs2103-f15 1 present`<br>
+       Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
 
-   1. Test case: `markAttendance cs2103-f15 1 absent`<br>
-      Expected: Student with ID 1 (John Doe) is marked as absent. A success message is displayed.
+    1. Test case: `markAttendance cs2103-f15 1 absent`<br>
+       Expected: Student with ID 1 (John Doe) is marked as absent. A success message is displayed.
 
-   1. Test case: `markAttendance cs9999-f15 1 present`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+    1. Test case: `markAttendance cs9999-f15 1 present`<br>
+       Expected: Error message indicating that the tutorial slot does not exist.
 
 ### Deleting a lesson under tutorial slot for each student
 
 1. Deleting a lesson
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`).
-   1. Test case: `deleteLesson cs2103-f15`<br>
-      Expected: The lesson for the `cs2103-f15` tutorial slot is deleted. A success message confirming the deletion is shown.
+    1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`).
+    1. Test case: `deleteLesson cs2103-f15`<br>
+       Expected: The lesson for the `cs2103-f15` tutorial slot is deleted. A success message confirming the deletion is
+       shown.
 
-   1. Test case: `deleteLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+    1. Test case: `deleteLesson cs9999-f15`<br>
+       Expected: Error message indicating that the tutorial slot does not exist.
 
 ### Viewing overall attendance
 
 1. Viewing overall attendance
-   1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
-   1. Test case: `viewAttendance`<br>
-      Expected: A summary of the overall attendance for all students is displayed.
+    1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
+    1. Test case: `viewAttendance`<br>
+       Expected: A summary of the overall attendance for all students is displayed.
 
-   1. Test case: `viewAttendance` with no attendance data<br>
-      Expected: Message indicating that no attendance data is available.
+    1. Test case: `viewAttendance` with no attendance data<br>
+       Expected: Message indicating that no attendance data is available.
 
 ### Exporting student contact list
 
 1. Exporting contact list
-   1. Prerequisites: At least one student should be added (e.g., `add John Doe`).
-   1. Test case: `exportContacts`<br>
-      Expected: The student contact list is exported successfully. A success message is shown.
+    1. Prerequisites: At least one student should be added (e.g., `add John Doe`).
+    1. Test case: `exportContacts`<br>
+       Expected: The student contact list is exported successfully. A success message is shown.
 
-   1. Test case: `exportContacts` with invalid file path<br>
-      Expected: Error message indicating invalid file path.
+    1. Test case: `exportContacts` with invalid file path<br>
+       Expected: Error message indicating invalid file path.
 
 ### Making announcements to students through email
 
 1. Making an announcement
-   1. Prerequisites: At least one student should have an email address in the system (e.g., `add John Doe` with email).
-   1. Test case: `announce email`<br>
-      Expected: An announcement email is sent to all students. A success message is shown confirming the email was sent.
+    1. Prerequisites: At least one student should have an email address in the system (e.g., `add John Doe` with email).
+    1. Test case: `announce email`<br>
+       Expected: An announcement email is sent to all students. A success message is shown confirming the email was
+       sent.
 
-   1. Test case: `announce email` with invalid email format<br>
-      Expected: Error message indicating that the email format is invalid.
-
+    1. Test case: `announce email` with invalid email format<br>
+       Expected: Error message indicating that the email format is invalid.
