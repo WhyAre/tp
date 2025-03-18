@@ -297,27 +297,6 @@ _{Explain here how the data archiving feature will be implemented}_
 | High     | TA     | Delete tutorial groups | Remove outdated groups | No |
 | High     | TA     | Delete a student's data | Make space for the next semester's class | No |
 
-## **Feature List**
-
-| #  | Feature                                        | Priority        | Done        |
-|----|-----------------------------------------------|----------------|------------|
-| 1  | Add students                                  | MVP            | v1.2       |
-| 2  | List all students                            | MVP            | v1.2       |
-| 3  | Delete students                              | MVP            | v1.2       |
-| 4  | Add Tutorial Slot                            | MVP            | v1.2       |
-| 5  | Add students to tutorial group slots        | MVP            | v1.2       |
-| 6  | Delete Student from Tutorial Slot           | MVP            | v1.2       |
-| 7  | Delete tutorial group slots                 | MVP            | v1.2       |
-| 8  | List Tutorial Slots                         | MVP            | v1.2       |
-| 9  | Retrieve and Save to file                   | Nice to have   |  v1.2   |
-| 10 | Search for students                           | Nice to have   | Coming soon |
-| 11 | Create a lesson under tutorial slot for each student | Nice to have   | Coming soon |
-| 12 | Mark lesson attendance                       | Nice to have   | Coming soon |
-| 13 | Delete a lesson under tutorial slot for each student | Nice to have   | Coming soon |
-| 14 | View overall attendance                      | Nice to have   | Coming soon |
-| 15 | Export student contact list                  | Nice to have   | Coming soon |
-| 16 | Make announcements to students through email | Nice to have   | Coming soon |
-
 
 ## **Feature Specification**
 
