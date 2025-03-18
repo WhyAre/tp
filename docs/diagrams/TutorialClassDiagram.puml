@@ -1,0 +1,28 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+package "Parser" {
+    class AddressBookParser
+    class TutorialParser
+    class AddTutorialParser
+    class DeleteTutorialParser
+    class ListTutorialParser
+}
+
+class AddTutorial
+class DeleteTutorial
+class ListTutorial
+
+AddressBookParser ..> TutorialParser: <<create>>
+
+TutorialParser ..> AddTutorialParser: <<create>>
+TutorialParser ..> DeleteTutorialParser: <<create>>
+TutorialParser ..> ListTutorialParser: <<create>>
+
+AddTutorialParser ..> AddTutorial: <<create>>
+DeleteTutorialParser ..> DeleteTutorial: <<create>>
+ListTutorialParser ..> ListTutorial: <<create>>
+@enduml
