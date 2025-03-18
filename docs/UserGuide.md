@@ -116,7 +116,7 @@ Format: `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TU
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tutorial slots,
-  the existing tutorial slots of the person will be removed i.e adding of tutorials is not cumulative.
+  the existing set of tutorials allocated to the person will be replaced entirely with the new values provided i.e. adding of tutorials is not cumulative.
 * You can remove all the person’s tutorial slots by typing `t/` without
   specifying any tutorials after it.
 
