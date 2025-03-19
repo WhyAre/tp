@@ -3,6 +3,7 @@ package seedu.address.model.student;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -98,7 +99,7 @@ public class Student {
      * Returns a clone of the current student.
      */
     public Student clone() {
-        return new Student(name, studentId, phone, email, handle, tutorials);
+        return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials));
     }
 
     /**
