@@ -49,6 +49,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
+    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
+                    + "is edited into does not exist: ";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;
@@ -81,6 +83,12 @@ public class EditCommand extends Command {
 
         if (!studentToEdit.isSamePerson(editedStudent) && model.hasStudent(editedStudent)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        for (Tutorial tutorial : editedStudent.getTutorials()) {
+            if (!model.hasTutorial(tutorial)) {
+                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name());
+            }
         }
 
         model.setStudent(studentToEdit, editedStudent);

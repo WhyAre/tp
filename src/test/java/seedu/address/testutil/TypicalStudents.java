@@ -29,15 +29,15 @@ public class TypicalStudents {
 
     public static final Student ALICE = new StudentBuilder().withName("Alice Pauline").withStudentId("A0743062E")
                     .withHandle("@alice_pauline").withEmail("alice@example.com").withPhone("94351253")
-                    .withTutorials("CS2103-T23").build();
+                    .withTutorials("CS2103-T1").build();
     public static final Student BENSON = new StudentBuilder().withName("Benson Meier").withStudentId("A0179034R")
                     .withHandle("@benson_meier").withEmail("johnd@example.com").withPhone("98765432")
-                    .withTutorials("CS2103-T23", "CS2106-T02").build();
+                    .withTutorials("CS2103-T1", "CS2106-T37").build();
     public static final Student CARL = new StudentBuilder().withName("Carl Kurz").withPhone("95352563")
                     .withStudentId("A0388094Q").withEmail("heinz@example.com").withHandle("@carl_kurz").build();
     public static final Student DANIEL = new StudentBuilder().withName("Daniel Meier").withPhone("87652533")
                     .withStudentId("A0833488W").withEmail("cornelia@example.com").withHandle("@dannn_mayor")
-                    .withTutorials("CS2103-T23").build();
+                    .withTutorials("CS2106-T37").build();
     public static final Student ELLE = new StudentBuilder().withName("Elle Meyer").withPhone("9482224")
                     .withStudentId("A0172925M").withEmail("werner@example.com").withHandle("@ellem").build();
     public static final Student FIONA = new StudentBuilder().withName("Fiona Kunz").withPhone("9482427")
@@ -94,6 +94,6 @@ public class TypicalStudents {
     }
 
     public static List<Tutorial> getTypicalTutorials() {
-        return List.of(new Tutorial("Tutorial_1"), new Tutorial("Tutorial-2"));
+        return List.of(new Tutorial("CS2103-T1"), new Tutorial("CS2106-T37"));
     }
 }
