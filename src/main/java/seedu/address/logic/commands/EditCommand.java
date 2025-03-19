@@ -41,13 +41,16 @@ public class EditCommand extends Command {
                     + "by the index number used in the displayed student list. "
                     + "Existing values will be overwritten by the input values.\n"
                     + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "["
-                    + PREFIX_ID_STUDENT + "STUDENT_ID] " + PREFIX_PHONE + "PHONE] " + "[" + PREFIX_EMAIL + "EMAIL] "
-                    + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n" + "Example: "
-                    + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL + "johndoe@example.com";
+                    + PREFIX_ID_STUDENT + "STUDENT_ID] " + "[" + PREFIX_PHONE + "PHONE] " + "[" + PREFIX_EMAIL
+                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n"
+                    + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
+                    + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
+    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
+                    + "is edited into does not exist: ";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;
@@ -82,9 +85,20 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        String resultMessage = MESSAGE_EDIT_PERSON_SUCCESS;
+        final Set<Tutorial> existingTutorials = new HashSet<>();
+        for (Tutorial tutorial : editedStudent.getTutorials()) {
+            if (!model.hasTutorial(tutorial)) {
+                resultMessage += "\n" + MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name();
+            } else {
+                existingTutorials.add(tutorial);
+            }
+        }
+        editedStudent.setTutorials(existingTutorials);
+
         model.setStudent(studentToEdit, editedStudent);
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedStudent)));
+        return new CommandResult(String.format(resultMessage, Messages.format(editedStudent)));
     }
 
     /**
