@@ -23,8 +23,7 @@ import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
  * {@code FindTutorialCommand}.
  */
 public class FindTutorialCommandTest {
-    private static final TutorialContainsKeywordsPredicate emptyTutorialPredicate =
-            new TutorialContainsKeywordsPredicate(
+    private static final TutorialContainsKeywordsPredicate emptyT = new TutorialContainsKeywordsPredicate(
                     Collections.emptyList());
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -59,7 +58,7 @@ public class FindTutorialCommandTest {
     @Test
     public void execute_zeroKeywords_noTutorialFound() {
         String expectedMessage = String.format(MESSAGE_TUTORIALS_LISTED_OVERVIEW, 0);
-        TutorialContainsKeywordsPredicate tutorialPredicate = emptyTutorialPredicate;
+        TutorialContainsKeywordsPredicate tutorialPredicate = emptyT;
         FindTutorialCommand command = new FindTutorialCommand(tutorialPredicate);
         expectedModel.updateFilteredTutorialWithStudentsList(tutorialPredicate);
         assertEquals(Collections.emptyList(), expectedModel.getFilteredTutorialWithStudents());

@@ -25,8 +25,7 @@ import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 public class FindCommandTest {
     private static final NameContainsKeywordsPredicate emptyNamePredicate = new NameContainsKeywordsPredicate(
                     Collections.emptyList());
-    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate =
-            new StudentContainsTutorialKeywordsPredicate(
+    private static final StudentContainsTutorialKeywordsPredicate emptyT = new StudentContainsTutorialKeywordsPredicate(
                     Collections.emptyList());
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -67,7 +66,7 @@ public class FindCommandTest {
     public void execute_zeroKeywords_noStudentFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate namePredicate = emptyNamePredicate;
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate = emptyTutorialPredicate;
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = emptyT;
         FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
         expectedModel.updateFilteredStudentList(namePredicate);
         assertEquals(Collections.emptyList(), expectedModel.getFilteredStudentList());

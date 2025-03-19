@@ -33,8 +33,8 @@ public class StudentContainsTutorialKeywordsPredicate implements Predicate<Tutor
             return false;
         }
 
-        StudentContainsTutorialKeywordsPredicate otherStudentContainsTutorialKeywordsPredicate =
-                (StudentContainsTutorialKeywordsPredicate) other;
+        StudentContainsTutorialKeywordsPredicate otherStudentContainsTutorialKeywordsPredicate;
+        otherStudentContainsTutorialKeywordsPredicate = (StudentContainsTutorialKeywordsPredicate) other;
         return keywords.equals(otherStudentContainsTutorialKeywordsPredicate.keywords);
     }
 
