@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.Objects;
 
 import seedu.address.logic.commands.ListTutorialCommand;
@@ -21,10 +19,6 @@ public class ListTutorialCommandParser implements Parser<ListTutorialCommand> {
      */
     public ListTutorialCommand parse(String unused) throws ParseException {
         Objects.requireNonNull(unused);
-
-        if (!unused.isEmpty()) {
-            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(ListTutorialCommand.MESSAGE_USAGE));
-        }
 
         return new ListTutorialCommand();
     }

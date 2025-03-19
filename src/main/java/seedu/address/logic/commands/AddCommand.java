@@ -8,6 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -32,7 +35,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
-                    + "is added to does not exist";
+                    + "is added to does not exist: ";
 
     private final Student toAdd;
 
@@ -52,14 +55,19 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        String resultMessage = MESSAGE_SUCCESS;
+        final Set<Tutorial> existingTutorials = new HashSet<>();
         for (Tutorial tutorial : toAdd.getTutorials()) {
             if (!model.hasTutorial(tutorial)) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
+                resultMessage += "\n" + MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name();
+            } else {
+                existingTutorials.add(tutorial);
             }
         }
+        toAdd.setTutorials(existingTutorials);
 
         model.addStudent(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(resultMessage, Messages.format(toAdd)));
     }
 
     @Override

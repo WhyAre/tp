@@ -75,6 +75,14 @@ public class Student {
     }
 
     /**
+     * Returns true if the student has the specified tutorial allocated
+     *
+     */
+    public boolean hasTutorial(Tutorial tutorial) {
+        return tutorials.contains(tutorial);
+    }
+
+    /**
      * Returns true if both students have the same name. This defines a weaker
      * notion of equality between two students.
      */

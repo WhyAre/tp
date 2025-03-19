@@ -28,7 +28,7 @@ public class SampleDataUtil {
                             getTutorialSet("CS2103-T2", "CS2106-T45")),
             new Student(new Name("Charlotte Oliveiro"), new StudentID("A0185783R"), new Phone("93210283"),
                             new Email("charlotte@example.com"), new TelegramHandle("@charlotte_oliveiro"),
-                            getTutorialSet("CS2103_T2")),
+                            getTutorialSet("CS2103-T2")),
             new Student(new Name("David Li"), new StudentID("A0209380W"), new Phone("91031282"),
                             new Email("lidavid@example.com"), new TelegramHandle("@li_david"),
                             getTutorialSet("CS2106-T37")),
@@ -39,10 +39,19 @@ public class SampleDataUtil {
                             new Email("royb@example.com"), new TelegramHandle("@royb"), getTutorialSet("CS2106-T37"))};
     }
 
+    public static Tutorial[] getSampleTutorials() {
+        return new Tutorial[]{
+            new Tutorial("CS2103-T1"), new Tutorial("CS2103-T2"), new Tutorial("CS2106-T37"),
+            new Tutorial("CS2106-T45")};
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Student sampleStudent : getSampleStudents()) {
             sampleAb.addStudent(sampleStudent);
+        }
+        for (Tutorial sampleTutorial : getSampleTutorials()) {
+            sampleAb.addTutorial(sampleTutorial);
         }
         return sampleAb;
     }
