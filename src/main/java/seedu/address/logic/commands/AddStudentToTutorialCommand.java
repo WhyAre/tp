@@ -22,7 +22,7 @@ public class AddStudentToTutorialCommand extends Command {
 
     public static final String COMMAND_WORD = "add-student";
 
-    public static final String MESSAGE_USAGE = "Usage: tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX";
+    public static final String MESSAGE_USAGE = "Usage: tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...";
 
     public static final String MESSAGE_SUCCESS = "Students added to tutorial!";
 
