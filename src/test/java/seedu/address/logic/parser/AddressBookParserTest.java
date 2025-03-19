@@ -83,7 +83,8 @@ public class AddressBookParserTest {
                 + tutorialKeywords.stream().collect(Collectors.joining(" "));
         FindCommand command = (FindCommand) parser.parseCommand(input);
         NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(nameKeywords);
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate = new StudentContainsTutorialKeywordsPredicate(tutorialKeywords);
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate =
+                new StudentContainsTutorialKeywordsPredicate(tutorialKeywords);
         assertEquals(new FindCommand(namePredicate, tutorialPredicate), command);
     }
 

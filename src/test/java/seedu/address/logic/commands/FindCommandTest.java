@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalStudents.CARL;
-import static seedu.address.testutil.TypicalStudents.ELLE;
-import static seedu.address.testutil.TypicalStudents.FIONA;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -26,11 +23,13 @@ import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
  * {@code FindCommand}.
  */
 public class FindCommandTest {
+    private static final NameContainsKeywordsPredicate emptyNamePredicate =
+            new NameContainsKeywordsPredicate(Collections.emptyList());
+    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate =
+            new StudentContainsTutorialKeywordsPredicate(Collections.emptyList());
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    private static final NameContainsKeywordsPredicate emptyNamePredicate = new NameContainsKeywordsPredicate(Collections.emptyList());
-    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(Collections.emptyList());
 
     @Test
     public void equals() {
@@ -86,7 +85,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_emptyName_oneTutorial_multipleStudentsFound() {
+    public void executeEmptyNameOneTutorialMultipleStudentsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23");
         FindCommand command = new FindCommand(null, tutorialPredicate);
@@ -95,7 +94,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_emptyName_twoTutorials_multipleStudentsFound() {
+    public void executeEmptyNameTwoTutorialsMultipleStudentsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23 CS2106-T02");
         FindCommand command = new FindCommand(null, tutorialPredicate);
@@ -104,21 +103,24 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_nameAlice_tutorialCS2103T23_singleStudentFound() {
+    public void executeNameAliceTutorialCS2103T23SingleStudentFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate namePredicate = prepareNamePredicate("Alice");
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23");
         FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
-        expectedModel.updateFilteredStudentList(namePredicate.and(student -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
+        expectedModel.updateFilteredStudentList(namePredicate.and(student
+                -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate = new StudentContainsTutorialKeywordsPredicate(Arrays.asList("tutorial1"));
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate =
+                new StudentContainsTutorialKeywordsPredicate(Arrays.asList("tutorial1"));
         FindCommand findCommand = new FindCommand(namePredicate, tutorialPredicate);
-        String expected = FindCommand.class.getCanonicalName() + "{namePredicate=" + namePredicate + ", tutorialPredicate=" + tutorialPredicate + "}";
+        String expected = FindCommand.class.getCanonicalName() + "{namePredicate="
+                + namePredicate + ", tutorialPredicate=" + tutorialPredicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
