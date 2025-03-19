@@ -81,11 +81,11 @@ public class TypicalStudents {
      */
     public static AddressBook getTypicalAddressBookInclTutorials() {
         AddressBook ab = new AddressBook();
-        for (Student student : getTypicalStudents()) {
-            ab.addStudent(student);
-        }
         for (var t : getTypicalTutorials()) {
             ab.addTutorial(t);
+        }
+        for (Student student : getTypicalStudents()) {
+            ab.addStudent(student);
         }
         return ab;
     }
