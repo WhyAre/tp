@@ -190,7 +190,7 @@ Format: `tutorial list`
 
 ### Adding a student to a tutorial: `tutorial add-student`
 
-Adds a student to a tutorial slot
+Adds a student to a tutorial slot.
 
 Format: `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
@@ -203,7 +203,7 @@ Examples:
 
 ### Deleting a student to a tutorial: `tutorial delete-student`
 
-Deletes a student from a tutorial slot
+Deletes a student from a tutorial slot.
 
 Format: `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
