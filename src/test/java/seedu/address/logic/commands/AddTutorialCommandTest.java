@@ -36,7 +36,7 @@ public class AddTutorialCommandTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        var cmd = new AddTutorialCommand(new Tutorial("Tutorial_1"));
+        var cmd = new AddTutorialCommand(new Tutorial("CS2103-T1"));
 
         assertThrows(CommandException.class, AddTutorialCommand.MESSAGE_DUPLICATE_TUTORIAL, (
         ) -> cmd.execute(modelStub));
