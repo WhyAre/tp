@@ -41,7 +41,8 @@ public class TypicalStudents {
     public static final Student ELLE = new StudentBuilder().withName("Elle Meyer").withPhone("9482224")
                     .withStudentId("A0172925M").withEmail("werner@example.com").withHandle("@ellem").build();
     public static final Student FIONA = new StudentBuilder().withName("Fiona Kunz").withPhone("9482427")
-                    .withStudentId("A0005984F").withEmail("lydia@example.com").withHandle("@kunz_fiona").build();
+                    .withStudentId("A0005984F").withEmail("lydia@example.com").withHandle("@kunz_fiona")
+                    .withTutorials("CS2106-T02").build();
     public static final Student GEORGE = new StudentBuilder().withName("George Best").withPhone("9482442")
                     .withStudentId("A0443446N").withEmail("anna@example.com").withHandle("@the_best_george").build();
 
