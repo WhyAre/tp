@@ -51,7 +51,7 @@ public class JsonSerializableAddressBookTest {
         var modelType = dataFromFile.toModelType();
 
         AddressBook typicalStudentsAddressBook = TypicalStudents.getTypicalAddressBookInclTutorials();
-        assertEquals(modelType, typicalStudentsAddressBook);
+        assertEquals(typicalStudentsAddressBook, modelType);
     }
 
 }
