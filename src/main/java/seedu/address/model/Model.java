@@ -108,6 +108,15 @@ public interface Model {
      */
     void updateFilteredStudentList(Predicate<Student> predicate);
 
+    /**
+     * Updates the filter of the filtered student list to filter by the given
+     * {@code predicate} for tutorial group(s).
+     *
+     * @throws NullPointerException
+     *             if {@code predicate} is null.
+     */
+    void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate);
+
     /** Returns an unmodifiable view of the filtered tutorial list */
     ObservableList<Tutorial> getFilteredTutorialList();
 

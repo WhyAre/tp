@@ -150,6 +150,21 @@ public class ModelManager implements Model {
         filteredStudents.setPredicate(predicate);
     }
 
+    /**
+     * Updates the filter of the filtered student list to filter by the given
+     * {@code predicate} for tutorial group(s).
+     *
+     * @throws NullPointerException
+     *             if {@code predicate} is null.
+     */
+    @Override
+    public void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate) {
+        requireNonNull(predicate);
+        Predicate<Student> studentPredicate = student -> student.getTutorials().stream()
+                .anyMatch(predicate);
+        filteredStudents.setPredicate(studentPredicate);
+    }
+
     // =========== Filtered Tutorial List Accessors
     // =============================================================
 
