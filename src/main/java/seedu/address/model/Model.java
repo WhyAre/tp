@@ -92,6 +92,11 @@ public interface Model {
     void deleteTutorial(Tutorial tutorial);
 
     /**
+     * Deletes a tutorial from all students that were allocated to it
+     */
+    void deleteTutorialFromStudents(Tutorial tutorial);
+
+    /**
      * Checks whether tutorial exists in the address book
      */
     boolean hasTutorial(Tutorial tutorial);

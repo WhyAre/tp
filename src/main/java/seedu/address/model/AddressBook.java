@@ -2,7 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
@@ -118,6 +120,25 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void deleteTutorial(Tutorial tutorial) {
         tutorials.remove(tutorial);
+    }
+
+    /**
+     * Deletes a tutorial from all students that were allocated to it
+     */
+    public void deleteTutorialFromStudents(Tutorial tutorial) {
+        List<Student> currentList = this.getStudentList();
+
+        for (Student student : currentList) {
+            if (!student.hasTutorial(tutorial)) {
+                continue;
+            }
+            Student editedstudent = student.clone();
+            Set<Tutorial> newTutorials = new HashSet<>(editedstudent.getTutorials());
+            newTutorials.remove(tutorial);
+            editedstudent.setTutorials(newTutorials);
+
+            this.setStudent(student, editedstudent);
+        }
     }
 
     /**
