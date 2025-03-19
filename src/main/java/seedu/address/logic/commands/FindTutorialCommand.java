@@ -1,51 +1,43 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
+import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
 /**
- * Finds and lists all students in address book whose name contains any of the
+ * Finds and lists all tutorial in address book whose tutorial name contains any of the
  * argument keywords. Keyword matching is case insensitive.
  */
-public class FindCommand extends Command {
+public class FindTutorialCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all students whose names contain any of "
-            + "the specified keywords (case-insensitive) or who are in the specified tutorial group(s), "
-            + "and displays them as a list with index numbers.\n"
-            + "Parameters: [" + PREFIX_TUTORIAL_NAME + "TUTORIAL]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob \n\t\t find " + PREFIX_TUTORIAL_NAME + "CS2103_T01 ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tutorials whose names contain any of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: [ ]...\n"
+            + "Example: " + COMMAND_WORD + " tutorial find";
 
-    private final NameContainsKeywordsPredicate namePredicate;
+    private final TutorialContainsKeywordsPredicate tutorialPredicate;
 
-    private final StudentContainsTutorialKeywordsPredicate tutorialPredicate;
-
-    public FindCommand(NameContainsKeywordsPredicate namePredicate, StudentContainsTutorialKeywordsPredicate tutorialPredicate) {
-        this.namePredicate = namePredicate;
+    public FindTutorialCommand(TutorialContainsKeywordsPredicate tutorialPredicate) {
         this.tutorialPredicate = tutorialPredicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        if (namePredicate != null && tutorialPredicate != null) {
-            model.updateFilteredStudentList(namePredicate.and(student -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
-        } else if (namePredicate != null) {
-            model.updateFilteredStudentList(namePredicate);
-        } else if (tutorialPredicate != null) {
-            model.updateFilteredStudentsByTutorialList(tutorialPredicate);
-        }
+        model.updateFilteredTutorialWithStudentsList(tutorialPredicate);
 
         return new CommandResult(
-                        String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredStudentList().size()));
+                        String.format(Messages.MESSAGE_TUTORIALS_LISTED_OVERVIEW,
+                                model.getFilteredTutorialWithStudents().size()), NavigationMode.TUTORIAL);
     }
 
     @Override
@@ -55,19 +47,17 @@ public class FindCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof FindTutorialCommand)) {
             return false;
         }
 
-        FindCommand otherFindCommand = (FindCommand) other;
-        return (namePredicate.equals(otherFindCommand.namePredicate)
-                && tutorialPredicate.equals(otherFindCommand.tutorialPredicate));
+        FindTutorialCommand otherFindTutorialCommand = (FindTutorialCommand) other;
+        return (tutorialPredicate.equals(otherFindTutorialCommand.tutorialPredicate));
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("namePredicate", namePredicate)
                 .add("tutorialPredicate", tutorialPredicate)
                 .toString();
     }

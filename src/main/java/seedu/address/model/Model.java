@@ -1,12 +1,14 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
 
 /**
  * The API of the Model component.
@@ -96,7 +98,10 @@ public interface Model {
      */
     boolean hasTutorial(Tutorial tutorial);
 
-    /** Returns an unmodifiable view of the filtered student list */
+    /**
+     * Returns an unmodifiable view of the list of {@code Student} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
     ObservableList<Student> getFilteredStudentList();
 
     /**
@@ -117,7 +122,10 @@ public interface Model {
      */
     void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate);
 
-    /** Returns an unmodifiable view of the filtered tutorial list */
+    /**
+     * Returns an unmodifiable view of the list of {@code Tutorial} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
     ObservableList<Tutorial> getFilteredTutorialList();
 
     /**
@@ -128,4 +136,29 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredTutorialList(Predicate<Tutorial> predicate);
+
+    /**
+     * Returns an unmodifiable view of the list of TutorialWithStudents by
+     * mapping tutorials to their respective students
+     *
+     * @return An observable list of TutorialWithStudents
+     */
+    ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents();
+
+    /**
+     * Retrieves students who are enrolled in the given tutorial
+     *
+     * @param tutorial The tutorial to filter students for.
+     * @return A list of students in the given tutorial.
+     */
+    List<Student> getStudentsInTutorial(Tutorial tutorial);
+
+    /**
+     * Updates the filter of the filtered tutorial list to filter by the given
+     * {@code predicate} for tutorial group(s), along with retrieving students in each tutorial.
+     *
+     * @throws NullPointerException
+     *             if {@code predicate} is null.
+     */
+    void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
 }

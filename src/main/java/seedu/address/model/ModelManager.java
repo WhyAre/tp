@@ -3,9 +3,16 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import javafx.collections.FXCollections;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,6 +32,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
+    private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +46,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
+        filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -135,10 +145,6 @@ public class ModelManager implements Model {
     // =========== Filtered Student List Accessors
     // =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Student} backed by the
-     * internal list of {@code versionedAddressBook}
-     */
     @Override
     public ObservableList<Student> getFilteredStudentList() {
         return filteredStudents;
@@ -150,13 +156,6 @@ public class ModelManager implements Model {
         filteredStudents.setPredicate(predicate);
     }
 
-    /**
-     * Updates the filter of the filtered student list to filter by the given
-     * {@code predicate} for tutorial group(s).
-     *
-     * @throws NullPointerException
-     *             if {@code predicate} is null.
-     */
     @Override
     public void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate) {
         requireNonNull(predicate);
@@ -168,10 +167,6 @@ public class ModelManager implements Model {
     // =========== Filtered Tutorial List Accessors
     // =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Tutorial} backed by the
-     * internal list of {@code versionedAddressBook}
-     */
     @Override
     public ObservableList<Tutorial> getFilteredTutorialList() {
         return filteredTutorials;
@@ -182,6 +177,33 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         // Hide studentList
         filteredTutorials.setPredicate(predicate);
+    }
+
+    public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
+        return filteredTutorialWithStudents;
+    }
+
+    @Override
+    public List<Student> getStudentsInTutorial(Tutorial tutorial) {
+        return this.addressBook.getStudentList().stream()
+                .filter(student -> student.getTutorials().contains(tutorial))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
+        requireNonNull(predicate);
+        List<TutorialWithStudents> tutorialWithStudentsList = addressBook.getTutorialList().stream()
+                .filter(predicate::test)
+                .map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
+                .collect(Collectors.toList());
+
+        Predicate<TutorialWithStudents> isInList = tutorialWithStudents ->
+                tutorialWithStudentsList.stream()
+                        .anyMatch(item -> item.equals(tutorialWithStudents));
+
+        filteredTutorialWithStudents.setPredicate(isInList);
     }
 
     @Override
