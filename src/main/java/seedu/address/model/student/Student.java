@@ -84,6 +84,17 @@ public class Student {
     }
 
     /**
+     * Removes invalid tutorials from the student if it doesn't exist in
+     * {@code validTuts}
+     *
+     * @param validTuts
+     *            Set of valid tutorials
+     */
+    public void removeInvalidTutorials(Set<Tutorial> validTuts) {
+        this.tutorials.removeIf(t -> !validTuts.contains(t));
+    }
+
+    /**
      * Returns true if both students have the same name. This defines a weaker
      * notion of equality between two students.
      */
