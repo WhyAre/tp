@@ -108,8 +108,11 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_tutorialListCommand_success() throws ParseException {
         String commandString = "%s %s".formatted(TutorialCommand.COMMAND_WORD, ListTutorialCommand.COMMAND_WORD);
+        String commandStringExtraneous = "%s %s 3".formatted(TutorialCommand.COMMAND_WORD,
+                        ListTutorialCommand.COMMAND_WORD);
 
         assertTrue(parser.parseCommand(commandString) instanceof ListTutorialCommand);
+        assertTrue(parser.parseCommand(commandStringExtraneous) instanceof ListTutorialCommand);
     }
 
     @Test
