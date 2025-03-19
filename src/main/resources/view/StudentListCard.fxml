@@ -18,20 +18,53 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+
+      <HBox fx:id="studentCard" spacing="10" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+        <!-- Index Section -->
+        <VBox spacing="10">
+          <Label fx:id="id" styleClass="cell_big_label">
+            <minWidth>
+              <Region fx:constant="USE_PREF_SIZE" />
+            </minWidth>
+          </Label>
+        </VBox>
+
+        <!-- Main Content Section -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+          <HBox spacing="10" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <!-- Name -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <HBox spacing="5">
+                <Label fx:id="name" text="John Doe" />
+              </HBox>
+            </VBox>
+
+            <!-- StudentId and Email -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <Label fx:id="studentId" text="Student ID" />
+              <Label fx:id="email" text="john.doe@example.com" />
+            </VBox>
+
+            <!-- Phone and Telegram -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <HBox spacing="5">
+                <Label text="📞"/>
+                <Label fx:id="phone" text="123-456-7890" />
+              </HBox>
+              <HBox spacing="5">
+                <Label text="📱"/>
+                <Label fx:id="handle" text="@1231" />
+              </HBox>
+            </VBox>
+          </HBox>
+
+          <!-- Separator -->
+          <Region style="-fx-background-color: black; -fx-min-height: 1px; -fx-max-height: 1px;" />
+
+          <!-- Tutorials Section -->
+          <FlowPane fx:id="tutorials" />
+        </VBox>
       </HBox>
-      <FlowPane fx:id="tutorials" />
-      <Label fx:id="studentId" styleClass="cell_small_label" text="\$studentId" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="handle" styleClass="cell_small_label" text="\$handle" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
     </VBox>
   </GridPane>
 </HBox>

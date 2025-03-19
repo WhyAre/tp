@@ -4,15 +4,18 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_NAVIGATION_MODE;
 
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -65,6 +68,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private SplitPane mainSplitPane;
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -74,6 +80,9 @@ public class MainWindow extends UiPart<Stage> {
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+
+        Font.loadFont(getClass().getResourceAsStream("/fonts/Livvic-Bold.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/fonts/Livvic-Regular.ttf"), 12);
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -201,6 +210,8 @@ public class MainWindow extends UiPart<Stage> {
 
     void show() {
         primaryStage.show();
+        Platform.runLater((
+        ) -> mainSplitPane.setDividerPosition(0, 0.8));
     }
 
     /**

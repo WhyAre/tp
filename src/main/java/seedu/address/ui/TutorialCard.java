@@ -38,7 +38,7 @@ public class TutorialCard extends UiPart<Region> {
     public TutorialCard(Tutorial tutorial, int displayedIndex) {
         super(FXML);
         this.tutorial = tutorial;
-        id.setText(displayedIndex + ". ");
+        id.setText(displayedIndex + "");
         name.setText(tutorial.name());
     }
 }
