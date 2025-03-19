@@ -16,7 +16,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
- * Deletes a student from a tutorial slot.
+ * Deletes students from a tutorial slot.
  */
 public class DeleteStudentFromTutorialCommand extends Command {
 

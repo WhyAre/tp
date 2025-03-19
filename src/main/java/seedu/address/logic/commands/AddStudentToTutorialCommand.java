@@ -16,7 +16,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
- * Adds a student to a tutorial slot.
+ * Adds students to a tutorial slot.
  */
 public class AddStudentToTutorialCommand extends Command {
 
