@@ -27,6 +27,7 @@
                 </Label>
                 <Label fx:id="name" text="\$first" />
             </HBox>
+            <FlowPane fx:id="students" />
         </VBox>
     </GridPane>
 </HBox>
