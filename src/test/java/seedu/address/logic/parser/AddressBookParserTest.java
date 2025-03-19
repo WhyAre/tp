@@ -84,7 +84,7 @@ public class AddressBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(input);
         NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(nameKeywords);
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
-                tutorials);
+                        tutorials);
         assertEquals(new FindCommand(namePredicate, tutorialPredicate), command);
     }
 

@@ -74,7 +74,7 @@ public class FindCommand extends Command {
 
         FindCommand otherFindCommand = (FindCommand) other;
         return Objects.equals(namePredicate, otherFindCommand.namePredicate)
-                && Objects.equals(tutorialPredicate, otherFindCommand.tutorialPredicate);
+                        && Objects.equals(tutorialPredicate, otherFindCommand.tutorialPredicate);
     }
 
     @Override
