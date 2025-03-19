@@ -37,7 +37,7 @@ TAskbook can get your contact management tasks done faster than traditional GUI 
    * `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe` :
      Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 1` : Deletes the 3rd contact shown in the current list.
+   * `delete 1` : Deletes the 1st contact shown in the current list.
 
    * `clear` : Deletes all contacts.
 
