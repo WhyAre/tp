@@ -86,8 +86,8 @@ public class FindCommandTest {
 
     @Test
     public void executeEmptyNameOneTutorialMultipleStudentsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23");
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1");
         FindCommand command = new FindCommand(null, tutorialPredicate);
         expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -95,8 +95,8 @@ public class FindCommandTest {
 
     @Test
     public void executeEmptyNameTwoTutorialsMultipleStudentsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23 CS2106-T02");
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1 CS2106-T37");
         FindCommand command = new FindCommand(null, tutorialPredicate);
         expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -106,7 +106,7 @@ public class FindCommandTest {
     public void executeNameAliceTutorialCS2103T23SingleStudentFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate namePredicate = prepareNamePredicate("Alice");
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23");
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1");
         FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
         expectedModel.updateFilteredStudentList(
                         namePredicate.and(student -> student.getTutorials().stream().anyMatch(tutorialPredicate)));

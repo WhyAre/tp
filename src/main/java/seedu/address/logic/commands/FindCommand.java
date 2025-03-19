@@ -9,6 +9,8 @@ import seedu.address.model.Model;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 
+import java.util.Objects;
+
 /**
  * Finds and lists all students in address book whose name contains any of the
  * argument keywords. Keyword matching is case insensitive.
@@ -71,8 +73,8 @@ public class FindCommand extends Command {
         }
 
         FindCommand otherFindCommand = (FindCommand) other;
-        return (namePredicate.equals(otherFindCommand.namePredicate)
-                        && tutorialPredicate.equals(otherFindCommand.tutorialPredicate));
+        return Objects.equals(namePredicate, otherFindCommand.namePredicate)
+                && Objects.equals(tutorialPredicate, otherFindCommand.tutorialPredicate);
     }
 
     @Override

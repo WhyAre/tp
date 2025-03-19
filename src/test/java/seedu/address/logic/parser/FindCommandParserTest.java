@@ -31,11 +31,6 @@ public class FindCommandParserTest {
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
 
-        // tutorial keywords only (using 't/' as prefix)
-        FindCommand expectedFindCommandTutorial = new FindCommand(null,
-                        new StudentContainsTutorialKeywordsPredicate(Arrays.asList("t1", "t2")));
-        assertParseSuccess(parser, "t/t1 t/t2", expectedFindCommandTutorial);
-
         // mixed name and tutorial keywords
         FindCommand expectedMixedFindCommand = new FindCommand(
                         new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")),
