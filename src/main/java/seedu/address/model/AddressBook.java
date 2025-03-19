@@ -85,7 +85,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * address book.
      */
     public void addStudent(Student p) {
-        students.add(p);
+        // Check that tutorial slots exists
+        var student = p.clone();
+        student.removeInvalidTutorials(new HashSet<>(tutorials));
+        students.add(student);
     }
 
     /**
