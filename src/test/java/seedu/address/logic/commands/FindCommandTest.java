@@ -25,7 +25,8 @@ import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 public class FindCommandTest {
     private static final NameContainsKeywordsPredicate emptyNamePredicate = new NameContainsKeywordsPredicate(
                     Collections.emptyList());
-    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate =
+            new StudentContainsTutorialKeywordsPredicate(
                     Collections.emptyList());
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

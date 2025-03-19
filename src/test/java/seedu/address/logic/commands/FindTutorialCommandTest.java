@@ -23,7 +23,8 @@ import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
  * {@code FindTutorialCommand}.
  */
 public class FindTutorialCommandTest {
-    private static final TutorialContainsKeywordsPredicate emptyTutorialPredicate = new TutorialContainsKeywordsPredicate(
+    private static final TutorialContainsKeywordsPredicate emptyTutorialPredicate =
+            new TutorialContainsKeywordsPredicate(
                     Collections.emptyList());
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
