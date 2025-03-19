@@ -13,7 +13,6 @@ import javafx.scene.layout.Region;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.TutorialWithStudents;
 
-
 /**
  * An UI component that displays information of a {@code Tutorial}.
  */
@@ -61,13 +60,14 @@ public class TutorialCard extends UiPart<Region> {
     /**
      * Displays the list of students in this tutorial as labels inside the FlowPane.
      *
-     * @param studentList The list of students to be displayed.
+     * @param studentList
+     *            The list of students to be displayed.
      */
     private void displayStudents(List<Student> studentList) {
-        List<Label> studentLabels = studentList.stream()
-                .sorted((s1, s2) -> s1.getName().fullName.compareTo(s2.getName().fullName))
-                .map(student -> new Label(student.getName().fullName))
-                .collect(Collectors.toList());
+        List<Label> studentLabels = studentList.stream().sorted((
+                        s1, s2
+        ) -> s1.getName().fullName.compareTo(s2.getName().fullName))
+                        .map(student -> new Label(student.getName().fullName)).collect(Collectors.toList());
 
         students.getChildren().clear();
         students.getChildren().addAll(studentLabels);

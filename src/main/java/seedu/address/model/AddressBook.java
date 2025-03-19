@@ -186,9 +186,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @return An observable list of {@code TutorialWithStudents}.
      */
     public ObservableList<TutorialWithStudents> getTutorialWithStudentsList() {
-        return tutorials.stream()
-                .map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return tutorials.stream().map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     /**
@@ -196,13 +195,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * is a placeholder and should be implemented to return the actual students
      * enrolled in the given tutorial.
      *
-     * @param tutorial The tutorial for which the enrolled students are to be
-     *                 retrieved.
+     * @param tutorial
+     *            The tutorial for which the enrolled students are to be retrieved.
      * @return A list of students enrolled in the given tutorial.
      */
     private List<Student> getStudentsInTutorial(Tutorial tutorial) {
-        return this.getStudentList().stream()
-                .filter(student -> student.getTutorials().contains(tutorial))
-                .collect(Collectors.toList());
+        return this.getStudentList().stream().filter(student -> student.getTutorials().contains(tutorial))
+                        .collect(Collectors.toList());
     }
 }

@@ -15,8 +15,10 @@ public class TutorialWithStudents {
     /**
      * Constructs a {@code TutorialWithStudents} object
      *
-     * @param tutorial The tutorial associated with the students
-     * @param students The list of students enrolled in the tutorial
+     * @param tutorial
+     *            The tutorial associated with the students
+     * @param students
+     *            The list of students enrolled in the tutorial
      */
     public TutorialWithStudents(Tutorial tutorial, List<Student> students) {
         this.tutorial = tutorial;
@@ -42,12 +44,15 @@ public class TutorialWithStudents {
     }
 
     /**
-     * Two {@code TutorialWithStudents} objects are considered equal if they have the same {@code tutorial}
-     * and the same list of {@code students}. This means both the tutorial and the students list must be
-     * identical in terms of their content and order.
+     * Two {@code TutorialWithStudents} objects are considered equal if they have
+     * the same {@code tutorial} and the same list of {@code students}. This means
+     * both the tutorial and the students list must be identical in terms of their
+     * content and order.
      *
-     * @param o the reference object with which to compare.
-     * @return {@code true} if this object is the same as the {@code o} argument; {@code false} otherwise.
+     * @param o
+     *            the reference object with which to compare.
+     * @return {@code true} if this object is the same as the {@code o} argument;
+     *         {@code false} otherwise.
      */
     @Override
     public boolean equals(Object o) {

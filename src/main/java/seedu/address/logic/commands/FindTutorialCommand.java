@@ -9,17 +9,16 @@ import seedu.address.model.NavigationMode;
 import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
 
 /**
- * Finds and lists all tutorial in address book whose tutorial name contains any of the
- * argument keywords. Keyword matching is case insensitive.
+ * Finds and lists all tutorial in address book whose tutorial name contains any
+ * of the argument keywords. Keyword matching is case insensitive.
  */
 public class FindTutorialCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tutorials whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: [ ]...\n"
-            + "Example: " + COMMAND_WORD + " tutorial find";
+                    + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+                    + "Parameters: [ ]...\n" + "Example: " + COMMAND_WORD + " tutorial find";
 
     private final TutorialContainsKeywordsPredicate tutorialPredicate;
 
@@ -32,9 +31,8 @@ public class FindTutorialCommand extends Command {
         requireNonNull(model);
         model.updateFilteredTutorialWithStudentsList(tutorialPredicate);
 
-        return new CommandResult(
-                        String.format(Messages.MESSAGE_TUTORIALS_LISTED_OVERVIEW,
-                                model.getFilteredTutorialWithStudents().size()), NavigationMode.TUTORIAL);
+        return new CommandResult(String.format(Messages.MESSAGE_TUTORIALS_LISTED_OVERVIEW,
+                        model.getFilteredTutorialWithStudents().size()), NavigationMode.TUTORIAL);
     }
 
     @Override
@@ -54,8 +52,6 @@ public class FindTutorialCommand extends Command {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("tutorialPredicate", tutorialPredicate)
-                .toString();
+        return new ToStringBuilder(this).add("tutorialPredicate", tutorialPredicate).toString();
     }
 }

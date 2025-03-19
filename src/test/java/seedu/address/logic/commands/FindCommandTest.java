@@ -23,10 +23,10 @@ import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
  * {@code FindCommand}.
  */
 public class FindCommandTest {
-    private static final NameContainsKeywordsPredicate emptyNamePredicate =
-            new NameContainsKeywordsPredicate(Collections.emptyList());
-    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate =
-            new StudentContainsTutorialKeywordsPredicate(Collections.emptyList());
+    private static final NameContainsKeywordsPredicate emptyNamePredicate = new NameContainsKeywordsPredicate(
+                    Collections.emptyList());
+    private static final StudentContainsTutorialKeywordsPredicate emptyTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+                    Collections.emptyList());
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -38,9 +38,9 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate secondNamePredicate = new NameContainsKeywordsPredicate(
                         Collections.singletonList("second"));
         StudentContainsTutorialKeywordsPredicate firstTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
-                Collections.singletonList("tutorial1"));
+                        Collections.singletonList("tutorial1"));
         StudentContainsTutorialKeywordsPredicate secondTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
-                Collections.singletonList("tutorial2"));
+                        Collections.singletonList("tutorial2"));
 
         FindCommand findFirstCommand = new FindCommand(firstNamePredicate, firstTutorialPredicate);
         FindCommand findSecondCommand = new FindCommand(secondNamePredicate, secondTutorialPredicate);
@@ -108,19 +108,19 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate namePredicate = prepareNamePredicate("Alice");
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23");
         FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
-        expectedModel.updateFilteredStudentList(namePredicate.and(student
-                -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
+        expectedModel.updateFilteredStudentList(
+                        namePredicate.and(student -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
-        StudentContainsTutorialKeywordsPredicate tutorialPredicate =
-                new StudentContainsTutorialKeywordsPredicate(Arrays.asList("tutorial1"));
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+                        Arrays.asList("tutorial1"));
         FindCommand findCommand = new FindCommand(namePredicate, tutorialPredicate);
-        String expected = FindCommand.class.getCanonicalName() + "{namePredicate="
-                + namePredicate + ", tutorialPredicate=" + tutorialPredicate + "}";
+        String expected = FindCommand.class.getCanonicalName() + "{namePredicate=" + namePredicate
+                        + ", tutorialPredicate=" + tutorialPredicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
@@ -132,7 +132,8 @@ public class FindCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code StudentContainsTutorialKeywordsPredicate}.
+     * Parses {@code userInput} into a
+     * {@code StudentContainsTutorialKeywordsPredicate}.
      */
     private StudentContainsTutorialKeywordsPredicate prepareTutorialPredicate(String userInput) {
         return new StudentContainsTutorialKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));

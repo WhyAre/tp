@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
-
 /**
  * Tests that a {@code Tutorial}'s name matches any of the given keywords.
  * given.
@@ -20,8 +19,7 @@ public class StudentContainsTutorialKeywordsPredicate implements Predicate<Tutor
 
     @Override
     public boolean test(Tutorial tutorial) {
-        return keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tutorial.name(), keyword));
+        return keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tutorial.name(), keyword));
     }
 
     @Override
@@ -35,8 +33,7 @@ public class StudentContainsTutorialKeywordsPredicate implements Predicate<Tutor
             return false;
         }
 
-        StudentContainsTutorialKeywordsPredicate otherStudentContainsTutorialKeywordsPredicate =
-                (StudentContainsTutorialKeywordsPredicate) other;
+        StudentContainsTutorialKeywordsPredicate otherStudentContainsTutorialKeywordsPredicate = (StudentContainsTutorialKeywordsPredicate) other;
         return keywords.equals(otherStudentContainsTutorialKeywordsPredicate.keywords);
     }
 

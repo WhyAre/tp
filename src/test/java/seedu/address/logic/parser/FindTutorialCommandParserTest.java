@@ -18,14 +18,14 @@ public class FindTutorialCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTutorialCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTutorialCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindTutorialCommand expectedFindTutorialCommand = new FindTutorialCommand(
-                new TutorialContainsKeywordsPredicate(Arrays.asList("CS2103", "CS2106")));
+                        new TutorialContainsKeywordsPredicate(Arrays.asList("CS2103", "CS2106")));
         assertParseSuccess(parser, "CS2103 CS2106", expectedFindTutorialCommand);
 
         // multiple whitespaces between keywords

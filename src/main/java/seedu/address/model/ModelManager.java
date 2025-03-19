@@ -154,8 +154,7 @@ public class ModelManager implements Model {
     @Override
     public void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate) {
         requireNonNull(predicate);
-        Predicate<Student> studentPredicate = student -> student.getTutorials().stream()
-                .anyMatch(predicate);
+        Predicate<Student> studentPredicate = student -> student.getTutorials().stream().anyMatch(predicate);
         filteredStudents.setPredicate(studentPredicate);
     }
 
@@ -180,22 +179,19 @@ public class ModelManager implements Model {
 
     @Override
     public List<Student> getStudentsInTutorial(Tutorial tutorial) {
-        return this.addressBook.getStudentList().stream()
-                .filter(student -> student.getTutorials().contains(tutorial))
-                .collect(Collectors.toList());
+        return this.addressBook.getStudentList().stream().filter(student -> student.getTutorials().contains(tutorial))
+                        .collect(Collectors.toList());
     }
-
 
     @Override
     public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
         requireNonNull(predicate);
         List<TutorialWithStudents> tutorialWithStudentsList = addressBook.getTutorialList().stream()
-                .filter(predicate::test)
-                .map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
-                .collect(Collectors.toList());
+                        .filter(predicate::test)
+                        .map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
+                        .collect(Collectors.toList());
 
-        Predicate<TutorialWithStudents> isInList = tutorialWithStudents ->
-                tutorialWithStudentsList.stream()
+        Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
         filteredTutorialWithStudents.setPredicate(isInList);

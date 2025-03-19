@@ -138,8 +138,8 @@ public interface Model {
     void updateFilteredTutorialList(Predicate<Tutorial> predicate);
 
     /**
-     * Returns an unmodifiable view of the list of TutorialWithStudents by
-     * mapping tutorials to their respective students
+     * Returns an unmodifiable view of the list of TutorialWithStudents by mapping
+     * tutorials to their respective students
      *
      * @return An observable list of TutorialWithStudents
      */
@@ -148,14 +148,16 @@ public interface Model {
     /**
      * Retrieves students who are enrolled in the given tutorial
      *
-     * @param tutorial The tutorial to filter students for.
+     * @param tutorial
+     *            The tutorial to filter students for.
      * @return A list of students in the given tutorial.
      */
     List<Student> getStudentsInTutorial(Tutorial tutorial);
 
     /**
      * Updates the filter of the filtered tutorial list to filter by the given
-     * {@code predicate} for tutorial group(s), along with retrieving students in each tutorial.
+     * {@code predicate} for tutorial group(s), along with retrieving students in
+     * each tutorial.
      *
      * @throws NullPointerException
      *             if {@code predicate} is null.

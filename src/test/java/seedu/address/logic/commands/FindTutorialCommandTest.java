@@ -23,17 +23,17 @@ import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
  * {@code FindTutorialCommand}.
  */
 public class FindTutorialCommandTest {
-    private static final TutorialContainsKeywordsPredicate emptyTutorialPredicate =
-            new TutorialContainsKeywordsPredicate(Collections.emptyList());
+    private static final TutorialContainsKeywordsPredicate emptyTutorialPredicate = new TutorialContainsKeywordsPredicate(
+                    Collections.emptyList());
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
         TutorialContainsKeywordsPredicate firstTutorialPredicate = new TutorialContainsKeywordsPredicate(
-                Collections.singletonList("first"));
+                        Collections.singletonList("first"));
         TutorialContainsKeywordsPredicate secondTutorialPredicate = new TutorialContainsKeywordsPredicate(
-                Collections.singletonList("second"));
+                        Collections.singletonList("second"));
 
         FindTutorialCommand findFirstCommand = new FindTutorialCommand(firstTutorialPredicate);
         FindTutorialCommand findSecondCommand = new FindTutorialCommand(secondTutorialPredicate);
@@ -66,33 +66,37 @@ public class FindTutorialCommandTest {
         assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
     }
 
-    //    @Test
-    //    public void execute_multipleKeywords_multipleTutorialsFound() {
-    //        String expectedMessage = String.format(MESSAGE_TUTORIALS_LISTED_OVERVIEW, 2);
-    //        TutorialContainsKeywordsPredicate predicate = prepareTutorialPredicate("CS2103-T23 CS2106-T02");
-    //        FindTutorialCommand command = new FindTutorialCommand(predicate);
-    //        expectedModel.updateFilteredTutorialWithStudentsList(predicate);
-    //        CommandResult expectedCommandResult = new CommandResult(expectedMessage, NavigationMode.TUTORIAL);
-    //        assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
-    //    }
+    // @Test
+    // public void execute_multipleKeywords_multipleTutorialsFound() {
+    // String expectedMessage = String.format(MESSAGE_TUTORIALS_LISTED_OVERVIEW, 2);
+    // TutorialContainsKeywordsPredicate predicate =
+    // prepareTutorialPredicate("CS2103-T23 CS2106-T02");
+    // FindTutorialCommand command = new FindTutorialCommand(predicate);
+    // expectedModel.updateFilteredTutorialWithStudentsList(predicate);
+    // CommandResult expectedCommandResult = new CommandResult(expectedMessage,
+    // NavigationMode.TUTORIAL);
+    // assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
+    // }
     //
-    //    @Test
-    //    public void execute_singleKeyword_singleTutorialFound() {
-    //        String expectedMessage = String.format(MESSAGE_TUTORIALS_LISTED_OVERVIEW, 1);
-    //        TutorialContainsKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T23");
-    //        FindTutorialCommand command = new FindTutorialCommand(tutorialPredicate);
-    //        expectedModel.updateFilteredTutorialWithStudentsList(tutorialPredicate);
-    //        CommandResult expectedCommandResult = new CommandResult(expectedMessage, NavigationMode.TUTORIAL);
-    //        assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
-    //    }
+    // @Test
+    // public void execute_singleKeyword_singleTutorialFound() {
+    // String expectedMessage = String.format(MESSAGE_TUTORIALS_LISTED_OVERVIEW, 1);
+    // TutorialContainsKeywordsPredicate tutorialPredicate =
+    // prepareTutorialPredicate("CS2103-T23");
+    // FindTutorialCommand command = new FindTutorialCommand(tutorialPredicate);
+    // expectedModel.updateFilteredTutorialWithStudentsList(tutorialPredicate);
+    // CommandResult expectedCommandResult = new CommandResult(expectedMessage,
+    // NavigationMode.TUTORIAL);
+    // assertCommandSuccess(command, model, expectedCommandResult, expectedModel);
+    // }
 
     @Test
     public void toStringMethod() {
-        TutorialContainsKeywordsPredicate tutorialPredicate =
-                new TutorialContainsKeywordsPredicate(Arrays.asList("tutorial1"));
+        TutorialContainsKeywordsPredicate tutorialPredicate = new TutorialContainsKeywordsPredicate(
+                        Arrays.asList("tutorial1"));
         FindTutorialCommand findCommand = new FindTutorialCommand(tutorialPredicate);
-        String expected = FindTutorialCommand.class.getCanonicalName()
-                + "{tutorialPredicate=" + tutorialPredicate + "}";
+        String expected = FindTutorialCommand.class.getCanonicalName() + "{tutorialPredicate=" + tutorialPredicate
+                        + "}";
         assertEquals(expected, findCommand.toString());
     }
 

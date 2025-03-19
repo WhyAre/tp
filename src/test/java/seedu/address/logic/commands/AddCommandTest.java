@@ -193,7 +193,6 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-
         public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
             throw new AssertionError("This method should not be called.");
         }
@@ -202,7 +201,6 @@ public class AddCommandTest {
         public List<Student> getStudentsInTutorial(Tutorial tutorial) {
             throw new AssertionError("This method should not be called.");
         }
-
 
         @Override
         public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
