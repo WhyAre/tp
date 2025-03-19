@@ -62,7 +62,7 @@ public class DeleteStudentFromTutorialCommand extends Command {
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             Student editedStudent = studentToEdit.clone();
             Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-            tutorials.add(tutorial);
+            tutorials.remove(tutorial);
             editedStudent.setTutorials(tutorials);
 
             model.setStudent(studentToEdit, editedStudent);
