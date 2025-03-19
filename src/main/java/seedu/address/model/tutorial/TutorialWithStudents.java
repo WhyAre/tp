@@ -1,9 +1,9 @@
 package seedu.address.model.tutorial;
 
-import seedu.address.model.student.Student;
-
 import java.util.List;
 import java.util.Objects;
+
+import seedu.address.model.student.Student;
 
 /**
  * Represents a tutorial along with its associated students.
@@ -51,8 +51,12 @@ public class TutorialWithStudents {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TutorialWithStudents that = (TutorialWithStudents) o;
         return Objects.equals(tutorial, that.tutorial);
     }

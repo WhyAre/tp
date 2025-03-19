@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -8,7 +9,6 @@ import seedu.address.model.Model;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
 /**
  * Finds and lists all students in address book whose name contains any of the
@@ -28,7 +28,15 @@ public class FindCommand extends Command {
 
     private final StudentContainsTutorialKeywordsPredicate tutorialPredicate;
 
-    public FindCommand(NameContainsKeywordsPredicate namePredicate, StudentContainsTutorialKeywordsPredicate tutorialPredicate) {
+    /**
+     * Constructs a {@code FindCommand} with the specified {@code NameContainsKeywordsPredicate}
+     * and {@code StudentContainsTutorialKeywordsPredicate}.
+     *
+     * @param namePredicate A predicate to filter students based on their name
+     * @param tutorialPredicate A predicate to filter students based on their tutorial
+     */
+    public FindCommand(NameContainsKeywordsPredicate namePredicate,
+                       StudentContainsTutorialKeywordsPredicate tutorialPredicate) {
         this.namePredicate = namePredicate;
         this.tutorialPredicate = tutorialPredicate;
     }
@@ -37,7 +45,8 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         if (namePredicate != null && tutorialPredicate != null) {
-            model.updateFilteredStudentList(namePredicate.and(student -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
+            model.updateFilteredStudentList(namePredicate.and(student
+                    -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
         } else if (namePredicate != null) {
             model.updateFilteredStudentList(namePredicate);
         } else if (tutorialPredicate != null) {

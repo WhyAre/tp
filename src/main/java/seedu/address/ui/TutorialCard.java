@@ -1,18 +1,18 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.student.Student;
-import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * An UI component that displays information of a {@code Tutorial}.
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class TutorialCard extends UiPart<Region> {
 
     private static final String FXML = "TutorialListCard.fxml";
+    public final TutorialWithStudents tutorialWithStudents;
     private List<Student> emptyStudents = new ArrayList<>();
 
     /**
@@ -30,9 +31,6 @@ public class TutorialCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The
      *      issue on AddressBook level 4</a>
      */
-
-    public final TutorialWithStudents tutorialWithStudents;
-
     @FXML
     private HBox cardPane;
     @FXML

@@ -1,10 +1,11 @@
 package seedu.address.model.tutorial;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
-import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Tests that a {@code Tutorial}'s name matches any of the given keywords.
@@ -34,7 +35,8 @@ public class StudentContainsTutorialKeywordsPredicate implements Predicate<Tutor
             return false;
         }
 
-        StudentContainsTutorialKeywordsPredicate otherStudentContainsTutorialKeywordsPredicate = (StudentContainsTutorialKeywordsPredicate) other;
+        StudentContainsTutorialKeywordsPredicate otherStudentContainsTutorialKeywordsPredicate =
+                (StudentContainsTutorialKeywordsPredicate) other;
         return keywords.equals(otherStudentContainsTutorialKeywordsPredicate.keywords);
     }
 

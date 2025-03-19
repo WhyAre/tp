@@ -1,15 +1,16 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.FindTutorialCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
+import seedu.address.logic.commands.FindTutorialCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tutorial.TutorialContainsKeywordsPredicate;
+
 
 /**
  * Parses input arguments and creates a new FindTutorialCommand object

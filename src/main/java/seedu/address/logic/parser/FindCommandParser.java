@@ -27,7 +27,8 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TUTORIAL_NAME);
         String trimmedPreamble = argMultimap.getPreamble().trim();
-        ArrayList<String> nameKeywords = trimmedPreamble.isEmpty() ? new ArrayList<>() : new ArrayList<>(Arrays.asList(trimmedPreamble.split("\\s+")));
+        ArrayList<String> nameKeywords = trimmedPreamble.isEmpty() ? new ArrayList<>()
+                : new ArrayList<>(Arrays.asList(trimmedPreamble.split("\\s+")));
 
         List<String> tempTutorialKeywords = argMultimap.getAllValues(PREFIX_TUTORIAL_NAME);
         List<String> tutorialKeywords = new ArrayList<>();
