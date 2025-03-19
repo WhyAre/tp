@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalStudents.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.testutil.StudentBuilder;
 
 public class AddCommandTest {
@@ -188,6 +190,22 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredTutorialList(Predicate<Tutorial> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+
+        public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Student> getStudentsInTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+
+        @Override
+        public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }
