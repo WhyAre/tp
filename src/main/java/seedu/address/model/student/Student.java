@@ -131,7 +131,7 @@ public class Student {
         Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
                         && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle);
+                        && handle.equals(otherStudent.handle) && tutorials.equals(otherStudent.tutorials);
     }
 
     @Override
