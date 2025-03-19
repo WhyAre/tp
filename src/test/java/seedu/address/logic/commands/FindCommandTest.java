@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalStudents.CARL;
-import static seedu.address.testutil.TypicalStudents.ELLE;
-import static seedu.address.testutil.TypicalStudents.FIONA;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -19,30 +16,40 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
+import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for
  * {@code FindCommand}.
  */
 public class FindCommandTest {
+    private static final NameContainsKeywordsPredicate emptyNamePredicate = new NameContainsKeywordsPredicate(
+                    Collections.emptyList());
+    private static final StudentContainsTutorialKeywordsPredicate emptyT = new StudentContainsTutorialKeywordsPredicate(
+                    Collections.emptyList());
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate = new NameContainsKeywordsPredicate(
+        NameContainsKeywordsPredicate firstNamePredicate = new NameContainsKeywordsPredicate(
                         Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate = new NameContainsKeywordsPredicate(
+        NameContainsKeywordsPredicate secondNamePredicate = new NameContainsKeywordsPredicate(
                         Collections.singletonList("second"));
+        StudentContainsTutorialKeywordsPredicate firstTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+                        Collections.singletonList("tutorial1"));
+        StudentContainsTutorialKeywordsPredicate secondTutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+                        Collections.singletonList("tutorial2"));
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        FindCommand findFirstCommand = new FindCommand(firstNamePredicate, firstTutorialPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondNamePredicate, secondTutorialPredicate);
 
         // same object -> ok
         assertEquals(findFirstCommand, findFirstCommand);
 
         // same values -> ok
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        FindCommand findFirstCommandCopy = new FindCommand(firstNamePredicate, firstTutorialPredicate);
         assertEquals(findFirstCommand, findFirstCommandCopy);
 
         // different types -> fail
@@ -58,35 +65,77 @@ public class FindCommandTest {
     @Test
     public void execute_zeroKeywords_noStudentFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        NameContainsKeywordsPredicate predicate = preparePredicate(" ");
-        FindCommand command = new FindCommand(predicate);
-        expectedModel.updateFilteredStudentList(predicate);
+        NameContainsKeywordsPredicate namePredicate = emptyNamePredicate;
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = emptyT;
+        FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
+        expectedModel.updateFilteredStudentList(namePredicate);
+        assertEquals(Collections.emptyList(), expectedModel.getFilteredStudentList());
+        expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
+        assertEquals(Collections.emptyList(), expectedModel.getFilteredStudentList());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredStudentList());
     }
 
     @Test
     public void execute_multipleKeywords_multipleStudentsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
-        FindCommand command = new FindCommand(predicate);
+        NameContainsKeywordsPredicate predicate = prepareNamePredicate("Kurz Elle Kunz");
+        FindCommand command = new FindCommand(predicate, null);
         expectedModel.updateFilteredStudentList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredStudentList());
+    }
+
+    @Test
+    public void executeEmptyNameOneTutorialMultipleStudentsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1");
+        FindCommand command = new FindCommand(null, tutorialPredicate);
+        expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeEmptyNameTwoTutorialsMultipleStudentsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1 CS2106-T37");
+        FindCommand command = new FindCommand(null, tutorialPredicate);
+        expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeNameAliceTutorialCS2103T23SingleStudentFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate namePredicate = prepareNamePredicate("Alice");
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1");
+        FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
+        expectedModel.updateFilteredStudentList(
+                        namePredicate.and(student -> student.getTutorials().stream().anyMatch(tutorialPredicate)));
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void toStringMethod() {
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
-        FindCommand findCommand = new FindCommand(predicate);
-        String expected = FindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
+        NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+                        Arrays.asList("tutorial1"));
+        FindCommand findCommand = new FindCommand(namePredicate, tutorialPredicate);
+        String expected = FindCommand.class.getCanonicalName() + "{namePredicate=" + namePredicate
+                        + ", tutorialPredicate=" + tutorialPredicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
     /**
      * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
      */
-    private NameContainsKeywordsPredicate preparePredicate(String userInput) {
+    private NameContainsKeywordsPredicate prepareNamePredicate(String userInput) {
         return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a
+     * {@code StudentContainsTutorialKeywordsPredicate}.
+     */
+    private StudentContainsTutorialKeywordsPredicate prepareTutorialPredicate(String userInput) {
+        return new StudentContainsTutorialKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }
