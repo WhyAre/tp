@@ -22,7 +22,7 @@ public class DeleteStudentFromTutorialCommand extends Command {
 
     public static final String COMMAND_WORD = "delete-student";
 
-    public static final String MESSAGE_USAGE = "Usage: tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX";
+    public static final String MESSAGE_USAGE = "Usage: tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...";
 
     public static final String MESSAGE_SUCCESS = "Students removed from tutorial!";
 
