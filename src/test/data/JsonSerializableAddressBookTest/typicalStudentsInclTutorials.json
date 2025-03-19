@@ -7,7 +7,7 @@
     "email" : "alice@example.com",
     "handle" : "@alice_pauline",
     "tutorials" : [ {
-      "name" : "Tutorial_1"
+      "name" : "CS2103-T1"
     } ]
   }, {
     "name" : "Benson Meier",
@@ -16,9 +16,9 @@
     "email" : "johnd@example.com",
     "handle" : "@benson_meier",
     "tutorials" : [ {
-      "name" : "Tutorial_1"
+      "name" : "CS2103-T1"
     }, {
-      "name" : "Tutorial-2"
+      "name" : "CS2106-T37"
     } ]
   }, {
     "name" : "Carl Kurz",
@@ -34,7 +34,7 @@
     "email" : "cornelia@example.com",
     "handle" : "@dannn_mayor",
     "tutorials" : [ {
-      "name" : "Tutorial_1"
+      "name" : "CS2103-T1"
     } ]
   }, {
     "name" : "Elle Meyer",
@@ -60,10 +60,10 @@
   } ],
   "tutorials": [
     {
-      "name": "Tutorial_1"
+      "name": "CS2103-T1"
     },
     {
-      "name": "Tutorial-2"
+      "name": "CS2106-T37"
     }
   ]
 }

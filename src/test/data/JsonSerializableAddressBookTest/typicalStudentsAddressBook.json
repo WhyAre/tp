@@ -6,20 +6,14 @@
     "phone" : "94351253",
     "email" : "alice@example.com",
     "handle" : "@alice_pauline",
-    "tutorials" : [ {
-      "name" : "CS2103-T1"
-    } ]
+    "tutorials" : [ ]
   }, {
     "name" : "Benson Meier",
     "id": "A0179034R",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "handle" : "@benson_meier",
-    "tutorials" : [ {
-      "name" : "CS2103-T2"
-    }, {
-      "name" : "CS2106-T45"
-    } ]
+    "tutorials" : [ ]
   }, {
     "name" : "Carl Kurz",
     "id": "A0388094Q",
@@ -33,9 +27,7 @@
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "handle" : "@dannn_mayor",
-    "tutorials" : [ {
-      "name" : "CS2103-T1"
-    } ]
+    "tutorials" : [ ]
   }, {
     "name" : "Elle Meyer",
     "id": "A0172925M",

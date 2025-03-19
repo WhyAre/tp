@@ -20,7 +20,7 @@ public class DeleteTutorialCommandTest {
 
     @Test
     public void execute_tutorialDeletedByModel_deleteSuccessful() throws Exception {
-        var t = new Tutorial("Tutorial-2");
+        var t = new Tutorial("CS2103-T1");
         CommandResult commandResult = new DeleteTutorialCommand(t).execute(modelStub);
         var tutorials = modelStub.getAddressBook().getTutorialList();
 
