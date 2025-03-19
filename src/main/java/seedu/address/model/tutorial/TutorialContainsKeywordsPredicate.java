@@ -1,6 +1,5 @@
 package seedu.address.model.tutorial;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 import java.util.List;
