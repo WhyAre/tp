@@ -91,7 +91,7 @@ public class Student {
      *            Set of valid tutorials
      */
     public void removeInvalidTutorials(Set<Tutorial> validTuts) {
-        this.tutorials.removeIf(t -> !validTuts.contains(t));
+        tutorials.removeIf(t -> !validTuts.contains(t));
     }
 
     /**
