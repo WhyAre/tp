@@ -24,7 +24,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueStudentList students;
     private final ObservableList<Tutorial> tutorials;
-    private final ObservableList<TutorialWithStudents> tutorialWithStudents;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -37,7 +36,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         students = new UniqueStudentList();
         tutorials = FXCollections.observableArrayList();
-        tutorialWithStudents = FXCollections.observableArrayList();
     }
 
     public AddressBook() {
