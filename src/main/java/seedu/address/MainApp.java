@@ -90,6 +90,10 @@ public class MainApp extends Application {
             logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
                             + " Will be starting with an empty AddressBook.");
             initialData = new AddressBook();
+        } catch (Exception e) {
+            logger.warning("An unexpected error occured while loading %s. Will be starting with an empty AddressBook."
+                            .formatted(storage.getAddressBookFilePath()));
+            initialData = new AddressBook();
         }
 
         return new ModelManager(initialData, userPrefs);

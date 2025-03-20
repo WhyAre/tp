@@ -81,11 +81,11 @@ public class TypicalStudents {
      */
     public static AddressBook getTypicalAddressBookInclTutorials() {
         AddressBook ab = new AddressBook();
-        for (Student student : getTypicalStudents()) {
-            ab.addStudent(student);
-        }
         for (var t : getTypicalTutorials()) {
             ab.addTutorial(t);
+        }
+        for (Student student : getTypicalStudents()) {
+            ab.addStudent(student);
         }
         return ab;
     }
@@ -95,6 +95,6 @@ public class TypicalStudents {
     }
 
     public static List<Tutorial> getTypicalTutorials() {
-        return List.of(new Tutorial("CS2103-T1"), new Tutorial("CS2106-T37"));
+        return List.of(new Tutorial("CS2103-T1"), new Tutorial("CS2106-T02"), new Tutorial("CS2106-T37"));
     }
 }
