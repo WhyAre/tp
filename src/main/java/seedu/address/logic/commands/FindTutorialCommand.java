@@ -29,10 +29,10 @@ public class FindTutorialCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredTutorialWithStudentsList(tutorialPredicate);
+        model.updateFilteredTutorialList(tutorialPredicate);
 
         return new CommandResult(String.format(Messages.MESSAGE_TUTORIALS_LISTED_OVERVIEW,
-                        model.getFilteredTutorialWithStudents().size()), NavigationMode.TUTORIAL);
+                        model.getFilteredTutorialList().size()), NavigationMode.TUTORIAL);
     }
 
     @Override
