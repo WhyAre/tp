@@ -16,15 +16,15 @@ import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
- * Adds students to a tutorial slot.
+ * Deletes students from a tutorial slot.
  */
-public class AddStudentToTutorialCommand extends Command {
+public class DeleteStudentFromTutorialCommand extends Command {
 
-    public static final String COMMAND_WORD = "add-student";
+    public static final String COMMAND_WORD = "delete-student";
 
-    public static final String MESSAGE_USAGE = "Usage: tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...";
+    public static final String MESSAGE_USAGE = "Usage: tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...";
 
-    public static final String MESSAGE_SUCCESS = "Students added to tutorial!";
+    public static final String MESSAGE_SUCCESS = "Students removed from tutorial!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
@@ -33,10 +33,10 @@ public class AddStudentToTutorialCommand extends Command {
     private final Tutorial tutorial;
 
     /**
-     * Creates an {@link AddStudentToTutorialCommand} to add the specified
+     * Creates an {@link DeleteStudentFromTutorialCommand} to add the specified
      * {@code Tutorial}
      */
-    public AddStudentToTutorialCommand(List<Index> indices, Tutorial tutorial) {
+    public DeleteStudentFromTutorialCommand(List<Index> indices, Tutorial tutorial) {
         requireNonNull(indices);
         requireNonNull(tutorial);
 
@@ -62,13 +62,13 @@ public class AddStudentToTutorialCommand extends Command {
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             Student editedStudent = studentToEdit.clone();
             Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-            tutorials.add(tutorial);
+            tutorials.remove(tutorial);
             editedStudent.setTutorials(tutorials);
 
             model.setStudent(studentToEdit, editedStudent);
         }
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.TUTORIAL);
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class AddStudentToTutorialCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddStudentToTutorialCommand otherAddCommand)) {
+        if (!(other instanceof DeleteStudentFromTutorialCommand otherAddCommand)) {
             return false;
         }
 

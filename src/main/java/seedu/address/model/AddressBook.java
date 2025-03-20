@@ -2,8 +2,11 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +14,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
@@ -20,6 +24,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueStudentList students;
     private final ObservableList<Tutorial> tutorials;
+    private final ObservableList<TutorialWithStudents> tutorialWithStudents;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -32,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         students = new UniqueStudentList();
         tutorials = FXCollections.observableArrayList();
+        tutorialWithStudents = FXCollections.observableArrayList();
     }
 
     public AddressBook() {
@@ -121,6 +127,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Deletes a tutorial from all students that were allocated to it
+     */
+    public void deleteTutorialFromStudents(Tutorial tutorial) {
+        List<Student> currentList = this.getStudentList();
+
+        for (Student student : currentList) {
+            if (!student.hasTutorial(tutorial)) {
+                continue;
+            }
+            Student editedstudent = student.clone();
+            Set<Tutorial> newTutorials = new HashSet<>(editedstudent.getTutorials());
+            newTutorials.remove(tutorial);
+            editedstudent.setTutorials(newTutorials);
+
+            this.setStudent(student, editedstudent);
+        }
+    }
+
+    /**
      * Checks whether tutorial exists in the address book
      */
     public boolean hasTutorial(Tutorial tutorial) {
@@ -173,5 +198,30 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return students.hashCode();
+    }
+
+    /**
+     * Returns an observable list of {@code TutorialWithStudents}, each pairing a
+     * tutorial with the students enrolled in that tutorial.
+     *
+     * @return An observable list of {@code TutorialWithStudents}.
+     */
+    public ObservableList<TutorialWithStudents> getTutorialWithStudentsList() {
+        return tutorials.stream().map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    }
+
+    /**
+     * Retrieves the list of students enrolled in a specific tutorial. This method
+     * is a placeholder and should be implemented to return the actual students
+     * enrolled in the given tutorial.
+     *
+     * @param tutorial
+     *            The tutorial for which the enrolled students are to be retrieved.
+     * @return A list of students enrolled in the given tutorial.
+     */
+    private List<Student> getStudentsInTutorial(Tutorial tutorial) {
+        return this.getStudentList().stream().filter(student -> student.getTutorials().contains(tutorial))
+                        .collect(Collectors.toList());
     }
 }
