@@ -9,6 +9,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddStudentToTutorialCommand;
 import seedu.address.logic.commands.AddTutorialCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteStudentFromTutorialCommand;
 import seedu.address.logic.commands.DeleteTutorialCommand;
 import seedu.address.logic.commands.FindTutorialCommand;
 import seedu.address.logic.commands.ListTutorialCommand;
@@ -33,6 +34,7 @@ public class TutorialParser implements Parser<Command> {
 
         // Edit tutorials.
         subcmds.put(AddStudentToTutorialCommand.COMMAND_WORD, new AddStudentToTutorialCommandParser());
+        subcmds.put(DeleteStudentFromTutorialCommand.COMMAND_WORD, new DeleteStudentFromTutorialCommandParser());
 
         usage = """
                         Usage: tutorial COMMAND
