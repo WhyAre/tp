@@ -25,7 +25,6 @@ public class StudentListPanel extends UiPart<Region> {
      */
     public StudentListPanel(ObservableList<Student> studentList) {
         super(FXML);
-        System.out.println(studentList == null);
         studentListView.setItems(studentList);
         studentListView.setCellFactory(listView -> new StudentListViewCell());
     }
