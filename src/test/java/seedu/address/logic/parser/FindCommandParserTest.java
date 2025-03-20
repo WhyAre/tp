@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
+import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -24,11 +25,17 @@ public class FindCommandParserTest {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand = new FindCommand(
-                        new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+                        new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")), null);
         assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+
+        // mixed name and tutorial keywords
+        FindCommand expectedMixedFindCommand = new FindCommand(
+                        new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")),
+                        new StudentContainsTutorialKeywordsPredicate(Arrays.asList("t1", "t2")));
+        assertParseSuccess(parser, "Alice Bob t/t1 t/t2", expectedMixedFindCommand);
     }
 
 }
