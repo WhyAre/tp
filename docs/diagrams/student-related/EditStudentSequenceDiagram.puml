@@ -1,0 +1,202 @@
+@startuml
+!include ../style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant "logic:LogicManager" as LogicManager LOGIC_COLOR
+participant "addressBookParser:AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
+participant "editStudentDescriptor:EditStudentDescriptor" as EditStudentDescriptor LOGIC_COLOR
+participant "command:EditCommand" as EditCommand LOGIC_COLOR
+participant "student:Student" as Student LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "model:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("edit ...")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("edit ...")
+activate AddressBookParser
+
+create EditCommandParser
+AddressBookParser -> EditCommandParser : EditCommandParser()
+activate EditCommandParser
+
+EditCommandParser --> AddressBookParser
+deactivate EditCommandParser
+
+AddressBookParser -> EditCommandParser : parse("<parameters>")
+activate EditCommandParser
+
+create EditStudentDescriptor
+EditCommandParser -> EditStudentDescriptor : EditStudentDescriptor()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> EditStudentDescriptor : setName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> EditStudentDescriptor : setStudentId()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> EditStudentDescriptor : setPhone()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> EditStudentDescriptor : setEmail()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> EditStudentDescriptor : setHandle()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> EditStudentDescriptor : setTutorials()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+create EditCommand
+EditCommandParser -> EditCommand
+activate EditCommand
+
+EditCommand --> EditCommandParser : command
+deactivate EditCommand
+
+EditCommandParser --> AddressBookParser : command
+deactivate EditCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+EditCommandParser -[hidden]-> AddressBookParser
+destroy EditCommandParser
+
+AddressBookParser --> LogicManager : command
+deactivate AddressBookParser
+
+LogicManager -> EditCommand : execute(model)
+activate EditCommand
+
+EditCommand -> Model : getFilteredStudentList()
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> EditCommand : createEditedStudent(studentToEdit, editStudentDescriptor)
+activate EditCommand
+
+EditCommand -> EditStudentDescriptor : getName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> EditStudentDescriptor : getName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> EditStudentDescriptor : getName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> EditStudentDescriptor : getName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> EditStudentDescriptor : getName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> EditStudentDescriptor : getName()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+create Student
+EditCommand -> Student : Student()
+activate Student
+
+Student --> EditCommand
+deactivate Student
+
+EditCommand --> EditCommand : student
+deactivate EditCommand
+
+EditCommand -> Model : hasStudent()
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Student : getTutorials()
+activate Student
+
+Student --> EditCommand
+deactivate Student
+
+loop for each tutorial of student to edit
+    EditCommand -> Model : hasTutorial(tutorial)
+    activate Model
+
+    Model --> EditCommand
+    deactivate Model
+end
+
+EditCommand -> Student : setTutorials()
+activate Student
+
+Student --> EditCommand
+deactivate Student
+
+EditCommand -> Model : setStudent(studentToEdit, editedStudent)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+EditCommand -> Model : updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+create CommandResult
+EditCommand -> CommandResult : CommandResult()
+activate CommandResult
+
+CommandResult --> EditCommand
+deactivate CommandResult
+
+EditCommand --> LogicManager : commandResult
+deactivate EditCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
