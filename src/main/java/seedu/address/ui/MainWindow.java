@@ -169,7 +169,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     private void handleMode(NavigationMode mode) {
         switch (mode) {
-        case PERSON:
+        case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
             break;
