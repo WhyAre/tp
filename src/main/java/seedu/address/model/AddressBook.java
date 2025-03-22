@@ -160,7 +160,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setTutorials(List<Tutorial> tutorials) {
         requireNonNull(tutorials);
-
+        this.tutorials.clear();
         tutorials.stream().filter(Predicate.not(this::hasTutorial)).forEach(this::addTutorial);
     }
 
