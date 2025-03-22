@@ -115,7 +115,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 In addition to having simple single-word command,
-our app supports commands with multiple words (e.g. `tutorial add`, `tutorial delete`).
+our app supports commands with subcommands (e.g. `tutorial add`, `tutorial delete`).
 Our implementation is similar to that of a Recursive Descent Parser.
 
 Here is a (partial) diagram showing how the recursive parsing works
