@@ -127,11 +127,11 @@ How the parsing works:
 
 1. The `AddressBookParser` will match the first word,
    and match against a `Command` object, or another `Parser` object
-  - The algorithm terminates if it maps to a `Command` object.
+    - The algorithm terminates if it maps to a `Command` object.
 1. If it maps to a `Parser` object,
    then it will call `Parser#parse` of that object
-  - The `parse` method will map the next word to either a `Command` or `Parser` object.
-  - The process repeats recursively until it eventually resolves to a `Command` object.
+    - The `parse` method will map the next word to either a `Command` or `Parser` object.
+    - The process repeats recursively until it eventually resolves to a `Command` object.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
