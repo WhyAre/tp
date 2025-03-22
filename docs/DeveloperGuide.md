@@ -118,7 +118,8 @@ In addition to having simple single-word command,
 our app supports commands with subcommands (e.g. `tutorial add`, `tutorial delete`).
 Our implementation is similar to that of a Recursive Descent Parser.
 
-Here is a (partial) diagram showing how the recursive parsing works
+Here is a (partial) diagram showing how the recursive parsing works,
+using the `TutorialParser` as an example
 (classes not involved are omitted):
 
 <img src="images/TutorialClassDiagram.png" width="600"/>
