@@ -115,6 +115,17 @@ public class UniqueListTest {
     }
 
     @Test
+    public void set_newEntityHasNonUniqueIdentity1_throwsIllegalStateException() {
+        uniqueStudentList.add(ALICE);
+        uniqueStudentList.add(BOB);
+
+        var fakeAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2).build();
+
+        assertThrows(IllegalStateException.class, (
+        ) -> uniqueStudentList.set(ALICE, fakeAlice));
+    }
+
+    @Test
     public void remove_null_returnFalse() {
         assertFalse(uniqueStudentList.remove(null));
     }
