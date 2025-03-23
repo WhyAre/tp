@@ -103,7 +103,10 @@ public class Student {
             return true;
         }
 
-        return otherStudent != null && otherStudent.getName().equals(getName());
+        return otherStudent != null && (otherStudent.getName().equals(getName())
+                        || otherStudent.getStudentId().equals(getStudentId())
+                        || otherStudent.getPhone().equals(getPhone()) || otherStudent.getEmail().equals(getEmail())
+                        || otherStudent.getHandle().equals(getHandle()));
     }
 
     /**
