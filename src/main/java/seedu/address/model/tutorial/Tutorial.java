@@ -1,9 +1,11 @@
 package seedu.address.model.tutorial;
 
+import seedu.address.model.util.Identifiable;
+
 /**
  * Represents a tutorial
  */
-public record Tutorial(String name) {
+public record Tutorial(String name) implements Identifiable<Tutorial> {
 
     /**
      * Checks whether the given name is valid
@@ -12,6 +14,15 @@ public record Tutorial(String name) {
         final var pattern = "[a-zA-Z0-9_-]+";
 
         return name.matches(pattern);
+    }
+
+    @Override
+    public boolean hasSameIdentity(Tutorial other) {
+        if (other == null) {
+            return false;
+        }
+
+        return this.name.equals(other.name);
     }
 
     @Override

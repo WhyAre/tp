@@ -9,12 +9,13 @@ import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.util.Identifiable;
 
 /**
  * Represents a Student in the address book. Guarantees: details are present and
  * not null, field values are validated, immutable.
  */
-public class Student {
+public class Student implements Identifiable<Student> {
 
     // Identity fields
     private final Name name;
@@ -149,4 +150,8 @@ public class Student {
                         .add("email", email).add("handle", handle).add("tutorials", tutorials).toString();
     }
 
+    @Override
+    public boolean hasSameIdentity(Student other) {
+        return isSamePerson(other);
+    }
 }
