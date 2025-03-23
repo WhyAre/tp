@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.util.UniqueList;
@@ -22,7 +21,7 @@ import seedu.address.model.util.UniqueList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueStudentList students;
+    private final UniqueList<Student> students;
     private final UniqueList<Tutorial> tutorials;
 
     /*
@@ -34,7 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * ways to avoid duplication among constructors.
      */
     {
-        students = new UniqueStudentList();
+        students = new UniqueList<>();
         tutorials = new UniqueList<>();
     }
 
@@ -56,7 +55,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code students} must not contain duplicate students.
      */
     public void setStudents(List<Student> students) {
-        this.students.setStudents(students);
+        this.students.setAll(students);
     }
 
     /**
@@ -77,7 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasStudent(Student student) {
         requireNonNull(student);
-        return students.contains(student);
+        return students.containsIdentity(student);
     }
 
     /**
@@ -100,7 +99,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setStudent(Student target, Student editedstudent) {
         requireNonNull(editedstudent);
 
-        students.setStudent(target, editedstudent);
+        students.set(target, editedstudent);
     }
 
     /**
@@ -151,7 +150,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasTutorial(Tutorial tutorial) {
         requireNonNull(tutorial);
-        return tutorials.contains(tutorial);
+        return tutorials.containsIdentity(tutorial);
     }
 
     /**
