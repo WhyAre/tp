@@ -3,6 +3,7 @@ package seedu.address.model.student;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -83,6 +84,17 @@ public class Student {
     }
 
     /**
+     * Removes invalid tutorials from the student if it doesn't exist in
+     * {@code validTuts}
+     *
+     * @param validTuts
+     *            Set of valid tutorials
+     */
+    public void removeInvalidTutorials(Set<Tutorial> validTuts) {
+        tutorials.removeIf(t -> !validTuts.contains(t));
+    }
+
+    /**
      * Returns true if both students have the same name. This defines a weaker
      * notion of equality between two students.
      */
@@ -91,14 +103,17 @@ public class Student {
             return true;
         }
 
-        return otherStudent != null && otherStudent.getName().equals(getName());
+        return otherStudent != null && (otherStudent.getName().equals(getName())
+                        || otherStudent.getStudentId().equals(getStudentId())
+                        || otherStudent.getPhone().equals(getPhone()) || otherStudent.getEmail().equals(getEmail())
+                        || otherStudent.getHandle().equals(getHandle()));
     }
 
     /**
      * Returns a clone of the current student.
      */
     public Student clone() {
-        return new Student(name, studentId, phone, email, handle, tutorials);
+        return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials));
     }
 
     /**
@@ -119,7 +134,7 @@ public class Student {
         Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
                         && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle);
+                        && handle.equals(otherStudent.handle) && tutorials.equals(otherStudent.tutorials);
     }
 
     @Override

@@ -24,7 +24,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueStudentList students;
     private final ObservableList<Tutorial> tutorials;
-    private final ObservableList<TutorialWithStudents> tutorialWithStudents;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -37,7 +36,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         students = new UniqueStudentList();
         tutorials = FXCollections.observableArrayList();
-        tutorialWithStudents = FXCollections.observableArrayList();
     }
 
     public AddressBook() {
@@ -87,7 +85,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * address book.
      */
     public void addStudent(Student p) {
-        students.add(p);
+        // Check that tutorial slots exists
+        var student = p.clone();
+        student.removeInvalidTutorials(new HashSet<>(tutorials));
+        students.add(student);
     }
 
     /**
@@ -159,7 +160,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setTutorials(List<Tutorial> tutorials) {
         requireNonNull(tutorials);
-
+        this.tutorials.clear();
         tutorials.stream().filter(Predicate.not(this::hasTutorial)).forEach(this::addTutorial);
     }
 

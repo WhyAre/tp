@@ -149,6 +149,20 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
+### Student functionality
+
+The sequence diagram below illustrates the interactions within the `Logic` and `Model` components,
+for executing the 3 key commands for functionalities related to students in TAskbook.
+
+#### `add` Command
+![Interactions Inside the Logic and Model Component for the `add` Command](images/student-related/AddStudentSequenceDiagram.svg)
+
+#### `edit` Command
+![Interactions Inside the Logic and Model Component for the `edit` Command](images/student-related/EditStudentSequenceDiagram.svg)
+
+#### `delete` Command
+![Interactions Inside the Logic and Model Component for the `delete` Command](images/student-related/DeleteStudentSequenceDiagram.svg)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Implementation**

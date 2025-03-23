@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalStudents.getTypicalAddressBookInclTutorials;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,8 +28,8 @@ public class FindCommandTest {
     private static final StudentContainsTutorialKeywordsPredicate emptyT = new StudentContainsTutorialKeywordsPredicate(
                     Collections.emptyList());
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBookInclTutorials(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalAddressBookInclTutorials(), new UserPrefs());
 
     @Test
     public void equals() {

@@ -47,11 +47,11 @@ public class SampleDataUtil {
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
-        for (Student sampleStudent : getSampleStudents()) {
-            sampleAb.addStudent(sampleStudent);
-        }
         for (Tutorial sampleTutorial : getSampleTutorials()) {
             sampleAb.addTutorial(sampleTutorial);
+        }
+        for (Student sampleStudent : getSampleStudents()) {
+            sampleAb.addStudent(sampleStudent);
         }
         return sampleAb;
     }

@@ -34,7 +34,7 @@
     "email" : "cornelia@example.com",
     "handle" : "@dannn_mayor",
     "tutorials" : [ {
-      "name" : "CS2103-T1"
+      "name" : "CS2106-T37"
     } ]
   }, {
     "name" : "Elle Meyer",
@@ -49,7 +49,9 @@
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "handle" : "@kunz_fiona",
-    "tutorials" : [ ]
+    "tutorials" : [ {
+      "name": "CS2106-T02"
+    } ]
   }, {
     "name" : "George Best",
     "id": "A0443446N",
@@ -61,6 +63,9 @@
   "tutorials": [
     {
       "name": "CS2103-T1"
+    },
+    {
+      "name": "CS2106-T02"
     },
     {
       "name": "CS2106-T37"
