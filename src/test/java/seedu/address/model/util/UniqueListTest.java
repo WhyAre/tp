@@ -43,7 +43,7 @@ public class UniqueListTest {
     public void containsIdentity_entityWithSameIdentityFieldsInList_returnsTrue() {
         uniqueStudentList.add(ALICE);
         Student editedAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2)
-            .build();
+                        .build();
         assertTrue(uniqueStudentList.containsIdentity(editedAlice));
     }
 
@@ -90,7 +90,7 @@ public class UniqueListTest {
     public void set_newEntityHasSameIdentity_success() {
         uniqueStudentList.add(ALICE);
         Student editedAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2)
-            .build();
+                        .build();
         uniqueStudentList.set(ALICE, editedAlice);
         var expectedUniqueStudentList = new UniqueList<Student>();
         expectedUniqueStudentList.add(editedAlice);
