@@ -23,62 +23,62 @@ public class UniqueListTest {
     private final UniqueList<Student> uniqueStudentList = new UniqueList<>();
 
     @Test
-    public void isUnique_nullStudent_throwsNullPointerException() {
+    public void containsIdentity_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
         ) -> uniqueStudentList.containsIdentity(null));
     }
 
     @Test
-    public void isUnique_studentNotInList_returnsFalse() {
+    public void containsIdentity_entityNotInList_returnsFalse() {
         assertFalse(uniqueStudentList.containsIdentity(ALICE));
     }
 
     @Test
-    public void isUnique_studentInList_returnsTrue() {
+    public void containsIdentity_entityInList_returnsTrue() {
         uniqueStudentList.add(ALICE);
         assertTrue(uniqueStudentList.containsIdentity(ALICE));
     }
 
     @Test
-    public void isUnique_studentWithSameIdentityFieldsInList_returnsTrue() {
+    public void containsIdentity_entityWithSameIdentityFieldsInList_returnsTrue() {
         uniqueStudentList.add(ALICE);
         Student editedAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2)
-                        .build();
+            .build();
         assertTrue(uniqueStudentList.containsIdentity(editedAlice));
     }
 
     @Test
-    public void add_nullStudent_throwsNullPointerException() {
+    public void add_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
         ) -> uniqueStudentList.add(null));
     }
 
     @Test
-    public void add_duplicateStudent_throwsDuplicateStudentException() {
+    public void add_duplicateEntity_returnFalse() {
         uniqueStudentList.add(ALICE);
         assertFalse(uniqueStudentList.add(ALICE));
     }
 
     @Test
-    public void setStudent_nullTargetStudent_throwsNullPointerException() {
+    public void set_nullOldItem_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
         ) -> uniqueStudentList.set(null, ALICE));
     }
 
     @Test
-    public void setStudent_nullEditedStudent_throwsNullPointerException() {
+    public void set_nullNewItem_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
         ) -> uniqueStudentList.set(ALICE, null));
     }
 
     @Test
-    public void setStudent_targetStudentNotInList_throwsStudentNotFoundException() {
+    public void set_oldItemNotInList_throwsIllegalStateException() {
         assertThrows(IllegalStateException.class, (
         ) -> uniqueStudentList.set(ALICE, ALICE));
     }
 
     @Test
-    public void setStudent_editedStudentIsSameStudent_success() {
+    public void set_newEntityIsSameEntity_success() {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.set(ALICE, ALICE);
         var expectedUniqueStudentList = new UniqueList<Student>();
@@ -87,10 +87,10 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setStudent_editedStudentHasSameIdentity_success() {
+    public void set_newEntityHasSameIdentity_success() {
         uniqueStudentList.add(ALICE);
         Student editedAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2)
-                        .build();
+            .build();
         uniqueStudentList.set(ALICE, editedAlice);
         var expectedUniqueStudentList = new UniqueList<Student>();
         expectedUniqueStudentList.add(editedAlice);
@@ -98,7 +98,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setStudent_editedStudentHasDifferentIdentity_success() {
+    public void set_newEntityHasDifferentIdentity_success() {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.set(ALICE, BOB);
         var expectedUniqueStudentList = new UniqueList<Student>();
@@ -107,7 +107,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setStudent_editedStudentHasNonUniqueIdentity_throwsDuplicateStudentException() {
+    public void set_newEntityHasNonUniqueIdentity_throwsIllegalStateException() {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.add(BOB);
         assertThrows(IllegalStateException.class, (
@@ -115,17 +115,17 @@ public class UniqueListTest {
     }
 
     @Test
-    public void remove_nullStudent_throwsNullPointerException() {
+    public void remove_null_returnFalse() {
         assertFalse(uniqueStudentList.remove(null));
     }
 
     @Test
-    public void remove_studentDoesNotExist_throwsStudentNotFoundException() {
+    public void remove_entityDoesNotExist_returnFalse() {
         assertFalse(uniqueStudentList.remove(ALICE));
     }
 
     @Test
-    public void remove_existingStudent_removesStudent() {
+    public void remove_existingEntity_success() {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.remove(ALICE);
         var expectedUniqueStudentList = new UniqueList<Student>();
@@ -133,13 +133,13 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setStudents_nullUniqueStudentList_throwsNullPointerException() {
+    public void setAll_nullEntityList_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
-        ) -> uniqueStudentList.setAll((UniqueList<Student>) null));
+        ) -> uniqueStudentList.setAll(null));
     }
 
     @Test
-    public void setStudents_uniqueStudentList_replacesOwnListWithProvidedUniqueStudentList() {
+    public void setAll_uniqueEntityList_replacesOwnListWithProvidedList() {
         uniqueStudentList.add(ALICE);
         var expectedUniqueStudentList = new UniqueList<Student>();
         expectedUniqueStudentList.add(BOB);
@@ -148,13 +148,13 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setStudents_nullList_throwsNullPointerException() {
+    public void setAll_nullList_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
         ) -> uniqueStudentList.setAll((List<Student>) null));
     }
 
     @Test
-    public void setStudents_list_replacesOwnListWithProvidedList() {
+    public void setAll_list_replacesOwnListWithProvidedList() {
         uniqueStudentList.add(ALICE);
         List<Student> studentList = Collections.singletonList(BOB);
         uniqueStudentList.setAll(studentList);
@@ -164,7 +164,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setStudents_listWithDuplicateStudents_throwsDuplicateStudentException() {
+    public void setAll_listWithDuplicateEntities_throwsIllegalStateException() {
         List<Student> listWithDuplicateStudents = Arrays.asList(ALICE, ALICE);
         assertThrows(IllegalStateException.class, (
         ) -> uniqueStudentList.setAll(listWithDuplicateStudents));
