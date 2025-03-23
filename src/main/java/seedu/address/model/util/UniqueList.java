@@ -35,14 +35,13 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
      * Checks whether the list contains the entity. This check uses
      * {@link Identifiable#hasSameIdentity}
      */
-    public boolean containsIdentity(T toCheck) {
-        requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::hasSameIdentity);
-    }
-
     public boolean containsIdentity(T toCheck, T ignore) {
         requireNonNull(toCheck);
         return internalList.stream().filter(obj -> !obj.equals(ignore)).anyMatch(toCheck::hasSameIdentity);
+    }
+
+    public boolean containsIdentity(T toCheck) {
+        return containsIdentity(toCheck, null);
     }
 
     /**
