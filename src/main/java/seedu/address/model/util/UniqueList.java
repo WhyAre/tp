@@ -35,9 +35,9 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
      * Checks whether the list contains the object based on
      * {@link Identifiable#hasSameIdentity}
      */
-    public boolean isUnique(T toCheck) {
+    public boolean containsIdentity(T toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().noneMatch(toCheck::hasSameIdentity);
+        return internalList.stream().anyMatch(toCheck::hasSameIdentity);
     }
 
     public void setAll(UniqueList<T> replacement) {
@@ -178,7 +178,7 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
             throw new IllegalStateException("Item not exists");
         }
 
-        if (!oldItem.hasSameIdentity(newItem) && !isUnique(newItem)) {
+        if (!oldItem.hasSameIdentity(newItem) && containsIdentity(newItem)) {
             throw new IllegalStateException("Item already exists");
         }
 
@@ -196,7 +196,7 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
     @Override
     public boolean add(T toAdd) {
         requireNonNull(toAdd);
-        if (!isUnique(toAdd)) {
+        if (containsIdentity(toAdd)) {
             return false;
         }
         return internalList.add(toAdd);

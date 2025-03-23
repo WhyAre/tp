@@ -25,18 +25,18 @@ public class UniqueListTest {
     @Test
     public void isUnique_nullStudent_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
-        ) -> uniqueStudentList.isUnique(null));
+        ) -> uniqueStudentList.containsIdentity(null));
     }
 
     @Test
     public void isUnique_studentNotInList_returnsFalse() {
-        assertTrue(uniqueStudentList.isUnique(ALICE));
+        assertFalse(uniqueStudentList.containsIdentity(ALICE));
     }
 
     @Test
     public void isUnique_studentInList_returnsTrue() {
         uniqueStudentList.add(ALICE);
-        assertFalse(uniqueStudentList.isUnique(ALICE));
+        assertTrue(uniqueStudentList.containsIdentity(ALICE));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class UniqueListTest {
         uniqueStudentList.add(ALICE);
         Student editedAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2)
                         .build();
-        assertFalse(uniqueStudentList.isUnique(editedAlice));
+        assertTrue(uniqueStudentList.containsIdentity(editedAlice));
     }
 
     @Test
