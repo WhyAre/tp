@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
@@ -15,6 +14,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.util.UniqueList;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
@@ -23,7 +23,7 @@ import seedu.address.model.tutorial.TutorialWithStudents;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueStudentList students;
-    private final ObservableList<Tutorial> tutorials;
+    private final UniqueList<Tutorial> tutorials;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -35,7 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         students = new UniqueStudentList();
-        tutorials = FXCollections.observableArrayList();
+        tutorials = new UniqueList<>();
     }
 
     public AddressBook() {
@@ -160,11 +160,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setTutorials(List<Tutorial> tutorials) {
         requireNonNull(tutorials);
-        this.tutorials.clear();
-        tutorials.stream().filter(Predicate.not(this::hasTutorial)).forEach(this::addTutorial);
+        this.tutorials.setAll(tutorials);
     }
 
-    //// util methods
+    /// / util methods
 
     @Override
     public String toString() {
@@ -178,7 +177,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<Tutorial> getTutorialList() {
-        return FXCollections.unmodifiableObservableList(tutorials);
+        return tutorials.asUnmodifiableObservableList();
     }
 
     @Override
