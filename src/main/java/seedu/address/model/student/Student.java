@@ -9,7 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.util.Identifiable;
+import seedu.address.model.uniquelist.Identifiable;
 
 /**
  * Represents a Student in the address book. Guarantees: details are present and

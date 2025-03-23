@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.student.Student;
+import seedu.address.model.uniquelist.UniqueList;
 import seedu.address.testutil.StudentBuilder;
 
 public class UniqueListTest {

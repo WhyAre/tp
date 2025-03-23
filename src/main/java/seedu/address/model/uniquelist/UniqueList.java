@@ -1,4 +1,4 @@
-package seedu.address.model.util;
+package seedu.address.model.uniquelist;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -51,7 +51,7 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
     public void setAll(List<T> items) {
         requireAllNonNull(items);
         if (!areItemsUnique(items)) {
-            throw new IllegalStateException("Students list contains duplicate students");
+            throw new IllegalStateException();
         }
 
         internalList.setAll(items);
@@ -179,11 +179,11 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
 
         int index = internalList.indexOf(oldItem);
         if (index == -1) {
-            throw new IllegalStateException("Item not exists");
+            throw new IllegalStateException();
         }
 
         if (containsIdentity(newItem, oldItem)) {
-            throw new IllegalStateException("Item already exists");
+            throw new IllegalStateException();
         }
 
         internalList.set(index, newItem);

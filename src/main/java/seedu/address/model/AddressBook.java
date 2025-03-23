@@ -13,7 +13,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
-import seedu.address.model.util.UniqueList;
+import seedu.address.model.uniquelist.UniqueList;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by

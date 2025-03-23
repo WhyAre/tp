@@ -1,6 +1,6 @@
 package seedu.address.model.tutorial;
 
-import seedu.address.model.util.Identifiable;
+import seedu.address.model.uniquelist.Identifiable;
 
 /**
  * Represents a tutorial
