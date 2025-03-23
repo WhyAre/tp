@@ -41,6 +41,7 @@ skinparam Package {
 
 skinparam Class {
     FontColor #FFFFFF
+    AttributeFontColor #FFFFFF
     FontSize 15
     BorderThickness 1
     BorderColor #FFFFFF
@@ -75,5 +76,5 @@ skinparam DefaultTextAlignment center
 skinparam packageStyle Rectangle
 
 hide footbox
-hide members
+hide empty members
 hide circle
