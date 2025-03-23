@@ -13,10 +13,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Wrapper around a list of {@link Identifiable} List cannot contain duplicate,
+ * Wrapper around a list of {@link Identifiable}. List cannot contain duplicate,
  * or null.
  * <p>
- * Duplicate detection checked done by {@link Identifiable#hasSameIdentity}
+ * Duplicate detection checked by {@link Identifiable#hasSameIdentity}
  */
 public class UniqueList<T extends Identifiable<T>> implements List<T> {
 
@@ -24,15 +24,15 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
     private final ObservableList<T> internalUnmodifiableList = FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if {@code items} contains only unique students.
+     * Returns true if {@code items} contains only unique entities.
      */
     private boolean areItemsUnique(List<T> items) {
-        return IntStream.range(0, items.size()).allMatch(i -> IntStream.range(i + 1, items.size())
-                        .noneMatch(j -> items.get(i).hasSameIdentity(items.get(j))));
+        return IntStream.range(0, items.size()).noneMatch(i -> IntStream.range(i + 1, items.size())
+                        .anyMatch(j -> items.get(i).hasSameIdentity(items.get(j))));
     }
 
     /**
-     * Checks whether the list contains the object based on
+     * Checks whether the list contains the entity. This check uses
      * {@link Identifiable#hasSameIdentity}
      */
     public boolean containsIdentity(T toCheck) {
@@ -40,13 +40,9 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
         return internalList.stream().anyMatch(toCheck::hasSameIdentity);
     }
 
-    public void setAll(UniqueList<T> replacement) {
-        setAll(replacement.internalList);
-    }
-
     /**
-     * Replaces the contents of this list with {@code students}. {@code students}
-     * must not contain duplicate students.
+     * Replaces the contents of this list with {@code items}. {@code items} must not
+     * contain duplicates
      */
     public void setAll(List<T> items) {
         requireAllNonNull(items);
@@ -57,6 +53,10 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
         internalList.setAll(items);
     }
 
+    public void setAll(UniqueList<T> replacement) {
+        setAll(replacement.internalList);
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -65,7 +65,7 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
     }
 
     /**
-     * Removes object from the list
+     * Removes entity from the list
      */
     public boolean remove(T toRemove) {
         return internalList.remove(toRemove);
