@@ -12,7 +12,7 @@ import seedu.address.model.NavigationMode;
  */
 public class CommandResult {
 
-    public static final NavigationMode DEFAULT_RESULTING_MODE = NavigationMode.PERSON;
+    public static final NavigationMode DEFAULT_RESULTING_MODE = NavigationMode.STUDENT;
 
     private final String feedbackToUser;
 
