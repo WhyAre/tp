@@ -71,7 +71,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             setStudents(newData.getStudentList());
             setTutorials(newData.getTutorialList());
         } catch (DuplicateItemException e) {
-            // Since it's coming from an address book, there errors shouldn't be thrown
+            // Since it's coming from an address book, these errors shouldn't be thrown
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
         }
     }
