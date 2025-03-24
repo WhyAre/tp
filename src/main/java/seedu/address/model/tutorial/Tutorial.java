@@ -8,6 +8,18 @@ import seedu.address.model.uniquelist.Identifiable;
 public record Tutorial(String name) implements Identifiable<Tutorial> {
 
     /**
+     * Creates a new Tutorial object
+     *
+     * @param name
+     *            name of the tutorial
+     */
+    public Tutorial {
+        if (!isValidName(name)) {
+            throw new IllegalArgumentException("Name cannot be empty!");
+        }
+    }
+
+    /**
      * Checks whether the given name is valid
      */
     public static boolean isValidName(String name) {
