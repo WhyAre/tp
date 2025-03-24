@@ -68,7 +68,7 @@ public class AddStudentToTutorialCommand extends Command {
             model.setStudent(studentToEdit, editedStudent);
         }
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.TUTORIAL);
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 
     @Override

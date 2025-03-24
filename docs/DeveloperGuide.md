@@ -114,10 +114,30 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+In addition to having simple single-word command,
+our app supports commands with subcommands (e.g. `tutorial add`, `tutorial delete`).
+Our implementation is similar to that of a Recursive Descent Parser.
+
+Here is a (partial) diagram showing how the recursive parsing works,
+using the `TutorialParser` as an example
+(classes not involved are omitted):
+
+<img src="images/TutorialClassDiagram.png" width="600"/>
+
+How the parsing works:
+
+1. The `AddressBookParser` will match the first word,
+   and match against a `Command` object, or another `Parser` object
+    - The algorithm terminates if it maps to a `Command` object.
+1. If it maps to a `Parser` object,
+   then it will call `Parser#parse` of that object
+    - The `parse` method will map the next word to either a `Command` or `Parser` object.
+    - The process repeats recursively until it eventually resolves to a `Command` object.
+
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.svg" width="450" />
 
 
 The `Model` component,
@@ -132,7 +152,6 @@ The `Model` component,
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
 </div>
-
 
 ### Storage component
 

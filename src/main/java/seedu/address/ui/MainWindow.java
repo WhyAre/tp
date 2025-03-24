@@ -169,7 +169,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     private void handleMode(NavigationMode mode) {
         switch (mode) {
-        case PERSON:
+        case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
             break;
@@ -243,6 +243,10 @@ public class MainWindow extends UiPart<Stage> {
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
+            resultDisplay.setFeedbackToUser(e.getMessage());
+            throw e;
+        } catch (RuntimeException e) {
+            logger.info("An unexpected error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
