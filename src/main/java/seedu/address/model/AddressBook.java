@@ -5,16 +5,15 @@ import static java.util.Objects.requireNonNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.UniqueList;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
@@ -22,8 +21,8 @@ import seedu.address.model.tutorial.TutorialWithStudents;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueStudentList students;
-    private final ObservableList<Tutorial> tutorials;
+    private final UniqueList<Student> students;
+    private final UniqueList<Tutorial> tutorials;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -34,8 +33,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * ways to avoid duplication among constructors.
      */
     {
-        students = new UniqueStudentList();
-        tutorials = FXCollections.observableArrayList();
+        students = new UniqueList<>();
+        tutorials = new UniqueList<>();
     }
 
     public AddressBook() {
@@ -56,7 +55,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code students} must not contain duplicate students.
      */
     public void setStudents(List<Student> students) {
-        this.students.setStudents(students);
+        this.students.setAll(students);
     }
 
     /**
@@ -77,7 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasStudent(Student student) {
         requireNonNull(student);
-        return students.contains(student);
+        return students.containsIdentity(student);
     }
 
     /**
@@ -100,7 +99,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setStudent(Student target, Student editedstudent) {
         requireNonNull(editedstudent);
 
-        students.setStudent(target, editedstudent);
+        students.set(target, editedstudent);
     }
 
     /**
@@ -151,7 +150,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasTutorial(Tutorial tutorial) {
         requireNonNull(tutorial);
-        return tutorials.contains(tutorial);
+        return tutorials.containsIdentity(tutorial);
     }
 
     /**
@@ -160,11 +159,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setTutorials(List<Tutorial> tutorials) {
         requireNonNull(tutorials);
-        this.tutorials.clear();
-        tutorials.stream().filter(Predicate.not(this::hasTutorial)).forEach(this::addTutorial);
+        this.tutorials.setAll(tutorials);
     }
 
-    //// util methods
+    /// / util methods
 
     @Override
     public String toString() {
@@ -178,7 +176,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<Tutorial> getTutorialList() {
-        return FXCollections.unmodifiableObservableList(tutorials);
+        return tutorials.asUnmodifiableObservableList();
     }
 
     @Override

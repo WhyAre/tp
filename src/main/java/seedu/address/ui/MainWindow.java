@@ -245,6 +245,10 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        } catch (RuntimeException e) {
+            logger.info("An unexpected error occurred while executing command: " + commandText);
+            resultDisplay.setFeedbackToUser(e.getMessage());
+            throw e;
         }
     }
 }
