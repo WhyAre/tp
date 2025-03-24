@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.student.Student;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -42,8 +41,12 @@ class JsonSerializableAddressBook {
      *            {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        students.addAll(source.getStudentList().stream().map(JsonAdaptedStudent::new).collect(Collectors.toList()));
-        tutorials.addAll(source.getTutorialList().stream().map(JsonAdaptedTutorial::new).toList());
+        students.addAll(map(source.getStudentList(), JsonAdaptedStudent::new));
+        tutorials.addAll(map(source.getTutorialList(), JsonAdaptedTutorial::new));
+    }
+
+    private static <T, U> List<U> map(List<T> list, Function<T, U> mapper) {
+        return list.stream().map(mapper).toList();
     }
 
     /**
@@ -65,20 +68,9 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        for (var tutorial : tutorials) {
-            var t = tutorial.toModelType();
-            if (addressBook.hasTutorial(t)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_TUTORIAL);
-            }
-            addressBook.addTutorial(t);
-        }
-        for (JsonAdaptedStudent jsonAdaptedStudent : students) {
-            Student student = jsonAdaptedStudent.toModelType();
-            if (addressBook.hasStudent(student)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
-            }
-            addressBook.addStudent(student);
-        }
+
+        tutorials.stream().map(JsonAdaptedTutorial::toModelType).forEach(addressBook::addTutorial);
+        students.stream().map(JsonAdaptedStudent::toModelType).forEach(addressBook::addStudent);
         return addressBook;
     }
 
