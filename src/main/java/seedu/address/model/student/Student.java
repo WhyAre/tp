@@ -141,7 +141,7 @@ public class Student implements Identifiable<Student> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, handle, tutorials);
+        return Objects.hash(name, studentId, phone, email, handle);
     }
 
     @Override

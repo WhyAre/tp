@@ -17,6 +17,8 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -116,7 +118,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setStudent(Student target, Student editedStudent) {
+    public void setStudent(Student target, Student editedStudent) throws DuplicateItemException, ItemNotFoundException {
         requireAllNonNull(target, editedStudent);
 
         addressBook.setStudent(target, editedStudent);
