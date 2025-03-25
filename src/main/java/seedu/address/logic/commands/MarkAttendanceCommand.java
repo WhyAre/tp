@@ -46,7 +46,7 @@ public class MarkAttendanceCommand extends Command {
         String tutorialName = tutorial.name();
         model.markAttendance(tutorialName, week, index);
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.ATTENDANCE);
     }
 
     @Override
