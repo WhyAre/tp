@@ -3,10 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Adds students to a tutorial slot.
@@ -43,8 +46,12 @@ public class MarkAttendanceCommand extends Command {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
 
-        String tutorialName = tutorial.name();
-        model.markAttendance(tutorialName, week, index);
+        try {
+            String tutorialName = tutorial.name();
+            model.markAttendance(tutorialName, week, index);
+        } catch (DuplicateItemException | ItemNotFoundException e) {
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
 
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }

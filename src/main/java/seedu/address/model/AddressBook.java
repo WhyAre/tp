@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.logic.Messages;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -192,7 +192,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Creates attendance record for a student in specified tutorial
      */
-    public void addStudentAttendance(String tutorialName, String studentName) {
+    public void addStudentAttendance(String tutorialName, String studentName)
+                    throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorialName);
         requireNonNull(studentName);
 
@@ -208,7 +209,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void markAttendance(String tutorialName, int week, int index) {
+    public void markAttendance(String tutorialName, int week, int index)
+                    throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorialName);
 
         for (Attendance a : attendances) {

@@ -151,12 +151,12 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addStudentAttendance(String t, String s) {
+    public void addStudentAttendance(String t, String s) throws DuplicateItemException, ItemNotFoundException {
         addressBook.addStudentAttendance(t, s);
     }
 
     @Override
-    public void markAttendance(String t, int w, int i) {
+    public void markAttendance(String t, int w, int i) throws DuplicateItemException, ItemNotFoundException {
         addressBook.markAttendance(t, w, i);
     }
 

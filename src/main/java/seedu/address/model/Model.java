@@ -114,12 +114,13 @@ public interface Model {
     /**
      * Creates attendance record for a student in specified tutorial
      */
-    void addStudentAttendance(String tutorialName, String studentName);
+    void addStudentAttendance(String tutorialName, String studentName)
+                    throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Marks students attendance
      */
-    void markAttendance(String tutorialName, int week, int index);
+    void markAttendance(String tutorialName, int week, int index) throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
