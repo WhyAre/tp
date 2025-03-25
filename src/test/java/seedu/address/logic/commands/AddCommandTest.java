@@ -23,6 +23,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -170,6 +171,21 @@ public class AddCommandTest {
 
         @Override
         public boolean hasTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addAttendance(Attendance attendance) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addStudentAttendance(String tutorialName, String studentName) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void markAttendance(String tutorialName, int week, int index) {
             throw new AssertionError("This method should not be called.");
         }
 

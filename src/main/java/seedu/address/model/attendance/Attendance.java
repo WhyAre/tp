@@ -8,7 +8,11 @@ import java.util.Map;
 
 import seedu.address.model.uniquelist.Identifiable;
 
-public record Attendance(String tutorialName, Map<String, List<Integer>> attendances) implements Identifiable<Attendance> {
+/**
+ * Represents an attendance record
+ */
+public record Attendance(String tutorialName,
+                Map<String, List<Integer>> attendances) implements Identifiable<Attendance> {
     private static final int NUMBER_OF_WEEKS = 11;
     private static final int ABSENT = 0;
     private static final int PRESENT = 1;
@@ -19,7 +23,9 @@ public record Attendance(String tutorialName, Map<String, List<Integer>> attenda
 
     /**
      * Creates an attendance record for a student for the specified tutorial
-     * @param name Name of student
+     *
+     * @param name
+     *            Name of student
      * @return An Attendance object containing new student attendance record
      */
     public Attendance addStudent(String name) {
@@ -31,8 +37,11 @@ public record Attendance(String tutorialName, Map<String, List<Integer>> attenda
 
     /**
      * Marks the attendance of the student for the specified week
-     * @param week Week of attendance
-     * @param name Name of student to mark attendance for
+     *
+     * @param week
+     *            Week of attendance
+     * @param name
+     *            Name of student to mark attendance for
      * @return new Attendance object with updated attendance
      */
     public Attendance markAttendance(int week, String name) {

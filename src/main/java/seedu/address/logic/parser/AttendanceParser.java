@@ -11,7 +11,8 @@ import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new {@link Command} object for attendance
+ * Parses input arguments and creates a new {@link Command} object for
+ * attendance
  */
 public class AttendanceParser implements Parser<Command> {
 
@@ -29,7 +30,7 @@ public class AttendanceParser implements Parser<Command> {
 
                         COMMAND:
                         %s""".formatted(
-                subcmds.keySet().stream().map("  - %s"::formatted).collect(Collectors.joining("\n")));
+                        subcmds.keySet().stream().map("  - %s"::formatted).collect(Collectors.joining("\n")));
     }
 
     @Override

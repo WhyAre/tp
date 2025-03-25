@@ -2,17 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
-import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
@@ -34,7 +27,8 @@ public class MarkAttendanceCommand extends Command {
     private final int index;
 
     /**
-     * Creates a {@link MarkAttendanceCommand} to mark the specified student's attendance {@code Attendance}
+     * Creates a {@link MarkAttendanceCommand} to mark the specified student's
+     * attendance {@code Attendance}
      */
     public MarkAttendanceCommand(Tutorial tutorial, int week, int index) {
         this.tutorial = tutorial;
@@ -66,7 +60,8 @@ public class MarkAttendanceCommand extends Command {
             return false;
         }
 
-        return tutorial.equals(otherMarkAttendanceCommand.tutorial) && week == otherMarkAttendanceCommand.week && index == otherMarkAttendanceCommand.index;
+        return tutorial.equals(otherMarkAttendanceCommand.tutorial) && week == otherMarkAttendanceCommand.week
+                        && index == otherMarkAttendanceCommand.index;
     }
 
     @Override
