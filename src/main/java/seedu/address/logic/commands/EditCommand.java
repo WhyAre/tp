@@ -29,6 +29,8 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentID;
 import seedu.address.model.student.TelegramHandle;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Edits the details of an existing student in the address book.
@@ -96,7 +98,15 @@ public class EditCommand extends Command {
         }
         editedStudent.setTutorials(existingTutorials);
 
-        model.setStudent(studentToEdit, editedStudent);
+        assert model.hasStudent(studentToEdit);
+        try {
+            model.setStudent(studentToEdit, editedStudent);
+        } catch (DuplicateItemException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (ItemNotFoundException e) {
+            // Student is guaranteed to exist
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(resultMessage, Messages.format(editedStudent)));
     }
