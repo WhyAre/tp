@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -102,6 +103,16 @@ public interface Model {
      * Checks whether tutorial exists in the address book
      */
     boolean hasTutorial(Tutorial tutorial);
+
+    /**
+     * Creates attendance record for a tutorial
+     */
+    void addAttendance(Attendance attendance);
+
+    /**
+     * Creates attendance record for a student in specified tutorial
+     */
+    void addStudentAttendance(String tutorialName, String studentName);
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the

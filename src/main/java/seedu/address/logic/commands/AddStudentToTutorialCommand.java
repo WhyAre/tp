@@ -62,10 +62,11 @@ public class AddStudentToTutorialCommand extends Command {
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             Student editedStudent = studentToEdit.clone();
             Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-            tutorials.add(tutorial.addAttendanceSlot(editedStudent.getName().toString()));
+            tutorials.add(tutorial);
             editedStudent.setTutorials(tutorials);
 
             model.setStudent(studentToEdit, editedStudent);
+            model.addStudentAttendance(tutorial.name(), editedStudent.getName().toString());
         }
 
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);

@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -23,6 +24,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueList<Student> students;
     private final UniqueList<Tutorial> tutorials;
+    private final UniqueList<Attendance> attendances;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -35,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         students = new UniqueList<>();
         tutorials = new UniqueList<>();
+        attendances = new UniqueList<>();
     }
 
     public AddressBook() {
@@ -160,6 +163,30 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setTutorials(List<Tutorial> tutorials) {
         requireNonNull(tutorials);
         this.tutorials.setAll(tutorials);
+    }
+
+    /**
+     * Creates attendance record for a tutorial
+     */
+    public void addAttendance(Attendance attendance) {
+        requireNonNull(attendance);
+        this.attendances.add(attendance);
+    }
+
+    /**
+     * Creates attendance record for a student in specified tutorial
+     */
+    public void addStudentAttendance(String tutorialName, String studentName) {
+        requireNonNull(tutorialName);
+        requireNonNull(studentName);
+
+        for (Attendance a : attendances) {
+            if (a.tutorialName().equals(tutorialName)) {
+                Attendance newAttendance = a.clone().addStudent(studentName);
+                attendances.set(a, newAttendance);
+                break;
+            }
+        }
     }
 
     /// / util methods
