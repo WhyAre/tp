@@ -2,12 +2,15 @@ package seedu.address.model.student;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -26,12 +29,13 @@ public class Student implements Identifiable<Student> {
 
     // Data fields
     private Set<Tutorial> tutorials;
+    private List<Submission> submissions;
 
     /**
      * Every field must be present and not null.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                    Set<Tutorial> tutorials) {
+                    Set<Tutorial> tutorials, List<Submission> submissions) {
         requireAllNonNull(name, studentId, phone, email, handle, tutorials);
         this.name = name;
         this.studentId = studentId;
@@ -39,6 +43,12 @@ public class Student implements Identifiable<Student> {
         this.email = email;
         this.handle = handle;
         this.tutorials = tutorials;
+        this.submissions = submissions;
+    }
+
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                    Set<Tutorial> tutorials) {
+        this(name, studentId, phone, email, handle, tutorials, new ArrayList<>());
     }
 
     public Name getName() {
@@ -61,6 +71,10 @@ public class Student implements Identifiable<Student> {
         return handle;
     }
 
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+
     /**
      * Returns an immutable tutorial set, which throws
      * {@code UnsupportedOperationException} if modification is attempted.
@@ -78,7 +92,6 @@ public class Student implements Identifiable<Student> {
 
     /**
      * Returns true if the student has the specified tutorial allocated
-     *
      */
     public boolean hasTutorial(Tutorial tutorial) {
         return tutorials.contains(tutorial);

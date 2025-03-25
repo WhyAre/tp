@@ -1,8 +1,6 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,16 +20,21 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Students list contains duplicate student(s).";
     public static final String MESSAGE_DUPLICATE_TUTORIAL = "Tutorials list contains duplicate tutorial(s).";
 
-    private final List<JsonAdaptedStudent> students = new ArrayList<>();
-    private final List<JsonAdaptedTutorial> tutorials = new ArrayList<>();
+    private final List<JsonAdaptedStudent> students;
+    private final List<JsonAdaptedTutorial> tutorials;
+    private final List<JsonAdaptedSubmission> submissions;
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given students and
      * tutorials.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("students") List<JsonAdaptedStudent> students) {
-        this.students.addAll(students);
+    public JsonSerializableAddressBook(@JsonProperty("students") List<JsonAdaptedStudent> students,
+                    @JsonProperty("tutorials") List<JsonAdaptedTutorial> tutorials,
+                    @JsonProperty("submissions") List<JsonAdaptedSubmission> submissions) {
+        this.students = students;
+        this.tutorials = tutorials;
+        this.submissions = submissions;
     }
 
     /**
@@ -41,9 +44,13 @@ class JsonSerializableAddressBook {
      *            future changes to this will not affect the created
      *            {@code JsonSerializableAddressBook}.
      */
-    public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        students.addAll(source.getStudentList().stream().map(JsonAdaptedStudent::new).collect(Collectors.toList()));
-        tutorials.addAll(source.getTutorialList().stream().map(JsonAdaptedTutorial::new).toList());
+    public static JsonSerializableAddressBook of(ReadOnlyAddressBook source) {
+        var students = source.getStudentList().stream().map(JsonAdaptedStudent::new).toList();
+        var tutorials = source.getTutorialList().stream().map(JsonAdaptedTutorial::new).toList();
+
+        var submissions = source.getSubmissionList().stream().map(JsonAdaptedSubmission::new).toList();
+
+        return new JsonSerializableAddressBook(students, tutorials, submissions);
     }
 
     /**
