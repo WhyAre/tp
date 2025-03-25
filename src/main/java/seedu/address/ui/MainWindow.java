@@ -38,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private StudentListPanel studentListPanel;
     private TutorialListPanel tutorialListPanel;
+    private AttendanceListPanel attendanceListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -54,10 +55,16 @@ public class MainWindow extends UiPart<Stage> {
     private VBox tutorialList;
 
     @FXML
+    private VBox attendanceList;
+
+    @FXML
     private StackPane studentListPanelPlaceholder;
 
     @FXML
     private StackPane tutorialListPanelPlaceholder;
+
+    @FXML
+    private StackPane attendanceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -133,6 +140,9 @@ public class MainWindow extends UiPart<Stage> {
         tutorialListPanel = new TutorialListPanel(logic.getFilteredTutorialList());
         tutorialListPanelPlaceholder.getChildren().add(tutorialListPanel.getRoot());
 
+        attendanceListPanel = new AttendanceListPanel(logic.getFilteredAttendanceList());
+        attendanceListPanelPlaceholder.getChildren().add(attendanceListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -172,11 +182,19 @@ public class MainWindow extends UiPart<Stage> {
         case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
+            setElementVisibility(attendanceList, false);
             break;
 
         case TUTORIAL:
             setElementVisibility(studentList, false);
             setElementVisibility(tutorialList, true);
+            setElementVisibility(attendanceList, false);
+            break;
+
+        case ATTENDANCE:
+            setElementVisibility(studentList, false);
+            setElementVisibility(tutorialList, false);
+            setElementVisibility(attendanceList, true);
             break;
 
         case UNCHANGED:
