@@ -49,5 +49,6 @@
     "email" : "anna@example.com",
     "handle" : "@the_best_george",
     "tutorials" : [ ]
-  } ]
+  } ],
+  "tutorials": []
 }
