@@ -45,8 +45,6 @@ public class AddStudentToTutorialCommandParser implements Parser<AddStudentToTut
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStudentToTutorialCommand.MESSAGE_USAGE));
         }
 
-        Tutorial tutorial = new Tutorial(tutorialString);
-
-        return new AddStudentToTutorialCommand(indices, tutorial);
+        return new AddStudentToTutorialCommand(indices, tutorialString);
     }
 }

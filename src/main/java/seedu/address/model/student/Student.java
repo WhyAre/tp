@@ -2,10 +2,16 @@ package seedu.address.model.student;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tutorial.Tutorial;
@@ -15,6 +21,7 @@ import seedu.address.model.uniquelist.Identifiable;
  * Represents a Student in the address book. Guarantees: details are present and
  * not null, field values are validated, immutable.
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Student implements Identifiable<Student> {
 
     // Identity fields
@@ -30,8 +37,11 @@ public class Student implements Identifiable<Student> {
     /**
      * Every field must be present and not null.
      */
-    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                    Set<Tutorial> tutorials) {
+    public Student(
+        @JsonProperty("name") Name name, @JsonProperty("studentId") StudentID studentId,
+        @JsonProperty("phone") Phone phone, @JsonProperty("email") Email email,
+        @JsonProperty("handle") TelegramHandle handle,
+        @JsonProperty("tutorials") Set<Tutorial> tutorials) {
         requireAllNonNull(name, studentId, phone, email, handle, tutorials);
         this.name = name;
         this.studentId = studentId;
@@ -66,19 +76,22 @@ public class Student implements Identifiable<Student> {
      * {@code UnsupportedOperationException} if modification is attempted.
      */
     public Set<Tutorial> getTutorials() {
-        return Collections.unmodifiableSet(tutorials);
+        return Collections.unmodifiableSet(new HashSet<>(tutorials));
     }
 
     /**
      * Updates the tutorial set
      */
     public void setTutorials(Set<Tutorial> tutorials) {
-        this.tutorials = tutorials;
+        this.tutorials = new HashSet<>(tutorials);
+    }
+
+    public void addTutorial(Tutorial t) {
+        this.tutorials.add(t);
     }
 
     /**
      * Returns true if the student has the specified tutorial allocated
-     *
      */
     public boolean hasTutorial(Tutorial tutorial) {
         return tutorials.contains(tutorial);
@@ -88,8 +101,7 @@ public class Student implements Identifiable<Student> {
      * Removes invalid tutorials from the student if it doesn't exist in
      * {@code validTuts}
      *
-     * @param validTuts
-     *            Set of valid tutorials
+     * @param validTuts Set of valid tutorials
      */
     public void removeInvalidTutorials(Set<Tutorial> validTuts) {
         tutorials.removeIf(t -> !validTuts.contains(t));
@@ -105,9 +117,9 @@ public class Student implements Identifiable<Student> {
         }
 
         return otherStudent != null && (otherStudent.getName().equals(getName())
-                        || otherStudent.getStudentId().equals(getStudentId())
-                        || otherStudent.getPhone().equals(getPhone()) || otherStudent.getEmail().equals(getEmail())
-                        || otherStudent.getHandle().equals(getHandle()));
+            || otherStudent.getStudentId().equals(getStudentId())
+            || otherStudent.getPhone().equals(getPhone()) || otherStudent.getEmail().equals(getEmail())
+            || otherStudent.getHandle().equals(getHandle()));
     }
 
     /**
@@ -134,20 +146,20 @@ public class Student implements Identifiable<Student> {
 
         Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
-                        && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle) && tutorials.equals(otherStudent.tutorials);
+            && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
+            && handle.equals(otherStudent.handle) && tutorials.equals(otherStudent.tutorials);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, handle, tutorials);
+        return Objects.hash(name, phone, email, handle);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("name", name).add("studentId", studentId).add("phone", phone)
-                        .add("email", email).add("handle", handle).add("tutorials", tutorials).toString();
+            .add("email", email).add("handle", handle).add("tutorials", tutorials).toString();
     }
 
     @Override

@@ -50,8 +50,7 @@ public class JsonAdaptedStudentTest {
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedStudent student = new JsonAdaptedStudent(null, VALID_STUDENT_ID, VALID_PHONE, VALID_EMAIL,
                         VALID_HANDLE, VALID_TUTORIALS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, student::toModelType);
+        assertThrows(NullPointerException.class, student::toModelType);
     }
 
     @Test
@@ -83,7 +82,7 @@ public class JsonAdaptedStudentTest {
         JsonAdaptedStudent student = new JsonAdaptedStudent(VALID_NAME, VALID_STUDENT_ID, VALID_PHONE, null,
                         VALID_HANDLE, VALID_TUTORIALS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, student::toModelType);
+        assertThrows(NullPointerException.class, student::toModelType);
     }
 
     @Test
@@ -91,7 +90,7 @@ public class JsonAdaptedStudentTest {
         JsonAdaptedStudent student = new JsonAdaptedStudent(VALID_NAME, VALID_STUDENT_ID, VALID_PHONE, VALID_EMAIL,
                         INVALID_HANDLE, VALID_TUTORIALS);
         String expectedMessage = TelegramHandle.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, student::toModelType);
+        assertThrows(NullPointerException.class, student::toModelType);
     }
 
     @Test

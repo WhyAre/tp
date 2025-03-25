@@ -3,6 +3,9 @@ package seedu.address.model.student;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a Student's name in the address book. Guarantees: immutable; is
  * valid as declared in {@link #isValidName(String)}
@@ -26,7 +29,8 @@ public class Name {
      * @param name
      *            A valid name.
      */
-    public Name(String name) {
+    @JsonCreator
+    public Name(@JsonProperty("fullName") String name) {
         requireNonNull(name);
         checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
         fullName = name;

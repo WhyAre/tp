@@ -3,6 +3,9 @@ package seedu.address.model.student;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a Student's Telegram handle in the address book. Guarantees:
  * immutable; is valid as declared in {@link #isValidHandle(String)}
@@ -21,7 +24,8 @@ public class TelegramHandle {
      * @param handle
      *            A valid Telegram handle.
      */
-    public TelegramHandle(String handle) {
+    @JsonCreator
+    public TelegramHandle(@JsonProperty("handle") String handle) {
         requireNonNull(handle);
         checkArgument(isValidHandle(handle), MESSAGE_CONSTRAINTS);
         this.handle = handle.toLowerCase().trim();

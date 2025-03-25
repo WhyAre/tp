@@ -3,6 +3,9 @@ package seedu.address.model.student;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a Student's email in the address book. Guarantees: immutable; is
  * valid as declared in {@link #isValidEmail(String)}
@@ -40,7 +43,8 @@ public class Email {
      * @param email
      *            A valid email address.
      */
-    public Email(String email) {
+    @JsonCreator
+    public Email(@JsonProperty("value") String email) {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
         value = email;
