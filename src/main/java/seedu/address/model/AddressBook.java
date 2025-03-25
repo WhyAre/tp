@@ -203,7 +203,6 @@ public class AddressBook implements ReadOnlyAddressBook {
                 break;
             }
         }
-        System.out.println(attendances.get(0).attendances());
     }
 
     /// / util methods
