@@ -6,7 +6,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.attendance.Attendance;
-import seedu.address.model.tutorial.Tutorial;
 
 /**
  * An UI component that displays information of a {@code Tutorial}.
@@ -35,8 +34,8 @@ public class AttendanceCard extends UiPart<Region> {
     private FlowPane students;
 
     /**
-     * Creates an {@code AttendanceCard} with the given {@code Attendance} and index to
-     * display.
+     * Creates an {@code AttendanceCard} with the given {@code Attendance} and index
+     * to display.
      */
     public AttendanceCard(Attendance attendance, int displayedIndex) {
         super(FXML);
