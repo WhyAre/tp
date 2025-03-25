@@ -1,5 +1,9 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,14 +15,17 @@ import seedu.address.model.tutorial.Tutorial;
  */
 public class JsonAdaptedTutorial {
     private final String name;
+    private final List<JsonAdaptedAssignment> assignments;
 
     JsonAdaptedTutorial(Tutorial tutorial) {
-        name = tutorial.name();
+        this(tutorial.name(), tutorial.assignments().stream().map(JsonAdaptedAssignment::new).toList());
     }
 
     @JsonCreator
-    public JsonAdaptedTutorial(@JsonProperty("name") String name) {
+    JsonAdaptedTutorial(@JsonProperty("name") String name,
+                    @JsonProperty("assignments") List<JsonAdaptedAssignment> assignments) {
         this.name = name;
+        this.assignments = assignments;
     }
 
     /**
@@ -33,6 +40,8 @@ public class JsonAdaptedTutorial {
         if (!Tutorial.isValidName(name)) {
             throw new IllegalValueException("Tutorial name is not valid.");
         }
-        return new Tutorial(name);
+
+        return new Tutorial(name, assignments.stream().map(JsonAdaptedAssignment::toModelType)
+                        .collect(Collectors.toCollection(ArrayList::new)));
     }
 }

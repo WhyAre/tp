@@ -37,10 +37,11 @@ class JsonAdaptedAssignment {
      * Converts this Jackson-friendly adapted student object into the model's
      * {@code Student} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted
-     *                               student.
+     * @throws IllegalValueException
+     *             if there were any data constraints violated in the adapted
+     *             student.
      */
-    public Assignment toModelType() throws IllegalValueException {
+    public Assignment toModelType() {
         return new Assignment(name, dueDate);
     }
 
