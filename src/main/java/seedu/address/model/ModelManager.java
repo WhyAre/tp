@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Filter;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
+    private final FilteredList<Attendance> filteredAttendances;
     private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
 
     /**
@@ -42,6 +44,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
+        filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
         filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
@@ -216,6 +219,21 @@ public class ModelManager implements Model {
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
         filteredTutorialWithStudents.setPredicate(isInList);
+    }
+
+    // =========== Filtered Attendance List Accessors
+    // =============================================================
+
+    @Override
+    public ObservableList<Attendance> getFilteredAttendanceList() {
+        return filteredAttendances;
+    }
+
+    @Override
+    public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+        requireNonNull(predicate);
+        // Hide studentList
+        filteredAttendances.setPredicate(predicate);
     }
 
     @Override
