@@ -6,6 +6,12 @@ import seedu.address.model.uniquelist.Identifiable;
  * Represents a tutorial
  */
 public record Tutorial(String name) implements Identifiable<Tutorial> {
+    public Tutorial {
+        Objects.requireNonNull(name);
+        if (!isValidName(name)) {
+            throw new IllegalArgumentException("Tutorial name is invalid.");
+        }
+    }
 
     /**
      * Checks whether the given name is valid
