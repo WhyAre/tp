@@ -21,6 +21,10 @@ public class JsonAdaptedTutorial {
         this(tutorial.name(), tutorial.assignments().stream().map(JsonAdaptedAssignment::new).toList());
     }
 
+    JsonAdaptedTutorial(String name) {
+        this(name, new ArrayList<>());
+    }
+
     @JsonCreator
     JsonAdaptedTutorial(@JsonProperty("name") String name,
                     @JsonProperty("assignments") List<JsonAdaptedAssignment> assignments) {
