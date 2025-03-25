@@ -77,6 +77,7 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        setUiVisibilities(logic.getGuiSettings());
 
         setAccelerators();
 
@@ -156,19 +157,11 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Sets the visibility and manageability of the specified UI element.
-     */
-    private void setElementVisibility(Node element, boolean isVisible) {
-        element.setVisible(isVisible);
-        element.setManaged(isVisible);
-    }
-
-    /**
      * Sets the visibility of the student and tutorial list UI elements according to
-     * the specified navigation mode.
+     * the specified navigation mode in {@code guiSettings}.
      */
-    private void handleMode(NavigationMode mode) {
-        switch (mode) {
+    private void setUiVisibilities(GuiSettings guiSettings) {
+        switch (guiSettings.getNavigationMode()) {
         case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
@@ -185,6 +178,39 @@ public class MainWindow extends UiPart<Stage> {
         default:
             throw new IllegalArgumentException(MESSAGE_INVALID_NAVIGATION_MODE);
         }
+    }
+
+    /**
+     * Sets the visibility and manageability of the specified UI element.
+     */
+    private void setElementVisibility(Node element, boolean isVisible) {
+        element.setVisible(isVisible);
+        element.setManaged(isVisible);
+    }
+
+    /**
+     * Sets the navigation mode in {@code GuiSettings} with the navigation mode
+     * specified.
+     */
+    private void setNavigationMode(NavigationMode navigationMode) {
+        assert navigationMode != NavigationMode.UNCHANGED;
+        GuiSettings oldGuiSettings = logic.getGuiSettings();
+        GuiSettings guiSettings = new GuiSettings(oldGuiSettings.getWindowWidth(), oldGuiSettings.getWindowHeight(),
+                        (int) oldGuiSettings.getWindowCoordinates().getX(),
+                        (int) oldGuiSettings.getWindowCoordinates().getY(), navigationMode);
+        logic.setGuiSettings(guiSettings);
+    }
+
+    /**
+     * Sets the navigation mode to the mode specified and updates the visibilities
+     * of UI elements if needed.
+     */
+    private void handleMode(NavigationMode navigationMode) {
+        if (navigationMode == NavigationMode.UNCHANGED) {
+            return;
+        }
+        setNavigationMode(navigationMode);
+        setUiVisibilities(logic.getGuiSettings());
     }
 
     /**
@@ -209,7 +235,8 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                        (int) primaryStage.getX(), (int) primaryStage.getY());
+                        (int) primaryStage.getX(), (int) primaryStage.getY(),
+                        logic.getGuiSettings().getNavigationMode());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
