@@ -67,6 +67,9 @@ public class DeleteStudentFromTutorialCommand extends Command {
             tutorials.remove(tutorial);
             editedStudent.setTutorials(tutorials);
 
+            assert model.hasStudent(studentToEdit);
+            assert studentToEdit.hashCode() == editedStudent.hashCode();
+
             try {
                 model.setStudent(studentToEdit, editedStudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {

@@ -67,6 +67,8 @@ public class AddStudentToTutorialCommand extends Command {
             tutorials.add(tutorial);
             editedStudent.setTutorials(tutorials);
 
+            assert model.hasStudent(studentToEdit);
+            assert studentToEdit.hashCode() == editedStudent.hashCode();
             try {
                 model.setStudent(studentToEdit, editedStudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {

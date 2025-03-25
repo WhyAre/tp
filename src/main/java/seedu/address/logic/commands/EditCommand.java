@@ -98,6 +98,7 @@ public class EditCommand extends Command {
         }
         editedStudent.setTutorials(existingTutorials);
 
+        assert model.hasStudent(studentToEdit);
         try {
             model.setStudent(studentToEdit, editedStudent);
         } catch (DuplicateItemException e) {

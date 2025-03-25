@@ -150,8 +150,9 @@ public class AddressBook implements ReadOnlyAddressBook {
             editedstudent.setTutorials(newTutorials);
 
             // Assertions
-            // - student always exists
             // - editedStudent always be unique
+            assert students.contains(student);
+
             try {
                 this.setStudent(student, editedstudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {
