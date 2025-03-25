@@ -22,7 +22,8 @@ public class StatusBarFooter extends UiPart<Region> {
     private Label navigationModeStatus;
 
     /**
-     * Creates a {@code StatusBarFooter} with the given {@code Path}.
+     * Creates a {@code StatusBarFooter} with the given {@code Path} and
+     * {@code NavigationMode}.
      */
     public StatusBarFooter(Path saveLocation, NavigationMode navigationMode) {
         super(FXML);
