@@ -153,6 +153,11 @@ public class ModelManager implements Model {
         addressBook.addStudentAttendance(t, s);
     }
 
+    @Override
+    public void markAttendance(String t, int w, int i) {
+        addressBook.markAttendance(t, w, i);
+    }
+
     // =========== Filtered Student List Accessors
     // =============================================================
 

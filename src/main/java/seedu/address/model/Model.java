@@ -115,6 +115,11 @@ public interface Model {
     void addStudentAttendance(String tutorialName, String studentName);
 
     /**
+     * Marks students attendance
+     */
+    void markAttendance(String tutorialName, int week, int index);
+
+    /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
      * internal list of {@code versionedAddressBook}
      */

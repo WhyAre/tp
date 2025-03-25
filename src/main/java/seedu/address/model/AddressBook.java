@@ -189,6 +189,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Marks students attendance
+     */
+    public void markAttendance(String tutorialName, int week, int index) {
+        requireNonNull(tutorialName);
+
+        for (Attendance a : attendances) {
+            if (a.tutorialName().equals(tutorialName)) {
+                Attendance oldAttendance = a.clone();
+                Attendance newAttendance = oldAttendance.markAttendance(week, students.get(index).getName().toString());
+                attendances.set(oldAttendance, newAttendance);
+                break;
+            }
+        }
+        System.out.println(attendances.get(0).attendances());
+    }
+
     /// / util methods
 
     @Override
