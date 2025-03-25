@@ -11,6 +11,8 @@ import java.util.stream.IntStream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Wrapper around a list of {@link Identifiable}. List cannot contain duplicate,
@@ -48,16 +50,16 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
      * Replaces the contents of this list with {@code items}. {@code items} must not
      * contain duplicates
      */
-    public void setAll(List<T> items) {
+    public void setAll(List<T> items) throws DuplicateItemException {
         requireAllNonNull(items);
         if (!areItemsUnique(items)) {
-            throw new IllegalStateException();
+            throw new DuplicateItemException();
         }
 
         internalList.setAll(items);
     }
 
-    public void setAll(UniqueList<T> replacement) {
+    public void setAll(UniqueList<T> replacement) throws DuplicateItemException {
         setAll(replacement.internalList);
     }
 
@@ -174,16 +176,16 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
      * identity of {@code editedStudent} must not be the same as another existing
      * student in the list.
      */
-    public void set(T oldItem, T newItem) {
+    public void set(T oldItem, T newItem) throws DuplicateItemException, ItemNotFoundException {
         requireAllNonNull(oldItem, newItem);
 
         int index = internalList.indexOf(oldItem);
         if (index == -1) {
-            throw new IllegalStateException();
+            throw new ItemNotFoundException();
         }
 
         if (containsIdentity(newItem, oldItem)) {
-            throw new IllegalStateException();
+            throw new DuplicateItemException();
         }
 
         internalList.set(index, newItem);

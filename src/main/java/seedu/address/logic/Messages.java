@@ -20,6 +20,7 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS = "Multiple values specified for the following "
                     + "single-valued field(s): ";
     public static final String MESSAGE_INVALID_NAVIGATION_MODE = "Invalid navigation mode provided";
+    public static final String MESSAGE_UNKNOWN_ERROR = "Something went wrong";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

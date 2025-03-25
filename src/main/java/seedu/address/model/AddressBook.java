@@ -10,10 +10,13 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.UniqueList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
@@ -54,7 +57,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the student list with {@code students}.
      * {@code students} must not contain duplicate students.
      */
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<Student> students) throws DuplicateItemException {
         this.students.setAll(students);
     }
 
@@ -64,8 +67,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
-        setStudents(newData.getStudentList());
-        setTutorials(newData.getTutorialList());
+        try {
+            setStudents(newData.getStudentList());
+            setTutorials(newData.getTutorialList());
+        } catch (DuplicateItemException e) {
+            // Since it's coming from an address book, these errors shouldn't be thrown
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
     }
 
     //// student-level operations
@@ -96,7 +104,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * student identity of {@code editedstudent} must not be the same as another
      * existing student in the address book.
      */
-    public void setStudent(Student target, Student editedstudent) {
+    public void setStudent(Student target, Student editedstudent) throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(editedstudent);
 
         students.set(target, editedstudent);
@@ -141,7 +149,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             newTutorials.remove(tutorial);
             editedstudent.setTutorials(newTutorials);
 
-            this.setStudent(student, editedstudent);
+            // Assertions
+            // - editedStudent always be unique
+            assert students.contains(student);
+
+            try {
+                this.setStudent(student, editedstudent);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -157,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the tutorial list with {@code tutorials}.
      * {@code tutorials} must not contain duplicate tutorials.
      */
-    public void setTutorials(List<Tutorial> tutorials) {
+    public void setTutorials(List<Tutorial> tutorials) throws DuplicateItemException {
         requireNonNull(tutorials);
         this.tutorials.setAll(tutorials);
     }

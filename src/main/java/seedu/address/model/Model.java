@@ -9,6 +9,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * The API of the Model component.
@@ -81,7 +83,7 @@ public interface Model {
      * {@code editedStudent} must not be the same as another existing student in the
      * address book.
      */
-    void setStudent(Student target, Student editedStudent);
+    void setStudent(Student target, Student editedStudent) throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Adds a tutorial slot

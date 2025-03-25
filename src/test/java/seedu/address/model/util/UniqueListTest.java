@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.student.Student;
 import seedu.address.model.uniquelist.UniqueList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 import seedu.address.testutil.StudentBuilder;
 
 public class UniqueListTest {
@@ -73,13 +75,13 @@ public class UniqueListTest {
     }
 
     @Test
-    public void set_oldItemNotInList_throwsIllegalStateException() {
-        assertThrows(IllegalStateException.class, (
+    public void set_oldItemNotInList_throwsItemNotFoundException() {
+        assertThrows(ItemNotFoundException.class, (
         ) -> uniqueStudentList.set(ALICE, ALICE));
     }
 
     @Test
-    public void set_newEntityIsSameEntity_success() {
+    public void set_newEntityIsSameEntity_success() throws DuplicateItemException, ItemNotFoundException {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.set(ALICE, ALICE);
         var expectedUniqueStudentList = new UniqueList<Student>();
@@ -88,7 +90,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void set_newEntityHasSameIdentity_success() {
+    public void set_newEntityHasSameIdentity_success() throws DuplicateItemException, ItemNotFoundException {
         uniqueStudentList.add(ALICE);
         Student editedAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2)
                         .build();
@@ -99,7 +101,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void set_newEntityHasDifferentIdentity_success() {
+    public void set_newEntityHasDifferentIdentity_success() throws DuplicateItemException, ItemNotFoundException {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.set(ALICE, BOB);
         var expectedUniqueStudentList = new UniqueList<Student>();
@@ -108,21 +110,21 @@ public class UniqueListTest {
     }
 
     @Test
-    public void set_newEntityHasNonUniqueIdentity_throwsIllegalStateException() {
+    public void set_newEntityHasNonUniqueIdentity_throwsDuplicateItemException() {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.add(BOB);
-        assertThrows(IllegalStateException.class, (
+        assertThrows(DuplicateItemException.class, (
         ) -> uniqueStudentList.set(ALICE, BOB));
     }
 
     @Test
-    public void set_newEntityHasNonUniqueIdentity1_throwsIllegalStateException() {
+    public void set_newEntityHasNonUniqueIdentity1_throwsDuplicateItemException() {
         uniqueStudentList.add(ALICE);
         uniqueStudentList.add(BOB);
 
         var fakeAlice = new StudentBuilder(ALICE).withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2).build();
 
-        assertThrows(IllegalStateException.class, (
+        assertThrows(DuplicateItemException.class, (
         ) -> uniqueStudentList.set(ALICE, fakeAlice));
     }
 
@@ -151,7 +153,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setAll_uniqueEntityList_replacesOwnListWithProvidedList() {
+    public void setAll_uniqueEntityList_replacesOwnListWithProvidedList() throws DuplicateItemException {
         uniqueStudentList.add(ALICE);
         var expectedUniqueStudentList = new UniqueList<Student>();
         expectedUniqueStudentList.add(BOB);
@@ -166,7 +168,7 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setAll_list_replacesOwnListWithProvidedList() {
+    public void setAll_list_replacesOwnListWithProvidedList() throws DuplicateItemException {
         uniqueStudentList.add(ALICE);
         List<Student> studentList = Collections.singletonList(BOB);
         uniqueStudentList.setAll(studentList);
@@ -176,9 +178,9 @@ public class UniqueListTest {
     }
 
     @Test
-    public void setAll_listWithDuplicateEntities_throwsIllegalStateException() {
+    public void setAll_listWithDuplicateEntities_throwsDuplicateItemException() {
         List<Student> listWithDuplicateStudents = Arrays.asList(ALICE, ALICE);
-        assertThrows(IllegalStateException.class, (
+        assertThrows(DuplicateItemException.class, (
         ) -> uniqueStudentList.setAll(listWithDuplicateStudents));
     }
 
