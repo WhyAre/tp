@@ -201,12 +201,11 @@ public class MainWindow extends UiPart<Stage> {
                         (int) oldGuiSettings.getWindowCoordinates().getX(),
                         (int) oldGuiSettings.getWindowCoordinates().getY(), navigationMode);
         logic.setGuiSettings(guiSettings);
-        statusBarFooter.setNavigationMode(navigationMode);
     }
 
     /**
-     * Sets the navigation mode to the mode specified and updates the visibilities
-     * of UI elements if needed.
+     * Sets the navigation mode to the specified mode and updates the visibilities
+     * of UI elements, and updates the status bar footer accordingly, if needed.
      */
     private void handleMode(NavigationMode navigationMode) {
         if (navigationMode == NavigationMode.UNCHANGED) {
@@ -214,6 +213,7 @@ public class MainWindow extends UiPart<Stage> {
         }
         setNavigationMode(navigationMode);
         setUiVisibilities(logic.getGuiSettings());
+        statusBarFooter.setNavigationMode(navigationMode);
     }
 
     /**
