@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.testutil.StudentBuilder;
 
@@ -114,6 +115,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tutorial> getTutorialList() {
             return tutorials;
+        }
+
+        @Override
+        public List<Submission> getSubmissionList() {
+            throw new UnsupportedOperationException();
         }
     }
 

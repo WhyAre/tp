@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.UniqueList;
@@ -192,6 +193,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tutorial> getTutorialList() {
         return tutorials.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public List<Submission> getSubmissionList() {
+        return students.stream().flatMap(s -> s.getSubmissions().stream()).toList();
     }
 
     @Override
