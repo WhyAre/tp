@@ -26,7 +26,12 @@ public class MarkAttendanceCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Attendance marked!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
+
+    public static final String MESSAGE_INVALID_WEEK = "Weeks are from 3 to 13. If you are making up for tutorials, enter the week that is being accounted for.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
+
+    public static final int START_WEEK = 3;
+    public static final int END_WEEK = 13;
 
     private final Tutorial tutorial;
     private final int week;
@@ -55,6 +60,8 @@ public class MarkAttendanceCommand extends Command {
         assert model.hasStudent(studentToEdit);
 
         try {
+            assert week >= START_WEEK;
+            assert week <= END_WEEK;
             model.markAttendance(tutorial, week, studentToEdit);
         } catch (DuplicateItemException | ItemNotFoundException e) {
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);

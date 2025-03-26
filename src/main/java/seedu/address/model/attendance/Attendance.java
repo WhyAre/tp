@@ -27,7 +27,7 @@ public record Attendance(Tutorial tutorial, Student student,
      * @param week Week of attendance
      */
     public void markAttendance(int week) {
-        attendances.set(week - 2, PRESENT);
+        attendances.set(week - 3, PRESENT);
     }
 
     @Override
