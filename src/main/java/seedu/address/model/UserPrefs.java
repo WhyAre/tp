@@ -48,6 +48,23 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.guiSettings = guiSettings;
     }
 
+    /**
+     * Returns the navigation mode in {@code guiSettings}.
+     */
+    public NavigationMode getNavigationMode() {
+        return guiSettings.getNavigationMode();
+    }
+
+    /**
+     * Sets the navigation mode in {@code guiSettings}.
+     */
+    public void setNavigationMode(NavigationMode navigationMode) {
+        requireNonNull(navigationMode);
+        this.guiSettings = new GuiSettings(guiSettings.getWindowWidth(), guiSettings.getWindowHeight(),
+                        (int) guiSettings.getWindowCoordinates().getX(),
+                        (int) guiSettings.getWindowCoordinates().getY(), navigationMode);
+    }
+
     public Path getAddressBookFilePath() {
         return addressBookFilePath;
     }

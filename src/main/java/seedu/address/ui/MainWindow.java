@@ -78,7 +78,7 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
-        setUiVisibilities(logic.getGuiSettings());
+        setUiVisibilities(logic.getNavigationMode());
 
         setAccelerators();
 
@@ -160,10 +160,10 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the visibility of the student and tutorial list UI elements according to
-     * the specified navigation mode in {@code guiSettings}.
+     * the specified navigation mode.
      */
-    private void setUiVisibilities(GuiSettings guiSettings) {
-        switch (guiSettings.getNavigationMode()) {
+    private void setUiVisibilities(NavigationMode navigationMode) {
+        switch (navigationMode) {
         case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
@@ -191,16 +191,11 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Sets the navigation mode in {@code GuiSettings} with the navigation mode
+     * Sets the navigation mode in {@code GuiSettings} to the navigation mode
      * specified.
      */
     private void setNavigationMode(NavigationMode navigationMode) {
-        assert navigationMode != NavigationMode.UNCHANGED;
-        GuiSettings oldGuiSettings = logic.getGuiSettings();
-        GuiSettings guiSettings = new GuiSettings(oldGuiSettings.getWindowWidth(), oldGuiSettings.getWindowHeight(),
-                        (int) oldGuiSettings.getWindowCoordinates().getX(),
-                        (int) oldGuiSettings.getWindowCoordinates().getY(), navigationMode);
-        logic.setGuiSettings(guiSettings);
+        logic.setNavigationMode(navigationMode);
     }
 
     /**
@@ -212,7 +207,7 @@ public class MainWindow extends UiPart<Stage> {
             return;
         }
         setNavigationMode(navigationMode);
-        setUiVisibilities(logic.getGuiSettings());
+        setUiVisibilities(navigationMode);
         statusBarFooter.setNavigationMode(navigationMode);
     }
 

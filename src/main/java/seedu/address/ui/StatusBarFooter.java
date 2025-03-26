@@ -36,6 +36,7 @@ public class StatusBarFooter extends UiPart<Region> {
      * the specified {@code NavigationMode}.
      */
     public void setNavigationMode(NavigationMode navigationMode) {
+        assert navigationMode != NavigationMode.UNCHANGED;
         navigationModeStatus.setText(navigationMode.toString());
     }
 }

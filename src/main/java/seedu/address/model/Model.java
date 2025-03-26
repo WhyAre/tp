@@ -43,6 +43,16 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
+     * Returns the {@code NavigationMode} in the user prefs' GUI settings.
+     */
+    NavigationMode getNavigationMode();
+
+    /**
+     * Sets the {@code NavigationMode} in the user prefs' GUI settings.
+     */
+    void setNavigationMode(NavigationMode navigationMode);
+
+    /**
      * Returns the user prefs' address book file path.
      */
     Path getAddressBookFilePath();
