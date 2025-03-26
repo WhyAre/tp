@@ -106,6 +106,16 @@ public interface Model {
     boolean hasTutorial(Tutorial tutorial);
 
     /**
+     * Creates attendance record for a student in specified tutorial
+     */
+    void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    /**
+     * Marks students attendance
+     */
+    void markAttendance(Tutorial tutorial, int week, Student student);
+
+    /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
      * internal list of {@code versionedAddressBook}
      */
