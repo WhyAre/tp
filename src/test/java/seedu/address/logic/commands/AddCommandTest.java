@@ -178,14 +178,10 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        /*
-         * @Override public void addStudentAttendance(String tutorialName, String
-         * studentName) { throw new AssertionError("This method should not be called.");
-         * }
-         *
-         * @Override public void markAttendance(String tutorialName, int week, int
-         * index) { throw new AssertionError("This method should not be called."); }
-         */
+        @Override
+        public void markAttendance(Tutorial tutorial, int week, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public ObservableList<Student> getFilteredStudentList() {

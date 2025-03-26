@@ -207,7 +207,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void markAttendance(Tutorial tutorial, int week, Student student) {
         requireNonNull(tutorial);
-        for (Attendance attendance: attendances) {
+        for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
                 attendance.markAttendance(week);
                 break;
@@ -230,6 +230,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tutorial> getTutorialList() {
         return tutorials.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Attendance> getAttendanceList() {
+        return attendances.asUnmodifiableObservableList();
     }
 
     @Override

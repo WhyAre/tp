@@ -24,7 +24,8 @@ public record Attendance(Tutorial tutorial, Student student,
     /**
      * Marks attendance for the specific week
      *
-     * @param week Week of attendance
+     * @param week
+     *            Week of attendance
      */
     public void markAttendance(int week) {
         attendances.set(week - 3, PRESENT);
