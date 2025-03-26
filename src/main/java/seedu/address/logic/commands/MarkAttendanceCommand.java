@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -33,13 +34,13 @@ public class MarkAttendanceCommand extends Command {
 
     private final Tutorial tutorial;
     private final int week;
-    private final int index;
+    private final Index index;
 
     /**
      * Creates a {@link MarkAttendanceCommand} to mark the specified student's
      * attendance {@code Attendance}
      */
-    public MarkAttendanceCommand(Tutorial tutorial, int week, int index) {
+    public MarkAttendanceCommand(Tutorial tutorial, int week, Index index) {
         this.tutorial = tutorial;
         this.week = week;
         this.index = index;
@@ -54,7 +55,7 @@ public class MarkAttendanceCommand extends Command {
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        Student studentToEdit = lastShownList.get(index);
+        Student studentToEdit = lastShownList.get(index.getZeroBased());
         assert model.hasStudent(studentToEdit);
 
         assert week >= START_WEEK;

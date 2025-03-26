@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEEK;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.commands.UnmarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -45,7 +46,7 @@ public class UnmarkAttendanceCommandParser implements Parser<UnmarkAttendanceCom
             throw new ParseException(String.format(MarkAttendanceCommand.MESSAGE_INVALID_WEEK));
         }
 
-        int index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get()).getZeroBased();
+        Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
 
         Tutorial tutorial = new Tutorial(tutorialString);
 

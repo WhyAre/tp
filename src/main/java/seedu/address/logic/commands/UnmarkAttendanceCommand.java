@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -12,7 +13,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
- * Marks a student as absent.
+ * Unmarks a student's attendance
  */
 public class UnmarkAttendanceCommand extends Command {
 
@@ -33,13 +34,13 @@ public class UnmarkAttendanceCommand extends Command {
 
     private final Tutorial tutorial;
     private final int week;
-    private final int index;
+    private final Index index;
 
     /**
      * Creates an {@link UnmarkAttendanceCommand} to unmark the specified student's
      * attendance {@code Attendance}
      */
-    public UnmarkAttendanceCommand(Tutorial tutorial, int week, int index) {
+    public UnmarkAttendanceCommand(Tutorial tutorial, int week, Index index) {
         this.tutorial = tutorial;
         this.week = week;
         this.index = index;
@@ -54,7 +55,7 @@ public class UnmarkAttendanceCommand extends Command {
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        Student studentToEdit = lastShownList.get(index);
+        Student studentToEdit = lastShownList.get(index.getZeroBased());
         assert model.hasStudent(studentToEdit);
 
         assert week >= START_WEEK;
