@@ -61,8 +61,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void setNavigationMode(NavigationMode navigationMode) {
         requireNonNull(navigationMode);
         this.guiSettings = new GuiSettings(guiSettings.getWindowWidth(), guiSettings.getWindowHeight(),
-                        (int) guiSettings.getWindowCoordinates().getX(),
-                        (int) guiSettings.getWindowCoordinates().getY(), navigationMode);
+                        guiSettings.getWindowCoordinates(), navigationMode);
     }
 
     public Path getAddressBookFilePath() {

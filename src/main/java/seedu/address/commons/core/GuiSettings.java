@@ -37,13 +37,22 @@ public class GuiSettings implements Serializable {
      * and navigation mode. Prevents the {@code UNCHANGED} {@code NavigationMode} to
      * be set.
      */
-    public GuiSettings(double windowWidth, double windowHeight, int xPosition, int yPosition,
+    public GuiSettings(double windowWidth, double windowHeight, Point windowCoordinates,
                     NavigationMode navigationMode) {
         assert navigationMode != NavigationMode.UNCHANGED;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
-        windowCoordinates = new Point(xPosition, yPosition);
+        this.windowCoordinates = windowCoordinates;
         this.navigationMode = navigationMode;
+    }
+
+    /**
+     * Constructs a {@code GuiSettings} with the specified height, width, positions,
+     * and navigation mode.
+     */
+    public GuiSettings(double windowWidth, double windowHeight, int xPosition, int yPosition,
+                    NavigationMode navigationMode) {
+        this(windowWidth, windowHeight, new Point(xPosition, yPosition), navigationMode);
     }
 
     public double getWindowWidth() {
