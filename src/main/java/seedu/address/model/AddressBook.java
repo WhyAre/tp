@@ -134,7 +134,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Deletes a tutorial slot
      */
     public void deleteTutorial(Tutorial tutorial) {
-        tutorials.remove(tutorial);
+        Tutorial toDelete = tutorials.find(tutorial).orElse(tutorial);
+        tutorials.remove(toDelete);
     }
 
     /**
