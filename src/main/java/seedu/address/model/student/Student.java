@@ -104,10 +104,6 @@ public class Student implements Identifiable<Student> {
         return tutorials.contains(tutorial);
     }
 
-    public List<Attendance> getAttendances() {
-        return this.attendances;
-    }
-
     /**
      * Removes invalid tutorials from the student if it doesn't exist in
      * {@code validTuts}
@@ -127,6 +123,13 @@ public class Student implements Identifiable<Student> {
      */
     public void addAttendance(Attendance attendance) {
         this.attendances.add(attendance);
+    }
+
+    /**
+     * Returns a list of attendances owned by the student
+     */
+    public List<Attendance> getAttendances() {
+        return this.attendances;
     }
 
     /**

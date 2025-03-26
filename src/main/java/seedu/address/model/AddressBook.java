@@ -199,34 +199,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         studentFromList.addAttendance(attendance);
 
         this.attendances.add(attendance);
-        System.out.println(studentFromList.getAttendances());
     }
-
-    /**
-     * Creates attendance record for a student in specified tutorial
-     */
-    /*
-     * public void addStudentAttendance(String tutorialName, String studentName)
-     * throws DuplicateItemException, ItemNotFoundException {
-     * requireNonNull(tutorialName); requireNonNull(studentName);
-     *
-     * for (Attendance a : attendances) { if (a.tutorialName().equals(tutorialName))
-     * { Attendance newAttendance = a.clone().addStudent(studentName);
-     * attendances.set(a, newAttendance); break; } } }
-     */
 
     /**
      * Marks students attendance
      */
-    /*
-     * public void markAttendance(String tutorialName, int week, int index) throws
-     * DuplicateItemException, ItemNotFoundException { requireNonNull(tutorialName);
-     *
-     * for (Attendance a : attendances) { if (a.tutorialName().equals(tutorialName))
-     * { Attendance oldAttendance = a.clone(); Attendance newAttendance =
-     * oldAttendance.markAttendance(week, students.get(index).getName().toString());
-     * attendances.set(oldAttendance, newAttendance); break; } } }
-     */
+    public void markAttendance(Tutorial tutorial, int week, Student student) {
+        requireNonNull(tutorial);
+        for (Attendance attendance: attendances) {
+            if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
+                attendance.markAttendance(week);
+                break;
+            }
+        }
+    }
 
     /// / util methods
 

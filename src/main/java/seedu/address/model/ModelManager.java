@@ -149,15 +149,10 @@ public class ModelManager implements Model {
         addressBook.addAttendance(t, s);
     }
 
-    /*
-     * @Override public void addStudentAttendance(String t, String s) throws
-     * DuplicateItemException, ItemNotFoundException {
-     * addressBook.addStudentAttendance(t, s); }
-     *
-     * @Override public void markAttendance(String t, int w, int i) throws
-     * DuplicateItemException, ItemNotFoundException { addressBook.markAttendance(t,
-     * w, i); }
-     */
+    @Override
+    public void markAttendance(Tutorial t, int w, Student s) throws DuplicateItemException, ItemNotFoundException {
+        addressBook.markAttendance(t, w, s);
+    }
 
     // =========== Filtered Student List Accessors
     // =============================================================

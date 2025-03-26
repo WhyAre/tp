@@ -21,6 +21,15 @@ public record Attendance(Tutorial tutorial, Student student,
         this(tutorial, student, new ArrayList<>(Collections.nCopies(NUMBER_OF_WEEKS, ABSENT)));
     }
 
+    /**
+     * Marks attendance for the specific week
+     *
+     * @param week Week of attendance
+     */
+    public void markAttendance(int week) {
+        attendances.set(week - 2, PRESENT);
+    }
+
     @Override
     public boolean hasSameIdentity(Attendance other) {
         if (other == null) {
