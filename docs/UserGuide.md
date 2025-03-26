@@ -220,6 +220,32 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+### Exporting Students and Tutorials : `export`
+
+Exports the list of students and tutorials to `data/students.csv` and `data/tutorials.csv` respectively.
+
+Format: `export`
+
+### Exporting Students : `export students`
+
+Exports the list of students to `data/students.csv`.
+
+Format: `export students`
+
+Exports the list of students from a specified tutorial to `data/students-TUTORIAL_NAME.csv`.
+
+Format: `export students TUTORIAL_NAME`
+
+Examples:
+- `export students`
+- `export students CS2103-T2`
+
+### Exporting Tutorials : `export tutorials`
+
+Exports the list of tutorials to `data/tutorials.csv`.
+
+Format: `export tutorials`
+
 ### Exiting the program : `exit`
 
 Exits the program.
