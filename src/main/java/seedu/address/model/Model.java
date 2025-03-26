@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;

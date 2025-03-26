@@ -24,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;

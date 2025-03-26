@@ -1,18 +1,21 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.attendance.Attendance;
+import seedu.address.model.student.Student;
 
 /**
  * An UI component that displays information of a {@code Tutorial}.
  */
 public class AttendanceCard extends UiPart<Region> {
 
-    private static final String FXML = "AttedanceListCard.fxml";
+    private static final String FXML = "AttendanceListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved
@@ -27,11 +30,13 @@ public class AttendanceCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
-    @FXML
     private Label id;
     @FXML
-    private FlowPane students;
+    private Label studentName;
+    @FXML
+    private FlowPane tutorials;
+    @FXML
+    private FlowPane attendances;
 
     /**
      * Creates an {@code AttendanceCard} with the given {@code Attendance} and index
@@ -41,6 +46,9 @@ public class AttendanceCard extends UiPart<Region> {
         super(FXML);
         this.attendance = attendance;
         id.setText(displayedIndex + ". ");
-        name.setText(attendance.tutorialName());
+        studentName.setText(attendance.student().getName().toString());
+        Student student = attendance.student();
+        student.getTutorials().stream().sorted(Comparator.comparing(tutorial -> tutorial.name()))
+                .forEach(tutorial -> tutorials.getChildren().add(new Label(tutorial.name())));
     }
 }
