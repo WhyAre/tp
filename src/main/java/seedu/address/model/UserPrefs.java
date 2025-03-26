@@ -5,13 +5,17 @@ import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Represents User's preferences.
  */
 public class UserPrefs implements ReadOnlyUserPrefs {
+
+    private static final Logger logger = LogsCenter.getLogger(UserPrefs.class);
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path addressBookFilePath = Paths.get("data", "addressbook.json");
@@ -46,6 +50,23 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void setGuiSettings(GuiSettings guiSettings) {
         requireNonNull(guiSettings);
         this.guiSettings = guiSettings;
+    }
+
+    /**
+     * Returns the navigation mode in {@code guiSettings}.
+     */
+    public NavigationMode getNavigationMode() {
+        return guiSettings.getNavigationMode();
+    }
+
+    /**
+     * Sets the navigation mode in {@code guiSettings}.
+     */
+    public void setNavigationMode(NavigationMode navigationMode) {
+        requireNonNull(navigationMode);
+        logger.config("Setting navigation mode to " + navigationMode);
+        this.guiSettings = new GuiSettings(guiSettings.getWindowWidth(), guiSettings.getWindowHeight(),
+                        guiSettings.getWindowCoordinates(), navigationMode);
     }
 
     public Path getAddressBookFilePath() {
