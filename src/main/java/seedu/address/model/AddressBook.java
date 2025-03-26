@@ -205,16 +205,30 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void markAttendance(Tutorial tutorial, int week, Student student) {
+    public void editAttendance(Tutorial tutorial, int week, Student student, boolean isPresent) {
         requireNonNull(tutorial);
         requireNonNull(student);
 
         for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
-                attendance.markAttendance(week);
+                attendance.editAttendance(week, isPresent);
                 break;
             }
         }
+    }
+
+    /**
+     * Marks student as present
+     */
+    public void markAttendance(Tutorial tutorial, int week, Student student) {
+        editAttendance(tutorial, week, student, true);
+    }
+
+    /**
+     * Marks student as absent
+     */
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student) {
+        editAttendance(tutorial, week, student, false);
     }
 
     /// / util methods

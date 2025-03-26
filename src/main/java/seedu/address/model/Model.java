@@ -121,9 +121,14 @@ public interface Model {
     void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
 
     /**
-     * Marks students attendance
+     * Marks student as present
      */
     void markAttendance(Tutorial tutorial, int week, Student student);
+
+    /**
+     * Marks student as absent
+     */
+    void unmarkAttendance(Tutorial tutorial, int week, Student student);
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the

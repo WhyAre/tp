@@ -22,13 +22,17 @@ public record Attendance(Tutorial tutorial, Student student,
     }
 
     /**
-     * Marks attendance for the specific week
+     * Marks attendance for the specific week as present or absent
      *
-     * @param week
-     *            Week of attendance
+     * @param week Week of attendance
+     * @param isPresent Value is true if mark as present, false if mark as absent
      */
-    public void markAttendance(int week) {
-        attendances.set(week - 3, PRESENT);
+    public void editAttendance(int week, boolean isPresent) {
+        if (isPresent) {
+            attendances.set(week - 3, PRESENT);
+        } else {
+            attendances.set(week - 3, ABSENT);
+        }
     }
 
     @Override
