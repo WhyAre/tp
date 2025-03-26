@@ -64,7 +64,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
      */
     public void setNavigationMode(NavigationMode navigationMode) {
         requireNonNull(navigationMode);
-        logger.config("Setting navigation mode to " + navigationMode);
+        logger.info("Setting navigation mode to " + navigationMode);
         this.guiSettings = new GuiSettings(guiSettings.getWindowWidth(), guiSettings.getWindowHeight(),
                         guiSettings.getWindowCoordinates(), navigationMode);
     }
