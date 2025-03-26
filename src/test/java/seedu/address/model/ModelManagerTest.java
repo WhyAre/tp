@@ -65,6 +65,25 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void setNavigationMode_nullNavigationMode_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, (
+        ) -> modelManager.setNavigationMode(null));
+    }
+
+    @Test
+    public void setNavigationMode_unchangedNavigationMode_throwsAssertionError() {
+        assertThrows(AssertionError.class, (
+        ) -> modelManager.setNavigationMode(NavigationMode.UNCHANGED));
+    }
+
+    @Test
+    public void setNavigationMode_validNavigationMode_setsNavigationMode() {
+        NavigationMode navigationMode = NavigationMode.STUDENT;
+        modelManager.setNavigationMode(navigationMode);
+        assertEquals(navigationMode, modelManager.getNavigationMode());
+    }
+
+    @Test
     public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
         ) -> modelManager.setAddressBookFilePath(null));
