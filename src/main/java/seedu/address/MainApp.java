@@ -91,7 +91,7 @@ public class MainApp extends Application {
                             + " Will be starting with an empty AddressBook.");
             initialData = new AddressBook();
         } catch (Exception e) {
-            logger.warning("An unexpected error occured while loading %s. Will be starting with an empty AddressBook."
+            logger.warning("An unexpected error occurred while loading %s. Will be starting with an empty AddressBook."
                             .formatted(storage.getAddressBookFilePath()));
             initialData = new AddressBook();
         }
