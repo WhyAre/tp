@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
@@ -23,6 +24,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.attendance.Attendance;
+import seedu.address.model.student.Details;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -45,7 +47,8 @@ public class EditCommand extends Command {
                     + "Existing values will be overwritten by the input values.\n"
                     + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "["
                     + PREFIX_ID_STUDENT + "STUDENT_ID] " + "[" + PREFIX_PHONE + "PHONE] " + "[" + PREFIX_EMAIL
-                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n"
+                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_DETAILS + "DETAILS]\n"
+                    + "[" + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n"
                     + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
                     + "johndoe@example.com";
 
@@ -98,7 +101,6 @@ public class EditCommand extends Command {
             }
         }
         editedStudent.setTutorials(existingTutorials);
-
         assert model.hasStudent(studentToEdit);
         try {
             model.setStudent(studentToEdit, editedStudent);
@@ -124,11 +126,12 @@ public class EditCommand extends Command {
         Phone updatedPhone = editStudentDescriptor.getPhone().orElse(studentToEdit.getPhone());
         Email updatedEmail = editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail());
         TelegramHandle updatedHandle = editStudentDescriptor.getHandle().orElse(studentToEdit.getHandle());
+        Details updatedDetails = editStudentDescriptor.getDetails().orElse(studentToEdit.getDetails());
         Set<Tutorial> updatedTutorials = editStudentDescriptor.getTutorials().orElse(studentToEdit.getTutorials());
         List<Attendance> updatedAttendances = studentToEdit.getAttendances();
 
         return new Student(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedHandle, updatedTutorials,
-                updatedAttendances);
+                updatedDetails, updatedAttendances);
     }
 
     @Override
@@ -163,6 +166,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private TelegramHandle handle;
+        private Details details;
         private Set<Tutorial> tutorials;
 
         public EditStudentDescriptor() {
@@ -177,6 +181,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setHandle(toCopy.handle);
+            setDetails(toCopy.details);
             setTutorials(toCopy.tutorials);
         }
 
@@ -184,7 +189,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, studentId, phone, email, handle, tutorials);
+            return CollectionUtil.isAnyNonNull(name, studentId, phone, email, handle, details, tutorials);
         }
 
         public void setName(Name name) {
@@ -227,6 +232,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(handle);
         }
 
+        public void setDetails(Details details) {
+            this.details = details;
+        }
+
+        public Optional<Details> getDetails() {
+            return Optional.ofNullable(details);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}. A defensive copy of
          * {@code tags} is used internally.
@@ -266,7 +279,7 @@ public class EditCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this).add("name", name).add("studentId", studentId).add("phone", phone)
-                            .add("email", email).add("handle", handle).add("tutorials", tutorials).toString();
+                            .add("email", email).add("handle", handle).add("details", details).add("tutorials", tutorials).toString();
         }
     }
 }
