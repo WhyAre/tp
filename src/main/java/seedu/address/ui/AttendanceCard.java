@@ -34,7 +34,7 @@ public class AttendanceCard extends UiPart<Region> {
     @FXML
     private Label studentName;
     @FXML
-    private FlowPane tutorials;
+    private Label tutorialName;
     @FXML
     private FlowPane attendances;
 
@@ -47,8 +47,7 @@ public class AttendanceCard extends UiPart<Region> {
         this.attendance = attendance;
         id.setText(displayedIndex + ". ");
         studentName.setText(attendance.student().getName().toString());
-        Student student = attendance.student();
-        student.getTutorials().stream().sorted(Comparator.comparing(tutorial -> tutorial.name()))
-                .forEach(tutorial -> tutorials.getChildren().add(new Label(tutorial.name())));
+        tutorialName.setText(attendance.tutorial().name());
+        attendance.attendances().forEach(a -> attendances.getChildren().add(new Label(a.toString() + " ")));
     }
 }

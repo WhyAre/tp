@@ -24,6 +24,8 @@ public class ListAttendanceCommand extends Command {
     public static final String MESSAGE_USAGE = "Usage: attendance list s/INDEX"
         + "\nYou must be in STUDENTS or TUTORIAL view";
 
+    public static final String MESSAGE_INVALID_VIEW = "Invalid view. Please switch to STUDENTS or TUTORIAL view first";
+
     public static final String MESSAGE_SUCCESS = "Listed attendances for %s";
 
     private final Index index;
@@ -48,8 +50,9 @@ public class ListAttendanceCommand extends Command {
             Tutorial tutorial = lastShownList.get(index.getZeroBased());
             name = tutorial.name();
             model.updateFilteredAttendanceList(x -> x.tutorial().equals(tutorial));
+        } else {
+            throw new CommandException(MESSAGE_INVALID_VIEW);
         }
-        model.updateFilteredAttendanceList(PREDICATE_SHOW_ALL_ATTENDANCES);
         return new CommandResult(MESSAGE_SUCCESS.formatted(name), NavigationMode.ATTENDANCE);
     }
 }
