@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,19 +27,14 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = "%s: Adds a student to the address book.\n".formatted(COMMAND_WORD)
-                    + "Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE [%sTUTORIAL]...\n".formatted(
+                    + "Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE %sDETAILS [%sTUTORIAL]...\n".formatted(
                                     PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HANDLE,
-                                    PREFIX_TUTORIAL_NAME)
-                    + "Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe ".formatted(
+                                    PREFIX_DETAILS, PREFIX_TUTORIAL_NAME)
+                    + ("Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe %sJohn has " +
+                                    "faster understanding of concepts. ").formatted(
                                     COMMAND_WORD, PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL,
-                                    PREFIX_HANDLE)
+                                    PREFIX_HANDLE, PREFIX_DETAILS)
                     + "%sCS2103_T01 %sCS2106_T02".formatted(PREFIX_TUTORIAL_NAME, PREFIX_TUTORIAL_NAME);
-
-    // public static final String MESSAGE_USAGE =
-    // %s: Adds a student to the address book.
-    // Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE [%sTUTORIAL]...
-    // Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe
-    // %sCS2103_T01 %sCS2106_T02
 
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book";

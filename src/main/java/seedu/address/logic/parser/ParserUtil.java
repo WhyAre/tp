@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.student.Details;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -146,5 +147,18 @@ public class ParserUtil {
             throw new ParseException(TelegramHandle.MESSAGE_CONSTRAINTS);
         }
         return new TelegramHandle(trimmedHandle);
+    }
+
+    /**
+     * Parses a {@code String details} into an {@code Details}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException
+     *             if the given {@code details} is invalid.
+     */
+    public static Details parseDetails(String details) throws ParseException {
+        requireNonNull(details);
+        String trimmedDetails = details.trim();
+        return new Details(trimmedDetails);
     }
 }
