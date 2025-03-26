@@ -120,6 +120,10 @@ public class ModelManager implements Model {
     public void deleteStudent(Student target) {
         addressBook.removeStudent(target);
     }
+    @Override
+    public void viewStudent(Student target) {
+        addressBook.hasStudent(target);
+    }
 
     @Override
     public void addStudent(Student student) {
