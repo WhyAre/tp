@@ -144,6 +144,16 @@ public class ModelManager implements Model {
         return addressBook.hasTutorial(t);
     }
 
+    @Override
+    public void addAttendance(Tutorial t, Student s) throws ItemNotFoundException {
+        addressBook.addAttendance(t, s);
+    }
+
+    @Override
+    public void markAttendance(Tutorial t, int w, Student s) {
+        addressBook.markAttendance(t, w, s);
+    }
+
     // =========== Filtered Student List Accessors
     // =============================================================
 

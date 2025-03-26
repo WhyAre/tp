@@ -174,6 +174,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAttendance(Tutorial tutorial, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void markAttendance(Tutorial tutorial, int week, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Student> getFilteredStudentList() {
             throw new AssertionError("This method should not be called.");
         }

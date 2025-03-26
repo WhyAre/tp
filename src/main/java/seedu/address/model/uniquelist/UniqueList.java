@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import javafx.collections.FXCollections;
@@ -68,6 +69,13 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
      */
     public ObservableList<T> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
+    }
+
+    /**
+     * Returns specified object in the list
+     */
+    public Optional<T> find(T obj) {
+        return internalList.stream().filter(x -> x.hasSameIdentity(obj)).findAny();
     }
 
     /**

@@ -1,8 +1,11 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -29,6 +32,7 @@ public class StudentBuilder {
     private Email email;
     private TelegramHandle handle;
     private Set<Tutorial> tutorials;
+    private List<Attendance> attendances;
 
     /**
      * Creates a {@code StudentBuilder} with the default details.
@@ -40,6 +44,7 @@ public class StudentBuilder {
         email = new Email(DEFAULT_EMAIL);
         handle = new TelegramHandle(DEFAULT_HANDLE);
         tutorials = new HashSet<>();
+        attendances = new ArrayList<>();
     }
 
     /**
@@ -52,6 +57,11 @@ public class StudentBuilder {
         email = studentToCopy.getEmail();
         handle = studentToCopy.getHandle();
         tutorials = new HashSet<>(studentToCopy.getTutorials());
+        attendances = new ArrayList<>();
+
+        for (Tutorial tutorial : tutorials) {
+            attendances.add(new Attendance(tutorial, studentToCopy));
+        }
     }
 
     /**
