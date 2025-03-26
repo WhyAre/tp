@@ -76,6 +76,17 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public NavigationMode getNavigationMode() {
+        return userPrefs.getNavigationMode();
+    }
+
+    @Override
+    public void setNavigationMode(NavigationMode navigationMode) {
+        requireNonNull(navigationMode);
+        userPrefs.setNavigationMode(navigationMode);
+    }
+
+    @Override
     public Path getAddressBookFilePath() {
         return userPrefs.getAddressBookFilePath();
     }
