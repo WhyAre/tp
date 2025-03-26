@@ -26,7 +26,7 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_WEEK, PREFIX_INDEX);
 
-        if (!argMultimap.allPresent(PREFIX_INDEX)) {
+        if (!argMultimap.allPresent(PREFIX_WEEK, PREFIX_INDEX)) {
             throw new ParseException(
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
         }

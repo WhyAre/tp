@@ -185,15 +185,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Creates attendance record for a student in specified tutorial
      */
-    public void addAttendance(Tutorial tutorial, Student student) {
+    public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
 
         // Fetch tutorial from tutorial list
-        Tutorial tutorialFromList = tutorials.find(tutorial).orElse(tutorial);
+        Tutorial tutorialFromList = tutorials.find(tutorial).orElseThrow(ItemNotFoundException::new);
 
         // Fetch student from student list
-        Student studentFromList = students.find(student).orElse(student);
+        Student studentFromList = students.find(student).orElseThrow(ItemNotFoundException::new);
 
         Attendance attendance = new Attendance(tutorialFromList, student);
         tutorialFromList.addAttendance(attendance);
@@ -207,6 +207,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void markAttendance(Tutorial tutorial, int week, Student student) {
         requireNonNull(tutorial);
+        requireNonNull(student);
+
         for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
                 attendance.markAttendance(week);

@@ -5,17 +5,14 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
-import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
- * Adds students to a tutorial slot.
+ * Marks a student as present.
  */
 public class MarkAttendanceCommand extends Command {
 
@@ -60,13 +57,9 @@ public class MarkAttendanceCommand extends Command {
         Student studentToEdit = lastShownList.get(index);
         assert model.hasStudent(studentToEdit);
 
-        try {
-            assert week >= START_WEEK;
-            assert week <= END_WEEK;
-            model.markAttendance(tutorial, week, studentToEdit);
-        } catch (DuplicateItemException | ItemNotFoundException e) {
-            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
-        }
+        assert week >= START_WEEK;
+        assert week <= END_WEEK;
+        model.markAttendance(tutorial, week, studentToEdit);
 
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
