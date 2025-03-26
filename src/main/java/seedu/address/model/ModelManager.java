@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -146,19 +145,19 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addAttendance(Attendance a) {
-        addressBook.addAttendance(a);
+    public void addAttendance(Tutorial t, Student s) {
+        addressBook.addAttendance(t, s);
     }
 
-    @Override
-    public void addStudentAttendance(String t, String s) throws DuplicateItemException, ItemNotFoundException {
-        addressBook.addStudentAttendance(t, s);
-    }
-
-    @Override
-    public void markAttendance(String t, int w, int i) throws DuplicateItemException, ItemNotFoundException {
-        addressBook.markAttendance(t, w, i);
-    }
+    /*
+     * @Override public void addStudentAttendance(String t, String s) throws
+     * DuplicateItemException, ItemNotFoundException {
+     * addressBook.addStudentAttendance(t, s); }
+     *
+     * @Override public void markAttendance(String t, int w, int i) throws
+     * DuplicateItemException, ItemNotFoundException { addressBook.markAttendance(t,
+     * w, i); }
+     */
 
     // =========== Filtered Student List Accessors
     // =============================================================

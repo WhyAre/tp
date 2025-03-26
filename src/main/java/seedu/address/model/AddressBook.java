@@ -182,46 +182,51 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Creates attendance record for a tutorial
+     * Creates attendance record for a student in specified tutorial
      */
-    public void addAttendance(Attendance attendance) {
-        requireNonNull(attendance);
+    public void addAttendance(Tutorial tutorial, Student student) {
+        requireNonNull(tutorial);
+        requireNonNull(student);
+
+        // Fetch tutorial from tutorial list
+        Tutorial tutorialFromList = tutorials.find(tutorial).orElse(tutorial);
+
+        // Fetch student from student list
+        Student studentFromList = students.find(student).orElse(student);
+
+        Attendance attendance = new Attendance(tutorialFromList, student);
+        tutorialFromList.addAttendance(attendance);
+        studentFromList.addAttendance(attendance);
+
         this.attendances.add(attendance);
+        System.out.println(studentFromList.getAttendances());
     }
 
     /**
      * Creates attendance record for a student in specified tutorial
      */
-    public void addStudentAttendance(String tutorialName, String studentName)
-                    throws DuplicateItemException, ItemNotFoundException {
-        requireNonNull(tutorialName);
-        requireNonNull(studentName);
-
-        for (Attendance a : attendances) {
-            if (a.tutorialName().equals(tutorialName)) {
-                Attendance newAttendance = a.clone().addStudent(studentName);
-                attendances.set(a, newAttendance);
-                break;
-            }
-        }
-    }
+    /*
+     * public void addStudentAttendance(String tutorialName, String studentName)
+     * throws DuplicateItemException, ItemNotFoundException {
+     * requireNonNull(tutorialName); requireNonNull(studentName);
+     *
+     * for (Attendance a : attendances) { if (a.tutorialName().equals(tutorialName))
+     * { Attendance newAttendance = a.clone().addStudent(studentName);
+     * attendances.set(a, newAttendance); break; } } }
+     */
 
     /**
      * Marks students attendance
      */
-    public void markAttendance(String tutorialName, int week, int index)
-                    throws DuplicateItemException, ItemNotFoundException {
-        requireNonNull(tutorialName);
-
-        for (Attendance a : attendances) {
-            if (a.tutorialName().equals(tutorialName)) {
-                Attendance oldAttendance = a.clone();
-                Attendance newAttendance = oldAttendance.markAttendance(week, students.get(index).getName().toString());
-                attendances.set(oldAttendance, newAttendance);
-                break;
-            }
-        }
-    }
+    /*
+     * public void markAttendance(String tutorialName, int week, int index) throws
+     * DuplicateItemException, ItemNotFoundException { requireNonNull(tutorialName);
+     *
+     * for (Attendance a : attendances) { if (a.tutorialName().equals(tutorialName))
+     * { Attendance oldAttendance = a.clone(); Attendance newAttendance =
+     * oldAttendance.markAttendance(week, students.get(index).getName().toString());
+     * attendances.set(oldAttendance, newAttendance); break; } } }
+     */
 
     /// / util methods
 

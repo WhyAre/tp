@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -107,23 +106,24 @@ public interface Model {
     boolean hasTutorial(Tutorial tutorial);
 
     /**
-     * Creates attendance record for a tutorial
+     * Creates attendance record for a student in specified tutorial
      */
-    void addAttendance(Attendance attendance);
+    void addAttendance(Tutorial tutorial, Student student);
 
     /**
      * Creates attendance record for a student in specified tutorial
      */
-    void addStudentAttendance(String tutorialName, String studentName)
-                    throws DuplicateItemException, ItemNotFoundException;
-
-    /**
-     * Marks students attendance
+    /*
+     * void addStudentAttendance(String tutorialName, String studentName) throws
+     * DuplicateItemException, ItemNotFoundException;
+     *
+     * /** Marks students attendance
      */
-    void markAttendance(String tutorialName, int week, int index) throws DuplicateItemException, ItemNotFoundException;
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Student} backed by the
+    /*
+     * void markAttendance(String tutorialName, int week, int index) throws
+     * DuplicateItemException, ItemNotFoundException;
+     *
+     * /** Returns an unmodifiable view of the list of {@code Student} backed by the
      * internal list of {@code versionedAddressBook}
      */
     ObservableList<Student> getFilteredStudentList();

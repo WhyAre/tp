@@ -6,7 +6,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
@@ -42,7 +41,6 @@ public class AddTutorialCommand extends Command {
         }
 
         model.addTutorial(toAdd);
-        model.addAttendance(new Attendance(toAdd.name()));
         return new CommandResult(MESSAGE_SUCCESS.formatted(toAdd), NavigationMode.TUTORIAL);
     }
 

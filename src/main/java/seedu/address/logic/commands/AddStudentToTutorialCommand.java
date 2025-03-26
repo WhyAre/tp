@@ -62,16 +62,18 @@ public class AddStudentToTutorialCommand extends Command {
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
+            assert model.hasStudent(studentToEdit);
+
             Student editedStudent = studentToEdit.clone();
+            assert studentToEdit.hashCode() == editedStudent.hashCode();
+
             Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
             tutorials.add(tutorial);
             editedStudent.setTutorials(tutorials);
 
-            assert model.hasStudent(studentToEdit);
-            assert studentToEdit.hashCode() == editedStudent.hashCode();
             try {
                 model.setStudent(studentToEdit, editedStudent);
-                model.addStudentAttendance(tutorial.name(), editedStudent.getName().toString());
+                model.addAttendance(tutorial, editedStudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {
                 throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
             }
