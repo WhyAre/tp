@@ -21,6 +21,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.student.Student;
@@ -114,6 +115,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public NavigationMode getNavigationMode() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setNavigationMode(NavigationMode navigationMode) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public Path getAddressBookFilePath() {
             throw new AssertionError("This method should not be called.");
         }
@@ -170,6 +181,16 @@ public class AddCommandTest {
 
         @Override
         public boolean hasTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addAttendance(Tutorial tutorial, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void markAttendance(Tutorial tutorial, int week, Student student) {
             throw new AssertionError("This method should not be called.");
         }
 
