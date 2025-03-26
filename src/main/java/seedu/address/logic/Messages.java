@@ -40,9 +40,8 @@ public class Messages {
         final StringBuilder builder = new StringBuilder();
         builder.append(student.getName()).append("; Student ID: ").append(student.getStudentId()).append("; Phone: ")
                         .append(student.getPhone()).append("; Email: ").append(student.getEmail())
-                        .append("; Telegram Handle: ").append(student.getHandle())
-                        .append("; Details: ").append(student.getDetails())
-                        .append("; Tutorials: ");
+                        .append("; Telegram Handle: ").append(student.getHandle()).append("; Details: ")
+                        .append(student.getDetails()).append("; Tutorials: ");
         student.getTutorials().forEach(builder::append);
         return builder.toString();
     }

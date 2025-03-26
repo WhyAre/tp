@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
@@ -36,11 +34,12 @@ public class Student implements Identifiable<Student> {
 
     /**
      * Constructs a {@code Student} object with the provided details and attendance.
-     * Every field other than {@code details} and {@code attendances} must be present and not null.
-     * If {@code details} or {@code attendances} are null, they will be initialized with default values.
+     * Every field other than {@code details} and {@code attendances} must be
+     * present and not null. If {@code details} or {@code attendances} are null,
+     * they will be initialized with default values.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                   Set<Tutorial> tutorials, Details details, List<Attendance> attendances) {
+                    Set<Tutorial> tutorials, Details details, List<Attendance> attendances) {
         requireAllNonNull(name, studentId, phone, email, handle, tutorials);
         this.name = name;
         this.studentId = studentId;
@@ -53,27 +52,29 @@ public class Student implements Identifiable<Student> {
     }
 
     /**
-     * Constructs a {@code Student} object with the provided required fields and default empty details and attendance.
+     * Constructs a {@code Student} object with the provided required fields and
+     * default empty details and attendance.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                   Set<Tutorial> tutorials) {
+                    Set<Tutorial> tutorials) {
         this(name, studentId, phone, email, handle, tutorials, null, null);
     }
 
     /**
-     * Constructs a {@code Student} object with the provided required fields and default empty details,
-     * and with a specified list of attendances.
+     * Constructs a {@code Student} object with the provided required fields and
+     * default empty details, and with a specified list of attendances.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                   Set<Tutorial> tutorials, List<Attendance> attendances) {
+                    Set<Tutorial> tutorials, List<Attendance> attendances) {
         this(name, studentId, phone, email, handle, tutorials, null, attendances);
     }
 
     /**
-     * Constructs a {@code Student} object with the provided required fields and details field
+     * Constructs a {@code Student} object with the provided required fields and
+     * details field
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                   Set<Tutorial> tutorials, Details details) {
+                    Set<Tutorial> tutorials, Details details) {
         this(name, studentId, phone, email, handle, tutorials, details, null);
     }
 
@@ -211,8 +212,8 @@ public class Student implements Identifiable<Student> {
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("name", name).add("studentId", studentId).add("phone", phone)
-                        .add("email", email).add("handle", handle).add("details", details)
-                        .add("tutorials", tutorials).toString();
+                        .add("email", email).add("handle", handle).add("details", details).add("tutorials", tutorials)
+                        .toString();
     }
 
     @Override

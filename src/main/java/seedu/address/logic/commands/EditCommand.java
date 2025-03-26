@@ -47,10 +47,9 @@ public class EditCommand extends Command {
                     + "Existing values will be overwritten by the input values.\n"
                     + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "["
                     + PREFIX_ID_STUDENT + "STUDENT_ID] " + "[" + PREFIX_PHONE + "PHONE] " + "[" + PREFIX_EMAIL
-                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_DETAILS + "DETAILS]\n"
-                    + "[" + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n"
-                    + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
-                    + "johndoe@example.com";
+                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_DETAILS + "DETAILS]\n" + "["
+                    + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE
+                    + "91234567 " + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -131,7 +130,7 @@ public class EditCommand extends Command {
         List<Attendance> updatedAttendances = studentToEdit.getAttendances();
 
         return new Student(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedHandle, updatedTutorials,
-                updatedDetails, updatedAttendances);
+                        updatedDetails, updatedAttendances);
     }
 
     @Override
@@ -279,7 +278,8 @@ public class EditCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this).add("name", name).add("studentId", studentId).add("phone", phone)
-                            .add("email", email).add("handle", handle).add("details", details).add("tutorials", tutorials).toString();
+                            .add("email", email).add("handle", handle).add("details", details)
+                            .add("tutorials", tutorials).toString();
         }
     }
 }

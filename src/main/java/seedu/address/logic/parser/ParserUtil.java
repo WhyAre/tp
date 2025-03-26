@@ -150,8 +150,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String details} into an {@code Details}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String details} into an {@code Details}. Leading and trailing
+     * whitespaces will be trimmed.
      *
      * @throws ParseException
      *             if the given {@code details} is invalid.

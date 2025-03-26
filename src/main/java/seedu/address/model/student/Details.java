@@ -1,11 +1,10 @@
 package seedu.address.model.student;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Student's details in the address book.
- * Guarantees: immutable; can be empty or valid as declared in {@link #isValidDetails(String)}
+ * Represents a Student's details in the address book. Guarantees: immutable;
+ * can be empty or valid as declared in {@link #isValidDetails(String)}
  */
 public class Details {
     /**
@@ -16,7 +15,8 @@ public class Details {
     /**
      * Constructs a {@code Details} object.
      *
-     * @param details Any string representing details. Cannot be null.
+     * @param details
+     *            Any string representing details. Cannot be null.
      */
     public Details(String details) {
         requireNonNull(details);
@@ -36,7 +36,8 @@ public class Details {
     /**
      * Compares this {@code Details} object to another object for equality.
      *
-     * @param other The object to compare to.
+     * @param other
+     *            The object to compare to.
      * @return True if both objects have the same details value, false otherwise.
      */
     @Override
