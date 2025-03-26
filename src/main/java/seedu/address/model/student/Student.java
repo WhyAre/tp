@@ -21,6 +21,7 @@ public class Student {
     private final Phone phone;
     private final Email email;
     private final TelegramHandle handle;
+    private final Details details;
 
     // Data fields
     private Set<Tutorial> tutorials;
@@ -29,13 +30,28 @@ public class Student {
      * Every field must be present and not null.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                    Set<Tutorial> tutorials) {
+                   Details details, Set<Tutorial> tutorials) {
         requireAllNonNull(name, studentId, phone, email, handle, tutorials);
         this.name = name;
         this.studentId = studentId;
         this.phone = phone;
         this.email = email;
         this.handle = handle;
+        this.details = details;
+        this.tutorials = tutorials;
+    }
+
+    /**
+     * Constructor with default empty details.
+     */
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                   Set<Tutorial> tutorials) {
+        this.name = name;
+        this.studentId = studentId;
+        this.phone = phone;
+        this.email = email;
+        this.handle = handle;
+        this.details = new Details("");
         this.tutorials = tutorials;
     }
 
@@ -57,6 +73,15 @@ public class Student {
 
     public TelegramHandle getHandle() {
         return handle;
+    }
+
+    /**
+     * Returns the details of the student.
+     *
+     * @return the details of the student
+     */
+    public Details getDetails() {
+        return details;
     }
 
     /**
@@ -98,7 +123,7 @@ public class Student {
      * Returns a clone of the current student.
      */
     public Student clone() {
-        return new Student(name, studentId, phone, email, handle, tutorials);
+        return new Student(name, studentId, phone, email, handle, details, tutorials);
     }
 
     /**
@@ -119,19 +144,20 @@ public class Student {
         Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
                         && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle);
+                        && handle.equals(otherStudent.handle) && details.equals(otherStudent.details);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, handle, tutorials);
+        return Objects.hash(name, phone, email, handle, details, tutorials);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("name", name).add("studentId", studentId).add("phone", phone)
-                        .add("email", email).add("handle", handle).add("tutorials", tutorials).toString();
+                        .add("email", email).add("handle", handle).add("details", details)
+                        .add("tutorials", tutorials).toString();
     }
 
 }
