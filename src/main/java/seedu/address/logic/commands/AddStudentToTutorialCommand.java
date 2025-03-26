@@ -14,6 +14,8 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Adds students to a tutorial slot.
@@ -60,13 +62,21 @@ public class AddStudentToTutorialCommand extends Command {
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
+            assert model.hasStudent(studentToEdit);
+
             Student editedStudent = studentToEdit.clone();
+            assert studentToEdit.hashCode() == editedStudent.hashCode();
+
             Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
             tutorials.add(tutorial);
             editedStudent.setTutorials(tutorials);
 
-            model.setStudent(studentToEdit, editedStudent);
-            model.addStudentAttendance(tutorial.name(), editedStudent.getName().toString());
+            try {
+                model.setStudent(studentToEdit, editedStudent);
+                model.addAttendance(tutorial, editedStudent);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
 
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);

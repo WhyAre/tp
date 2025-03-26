@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
@@ -103,5 +104,15 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public NavigationMode getNavigationMode() {
+        return model.getNavigationMode();
+    }
+
+    @Override
+    public void setNavigationMode(NavigationMode navigationMode) {
+        model.setNavigationMode(navigationMode);
     }
 }

@@ -13,10 +13,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -77,6 +78,17 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public NavigationMode getNavigationMode() {
+        return userPrefs.getNavigationMode();
+    }
+
+    @Override
+    public void setNavigationMode(NavigationMode navigationMode) {
+        requireNonNull(navigationMode);
+        userPrefs.setNavigationMode(navigationMode);
+    }
+
+    @Override
     public Path getAddressBookFilePath() {
         return userPrefs.getAddressBookFilePath();
     }
@@ -118,7 +130,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setStudent(Student target, Student editedStudent) {
+    public void setStudent(Student target, Student editedStudent) throws DuplicateItemException, ItemNotFoundException {
         requireAllNonNull(target, editedStudent);
 
         addressBook.setStudent(target, editedStudent);
@@ -146,18 +158,13 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addAttendance(Attendance a) {
-        addressBook.addAttendance(a);
+    public void addAttendance(Tutorial t, Student s) throws ItemNotFoundException {
+        addressBook.addAttendance(t, s);
     }
 
     @Override
-    public void addStudentAttendance(String t, String s) {
-        addressBook.addStudentAttendance(t, s);
-    }
-
-    @Override
-    public void markAttendance(String t, int w, int i) {
-        addressBook.markAttendance(t, w, i);
+    public void markAttendance(Tutorial t, int w, Student s) {
+        addressBook.markAttendance(t, w, s);
     }
 
     // =========== Filtered Student List Accessors

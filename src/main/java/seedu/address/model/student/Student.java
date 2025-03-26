@@ -2,12 +2,15 @@ package seedu.address.model.student;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -26,6 +29,7 @@ public class Student implements Identifiable<Student> {
 
     // Data fields
     private Set<Tutorial> tutorials;
+    private List<Attendance> attendances;
 
     /**
      * Every field must be present and not null.
@@ -39,6 +43,22 @@ public class Student implements Identifiable<Student> {
         this.email = email;
         this.handle = handle;
         this.tutorials = tutorials;
+        this.attendances = new ArrayList<>();
+    }
+
+    /**
+     * Creates a student object with attendance
+     */
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                    Set<Tutorial> tutorials, List<Attendance> attendances) {
+        requireAllNonNull(name, studentId, phone, email, handle, tutorials);
+        this.name = name;
+        this.studentId = studentId;
+        this.phone = phone;
+        this.email = email;
+        this.handle = handle;
+        this.tutorials = tutorials;
+        this.attendances = attendances;
     }
 
     public Name getName() {
@@ -96,6 +116,23 @@ public class Student implements Identifiable<Student> {
     }
 
     /**
+     * Adds an attendance record for the student
+     *
+     * @param attendance
+     *            Attendance object
+     */
+    public void addAttendance(Attendance attendance) {
+        this.attendances.add(attendance);
+    }
+
+    /**
+     * Returns a list of attendances owned by the student
+     */
+    public List<Attendance> getAttendances() {
+        return this.attendances;
+    }
+
+    /**
      * Returns true if both students have the same name. This defines a weaker
      * notion of equality between two students.
      */
@@ -114,7 +151,8 @@ public class Student implements Identifiable<Student> {
      * Returns a clone of the current student.
      */
     public Student clone() {
-        return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials));
+        return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials),
+                        new ArrayList<>(attendances));
     }
 
     /**
@@ -141,7 +179,7 @@ public class Student implements Identifiable<Student> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, handle, tutorials);
+        return Objects.hash(name, studentId, phone, email, handle);
     }
 
     @Override

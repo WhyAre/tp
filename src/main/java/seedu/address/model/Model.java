@@ -6,10 +6,11 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * The API of the Model component.
@@ -43,6 +44,16 @@ public interface Model {
      * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Returns the {@code NavigationMode} in the user prefs' GUI settings.
+     */
+    NavigationMode getNavigationMode();
+
+    /**
+     * Sets the {@code NavigationMode} in the user prefs' GUI settings.
+     */
+    void setNavigationMode(NavigationMode navigationMode);
 
     /**
      * Returns the user prefs' address book file path.
@@ -85,7 +96,7 @@ public interface Model {
      * {@code editedStudent} must not be the same as another existing student in the
      * address book.
      */
-    void setStudent(Student target, Student editedStudent);
+    void setStudent(Student target, Student editedStudent) throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Adds a tutorial slot
@@ -108,19 +119,14 @@ public interface Model {
     boolean hasTutorial(Tutorial tutorial);
 
     /**
-     * Creates attendance record for a tutorial
-     */
-    void addAttendance(Attendance attendance);
-
-    /**
      * Creates attendance record for a student in specified tutorial
      */
-    void addStudentAttendance(String tutorialName, String studentName);
+    void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
 
     /**
      * Marks students attendance
      */
-    void markAttendance(String tutorialName, int week, int index);
+    void markAttendance(Tutorial tutorial, int week, Student student);
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the

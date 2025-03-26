@@ -10,11 +10,14 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.UniqueList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
@@ -57,7 +60,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the student list with {@code students}.
      * {@code students} must not contain duplicate students.
      */
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<Student> students) throws DuplicateItemException {
         this.students.setAll(students);
     }
 
@@ -67,8 +70,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
-        setStudents(newData.getStudentList());
-        setTutorials(newData.getTutorialList());
+        try {
+            setStudents(newData.getStudentList());
+            setTutorials(newData.getTutorialList());
+        } catch (DuplicateItemException e) {
+            // Since it's coming from an address book, these errors shouldn't be thrown
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
     }
 
     //// student-level operations
@@ -99,7 +107,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * student identity of {@code editedstudent} must not be the same as another
      * existing student in the address book.
      */
-    public void setStudent(Student target, Student editedstudent) {
+    public void setStudent(Student target, Student editedstudent) throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(editedstudent);
 
         students.set(target, editedstudent);
@@ -126,7 +134,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Deletes a tutorial slot
      */
     public void deleteTutorial(Tutorial tutorial) {
-        tutorials.remove(tutorial);
+        Tutorial toDelete = tutorials.find(tutorial).orElse(tutorial);
+        tutorials.remove(toDelete);
     }
 
     /**
@@ -144,7 +153,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             newTutorials.remove(tutorial);
             editedstudent.setTutorials(newTutorials);
 
-            this.setStudent(student, editedstudent);
+            // Assertions
+            // - editedStudent always be unique
+            assert students.contains(student);
+
+            try {
+                this.setStudent(student, editedstudent);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -160,46 +177,41 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the tutorial list with {@code tutorials}.
      * {@code tutorials} must not contain duplicate tutorials.
      */
-    public void setTutorials(List<Tutorial> tutorials) {
+    public void setTutorials(List<Tutorial> tutorials) throws DuplicateItemException {
         requireNonNull(tutorials);
         this.tutorials.setAll(tutorials);
     }
 
     /**
-     * Creates attendance record for a tutorial
-     */
-    public void addAttendance(Attendance attendance) {
-        requireNonNull(attendance);
-        this.attendances.add(attendance);
-    }
-
-    /**
      * Creates attendance record for a student in specified tutorial
      */
-    public void addStudentAttendance(String tutorialName, String studentName) {
-        requireNonNull(tutorialName);
-        requireNonNull(studentName);
+    public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        requireNonNull(tutorial);
+        requireNonNull(student);
 
-        for (Attendance a : attendances) {
-            if (a.tutorialName().equals(tutorialName)) {
-                Attendance newAttendance = a.clone().addStudent(studentName);
-                attendances.set(a, newAttendance);
-                break;
-            }
-        }
+        // Fetch tutorial from tutorial list
+        Tutorial tutorialFromList = tutorials.find(tutorial).orElseThrow(ItemNotFoundException::new);
+
+        // Fetch student from student list
+        Student studentFromList = students.find(student).orElseThrow(ItemNotFoundException::new);
+
+        Attendance attendance = new Attendance(tutorialFromList, student);
+        tutorialFromList.addAttendance(attendance);
+        studentFromList.addAttendance(attendance);
+
+        this.attendances.add(attendance);
     }
 
     /**
      * Marks students attendance
      */
-    public void markAttendance(String tutorialName, int week, int index) {
-        requireNonNull(tutorialName);
+    public void markAttendance(Tutorial tutorial, int week, Student student) {
+        requireNonNull(tutorial);
+        requireNonNull(student);
 
-        for (Attendance a : attendances) {
-            if (a.tutorialName().equals(tutorialName)) {
-                Attendance oldAttendance = a.clone();
-                Attendance newAttendance = oldAttendance.markAttendance(week, students.get(index).getName().toString());
-                attendances.set(oldAttendance, newAttendance);
+        for (Attendance attendance : attendances) {
+            if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
+                attendance.markAttendance(week);
                 break;
             }
         }

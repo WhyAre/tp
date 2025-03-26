@@ -2,14 +2,17 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
+import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
- * Adds students to a tutorial slot.
+ * Marks a student as present.
  */
 public class MarkAttendanceCommand extends Command {
 
@@ -20,7 +23,13 @@ public class MarkAttendanceCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Attendance marked!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
+
+    public static final String MESSAGE_INVALID_WEEK = "Weeks are from 3 to 13. If you are making up for tutorials, "
+                    + "enter the week that is being accounted for.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
+
+    public static final int START_WEEK = 3;
+    public static final int END_WEEK = 13;
 
     private final Tutorial tutorial;
     private final int week;
@@ -43,8 +52,14 @@ public class MarkAttendanceCommand extends Command {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
 
-        String tutorialName = tutorial.name();
-        model.markAttendance(tutorialName, week, index);
+        List<Student> lastShownList = model.getFilteredStudentList();
+
+        Student studentToEdit = lastShownList.get(index);
+        assert model.hasStudent(studentToEdit);
+
+        assert week >= START_WEEK;
+        assert week <= END_WEEK;
+        model.markAttendance(tutorial, week, studentToEdit);
 
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.ATTENDANCE);
     }

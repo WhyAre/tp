@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     private AttendanceListPanel attendanceListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private StatusBarFooter statusBarFooter;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -84,6 +85,7 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        setUiVisibilities(logic.getNavigationMode());
 
         setAccelerators();
 
@@ -146,7 +148,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath(), logic.getNavigationMode());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -166,19 +168,11 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Sets the visibility and manageability of the specified UI element.
-     */
-    private void setElementVisibility(Node element, boolean isVisible) {
-        element.setVisible(isVisible);
-        element.setManaged(isVisible);
-    }
-
-    /**
      * Sets the visibility of the student and tutorial list UI elements according to
      * the specified navigation mode.
      */
-    private void handleMode(NavigationMode mode) {
-        switch (mode) {
+    private void setUiVisibilities(NavigationMode navigationMode) {
+        switch (navigationMode) {
         case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
@@ -206,6 +200,35 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Sets the visibility and manageability of the specified UI element.
+     */
+    private void setElementVisibility(Node element, boolean isVisible) {
+        element.setVisible(isVisible);
+        element.setManaged(isVisible);
+    }
+
+    /**
+     * Sets the navigation mode in {@code GuiSettings} to the navigation mode
+     * specified.
+     */
+    private void setNavigationMode(NavigationMode navigationMode) {
+        logic.setNavigationMode(navigationMode);
+    }
+
+    /**
+     * Sets the navigation mode to the specified mode and updates the visibilities
+     * of UI elements, and updates the status bar footer accordingly, if needed.
+     */
+    private void handleMode(NavigationMode navigationMode) {
+        if (navigationMode == NavigationMode.UNCHANGED) {
+            return;
+        }
+        setNavigationMode(navigationMode);
+        setUiVisibilities(navigationMode);
+        statusBarFooter.setNavigationMode(navigationMode);
+    }
+
+    /**
      * Opens the help window or focuses on it if it's already opened.
      */
     @FXML
@@ -227,7 +250,8 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                        (int) primaryStage.getX(), (int) primaryStage.getY());
+                        (int) primaryStage.getX(), (int) primaryStage.getY(),
+                        logic.getGuiSettings().getNavigationMode());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
