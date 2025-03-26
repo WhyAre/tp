@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -8,20 +12,16 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
 /**
- * View a student identified using it's displayed index from the address
- * book.
+ * View a student identified using it's displayed index from the address book.
  */
 public class ViewCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-                    + ": View more information of the student identified by the index number used in the displayed student list.\n"
+                    + ": View more information of the student identified by the index "
+                    + "number used in the displayed student list.\n"
                     + "Parameters: INDEX (must be a positive integer)\n" + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_VIEWED_PERSON_SUCCESS = "Viewed Student: %1$s";
@@ -43,7 +43,8 @@ public class ViewCommand extends Command {
 
         Student studentToView = lastShownList.get(targetIndex.getZeroBased());
         model.setSelectedStudent(studentToView);
-        return new CommandResult(String.format(MESSAGE_VIEWED_PERSON_SUCCESS, Messages.format(studentToView)), NavigationMode.SINGLE_STUDENT);
+        return new CommandResult(String.format(MESSAGE_VIEWED_PERSON_SUCCESS, Messages.format(studentToView)),
+                        NavigationMode.SINGLE_STUDENT);
     }
 
     @Override

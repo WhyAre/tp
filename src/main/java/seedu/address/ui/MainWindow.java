@@ -146,7 +146,10 @@ public class MainWindow extends UiPart<Stage> {
         ObjectProperty<Student> selectedStudentProperty = logic.getSelectedStudent();
         StudentArea studentArea = new StudentArea();
 
-        selectedStudentProperty.addListener((observable, oldValue, newValue) -> {
+        selectedStudentProperty.addListener((
+                        observable, oldValue, newValue
+        ) -> {
+            logger.info("Student selection changed from " + oldValue + " to " + newValue);
             if (newValue != null) {
                 studentArea.updateStudent(newValue);
             } else {

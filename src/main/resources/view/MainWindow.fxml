@@ -61,8 +61,8 @@
           <StackPane fx:id="tutorialListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="studentAreaPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+        <StackPane fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"
+                   minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>

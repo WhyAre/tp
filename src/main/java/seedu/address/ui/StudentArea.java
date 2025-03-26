@@ -1,18 +1,12 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.model.student.Student;
-
-import java.util.Comparator;
-
-import static java.util.Objects.requireNonNull;
-
 
 /**
  * An UI component that displays specific information of a {@code Student}.
@@ -43,28 +37,23 @@ public class StudentArea extends UiPart<Region> {
     @FXML
     private Label studentHandleLabel;
     @FXML
-    private TextArea details;
+    private Label studentDetailTextArea;
     @FXML
-    private FlowPane tutorials;
+    private FlowPane tutorialsContainer;
 
     /**
-     * Creates a {@code StudentCode} with the given default values to
-     * display.
+     * Creates a {@code StudentCode} with the given default values to display.
      */
     public StudentArea() {
         super(FXML);
         this.student = null;
     }
 
-    public StudentArea(Student student) {
-        super(FXML);
-        this.student = student;
-    }
-
     /**
      * Updates the displayed student information.
      *
-     * @param student the new student object to display
+     * @param student
+     *            the new student object to display
      */
     public void updateStudent(Student student) {
         if (student != null) {
@@ -73,20 +62,18 @@ public class StudentArea extends UiPart<Region> {
             studentPhoneLabel.setText(student.getPhone().value);
             studentHandleLabel.setText(student.getHandle().handle);
             studentEmailLabel.setText(student.getEmail().value);
-//            details.setText(student.getDetails().value);
-//
-//            tutorials.getChildren().clear();
-//            student.getTutorials().stream()
-//                    .sorted(Comparator.comparing(tutorial -> tutorial.name()))
-//                    .forEach(tutorial -> tutorials.getChildren().add(new Label(tutorial.name())));
+            studentDetailTextArea.setText(student.getDetails().value);
+            tutorialsContainer.getChildren().clear();
+            student.getTutorials().stream().sorted(Comparator.comparing(tutorial -> tutorial.name()))
+                            .forEach(tutorial -> tutorialsContainer.getChildren().add(new Label(tutorial.name())));
         } else {
             studentNameLabel.setText("");
             studentIdLabel.setText("");
             studentPhoneLabel.setText("");
             studentHandleLabel.setText("");
             studentEmailLabel.setText("");
-            details.setText("");
-            tutorials.getChildren().clear();
+            studentDetailTextArea.setText("");
+            tutorialsContainer.getChildren().clear();
         }
     }
 }
