@@ -24,8 +24,10 @@ public record Attendance(Tutorial tutorial, Student student,
     /**
      * Marks attendance for the specific week as present or absent
      *
-     * @param week Week of attendance
-     * @param isPresent Value is true if mark as present, false if mark as absent
+     * @param week
+     *            Week of attendance
+     * @param isPresent
+     *            Value is true if mark as present, false if mark as absent
      */
     public void editAttendance(int week, boolean isPresent) {
         if (isPresent) {

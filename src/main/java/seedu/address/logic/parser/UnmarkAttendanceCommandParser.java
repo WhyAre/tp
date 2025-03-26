@@ -29,14 +29,14 @@ public class UnmarkAttendanceCommandParser implements Parser<UnmarkAttendanceCom
 
         if (!argMultimap.allPresent(PREFIX_WEEK, PREFIX_INDEX)) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
         }
 
         String tutorialString = argMultimap.getPreamble();
         // Throw parse error if no tutorial is specified.
         if (tutorialString.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
         }
 
         int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getZeroBased() + 1;
