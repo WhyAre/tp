@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
@@ -54,7 +55,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         TelegramHandle handle = ParserUtil.parseTelegramHandle(argMultimap.getValue(PREFIX_HANDLE).get());
         Set<Tutorial> tutorialList = ParserUtil.parseTutorials(argMultimap.getAllValues(PREFIX_TUTORIAL_NAME));
-        Details details = ParserUtil.parseDetails(argMultimap.getValue(PREFIX_HANDLE).get());
+        Optional<String> detailsOptional = argMultimap.getValue(PREFIX_DETAILS);
+        Details details = detailsOptional.map(ParserUtil::parseDetails).orElse(new Details(""));
 
         Student student = new Student(name, studentId, phone, email, handle, tutorialList, details);
 

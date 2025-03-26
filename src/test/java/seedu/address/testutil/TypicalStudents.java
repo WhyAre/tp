@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAILS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_HANDLE_AMY;
@@ -58,7 +59,7 @@ public class TypicalStudents {
                     .withTutorials(VALID_TUTORIAL_1).build();
     public static final Student BOB = new StudentBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                     .withStudentId(VALID_ID_BOB).withEmail(VALID_EMAIL_BOB).withHandle(VALID_HANDLE_BOB)
-                    .withTutorials(VALID_TUTORIAL_2, VALID_TUTORIAL_1).build();
+                    .withDetails(VALID_DETAILS_BOB).withTutorials(VALID_TUTORIAL_2, VALID_TUTORIAL_1).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

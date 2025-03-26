@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
@@ -38,6 +39,8 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_HANDLE_AMY = "@amy_bee";
     public static final String VALID_HANDLE_BOB = "@b0bch00";
+    public static final String VALID_DETAILS_BOB = "";
+    public static final String VALID_DETAILS_AMY = "";
     public static final String VALID_TUTORIAL_1 = "CS2103-T1";
     public static final String VALID_TUTORIAL_2 = "CS2106-T37";
 
@@ -51,6 +54,8 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String HANDLE_DESC_AMY = " " + PREFIX_HANDLE + VALID_HANDLE_AMY;
     public static final String HANDLE_DESC_BOB = " " + PREFIX_HANDLE + VALID_HANDLE_BOB;
+    public static final String DETAILS_DESC_BOB = " " + PREFIX_DETAILS + VALID_DETAILS_BOB;
+    public static final String DETAILS_DESC_AMY = " " + PREFIX_HANDLE + VALID_DETAILS_AMY;
     public static final String TUTORIAL_DESC_1 = " " + PREFIX_TUTORIAL_NAME + VALID_TUTORIAL_1;
     public static final String TUTORIAL_DESC_2 = " " + PREFIX_TUTORIAL_NAME + VALID_TUTORIAL_2;
 

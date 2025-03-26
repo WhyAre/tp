@@ -156,7 +156,7 @@ public class ParserUtil {
      * @throws ParseException
      *             if the given {@code details} is invalid.
      */
-    public static Details parseDetails(String details) throws ParseException {
+    public static Details parseDetails(String details) {
         requireNonNull(details);
         String trimmedDetails = details.trim();
         return new Details(trimmedDetails);
