@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;

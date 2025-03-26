@@ -9,6 +9,8 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -30,6 +32,7 @@ public class ModelManager implements Model {
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
     private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
+    private ObjectProperty<Student> student;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,6 +44,8 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        student = new SimpleObjectProperty<>();
+
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
         filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
@@ -120,9 +125,15 @@ public class ModelManager implements Model {
     public void deleteStudent(Student target) {
         addressBook.removeStudent(target);
     }
+
     @Override
-    public void viewStudent(Student target) {
-        addressBook.hasStudent(target);
+    public ObjectProperty<Student> getSelectedStudent() {
+        return student;
+    }
+
+    @Override
+    public void setSelectedStudent(Student target) {
+        student.set(target);
     }
 
     @Override

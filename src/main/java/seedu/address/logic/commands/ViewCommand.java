@@ -5,6 +5,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 
 import java.util.List;
@@ -41,8 +42,8 @@ public class ViewCommand extends Command {
         }
 
         Student studentToView = lastShownList.get(targetIndex.getZeroBased());
-        model.viewStudent(studentToView);
-        return new CommandResult(String.format(MESSAGE_VIEWED_PERSON_SUCCESS, Messages.format(studentToView)));
+        model.setSelectedStudent(studentToView);
+        return new CommandResult(String.format(MESSAGE_VIEWED_PERSON_SUCCESS, Messages.format(studentToView)), NavigationMode.SINGLE_STUDENT);
     }
 
     @Override

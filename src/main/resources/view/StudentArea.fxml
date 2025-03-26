@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<VBox fx:id="studentArea" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <Label fx:id="studentNameLabel" text="Name: " />
+  <Label fx:id="studentIdLabel" text="ID: " />
+  <Label fx:id="studentEmailLabel" text="Email: " />
+  <Label fx:id="studentPhoneLabel" text="Phone: " />
+  <Label fx:id="studentHandleLabel" text="Handle: " />
+</VBox>

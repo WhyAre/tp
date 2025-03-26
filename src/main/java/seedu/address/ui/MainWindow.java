@@ -4,6 +4,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_NAVIGATION_MODE;
 
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.NavigationMode;
+import seedu.address.model.student.Student;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -55,10 +57,16 @@ public class MainWindow extends UiPart<Stage> {
     private VBox tutorialList;
 
     @FXML
+    private VBox studentArea;
+
+    @FXML
     private StackPane studentListPanelPlaceholder;
 
     @FXML
     private StackPane tutorialListPanelPlaceholder;
+
+    @FXML
+    private StackPane studentAreaPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -135,6 +143,19 @@ public class MainWindow extends UiPart<Stage> {
         tutorialListPanel = new TutorialListPanel(logic.getFilteredTutorialList());
         tutorialListPanelPlaceholder.getChildren().add(tutorialListPanel.getRoot());
 
+        ObjectProperty<Student> selectedStudentProperty = logic.getSelectedStudent();
+        StudentArea studentArea = new StudentArea();
+
+        selectedStudentProperty.addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                studentArea.updateStudent(newValue);
+            } else {
+                studentArea.updateStudent(null);
+            }
+            studentAreaPlaceholder.getChildren().clear();
+            studentAreaPlaceholder.getChildren().add(studentArea.getRoot());
+        });
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -166,11 +187,19 @@ public class MainWindow extends UiPart<Stage> {
         case STUDENT:
             setElementVisibility(studentList, true);
             setElementVisibility(tutorialList, false);
+            setElementVisibility(studentAreaPlaceholder, false);
             break;
 
         case TUTORIAL:
             setElementVisibility(studentList, false);
             setElementVisibility(tutorialList, true);
+            setElementVisibility(studentAreaPlaceholder, false);
+            break;
+
+        case SINGLE_STUDENT:
+            setElementVisibility(studentList, false);
+            setElementVisibility(tutorialList, false);
+            setElementVisibility(studentAreaPlaceholder, true);
             break;
 
         case UNCHANGED:
