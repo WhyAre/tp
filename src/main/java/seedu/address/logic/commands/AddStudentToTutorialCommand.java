@@ -14,15 +14,17 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
- * Adds a tutorial to the address book.
+ * Adds students to a tutorial slot.
  */
 public class AddStudentToTutorialCommand extends Command {
 
     public static final String COMMAND_WORD = "add-student";
 
-    public static final String MESSAGE_USAGE = "Usage: tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX";
+    public static final String MESSAGE_USAGE = "Usage: tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...";
 
     public static final String MESSAGE_SUCCESS = "Students added to tutorial!";
 
@@ -60,15 +62,24 @@ public class AddStudentToTutorialCommand extends Command {
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
+            assert model.hasStudent(studentToEdit);
+
             Student editedStudent = studentToEdit.clone();
+            assert studentToEdit.hashCode() == editedStudent.hashCode();
+
             Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
             tutorials.add(tutorial);
             editedStudent.setTutorials(tutorials);
 
-            model.setStudent(studentToEdit, editedStudent);
+            try {
+                model.setStudent(studentToEdit, editedStudent);
+                model.addAttendance(tutorial, editedStudent);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.TUTORIAL);
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 
     @Override

@@ -22,6 +22,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -29,6 +30,8 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentID;
 import seedu.address.model.student.TelegramHandle;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Edits the details of an existing student in the address book.
@@ -96,7 +99,15 @@ public class EditCommand extends Command {
         }
         editedStudent.setTutorials(existingTutorials);
 
-        model.setStudent(studentToEdit, editedStudent);
+        assert model.hasStudent(studentToEdit);
+        try {
+            model.setStudent(studentToEdit, editedStudent);
+        } catch (DuplicateItemException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (ItemNotFoundException e) {
+            // Student is guaranteed to exist
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(resultMessage, Messages.format(editedStudent)));
     }
@@ -114,8 +125,10 @@ public class EditCommand extends Command {
         Email updatedEmail = editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail());
         TelegramHandle updatedHandle = editStudentDescriptor.getHandle().orElse(studentToEdit.getHandle());
         Set<Tutorial> updatedTutorials = editStudentDescriptor.getTutorials().orElse(studentToEdit.getTutorials());
+        List<Attendance> updatedAttendances = studentToEdit.getAttendances();
 
-        return new Student(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedHandle, updatedTutorials);
+        return new Student(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedHandle, updatedTutorials,
+                updatedAttendances);
     }
 
     @Override

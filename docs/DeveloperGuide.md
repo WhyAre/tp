@@ -72,7 +72,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `TutorialListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -81,7 +81,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Student` and `Tutorial` objects residing in the `Model`.
 
 ### Logic component
 
@@ -114,10 +114,30 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+In addition to having simple single-word command,
+our app supports commands with subcommands (e.g. `tutorial add`, `tutorial delete`).
+Our implementation is similar to that of a Recursive Descent Parser.
+
+Here is a (partial) diagram showing how the recursive parsing works,
+using the `TutorialParser` as an example
+(classes not involved are omitted):
+
+<img src="images/TutorialClassDiagram.png" width="600"/>
+
+How the parsing works:
+
+1. The `AddressBookParser` will match the first word,
+   and match against a `Command` object, or another `Parser` object
+    - The algorithm terminates if it maps to a `Command` object.
+1. If it maps to a `Parser` object,
+   then it will call `Parser#parse` of that object
+    - The `parse` method will map the next word to either a `Command` or `Parser` object.
+    - The process repeats recursively until it eventually resolves to a `Command` object.
+
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.svg" width="450" />
 
 
 The `Model` component,
@@ -133,7 +153,6 @@ The `Model` component,
 
 </div>
 
-
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
@@ -148,6 +167,20 @@ The `Storage` component,
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
+
+### Student functionality
+
+The sequence diagram below illustrates the interactions within the `Logic` and `Model` components,
+for executing the 3 key commands for functionalities related to students in TAskbook.
+
+#### `add` Command
+![Interactions Inside the Logic and Model Component for the `add` Command](images/student-related/AddStudentSequenceDiagram.svg)
+
+#### `edit` Command
+![Interactions Inside the Logic and Model Component for the `edit` Command](images/student-related/EditStudentSequenceDiagram.svg)
+
+#### `delete` Command
+![Interactions Inside the Logic and Model Component for the `delete` Command](images/student-related/DeleteStudentSequenceDiagram.svg)
 
 --------------------------------------------------------------------------------------------------------------------
 

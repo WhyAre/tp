@@ -25,12 +25,20 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the address book. " + "Parameters: "
-                    + PREFIX_NAME + "NAME " + PREFIX_ID_STUDENT + "ID Student " + PREFIX_PHONE + "PHONE " + PREFIX_EMAIL
-                    + "EMAIL " + "[" + PREFIX_TUTORIAL_NAME + "TUTORIAL]...\n" + "Example: " + COMMAND_WORD + " "
-                    + PREFIX_NAME + "John Doe " + PREFIX_ID_STUDENT + "A0123456Z " + PREFIX_PHONE + "98765432 "
-                    + PREFIX_EMAIL + "johnd@example.com " + PREFIX_HANDLE + "@john_doe " + PREFIX_TUTORIAL_NAME
-                    + "CS2103_T01 " + PREFIX_TUTORIAL_NAME + "CS2106_T02";
+    public static final String MESSAGE_USAGE = "%s: Adds a student to the address book.\n".formatted(COMMAND_WORD)
+                    + "Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE [%sTUTORIAL]...\n".formatted(
+                                    PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HANDLE,
+                                    PREFIX_TUTORIAL_NAME)
+                    + "Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe ".formatted(
+                                    COMMAND_WORD, PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL,
+                                    PREFIX_HANDLE)
+                    + "%sCS2103_T01 %sCS2106_T02".formatted(PREFIX_TUTORIAL_NAME, PREFIX_TUTORIAL_NAME);
+
+    // public static final String MESSAGE_USAGE =
+    // %s: Adds a student to the address book.
+    // Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE [%sTUTORIAL]...
+    // Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe
+    // %sCS2103_T01 %sCS2106_T02
 
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book";

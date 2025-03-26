@@ -12,19 +12,37 @@ Class AddressBook
 Class ModelManager
 Class UserPrefs
 
-Class UniquePersonList
-Class Person
-Class Address
-Class Email
-Class Name
-Class Phone
-Class Tag
+Class Tutorial
 
-Class I #FFFFFF
+
+class Student {
+    name: String
+    studentID: String
+    phone: String
+    email: String
+    handle: String
+}
+class Tutorial {
+    name: String
 }
 
-Class HiddenOutside #FFFFFF
-HiddenOutside ..> Model
+class Assignment {
+    dueDate: Datetime
+}
+
+class Attendance {
+    weekNo: int
+    lessonNo: int
+}
+
+class Submission
+
+enum "<<enumeration>>\nState" as State {
+    COMPLETED
+    VALID_REASON
+    NOT_COMPLETED
+}
+}
 
 AddressBook .up.|> ReadOnlyAddressBook
 
@@ -35,20 +53,16 @@ ModelManager -left-> "1" AddressBook
 ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-AddressBook *--> "1" UniquePersonList
-UniquePersonList --> "~* all" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
+ModelManager --> "*" Tutorial : filters >
+ModelManager --> "*" Student : filters >
 
-Person -[hidden]up--> I
-UniquePersonList -[hidden]right-> I
+Student "*" <--> "*" Tutorial
+Tutorial "1" *--> "*" Assignment
+Attendance "*" <-right- "1" Student
+Attendance "*" <-- "1" Tutorial
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Student "*" -- "*" Assignment
+(Student, Assignment) .. Submission
 
-ModelManager --> "~* filtered" Person
+Submission --> State
 @enduml

@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalStudents.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,12 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.testutil.StudentBuilder;
 
 public class AddCommandTest {
@@ -112,6 +115,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public NavigationMode getNavigationMode() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setNavigationMode(NavigationMode navigationMode) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public Path getAddressBookFilePath() {
             throw new AssertionError("This method should not be called.");
         }
@@ -172,6 +185,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAttendance(Tutorial tutorial, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void markAttendance(Tutorial tutorial, int week, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Student> getFilteredStudentList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -182,12 +205,31 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Tutorial> getFilteredTutorialList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void updateFilteredTutorialList(Predicate<Tutorial> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Student> getStudentsInTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }

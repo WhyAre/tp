@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,6 +15,9 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,6 +29,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
+    private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +43,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
+        filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -66,6 +73,17 @@ public class ModelManager implements Model {
     public void setGuiSettings(GuiSettings guiSettings) {
         requireNonNull(guiSettings);
         userPrefs.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public NavigationMode getNavigationMode() {
+        return userPrefs.getNavigationMode();
+    }
+
+    @Override
+    public void setNavigationMode(NavigationMode navigationMode) {
+        requireNonNull(navigationMode);
+        userPrefs.setNavigationMode(navigationMode);
     }
 
     @Override
@@ -110,7 +128,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setStudent(Student target, Student editedStudent) {
+    public void setStudent(Student target, Student editedStudent) throws DuplicateItemException, ItemNotFoundException {
         requireAllNonNull(target, editedStudent);
 
         addressBook.setStudent(target, editedStudent);
@@ -137,13 +155,19 @@ public class ModelManager implements Model {
         return addressBook.hasTutorial(t);
     }
 
+    @Override
+    public void addAttendance(Tutorial t, Student s) throws ItemNotFoundException {
+        addressBook.addAttendance(t, s);
+    }
+
+    @Override
+    public void markAttendance(Tutorial t, int w, Student s) {
+        addressBook.markAttendance(t, w, s);
+    }
+
     // =========== Filtered Student List Accessors
     // =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Student} backed by the
-     * internal list of {@code versionedAddressBook}
-     */
     @Override
     public ObservableList<Student> getFilteredStudentList() {
         return filteredStudents;
@@ -155,13 +179,16 @@ public class ModelManager implements Model {
         filteredStudents.setPredicate(predicate);
     }
 
+    @Override
+    public void updateFilteredStudentsByTutorialList(Predicate<Tutorial> predicate) {
+        requireNonNull(predicate);
+        Predicate<Student> studentPredicate = student -> student.getTutorials().stream().anyMatch(predicate);
+        filteredStudents.setPredicate(studentPredicate);
+    }
+
     // =========== Filtered Tutorial List Accessors
     // =============================================================
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Tutorial} backed by the
-     * internal list of {@code versionedAddressBook}
-     */
     @Override
     public ObservableList<Tutorial> getFilteredTutorialList() {
         return filteredTutorials;
@@ -172,6 +199,30 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         // Hide studentList
         filteredTutorials.setPredicate(predicate);
+    }
+
+    public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
+        return filteredTutorialWithStudents;
+    }
+
+    @Override
+    public List<Student> getStudentsInTutorial(Tutorial tutorial) {
+        return this.addressBook.getStudentList().stream().filter(student -> student.getTutorials().contains(tutorial))
+                        .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
+        requireNonNull(predicate);
+        List<TutorialWithStudents> tutorialWithStudentsList = addressBook.getTutorialList().stream()
+                        .filter(predicate::test)
+                        .map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
+                        .collect(Collectors.toList());
+
+        Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
+                        .anyMatch(item -> item.equals(tutorialWithStudents));
+
+        filteredTutorialWithStudents.setPredicate(isInList);
     }
 
     @Override

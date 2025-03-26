@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.tutorial.Tutorial;
@@ -23,13 +24,14 @@ public class TutorialCard extends UiPart<Region> {
      */
 
     public final Tutorial tutorial;
-
     @FXML
     private HBox cardPane;
     @FXML
     private Label name;
     @FXML
     private Label id;
+    @FXML
+    private FlowPane students;
 
     /**
      * Creates a {@code TutorialCard} with the given {@code Tutorial} and index to

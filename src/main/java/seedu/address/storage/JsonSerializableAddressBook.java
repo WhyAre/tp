@@ -65,19 +65,19 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        for (JsonAdaptedStudent jsonAdaptedStudent : students) {
-            Student student = jsonAdaptedStudent.toModelType();
-            if (addressBook.hasStudent(student)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
-            }
-            addressBook.addStudent(student);
-        }
         for (var tutorial : tutorials) {
             var t = tutorial.toModelType();
             if (addressBook.hasTutorial(t)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_TUTORIAL);
             }
             addressBook.addTutorial(t);
+        }
+        for (JsonAdaptedStudent jsonAdaptedStudent : students) {
+            Student student = jsonAdaptedStudent.toModelType();
+            if (addressBook.hasStudent(student)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+            }
+            addressBook.addStudent(student);
         }
         return addressBook;
     }

@@ -29,6 +29,7 @@ import seedu.address.logic.commands.TutorialCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
+import seedu.address.model.tutorial.StudentContainsTutorialKeywordsPredicate;
 import seedu.address.testutil.EditStudentDescriptorBuilder;
 import seedu.address.testutil.StudentBuilder;
 import seedu.address.testutil.StudentUtil;
@@ -75,10 +76,16 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                        FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        List<String> nameKeywords = Arrays.asList("foo", "bar", "baz");
+        List<String> tutorialKeywords = Arrays.asList("t/t1", "t/t2");
+        List<String> tutorials = Arrays.asList("t1", "t2");
+        String input = FindCommand.COMMAND_WORD + " " + nameKeywords.stream().collect(Collectors.joining(" ")) + " "
+                        + tutorialKeywords.stream().collect(Collectors.joining(" "));
+        FindCommand command = (FindCommand) parser.parseCommand(input);
+        NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(nameKeywords);
+        StudentContainsTutorialKeywordsPredicate tutorialPredicate = new StudentContainsTutorialKeywordsPredicate(
+                        tutorials);
+        assertEquals(new FindCommand(namePredicate, tutorialPredicate), command);
     }
 
     @Test

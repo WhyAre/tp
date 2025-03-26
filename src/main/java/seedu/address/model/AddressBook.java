@@ -5,14 +5,19 @@ import static java.util.Objects.requireNonNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.UniqueStudentList;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.UniqueList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
@@ -20,8 +25,9 @@ import seedu.address.model.tutorial.Tutorial;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueStudentList students;
-    private final ObservableList<Tutorial> tutorials;
+    private final UniqueList<Student> students;
+    private final UniqueList<Tutorial> tutorials;
+    private final UniqueList<Attendance> attendances;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -32,8 +38,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * ways to avoid duplication among constructors.
      */
     {
-        students = new UniqueStudentList();
-        tutorials = FXCollections.observableArrayList();
+        students = new UniqueList<>();
+        tutorials = new UniqueList<>();
+        attendances = new UniqueList<>();
     }
 
     public AddressBook() {
@@ -53,8 +60,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the student list with {@code students}.
      * {@code students} must not contain duplicate students.
      */
-    public void setStudents(List<Student> students) {
-        this.students.setStudents(students);
+    public void setStudents(List<Student> students) throws DuplicateItemException {
+        this.students.setAll(students);
     }
 
     /**
@@ -63,8 +70,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
-        setStudents(newData.getStudentList());
-        setTutorials(newData.getTutorialList());
+        try {
+            setStudents(newData.getStudentList());
+            setTutorials(newData.getTutorialList());
+        } catch (DuplicateItemException e) {
+            // Since it's coming from an address book, these errors shouldn't be thrown
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
     }
 
     //// student-level operations
@@ -75,7 +87,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasStudent(Student student) {
         requireNonNull(student);
-        return students.contains(student);
+        return students.containsIdentity(student);
     }
 
     /**
@@ -83,7 +95,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * address book.
      */
     public void addStudent(Student p) {
-        students.add(p);
+        // Check that tutorial slots exists
+        var student = p.clone();
+        student.removeInvalidTutorials(new HashSet<>(tutorials));
+        students.add(student);
     }
 
     /**
@@ -92,10 +107,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * student identity of {@code editedstudent} must not be the same as another
      * existing student in the address book.
      */
-    public void setStudent(Student target, Student editedstudent) {
+    public void setStudent(Student target, Student editedstudent) throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(editedstudent);
 
-        students.setStudent(target, editedstudent);
+        students.set(target, editedstudent);
     }
 
     /**
@@ -119,7 +134,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Deletes a tutorial slot
      */
     public void deleteTutorial(Tutorial tutorial) {
-        tutorials.remove(tutorial);
+        Tutorial toDelete = tutorials.find(tutorial).orElse(tutorial);
+        tutorials.remove(toDelete);
     }
 
     /**
@@ -137,7 +153,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             newTutorials.remove(tutorial);
             editedstudent.setTutorials(newTutorials);
 
-            this.setStudent(student, editedstudent);
+            // Assertions
+            // - editedStudent always be unique
+            assert students.contains(student);
+
+            try {
+                this.setStudent(student, editedstudent);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -146,20 +170,54 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasTutorial(Tutorial tutorial) {
         requireNonNull(tutorial);
-        return tutorials.contains(tutorial);
+        return tutorials.containsIdentity(tutorial);
     }
 
     /**
      * Replaces the contents of the tutorial list with {@code tutorials}.
      * {@code tutorials} must not contain duplicate tutorials.
      */
-    public void setTutorials(List<Tutorial> tutorials) {
+    public void setTutorials(List<Tutorial> tutorials) throws DuplicateItemException {
         requireNonNull(tutorials);
-
-        tutorials.stream().filter(Predicate.not(this::hasTutorial)).forEach(this::addTutorial);
+        this.tutorials.setAll(tutorials);
     }
 
-    //// util methods
+    /**
+     * Creates attendance record for a student in specified tutorial
+     */
+    public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        requireNonNull(tutorial);
+        requireNonNull(student);
+
+        // Fetch tutorial from tutorial list
+        Tutorial tutorialFromList = tutorials.find(tutorial).orElseThrow(ItemNotFoundException::new);
+
+        // Fetch student from student list
+        Student studentFromList = students.find(student).orElseThrow(ItemNotFoundException::new);
+
+        Attendance attendance = new Attendance(tutorialFromList, student);
+        tutorialFromList.addAttendance(attendance);
+        studentFromList.addAttendance(attendance);
+
+        this.attendances.add(attendance);
+    }
+
+    /**
+     * Marks students attendance
+     */
+    public void markAttendance(Tutorial tutorial, int week, Student student) {
+        requireNonNull(tutorial);
+        requireNonNull(student);
+
+        for (Attendance attendance : attendances) {
+            if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
+                attendance.markAttendance(week);
+                break;
+            }
+        }
+    }
+
+    /// / util methods
 
     @Override
     public String toString() {
@@ -173,7 +231,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<Tutorial> getTutorialList() {
-        return FXCollections.unmodifiableObservableList(tutorials);
+        return tutorials.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Attendance> getAttendanceList() {
+        return attendances.asUnmodifiableObservableList();
     }
 
     @Override
@@ -194,5 +257,30 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return students.hashCode();
+    }
+
+    /**
+     * Returns an observable list of {@code TutorialWithStudents}, each pairing a
+     * tutorial with the students enrolled in that tutorial.
+     *
+     * @return An observable list of {@code TutorialWithStudents}.
+     */
+    public ObservableList<TutorialWithStudents> getTutorialWithStudentsList() {
+        return tutorials.stream().map(tutorial -> new TutorialWithStudents(tutorial, getStudentsInTutorial(tutorial)))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    }
+
+    /**
+     * Retrieves the list of students enrolled in a specific tutorial. This method
+     * is a placeholder and should be implemented to return the actual students
+     * enrolled in the given tutorial.
+     *
+     * @param tutorial
+     *            The tutorial for which the enrolled students are to be retrieved.
+     * @return A list of students enrolled in the given tutorial.
+     */
+    private List<Student> getStudentsInTutorial(Tutorial tutorial) {
+        return this.getStudentList().stream().filter(student -> student.getTutorials().contains(tutorial))
+                        .collect(Collectors.toList());
     }
 }
