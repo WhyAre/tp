@@ -216,7 +216,6 @@ public class ModelManager implements Model {
     @Override
     public void updateFilteredTutorialList(Predicate<Tutorial> predicate) {
         requireNonNull(predicate);
-        // Hide studentList
         filteredTutorials.setPredicate(predicate);
     }
 
