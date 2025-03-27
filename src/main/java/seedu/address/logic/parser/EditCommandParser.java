@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
@@ -35,7 +36,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE,
-                        PREFIX_EMAIL, PREFIX_HANDLE, PREFIX_TUTORIAL_NAME);
+                        PREFIX_EMAIL, PREFIX_HANDLE, PREFIX_DETAILS, PREFIX_TUTORIAL_NAME);
 
         Index index;
 
@@ -46,7 +47,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_HANDLE);
+                        PREFIX_DETAILS, PREFIX_HANDLE);
 
         EditStudentDescriptor editStudentDescriptor = new EditStudentDescriptor();
 
@@ -65,6 +66,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_HANDLE).isPresent()) {
             editStudentDescriptor.setHandle(ParserUtil.parseTelegramHandle(argMultimap.getValue(PREFIX_HANDLE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_DETAILS).isPresent()) {
+            editStudentDescriptor.setDetails(ParserUtil.parseDetails(argMultimap.getValue(PREFIX_DETAILS).get()));
         }
         parseTutorialsForEdit(argMultimap.getAllValues(PREFIX_TUTORIAL_NAME))
                         .ifPresent(editStudentDescriptor::setTutorials);

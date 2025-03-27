@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.DETAILS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.HANDLE_DESC_AMY;
@@ -58,15 +59,17 @@ public class AddCommandParserTest {
         Student expectedStudent = new StudentBuilder(BOB).withTutorials(VALID_TUTORIAL_1).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + HANDLE_DESC_BOB + TUTORIAL_DESC_1, new AddCommand(expectedStudent));
+        assertParseSuccess(parser,
+                        PREAMBLE_WHITESPACE + NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                                        + HANDLE_DESC_BOB + DETAILS_DESC_BOB + TUTORIAL_DESC_1,
+                        new AddCommand(expectedStudent));
 
         // multiple tags - all accepted
         Student expectedStudentMultipleTags = new StudentBuilder(BOB).withTutorials(VALID_TUTORIAL_1, VALID_TUTORIAL_2)
                         .build();
         assertParseSuccess(parser,
                         NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + HANDLE_DESC_BOB
-                                        + TUTORIAL_DESC_2 + TUTORIAL_DESC_1,
+                                        + DETAILS_DESC_BOB + TUTORIAL_DESC_2 + TUTORIAL_DESC_1,
                         new AddCommand(expectedStudentMultipleTags));
     }
 
