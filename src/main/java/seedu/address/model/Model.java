@@ -105,12 +105,12 @@ public interface Model {
     void addTutorial(Tutorial tutorial);
 
     /**
-     * Replaces the given student {@code target} with {@code editedStudent}.
-     * {@code target} must exist in the address book. The student identity of
-     * {@code editedStudent} must not be the same as another existing student in the
-     * address book.
+     * Replaces the given tutorial {@code target} with {@code editedTutorial}.
+     * {@code target} must exist in the address book. The tutorial identity of
+     * {@code editedTutorial} must not be the same as another existing tutorial in
+     * the address book.
      */
-    void setTutorial(Tutorial target, Tutorial editedStudent) throws DuplicateItemException, ItemNotFoundException;
+    void setTutorial(Tutorial target, Tutorial editedTutorial) throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Deletes a tutorial slot

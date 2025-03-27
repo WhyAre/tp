@@ -42,6 +42,17 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
         return assignments.add(assignment);
     }
 
+    /**
+     * Deletes an assignment from the tutorial.
+     *
+     * @param assignment
+     *            Assignment to delete
+     */
+    public boolean deleteAssignment(Assignment assignment) {
+        Objects.requireNonNull(assignment);
+        return assignments.remove(assignment);
+    }
+
     public boolean hasAssignment(Assignment assignment) {
         return assignments.contains(assignment);
     }
