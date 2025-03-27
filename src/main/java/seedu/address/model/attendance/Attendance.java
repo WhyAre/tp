@@ -22,13 +22,19 @@ public record Attendance(Tutorial tutorial, Student student,
     }
 
     /**
-     * Marks attendance for the specific week
+     * Marks or unmarks attendance for the specific week
      *
      * @param week
      *            Week of attendance
+     * @param isPresent
+     *            Value is true if mark as present, false if mark as absent
      */
-    public void markAttendance(int week) {
-        attendances.set(week - 3, PRESENT);
+    public void setAttendance(int week, boolean isPresent) {
+        if (isPresent) {
+            attendances.set(week - 3, PRESENT);
+        } else {
+            attendances.set(week - 3, ABSENT);
+        }
     }
 
     @Override
@@ -37,6 +43,7 @@ public record Attendance(Tutorial tutorial, Student student,
             return false;
         }
 
-        return this.tutorial.equals(other.tutorial) && this.student.equals(other.student);
+        return this.tutorial.name().equals(other.tutorial.name())
+                        && this.student.getName().equals(other.student.getName());
     }
 }

@@ -73,6 +73,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setStudents(newData.getStudentList());
             setTutorials(newData.getTutorialList());
+            setAttendances(newData.getAttendanceList());
         } catch (DuplicateItemException e) {
             // Since it's coming from an address book, these errors shouldn't be thrown
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
@@ -182,6 +183,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tutorials.setAll(tutorials);
     }
 
+    public void setTutorial(Tutorial oldTut, Tutorial newTut) throws DuplicateItemException, ItemNotFoundException {
+        requireNonNull(newTut);
+
+        tutorials.set(oldTut, newTut);
+    }
+
     /**
      * Creates attendance record for a student in specified tutorial
      */
@@ -205,16 +212,42 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void markAttendance(Tutorial tutorial, int week, Student student) {
+    public void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
+                    throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
 
         for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
-                attendance.markAttendance(week);
+                attendance.setAttendance(week, isPresent);
+                attendances.set(attendance, attendance);
                 break;
             }
         }
+    }
+
+    /**
+     * Replaces the contents of the attendance list with {@code attendances}.
+     */
+    public void setAttendances(List<Attendance> attendances) throws DuplicateItemException {
+        requireNonNull(attendances);
+        this.attendances.setAll(attendances);
+    }
+
+    /**
+     * Marks student as present
+     */
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
+        setAttendance(tutorial, week, student, true);
+    }
+
+    /**
+     * Unmarks a student's attendance
+     */
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
+        setAttendance(tutorial, week, student, false);
     }
 
     /// / util methods

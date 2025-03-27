@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_NAVIGATION_MODE;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -38,6 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private StudentListPanel studentListPanel;
     private TutorialListPanel tutorialListPanel;
+    private AttendanceListPanel attendanceListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private StatusBarFooter statusBarFooter;
@@ -55,10 +57,16 @@ public class MainWindow extends UiPart<Stage> {
     private VBox tutorialList;
 
     @FXML
+    private VBox attendanceList;
+
+    @FXML
     private StackPane studentListPanelPlaceholder;
 
     @FXML
     private StackPane tutorialListPanelPlaceholder;
+
+    @FXML
+    private StackPane attendanceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -135,6 +143,9 @@ public class MainWindow extends UiPart<Stage> {
         tutorialListPanel = new TutorialListPanel(logic.getFilteredTutorialList());
         tutorialListPanelPlaceholder.getChildren().add(tutorialListPanel.getRoot());
 
+        attendanceListPanel = new AttendanceListPanel(logic.getFilteredAttendanceList());
+        attendanceListPanelPlaceholder.getChildren().add(attendanceListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -162,22 +173,22 @@ public class MainWindow extends UiPart<Stage> {
      * the specified navigation mode.
      */
     private void setUiVisibilities(NavigationMode navigationMode) {
-        switch (navigationMode) {
-        case STUDENT:
-            setElementVisibility(studentList, true);
-            setElementVisibility(tutorialList, false);
-            break;
+        var modes = new HashMap<NavigationMode, VBox>();
+        modes.put(NavigationMode.STUDENT, studentList);
+        modes.put(NavigationMode.TUTORIAL, tutorialList);
+        modes.put(NavigationMode.ATTENDANCE, attendanceList);
 
-        case TUTORIAL:
-            setElementVisibility(studentList, false);
-            setElementVisibility(tutorialList, true);
-            break;
+        // Hide all modes
+        if (navigationMode == NavigationMode.UNCHANGED) {
+            return;
+        }
 
-        case UNCHANGED:
-            break;
-
-        default:
+        if (!modes.containsKey(navigationMode)) {
             throw new IllegalArgumentException(MESSAGE_INVALID_NAVIGATION_MODE);
+        }
+
+        for (var m : modes.entrySet()) {
+            setElementVisibility(m.getValue(), m.getKey() == navigationMode);
         }
     }
 

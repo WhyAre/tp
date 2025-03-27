@@ -6,31 +6,26 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.AddTutorialCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.ListAttendanceCommand;
-import seedu.address.logic.commands.MarkAttendanceCommand;
-import seedu.address.logic.commands.UnmarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new {@link Command} object for
- * attendance
+ * Parses input arguments and creates a new {@link Command} object
  */
-public class AttendanceParser implements Parser<Command> {
+public class AssignmentParser implements Parser<Command> {
 
+    public static final String COMMAND_WORD = "assignment";
     private final Map<String, Parser<? extends Command>> subcmds;
     private final String usage;
 
-    AttendanceParser() {
+    AssignmentParser() {
         subcmds = new HashMap<>();
 
-        // Mark/unmark/list attendance.
-        subcmds.put(MarkAttendanceCommand.COMMAND_WORD, new MarkAttendanceCommandParser());
-        subcmds.put(UnmarkAttendanceCommand.COMMAND_WORD, new UnmarkAttendanceCommandParser());
-        subcmds.put(ListAttendanceCommand.COMMAND_WORD, new ListAttendanceCommandParser());
+        subcmds.put(AddTutorialCommand.COMMAND_WORD, new AddAssignmentCommandParser());
 
         usage = """
-                        Usage: attendance COMMAND
+                        Usage: assignment COMMAND
 
                         COMMAND:
                         %s""".formatted(
@@ -39,7 +34,7 @@ public class AttendanceParser implements Parser<Command> {
 
     @Override
     public Command parse(String arguments) throws ParseException {
-        // Arguments does not have the word "attendance" in it
+        // Arguments does not have the word "tutorial" in it
 
         var cmd = arguments.trim().split(" ");
         var rest = Arrays.stream(cmd).skip(1).collect(Collectors.joining(" "));
