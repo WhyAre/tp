@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_NAVIGATION_MODE;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -172,30 +173,22 @@ public class MainWindow extends UiPart<Stage> {
      * the specified navigation mode.
      */
     private void setUiVisibilities(NavigationMode navigationMode) {
-        switch (navigationMode) {
-        case STUDENT:
-            setElementVisibility(studentList, true);
-            setElementVisibility(tutorialList, false);
-            setElementVisibility(attendanceList, false);
-            break;
+        var modes = new HashMap<NavigationMode, VBox>();
+        modes.put(NavigationMode.STUDENT, studentList);
+        modes.put(NavigationMode.TUTORIAL, tutorialList);
+        modes.put(NavigationMode.ATTENDANCE, attendanceList);
 
-        case TUTORIAL:
-            setElementVisibility(studentList, false);
-            setElementVisibility(tutorialList, true);
-            setElementVisibility(attendanceList, false);
-            break;
+        // Hide all modes
+        if (navigationMode == NavigationMode.UNCHANGED) {
+            return;
+        }
 
-        case ATTENDANCE:
-            setElementVisibility(studentList, false);
-            setElementVisibility(tutorialList, false);
-            setElementVisibility(attendanceList, true);
-            break;
-
-        case UNCHANGED:
-            break;
-
-        default:
+        if (!modes.containsKey(navigationMode)) {
             throw new IllegalArgumentException(MESSAGE_INVALID_NAVIGATION_MODE);
+        }
+
+        for (var m : modes.entrySet()) {
+            setElementVisibility(m.getValue(), m.getKey() == navigationMode);
         }
     }
 

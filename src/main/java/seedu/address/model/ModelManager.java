@@ -144,8 +144,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteTutorial(Tutorial tutorial) {
-        addressBook.deleteTutorial(tutorial);
+    public void setTutorial(Tutorial oldTut, Tutorial newTut) throws DuplicateItemException, ItemNotFoundException {
+        requireAllNonNull(oldTut, newTut);
+        addressBook.setTutorial(oldTut, newTut);
+    }
+
+    @Override
+    public void deleteTutorial(Tutorial t) {
+        addressBook.deleteTutorial(t);
     }
 
     @Override

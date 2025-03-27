@@ -26,7 +26,7 @@ public class AddTutorialCommandTest {
 
     @Test
     public void execute_tutorialAcceptedByModel_addSuccessful() throws Exception {
-        var t = new Tutorial("new tutorial");
+        var t = new Tutorial("new-tutorial");
         CommandResult commandResult = new AddTutorialCommand(t).execute(modelStub);
         var tutorials = modelStub.getAddressBook().getTutorialList();
 

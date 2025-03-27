@@ -182,6 +182,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tutorials.setAll(tutorials);
     }
 
+    public void setTutorial(Tutorial oldTut, Tutorial newTut) throws DuplicateItemException, ItemNotFoundException {
+        requireNonNull(newTut);
+
+        tutorials.set(oldTut, newTut);
+    }
+
     /**
      * Creates attendance record for a student in specified tutorial
      */

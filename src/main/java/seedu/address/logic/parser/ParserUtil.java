@@ -2,9 +2,15 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -146,5 +152,31 @@ public class ParserUtil {
             throw new ParseException(TelegramHandle.MESSAGE_CONSTRAINTS);
         }
         return new TelegramHandle(trimmedHandle);
+    }
+
+    /**
+     * Parses datetime string into {@link LocalDateTime} while supporting a few
+     * formats of date time
+     *
+     * @param input
+     * @return
+     */
+    public static LocalDateTime parseDateTime(String input) {
+        final List<DateTimeFormatter> formatters = List.of(DateTimeFormatter.ISO_DATE_TIME, // 2023-03-15T10:15:30
+                        DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm"), DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm"),
+                        DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss"),
+                        DateTimeFormatter.ofPattern("uuuu-MM-dd HHmmss"));
+
+        return formatters.stream()
+                        // The default behavior makes it such that 31 Feb will be rounded down to 28
+                        // feb. With STRICT style, 31 feb will be rejected
+                        .map(f -> f.withResolverStyle(ResolverStyle.STRICT)).flatMap(formatter -> {
+                            try {
+                                return Stream.of(LocalDateTime.parse(input, formatter));
+                            } catch (DateTimeException e) {
+                                return Stream.empty();
+                            }
+                        }).findAny().orElseThrow((
+                        ) -> new IllegalArgumentException("Unknown date format '%s'".formatted(input)));
     }
 }
