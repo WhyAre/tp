@@ -20,6 +20,7 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS = "Multiple values specified for the following "
                     + "single-valued field(s): ";
     public static final String MESSAGE_INVALID_NAVIGATION_MODE = "Invalid navigation mode provided";
+    public static final String MESSAGE_UNKNOWN_ERROR = "Something went wrong";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -39,7 +40,8 @@ public class Messages {
         final StringBuilder builder = new StringBuilder();
         builder.append(student.getName()).append("; Student ID: ").append(student.getStudentId()).append("; Phone: ")
                         .append(student.getPhone()).append("; Email: ").append(student.getEmail())
-                        .append("; Telegram Handle: ").append(student.getHandle()).append("; Tutorials: ");
+                        .append("; Telegram Handle: ").append(student.getHandle()).append("; Details: ")
+                        .append(student.getDetails()).append("; Tutorials: ");
         student.getTutorials().forEach(builder::append);
         return builder.toString();
     }

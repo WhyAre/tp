@@ -1,8 +1,12 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import seedu.address.model.attendance.Attendance;
+import seedu.address.model.student.Details;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -28,7 +32,9 @@ public class StudentBuilder {
     private Phone phone;
     private Email email;
     private TelegramHandle handle;
+    private Details details;
     private Set<Tutorial> tutorials;
+    private List<Attendance> attendances;
 
     /**
      * Creates a {@code StudentBuilder} with the default details.
@@ -39,7 +45,9 @@ public class StudentBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         handle = new TelegramHandle(DEFAULT_HANDLE);
+        details = new Details("");
         tutorials = new HashSet<>();
+        attendances = new ArrayList<>();
     }
 
     /**
@@ -51,7 +59,13 @@ public class StudentBuilder {
         phone = studentToCopy.getPhone();
         email = studentToCopy.getEmail();
         handle = studentToCopy.getHandle();
+        details = studentToCopy.getDetails();
         tutorials = new HashSet<>(studentToCopy.getTutorials());
+        attendances = new ArrayList<>();
+
+        for (Tutorial tutorial : tutorials) {
+            attendances.add(new Attendance(tutorial, studentToCopy));
+        }
     }
 
     /**
@@ -84,6 +98,14 @@ public class StudentBuilder {
      */
     public StudentBuilder withHandle(String handle) {
         this.handle = new TelegramHandle(handle);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Details} of the {@code Student} that we are building.
+     */
+    public StudentBuilder withDetails(String details) {
+        this.details = new Details(details);
         return this;
     }
 

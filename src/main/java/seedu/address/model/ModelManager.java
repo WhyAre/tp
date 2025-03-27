@@ -9,13 +9,17 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -27,7 +31,9 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
-    private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
+    private final FilteredList<Attendance> filteredAttendances;
+    // private final FilteredList<TutorialWithStudents>
+    // filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,7 +47,9 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
-        filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
+        filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
+        // filteredTutorialWithStudents = new
+        // FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -71,6 +79,17 @@ public class ModelManager implements Model {
     public void setGuiSettings(GuiSettings guiSettings) {
         requireNonNull(guiSettings);
         userPrefs.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public NavigationMode getNavigationMode() {
+        return userPrefs.getNavigationMode();
+    }
+
+    @Override
+    public void setNavigationMode(NavigationMode navigationMode) {
+        requireNonNull(navigationMode);
+        userPrefs.setNavigationMode(navigationMode);
     }
 
     @Override
@@ -115,16 +134,22 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setStudent(Student target, Student editedStudent) {
+    public void setStudent(Student target, Student editedStudent) throws DuplicateItemException, ItemNotFoundException {
         requireAllNonNull(target, editedStudent);
 
         addressBook.setStudent(target, editedStudent);
     }
 
     @Override
-    public void addTutorial(Tutorial t) {
-        addressBook.addTutorial(t);
+    public void addTutorial(Tutorial tutorial) {
+        addressBook.addTutorial(tutorial);
         updateFilteredTutorialList(PREDICATE_SHOW_ALL_TUTORIALS);
+    }
+
+    @Override
+    public void setTutorial(Tutorial oldTut, Tutorial newTut) throws DuplicateItemException, ItemNotFoundException {
+        requireAllNonNull(oldTut, newTut);
+        addressBook.setTutorial(oldTut, newTut);
     }
 
     @Override
@@ -133,13 +158,30 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteTutorialFromStudents(Tutorial t) {
-        addressBook.deleteTutorialFromStudents(t);
+    public void deleteTutorialFromStudents(Tutorial tutorial) {
+        addressBook.deleteTutorialFromStudents(tutorial);
     }
 
     @Override
-    public boolean hasTutorial(Tutorial t) {
-        return addressBook.hasTutorial(t);
+    public boolean hasTutorial(Tutorial tutorial) {
+        return addressBook.hasTutorial(tutorial);
+    }
+
+    @Override
+    public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        addressBook.addAttendance(tutorial, student);
+    }
+
+    @Override
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
+        addressBook.markAttendance(tutorial, week, student);
+    }
+
+    @Override
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
+        addressBook.unmarkAttendance(tutorial, week, student);
     }
 
     // =========== Filtered Student List Accessors
@@ -179,7 +221,8 @@ public class ModelManager implements Model {
     }
 
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
-        return filteredTutorialWithStudents;
+        // return filteredTutorialWithStudents;
+        return FXCollections.observableArrayList();
     }
 
     @Override
@@ -199,7 +242,21 @@ public class ModelManager implements Model {
         Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
-        filteredTutorialWithStudents.setPredicate(isInList);
+        // filteredTutorialWithStudents.setPredicate(isInList);
+    }
+
+    // =========== Filtered Attendance List Accessors
+    // =============================================================
+
+    @Override
+    public ObservableList<Attendance> getFilteredAttendanceList() {
+        return filteredAttendances;
+    }
+
+    @Override
+    public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+        requireNonNull(predicate);
+        filteredAttendances.setPredicate(predicate);
     }
 
     @Override

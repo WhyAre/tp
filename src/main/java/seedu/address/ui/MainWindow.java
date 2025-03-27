@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_NAVIGATION_MODE;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -38,8 +39,10 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private StudentListPanel studentListPanel;
     private TutorialListPanel tutorialListPanel;
+    private AttendanceListPanel attendanceListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private StatusBarFooter statusBarFooter;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -54,10 +57,16 @@ public class MainWindow extends UiPart<Stage> {
     private VBox tutorialList;
 
     @FXML
+    private VBox attendanceList;
+
+    @FXML
     private StackPane studentListPanelPlaceholder;
 
     @FXML
     private StackPane tutorialListPanelPlaceholder;
+
+    @FXML
+    private StackPane attendanceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -77,6 +86,7 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        setUiVisibilities(logic.getNavigationMode());
 
         setAccelerators();
 
@@ -133,10 +143,13 @@ public class MainWindow extends UiPart<Stage> {
         tutorialListPanel = new TutorialListPanel(logic.getFilteredTutorialList());
         tutorialListPanelPlaceholder.getChildren().add(tutorialListPanel.getRoot());
 
+        attendanceListPanel = new AttendanceListPanel(logic.getFilteredAttendanceList());
+        attendanceListPanelPlaceholder.getChildren().add(attendanceListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath(), logic.getNavigationMode());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -156,6 +169,30 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Sets the visibility of the student and tutorial list UI elements according to
+     * the specified navigation mode.
+     */
+    private void setUiVisibilities(NavigationMode navigationMode) {
+        var modes = new HashMap<NavigationMode, VBox>();
+        modes.put(NavigationMode.STUDENT, studentList);
+        modes.put(NavigationMode.TUTORIAL, tutorialList);
+        modes.put(NavigationMode.ATTENDANCE, attendanceList);
+
+        // Hide all modes
+        if (navigationMode == NavigationMode.UNCHANGED) {
+            return;
+        }
+
+        if (!modes.containsKey(navigationMode)) {
+            throw new IllegalArgumentException(MESSAGE_INVALID_NAVIGATION_MODE);
+        }
+
+        for (var m : modes.entrySet()) {
+            setElementVisibility(m.getValue(), m.getKey() == navigationMode);
+        }
+    }
+
+    /**
      * Sets the visibility and manageability of the specified UI element.
      */
     private void setElementVisibility(Node element, boolean isVisible) {
@@ -164,27 +201,24 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Sets the visibility of the student and tutorial list UI elements according to
-     * the specified navigation mode.
+     * Sets the navigation mode in {@code GuiSettings} to the navigation mode
+     * specified.
      */
-    private void handleMode(NavigationMode mode) {
-        switch (mode) {
-        case STUDENT:
-            setElementVisibility(studentList, true);
-            setElementVisibility(tutorialList, false);
-            break;
+    private void setNavigationMode(NavigationMode navigationMode) {
+        logic.setNavigationMode(navigationMode);
+    }
 
-        case TUTORIAL:
-            setElementVisibility(studentList, false);
-            setElementVisibility(tutorialList, true);
-            break;
-
-        case UNCHANGED:
-            break;
-
-        default:
-            throw new IllegalArgumentException(MESSAGE_INVALID_NAVIGATION_MODE);
+    /**
+     * Sets the navigation mode to the specified mode and updates the visibilities
+     * of UI elements, and updates the status bar footer accordingly, if needed.
+     */
+    private void handleMode(NavigationMode navigationMode) {
+        if (navigationMode == NavigationMode.UNCHANGED) {
+            return;
         }
+        setNavigationMode(navigationMode);
+        setUiVisibilities(navigationMode);
+        statusBarFooter.setNavigationMode(navigationMode);
     }
 
     /**
@@ -209,7 +243,8 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                        (int) primaryStage.getX(), (int) primaryStage.getY());
+                        (int) primaryStage.getX(), (int) primaryStage.getY(),
+                        logic.getGuiSettings().getNavigationMode());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
