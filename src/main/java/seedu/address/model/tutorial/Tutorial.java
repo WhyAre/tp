@@ -1,6 +1,7 @@
 package seedu.address.model.tutorial;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.uniquelist.Identifiable;
@@ -55,6 +56,10 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
 
     public boolean hasAssignment(Assignment assignment) {
         return assignments.contains(assignment);
+    }
+
+    public Optional<Assignment> findAssignment(Assignment assignment) {
+        return assignments.find(assignment);
     }
 
     /**
