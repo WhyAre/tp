@@ -135,39 +135,39 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addTutorial(Tutorial t) {
-        addressBook.addTutorial(t);
+    public void addTutorial(Tutorial tutorial) {
+        addressBook.addTutorial(tutorial);
         updateFilteredTutorialList(PREDICATE_SHOW_ALL_TUTORIALS);
     }
 
     @Override
-    public void deleteTutorial(Tutorial t) {
-        addressBook.deleteTutorial(t);
+    public void deleteTutorial(Tutorial tutorial) {
+        addressBook.deleteTutorial(tutorial);
     }
 
     @Override
-    public void deleteTutorialFromStudents(Tutorial t) {
-        addressBook.deleteTutorialFromStudents(t);
+    public void deleteTutorialFromStudents(Tutorial tutorial) {
+        addressBook.deleteTutorialFromStudents(tutorial);
     }
 
     @Override
-    public boolean hasTutorial(Tutorial t) {
-        return addressBook.hasTutorial(t);
+    public boolean hasTutorial(Tutorial tutorial) {
+        return addressBook.hasTutorial(tutorial);
     }
 
     @Override
-    public void addAttendance(Tutorial t, Student s) throws ItemNotFoundException {
-        addressBook.addAttendance(t, s);
+    public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        addressBook.addAttendance(tutorial, student);
     }
 
     @Override
-    public void markAttendance(Tutorial t, int w, Student s) {
-        addressBook.markAttendance(t, w, s);
+    public void markAttendance(Tutorial tutorial, int week, Student student) {
+        addressBook.markAttendance(tutorial, week, student);
     }
 
     @Override
-    public void unmarkAttendance(Tutorial t, int w, Student s) {
-        addressBook.unmarkAttendance(t, w, s);
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student) {
+        addressBook.unmarkAttendance(tutorial, week, student);
     }
 
     // =========== Filtered Student List Accessors
