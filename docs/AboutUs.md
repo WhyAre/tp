@@ -16,8 +16,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/meloppeitreet)]
 [[portfolio](team/meloppeitreet.md)]
 
-* Role: Developer
-* Responsibilities: Testing
+- Role: Developer
+- Responsibilities: Testing
 
 ### Chong Kok Seen
 
@@ -26,8 +26,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[homepage](http://www.comp.nus.edu.sg/~kokseen1)]
 [[github](https://github.com/kokseen1)]
 
-* Role: Developer
-* Responsibilities: Code quality
+- Role: Developer
+- Responsibilities: Code quality
 
 ### Amanda Quek Yan Ling
 
@@ -37,8 +37,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[homepage](https://nus-csm.symplicity.com/profiles/amanda.quek)]
 [[portfolio](team/victoria281.md)]
 
-* Role: Developer
-* Responsibilities: Documentation
+- Role: Developer
+- Responsibilities: Documentation
 
 ### Lai Yong Rong
 
@@ -47,8 +47,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[homepage](http://www.comp.nus.edu.sg/~laiyr)]
 [[github](https://github.com/WhyAre)]
 
-* Role: Developer
-* Responsibilities: Integration
+- Role: Developer
+- Responsibilities: Integration
 
 ### Nguyen Vu Khang
 
@@ -57,8 +57,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[website](https://www.nguyenvukhang.com)]
 [[github](https://github.com/nguyenvukhang)]
 
-* Role: Developer
-* Responsibilities: Git expert
+- Role: Developer
+- Responsibilities: Git expert
 
 ### Chng Wei Cheng
 
@@ -68,5 +68,5 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/AnAfterthought)]
 [[portfolio](team/anafterthought.md)]
 
-* Role: Developer
-* Responsibilities: Deliverables and deadlines
+- Role: Developer
+- Responsibilities: Deliverables and deadlines

@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import java.nio.file.Path;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
@@ -9,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -43,8 +45,16 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of tutorials */
     ObservableList<Tutorial> getFilteredTutorialList();
 
+    /** Returns an unmodifiable view of the filtered list of attendances */
+    ObservableList<Attendance> getFilteredAttendanceList();
+
     /** Returns an unmodifiable view of the filtered list of tutorials */
     ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents();
+
+    /**
+     * Returns the selected student.
+     */
+    ObjectProperty<Student> getSelectedStudent();
 
     /**
      * Returns the user prefs' address book file path.

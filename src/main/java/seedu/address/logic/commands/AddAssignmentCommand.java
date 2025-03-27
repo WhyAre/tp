@@ -46,7 +46,12 @@ public class AddAssignmentCommand extends Command {
         for (var idx : tutorialIdxList) {
             var idxZeroBased = idx.getZeroBased();
 
-            var tutorial = model.getFilteredTutorialList().get(idxZeroBased);
+            var tutorials = model.getFilteredTutorialList();
+            if (idxZeroBased >= tutorials.size()) {
+                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
+            }
+
+            var tutorial = tutorials.get(idxZeroBased);
             if (tutorial == null) {
                 throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
             }

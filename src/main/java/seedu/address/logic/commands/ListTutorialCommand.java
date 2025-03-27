@@ -8,7 +8,7 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 
 /**
- * to the address book.
+ * Lists the tutorials in the address book.
  */
 public class ListTutorialCommand extends Command {
 

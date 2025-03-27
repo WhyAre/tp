@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
@@ -36,6 +37,7 @@ public class StudentUtil {
         sb.append(PREFIX_PHONE + student.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + student.getEmail().value + " ");
         sb.append(PREFIX_HANDLE + student.getHandle().handle + " ");
+        sb.append(PREFIX_DETAILS + student.getDetails().value + " ");
         student.getTutorials().stream().forEach(s -> sb.append(PREFIX_TUTORIAL_NAME + s.name() + " "));
         return sb.toString();
     }
@@ -51,6 +53,7 @@ public class StudentUtil {
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getHandle().ifPresent(handle -> sb.append(PREFIX_HANDLE).append(handle.handle).append(" "));
+        descriptor.getDetails().ifPresent(details -> sb.append(PREFIX_DETAILS).append(details.value).append(" "));
         if (descriptor.getTutorials().isPresent()) {
             Set<Tutorial> tags = descriptor.getTutorials().get();
             if (tags.isEmpty()) {
