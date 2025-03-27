@@ -16,5 +16,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_TUTORIAL_IDX = new Prefix("t/");
     public static final Prefix PREFIX_INDEX = new Prefix("s/");
     public static final Prefix PREFIX_WEEK = new Prefix("w/");
+    public static final Prefix PREFIX_DETAILS = new Prefix("desc/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");
 }

@@ -7,10 +7,10 @@ TAskbook is a **desktop app for managing contacts, optimized for use via a Comma
 If you can type fast,
 TAskbook can get your contact management tasks done faster than traditional GUI apps.
 
-* Table of Contents
-{:toc}
+- Table of Contents
+  {:toc}
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Quick start
 
@@ -32,20 +32,20 @@ TAskbook can get your contact management tasks done faster than traditional GUI 
    e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   - `list` : Lists all contacts.
 
-   * `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe` :
+   - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe` :
      Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 1` : Deletes the 1st contact shown in the current list.
+   - `delete 1` : Deletes the 1st contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+   - `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+   - `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Features
 
@@ -53,24 +53,24 @@ TAskbook can get your contact management tasks done faster than traditional GUI 
 
 **:information_source: Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
+- Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
+- Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `...` after them can be used multiple times including zero times.<br>
+- Items with `...` after them can be used multiple times including zero times.<br>
   e.g. `[t/TUTORIAL_NAME]...` can be used as ` ` (i.e. 0 times), `t/cs2103`,
   `t/cs2103 t/cs2040s` etc.
 
-* Parameters can be in any order.<br>
+- Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters
+- Extraneous parameters for commands that do not take in parameters
   (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document,
+- If you are using a PDF version of this document,
 be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
@@ -83,7 +83,6 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
 ### Adding a person: `add`
 
 Adds a student to the address book.
@@ -95,8 +94,9 @@ A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
-* `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe t/CS2103_T01 t/CS2106_T02`
+
+- `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
+- `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe t/CS2103_T01 t/CS2106_T02`
 
 ### Listing all students: `list`
 
@@ -110,20 +110,21 @@ Edits an existing student in the address book.
 
 Format: `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`
 
-* Edits the person at the specified `INDEX`.
+- Edits the person at the specified `INDEX`.
   The index refers to the index number shown in the displayed person list.
   The index **must be a positive integer** 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tutorial slots,
+- At least one of the optional fields must be provided.
+- Existing values will be updated to the input values.
+- When editing tutorial slots,
   the existing set of tutorials allocated to the person will be replaced entirely with the new values provided i.e. adding of tutorials is not cumulative.
-* You can remove all the person’s tutorial slots by typing `t/` without
+- You can remove all the person’s tutorial slots by typing `t/` without
   specifying any tutorials after it.
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com`
+
+- `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/`
+- `edit 2 n/Betsy Crower t/`
   Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tutorial slots.
 
 <!-- ### Locating persons by name: `find` -->
@@ -150,12 +151,13 @@ Deletes the specified student from the address book.
 
 Format: `delete INDEX`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, ...
+- Deletes the person at the specified `INDEX`.
+- The index refers to the index number shown in the displayed person list.
+- The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+
+- `list` followed by `delete 2` deletes the 2nd person in the address book.
 <!-- * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command. -->
 
 ### Adding a tutorial: `tutorial add`
@@ -194,7 +196,7 @@ Adds a student to a tutorial slot.
 
 Format: `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
-* `STUDENT_INDEX` **must be a positive integer** 1, 2, 3, ...
+- `STUDENT_INDEX` **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 
@@ -207,7 +209,7 @@ Deletes a student from a tutorial slot.
 
 Format: `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
-* `STUDENT_INDEX` **must be a positive integer** 1, 2, 3, ...
+- `STUDENT_INDEX` **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 
@@ -275,7 +277,7 @@ Therefore, edit the data file only if you are confident that you can update it c
 <!---->
 <!-- _Details coming soon ..._ -->
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## FAQ
 
@@ -283,7 +285,7 @@ Therefore, edit the data file only if you are confident that you can update it c
 **A**: Install the app in the other computer
 and overwrite the empty data file it creates with the file that contains the data of your previous TAskbook home folder.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Known issues
 
@@ -292,12 +294,12 @@ and overwrite the empty data file it creates with the file that contains the dat
    the GUI will open off-screen.
    The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command
-  (or use the `Help` menu, or the keyboard shortcut `F1`) again,
-  the original Help Window will remain minimized,
-  and no new Help Window will appear.
-  The remedy is to manually restore the minimized Help Window.
+   (or use the `Help` menu, or the keyboard shortcut `F1`) again,
+   the original Help Window will remain minimized,
+   and no new Help Window will appear.
+   The remedy is to manually restore the minimized Help Window.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Command summary
 

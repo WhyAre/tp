@@ -69,6 +69,12 @@ activate EditStudentDescriptor
 EditStudentDescriptor --> EditCommandParser
 deactivate EditStudentDescriptor
 
+EditCommandParser -> EditStudentDescriptor : setDetails()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
 EditCommandParser -> EditStudentDescriptor : setTutorials()
 activate EditStudentDescriptor
 
@@ -109,32 +115,44 @@ activate EditStudentDescriptor
 EditStudentDescriptor --> EditCommand
 deactivate EditStudentDescriptor
 
-EditCommand -> EditStudentDescriptor : getName()
+EditCommand -> EditStudentDescriptor : getStudentId()
 activate EditStudentDescriptor
 
 EditStudentDescriptor --> EditCommand
 deactivate EditStudentDescriptor
 
-EditCommand -> EditStudentDescriptor : getName()
+EditCommand -> EditStudentDescriptor : getPhone()
 activate EditStudentDescriptor
 
 EditStudentDescriptor --> EditCommand
 deactivate EditStudentDescriptor
 
-EditCommand -> EditStudentDescriptor : getName()
+EditCommand -> EditStudentDescriptor : getEmail()
 activate EditStudentDescriptor
 
 EditStudentDescriptor --> EditCommand
 deactivate EditStudentDescriptor
 
-EditCommand -> EditStudentDescriptor : getName()
+EditCommand -> EditStudentDescriptor : getHandle()
 activate EditStudentDescriptor
 
 EditStudentDescriptor --> EditCommand
 deactivate EditStudentDescriptor
 
-EditCommand -> EditStudentDescriptor : getName()
+EditCommand -> EditStudentDescriptor : getDetails()
 activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> EditStudentDescriptor : getTutorials()
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommand
+deactivate EditStudentDescriptor
+
+EditCommand -> StudentToEdit : getAttendances()
+activate StudentToEdit
 
 EditStudentDescriptor --> EditCommand
 deactivate EditStudentDescriptor
@@ -148,6 +166,12 @@ deactivate Student
 
 EditCommand --> EditCommand : student
 deactivate EditCommand
+
+EditCommand -> Model : isSamePerson()
+activate Model
+
+Model --> EditCommand
+deactivate Model
 
 EditCommand -> Model : hasStudent()
 activate Model
