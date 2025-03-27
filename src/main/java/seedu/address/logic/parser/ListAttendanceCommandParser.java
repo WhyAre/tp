@@ -28,7 +28,7 @@ public class ListAttendanceCommandParser implements Parser<ListAttendanceCommand
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(" " + args, PREFIX_INDEX);
         if (!argMultimap.allPresent(PREFIX_INDEX)) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAttendanceCommand.MESSAGE_USAGE));
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAttendanceCommand.MESSAGE_USAGE));
         }
 
         Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());

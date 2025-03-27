@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ATTENDANCES;
 import static seedu.address.model.NavigationMode.STUDENT;
 import static seedu.address.model.NavigationMode.TUTORIAL;
 
@@ -16,25 +15,27 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.ui.AttendanceListPanel;
 
 /**
  * Lists attendances in the address book to the user.
  */
 public class ListAttendanceCommand extends Command {
-    private final Logger logger = LogsCenter.getLogger(ListAttendanceCommand.class);
-
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_USAGE = "Usage: attendance list s/INDEX"
-        + "\nYou must be in STUDENTS or TUTORIAL view";
+                    + "\nYou must be in STUDENTS or TUTORIAL view";
 
     public static final String MESSAGE_INVALID_VIEW = "Invalid view. Please switch to STUDENTS or TUTORIAL view first";
 
     public static final String MESSAGE_SUCCESS = "Listed attendances for %s";
 
+    private final Logger logger = LogsCenter.getLogger(ListAttendanceCommand.class);
     private final Index index;
 
+    /**
+     * Creates a {@link ListAttendanceCommand} to view the attendance for a specific
+     * student or tutorial via an {@code Attendance} object
+     */
     public ListAttendanceCommand(Index index) {
         requireNonNull(index);
         this.index = index;

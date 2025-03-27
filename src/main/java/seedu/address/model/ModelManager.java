@@ -6,11 +6,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.logging.Filter;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -19,7 +17,6 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
-import seedu.address.model.uniquelist.UniqueList;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
@@ -167,7 +164,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void markAttendance(Tutorial tutorial, int week, Student student) throws DuplicateItemException, ItemNotFoundException {
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         addressBook.markAttendance(tutorial, week, student);
     }
 

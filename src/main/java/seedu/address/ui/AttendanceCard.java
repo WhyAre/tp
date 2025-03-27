@@ -1,8 +1,6 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 import javafx.fxml.FXML;
@@ -11,7 +9,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.attendance.Attendance;
-import seedu.address.model.student.Student;
 
 /**
  * An UI component that displays information of a {@code Tutorial}.
@@ -52,16 +49,15 @@ public class AttendanceCard extends UiPart<Region> {
         studentName.setText(attendance.student().getName().toString());
         tutorialName.setText(attendance.tutorial().name());
         List<Integer> attendanceList = attendance.attendances();
-        IntStream.range(0, attendance.attendances().size())
-                        .forEach(i -> {
-                            int week = i + 3;
-                            Label label = new Label("Week " + week);
-                            if (attendanceList.get(i) == 0) {
-                                label.getStyleClass().add("attendance-absent");
-                            } else if (attendanceList.get(i) == 1) {
-                                label.getStyleClass().add("attendance-present");
-                            }
-                            attendances.getChildren().add(label);
-                        });
+        IntStream.range(0, attendance.attendances().size()).forEach(i -> {
+            int week = i + 3;
+            Label label = new Label("Week " + week);
+            if (attendanceList.get(i) == 0) {
+                label.getStyleClass().add("attendance-absent");
+            } else if (attendanceList.get(i) == 1) {
+                label.getStyleClass().add("attendance-present");
+            }
+            attendances.getChildren().add(label);
+        });
     }
 }

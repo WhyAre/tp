@@ -205,7 +205,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void markAttendance(Tutorial tutorial, int week, Student student) throws DuplicateItemException, ItemNotFoundException {
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
 
