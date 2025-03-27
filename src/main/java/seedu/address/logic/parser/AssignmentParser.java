@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddAssignmentCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteAssignmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -23,6 +24,7 @@ public class AssignmentParser implements Parser<Command> {
         subcmds = new HashMap<>();
 
         subcmds.put(AddAssignmentCommand.COMMAND_WORD, new AddAssignmentCommandParser());
+        subcmds.put(DeleteAssignmentCommand.COMMAND_WORD, new DeleteAssignmentCommandParser());
 
         usage = """
                         Usage: assignment COMMAND
