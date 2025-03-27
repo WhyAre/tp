@@ -65,7 +65,7 @@ public class UnmarkAttendanceCommand extends Command {
         assert week <= END_WEEK;
 
         try {
-            model.markAttendance(tutorial, week, studentToEdit);
+            model.unmarkAttendance(tutorial, week, studentToEdit);
         } catch (DuplicateItemException | ItemNotFoundException e) {
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
         }
