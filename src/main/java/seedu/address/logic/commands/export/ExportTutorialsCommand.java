@@ -24,6 +24,8 @@ public class ExportTutorialsCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Successfully exported tutorials.";
 
+    public static final String TUTORIAL_CSV_FILE = "tutorials.csv";
+
     private List<Tutorial> toExport;
 
     /**
@@ -37,7 +39,7 @@ public class ExportTutorialsCommand extends Command {
         requireNonNull(model);
 
         Path addressBookFilePath = model.getAddressBookFilePath();
-        Path exportTutorialFilePath = addressBookFilePath.resolveSibling("tutorials.csv");
+        Path exportTutorialFilePath = addressBookFilePath.resolveSibling(TUTORIAL_CSV_FILE);
         CsvListStorage<Tutorial> exportTutorialStorage = new CsvListStorage<Tutorial>(exportTutorialFilePath);
 
         try {

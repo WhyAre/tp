@@ -36,8 +36,7 @@ public class CsvAdaptedStudent {
         this.phone = source.getPhone().value;
         this.email = source.getEmail().value;
         this.handle = source.getHandle().handle;
-        this.tutorials = String.join(TUTORIALS_SEPARATOR,
-                        source.getTutorials().stream().map(Tutorial::toString).collect(Collectors.toList()));
+        this.tutorials = joinTutorials(source);
     }
 
     /**
@@ -60,6 +59,13 @@ public class CsvAdaptedStudent {
     }
     public String getTutorials() {
         return tutorials;
+    }
+
+    /**
+     * Join tutorials by appropriate separator for CSV-friendly list
+     */
+    public String joinTutorials(Student source) {
+        return source.getTutorials().stream().map(Tutorial::toString).collect(Collectors.joining(TUTORIALS_SEPARATOR));
     }
 
 }

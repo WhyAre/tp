@@ -8,13 +8,16 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.storage.csv.CsvListStorage;
+import seedu.address.storage.json.JsonAddressBookStorage;
 
 /**
  * Exports student lists.
@@ -28,8 +31,13 @@ public class ExportStudentsCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Successfully exported students";
     public static final String MESSAGE_TUTORIAL_DOES_NOT_EXIST = "%1$s doesn't exist";
 
+    public static final String STUDENT_CSV_FILE = "students.csv";
+    public static final String STUDENT_BELONGING_TO_CSV_FILE = "students-%s.csv";
+
     private final Optional<Tutorial> tutorial;
     private List<Student> toExport;
+
+    private static final Logger logger = LogsCenter.getLogger(JsonAddressBookStorage.class);
 
     /**
      * Creates a {@link ExportStudentsCommand} to export all students
@@ -58,14 +66,14 @@ public class ExportStudentsCommand extends Command {
 
         if (tutorial.isPresent()) {
             exportStudentFilePath = addressBookFilePath
-                            .resolveSibling(String.format("students-%s.csv", tutorial.get().name()));
+                            .resolveSibling(String.format(STUDENT_BELONGING_TO_CSV_FILE, tutorial.get().name()));
             if (model.hasTutorial(tutorial.get())) {
                 studentList.addAll(model.getStudentsInTutorial(tutorial.get()));
             } else {
                 return new CommandResult(String.format(MESSAGE_TUTORIAL_DOES_NOT_EXIST, tutorial.get().name()));
             }
         } else {
-            exportStudentFilePath = addressBookFilePath.resolveSibling("students.csv");
+            exportStudentFilePath = addressBookFilePath.resolveSibling(STUDENT_CSV_FILE);
             studentList.addAll(model.getFilteredStudentList());
         }
 
@@ -73,10 +81,13 @@ public class ExportStudentsCommand extends Command {
         try {
             exportStudentStorage.saveCsvList(studentList);
         } catch (AccessDeniedException e) {
+            logger.info("Access Denied Error (" + exportStudentFilePath + "): " + e.getMessage());
             return new CommandResult(String.format(ExportCommand.FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()));
         } catch (IOException ioe) {
+            logger.info("IO Exception (" + exportStudentFilePath + "): " + ioe.getMessage());
             return new CommandResult(String.format(ExportCommand.FILE_OPS_ERROR_FORMAT, ioe.getMessage()));
         }
+
 
         return new CommandResult(MESSAGE_SUCCESS);
 
