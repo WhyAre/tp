@@ -21,8 +21,6 @@ public class AddAssignmentCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = "Usage: assignment add ASSIGNMENT_NAME i/INDEX... [d/DUE_DATE]";
-
     public static final String MESSAGE_SUCCESS = "New assignment added";
     public static final String MESSAGE_INVALID_NAME = """
                     The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
