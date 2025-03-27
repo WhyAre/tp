@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
@@ -82,7 +83,12 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
      * Removes entity from the list
      */
     public boolean remove(T toRemove) {
-        return internalList.remove(toRemove);
+        for (T e : internalList) {
+            if (toRemove.hasSameIdentity(e)) {
+                return internalList.remove(e);
+            }
+        }
+        return false;
     }
 
     @Override
