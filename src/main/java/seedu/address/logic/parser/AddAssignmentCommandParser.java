@@ -42,7 +42,7 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
             }
         }).toList();
         if (idxList.isEmpty()) {
-            throw new ParseException("%s flag is missing".formatted(PREFIX_TUTORIAL_IDX));
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(MESSAGE_USAGE));
         }
 
         var name = argMultimap.getPreamble();
