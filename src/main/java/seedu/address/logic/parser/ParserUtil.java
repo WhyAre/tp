@@ -163,9 +163,8 @@ public class ParserUtil {
         requireNonNull(details);
         String trimmedDetails = details.trim();
         return new Details(trimmedDetails);
-
     }
-      
+
     /**
      * Parses datetime string into {@link LocalDateTime} while supporting a few
      * formats of date time
