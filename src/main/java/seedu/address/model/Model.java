@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -137,6 +138,11 @@ public interface Model {
      * Checks whether tutorial exists in the address book
      */
     boolean hasTutorial(Tutorial tutorial);
+
+    /**
+     * Sets submission status
+     */
+    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status);
 
     /**
      * Creates attendance record for a student in specified tutorial

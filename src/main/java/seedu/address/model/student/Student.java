@@ -11,6 +11,7 @@ import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.attendance.Attendance;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -31,6 +32,7 @@ public class Student implements Identifiable<Student> {
     // Data fields
     private Set<Tutorial> tutorials;
     private List<Attendance> attendances;
+    private List<Submission> submissions;
 
     /**
      * Constructs a {@code Student} object with the provided details and attendance.
@@ -39,7 +41,8 @@ public class Student implements Identifiable<Student> {
      * they will be initialized with default values.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                    Set<Tutorial> tutorials, Details details, List<Attendance> attendances) {
+                    Set<Tutorial> tutorials, Details details, List<Attendance> attendances,
+                    List<Submission> submissions) {
         requireAllNonNull(name, studentId, phone, email, handle, tutorials);
         this.name = name;
         this.studentId = studentId;
@@ -47,8 +50,18 @@ public class Student implements Identifiable<Student> {
         this.email = email;
         this.handle = handle;
         this.tutorials = tutorials;
-        this.details = (details != null) ? details : new Details("");
-        this.attendances = (attendances != null) ? attendances : new ArrayList<>();
+        this.details = details;
+        this.attendances = attendances;
+        this.submissions = submissions;
+    }
+
+    /**
+     * Constructs a {@code Student} object with the provided required fields and
+     * default empty details and attendance.
+     */
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                    Set<Tutorial> tutorials, Details details, List<Attendance> attendances) {
+        this(name, studentId, phone, email, handle, tutorials, details, attendances, new ArrayList<>());
     }
 
     /**
@@ -57,7 +70,7 @@ public class Student implements Identifiable<Student> {
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
                     Set<Tutorial> tutorials) {
-        this(name, studentId, phone, email, handle, tutorials, null, null);
+        this(name, studentId, phone, email, handle, tutorials, new ArrayList<>());
     }
 
     /**
@@ -66,7 +79,7 @@ public class Student implements Identifiable<Student> {
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
                     Set<Tutorial> tutorials, List<Attendance> attendances) {
-        this(name, studentId, phone, email, handle, tutorials, null, attendances);
+        this(name, studentId, phone, email, handle, tutorials, new Details(""), attendances, new ArrayList<>());
     }
 
     /**
@@ -75,7 +88,7 @@ public class Student implements Identifiable<Student> {
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
                     Set<Tutorial> tutorials, Details details) {
-        this(name, studentId, phone, email, handle, tutorials, details, null);
+        this(name, studentId, phone, email, handle, tutorials, details, new ArrayList<>(), new ArrayList<>());
     }
 
     public Name getName() {
@@ -139,6 +152,10 @@ public class Student implements Identifiable<Student> {
      */
     public void removeInvalidTutorials(Set<Tutorial> validTuts) {
         tutorials.removeIf(t -> !validTuts.contains(t));
+    }
+
+    public void addSubmission(Submission submission) {
+        submissions.add(submission);
     }
 
     /**

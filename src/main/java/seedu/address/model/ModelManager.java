@@ -18,6 +18,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -175,6 +176,12 @@ public class ModelManager implements Model {
     @Override
     public boolean hasTutorial(Tutorial tutorial) {
         return addressBook.hasTutorial(tutorial);
+    }
+
+    @Override
+    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+                    SubmissionStatus status) {
+        addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
     }
 
     @Override

@@ -18,6 +18,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SubmissionCommand;
 import seedu.address.logic.commands.TutorialCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.export.ExportCommand;
@@ -41,6 +42,7 @@ public class AddressBookParser {
      * @param userInput
      *            full user input string
      * @return the command based on the user input
+     *
      * @throws ParseException
      *             if the user input does not conform the expected format
      */
@@ -68,6 +70,9 @@ public class AddressBookParser {
 
         case AttendanceCommand.COMMAND_WORD:
             return new AttendanceParser().parse(arguments);
+
+        case SubmissionCommand.COMMAND_WORD:
+            return new SubmissionParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
