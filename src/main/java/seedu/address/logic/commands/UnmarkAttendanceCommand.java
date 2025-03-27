@@ -13,15 +13,15 @@ import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
- * Marks a student as present.
+ * Unmarks a student's attendance
  */
-public class MarkAttendanceCommand extends Command {
+public class UnmarkAttendanceCommand extends Command {
 
-    public static final String COMMAND_WORD = "mark";
+    public static final String COMMAND_WORD = "unmark";
 
-    public static final String MESSAGE_USAGE = "Usage: attendance mark TUTORIAL_NAME w/WEEK s/STUDENT_INDEX...";
+    public static final String MESSAGE_USAGE = "Usage: attendance unmark TUTORIAL_NAME w/WEEK s/STUDENT_INDEX...";
 
-    public static final String MESSAGE_SUCCESS = "Attendance marked!";
+    public static final String MESSAGE_SUCCESS = "Attendance unmarked!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
 
@@ -37,10 +37,10 @@ public class MarkAttendanceCommand extends Command {
     private final Index index;
 
     /**
-     * Creates a {@link MarkAttendanceCommand} to mark the specified student's
+     * Creates an {@link UnmarkAttendanceCommand} to unmark the specified student's
      * attendance {@code Attendance}
      */
-    public MarkAttendanceCommand(Tutorial tutorial, int week, Index index) {
+    public UnmarkAttendanceCommand(Tutorial tutorial, int week, Index index) {
         this.tutorial = tutorial;
         this.week = week;
         this.index = index;
@@ -60,7 +60,7 @@ public class MarkAttendanceCommand extends Command {
 
         assert week >= START_WEEK;
         assert week <= END_WEEK;
-        model.markAttendance(tutorial, week, studentToEdit);
+        model.unmarkAttendance(tutorial, week, studentToEdit);
 
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
@@ -72,12 +72,12 @@ public class MarkAttendanceCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof MarkAttendanceCommand otherMarkAttendanceCommand)) {
+        if (!(other instanceof UnmarkAttendanceCommand otherUnmarkAttendanceCommand)) {
             return false;
         }
 
-        return tutorial.equals(otherMarkAttendanceCommand.tutorial) && week == otherMarkAttendanceCommand.week
-                        && index == otherMarkAttendanceCommand.index;
+        return tutorial.equals(otherUnmarkAttendanceCommand.tutorial) && week == otherUnmarkAttendanceCommand.week
+                        && index == otherUnmarkAttendanceCommand.index;
     }
 
     @Override
