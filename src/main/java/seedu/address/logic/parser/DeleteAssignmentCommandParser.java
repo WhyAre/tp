@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.DeleteAssignmentCommand.MESSAGE_USAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 
 import java.util.ArrayList;
@@ -33,7 +32,8 @@ public class DeleteAssignmentCommandParser implements Parser<DeleteAssignmentCom
         var argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TUTORIAL_IDX);
 
         if (!argMultimap.allPresent(PREFIX_TUTORIAL_IDX)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAssignmentCommand.MESSAGE_USAGE));
         }
 
         ArrayList<Index> indices = new ArrayList<>();
@@ -44,7 +44,8 @@ public class DeleteAssignmentCommandParser implements Parser<DeleteAssignmentCom
         String assignmentName = argMultimap.getPreamble();
         // Throw parse error if no assignment is specified.
         if (assignmentName.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAssignmentCommand.MESSAGE_USAGE));
         }
 
         return new DeleteAssignmentCommand(indices, new Assignment(assignmentName, Optional.empty()));
