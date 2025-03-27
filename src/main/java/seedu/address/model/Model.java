@@ -125,9 +125,15 @@ public interface Model {
     void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
 
     /**
-     * Marks students attendance
+     * Marks student as present
      */
     void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException;
+
+    /**
+     * Marks student as absent
+     */
+    void unmarkAttendance(Tutorial tutorial, int week, Student student)
                     throws DuplicateItemException, ItemNotFoundException;
 
     /**
