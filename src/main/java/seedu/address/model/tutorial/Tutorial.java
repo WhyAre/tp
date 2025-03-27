@@ -50,6 +50,7 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
      * Checks whether the given name is valid
      */
     public static boolean isValidName(String name) {
+        Objects.requireNonNull(name);
         final var pattern = "[a-zA-Z0-9_-]+";
 
         return name.matches(pattern);

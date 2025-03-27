@@ -10,6 +10,10 @@ import seedu.address.model.tutorial.Tutorial;
  * Jackson-friendly version of {@link Tutorial}.
  */
 public class JsonAdaptedTutorial {
+
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Tutorial's %s field is missing!";
+    public static final String MESSAGE_INVALID_TUTORIAL_NAME = "Tutorial name is not valid.";
+
     private final String name;
 
     JsonAdaptedTutorial(Tutorial tutorial) {
@@ -30,9 +34,14 @@ public class JsonAdaptedTutorial {
      *             student.
      */
     public Tutorial toModelType() throws IllegalValueException {
+
+        if (name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "name"));
+        }
         if (!Tutorial.isValidName(name)) {
-            throw new IllegalValueException("Tutorial name is not valid.");
+            throw new IllegalValueException(MESSAGE_INVALID_TUTORIAL_NAME);
         }
         return new Tutorial(name);
+
     }
 }
