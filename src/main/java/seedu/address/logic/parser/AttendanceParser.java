@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.MarkAttendanceCommand;
+import seedu.address.logic.commands.UnmarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -22,8 +23,9 @@ public class AttendanceParser implements Parser<Command> {
     AttendanceParser() {
         subcmds = new HashMap<>();
 
-        // Mark attendance.
+        // Mark/unmark attendance.
         subcmds.put(MarkAttendanceCommand.COMMAND_WORD, new MarkAttendanceCommandParser());
+        subcmds.put(UnmarkAttendanceCommand.COMMAND_WORD, new UnmarkAttendanceCommandParser());
 
         usage = """
                         Usage: attendance COMMAND
