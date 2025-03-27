@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -21,6 +22,9 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Tutorial> PREDICATE_SHOW_ALL_TUTORIALS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Attendance> PREDICATE_SHOW_ALL_ATTENDANCES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -131,12 +135,14 @@ public interface Model {
     /**
      * Marks student as present
      */
-    void markAttendance(Tutorial tutorial, int week, Student student);
+    void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Marks student as absent
      */
-    void unmarkAttendance(Tutorial tutorial, int week, Student student);
+    void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
@@ -176,6 +182,21 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredTutorialList(Predicate<Tutorial> predicate);
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Attendance} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
+    ObservableList<Attendance> getFilteredAttendanceList();
+
+    /**
+     * Updates the filter of the filtered attendance list to filter by the given
+     * {@code predicate}.
+     *
+     * @throws NullPointerException
+     *             if {@code predicate} is null.
+     */
+    void updateFilteredAttendanceList(Predicate<Attendance> predicate);
 
     /**
      * Returns an unmodifiable view of the list of TutorialWithStudents by mapping

@@ -9,10 +9,12 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -29,7 +31,9 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
-    private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
+    private final FilteredList<Attendance> filteredAttendances;
+    // private final FilteredList<TutorialWithStudents>
+    // filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,7 +47,9 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
-        filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
+        filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
+        // filteredTutorialWithStudents = new
+        // FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -167,12 +173,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void markAttendance(Tutorial tutorial, int week, Student student) {
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         addressBook.markAttendance(tutorial, week, student);
     }
 
     @Override
-    public void unmarkAttendance(Tutorial tutorial, int week, Student student) {
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         addressBook.unmarkAttendance(tutorial, week, student);
     }
 
@@ -213,7 +221,8 @@ public class ModelManager implements Model {
     }
 
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
-        return filteredTutorialWithStudents;
+        // return filteredTutorialWithStudents;
+        return FXCollections.observableArrayList();
     }
 
     @Override
@@ -233,7 +242,21 @@ public class ModelManager implements Model {
         Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
-        filteredTutorialWithStudents.setPredicate(isInList);
+        // filteredTutorialWithStudents.setPredicate(isInList);
+    }
+
+    // =========== Filtered Attendance List Accessors
+    // =============================================================
+
+    @Override
+    public ObservableList<Attendance> getFilteredAttendanceList() {
+        return filteredAttendances;
+    }
+
+    @Override
+    public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+        requireNonNull(predicate);
+        filteredAttendances.setPredicate(predicate);
     }
 
     @Override

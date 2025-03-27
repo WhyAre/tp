@@ -6,11 +6,14 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Marks a student as present.
@@ -60,9 +63,14 @@ public class MarkAttendanceCommand extends Command {
 
         assert week >= START_WEEK;
         assert week <= END_WEEK;
-        model.markAttendance(tutorial, week, studentToEdit);
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
+        try {
+            model.markAttendance(tutorial, week, studentToEdit);
+        } catch (DuplicateItemException | ItemNotFoundException e) {
+            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        }
+
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.ATTENDANCE);
     }
 
     @Override

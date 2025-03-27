@@ -24,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -232,6 +233,16 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public ObservableList<Attendance> getFilteredAttendanceList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
         public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
             throw new AssertionError("This method should not be called.");
         }
@@ -245,6 +256,7 @@ public class AddCommandTest {
         public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
     }
 
     /**
