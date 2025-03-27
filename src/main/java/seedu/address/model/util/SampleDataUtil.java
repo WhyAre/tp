@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -13,6 +14,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentID;
 import seedu.address.model.student.TelegramHandle;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -45,6 +47,16 @@ public class SampleDataUtil {
             new Tutorial("CS2106-T45")};
     }
 
+    public static void getSampleAttendences(AddressBook sampleAb, Student student) {
+        try {
+            for (Tutorial tutorial : student.getTutorials()) {
+                sampleAb.addAttendance(tutorial, student);
+            }
+        } catch (ItemNotFoundException e) {
+            assert false;
+        }
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Tutorial sampleTutorial : getSampleTutorials()) {
@@ -52,6 +64,9 @@ public class SampleDataUtil {
         }
         for (Student sampleStudent : getSampleStudents()) {
             sampleAb.addStudent(sampleStudent);
+        }
+        for (Student student : sampleAb.getStudentList()) {
+            getSampleAttendences(sampleAb, student);
         }
         return sampleAb;
     }

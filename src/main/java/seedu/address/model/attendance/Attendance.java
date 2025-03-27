@@ -43,6 +43,6 @@ public record Attendance(Tutorial tutorial, Student student,
             return false;
         }
 
-        return this.tutorial.equals(other.tutorial) && this.student.equals(other.student);
+        return this.tutorial.name().equals(other.tutorial.name()) && this.student.getName().equals(other.student.getName());
     }
 }

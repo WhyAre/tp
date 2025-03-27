@@ -73,6 +73,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setStudents(newData.getStudentList());
             setTutorials(newData.getTutorialList());
+            setAttendances(newData.getAttendanceList());
         } catch (DuplicateItemException e) {
             // Since it's coming from an address book, these errors shouldn't be thrown
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
@@ -223,6 +224,14 @@ public class AddressBook implements ReadOnlyAddressBook {
                 break;
             }
         }
+    }
+
+    /**
+     * Replaces the contents of the attendance list with {@code attendances}.
+     */
+    public void setAttendances(List<Attendance> attendances) throws DuplicateItemException {
+        requireNonNull(attendances);
+        this.attendances.setAll(attendances);
     }
 
     /**

@@ -31,7 +31,7 @@ public class ModelManager implements Model {
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
     private final FilteredList<Attendance> filteredAttendances;
-    private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
+    //private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,7 +46,7 @@ public class ModelManager implements Model {
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
         filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
-        filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
+        //filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -216,7 +216,7 @@ public class ModelManager implements Model {
         // Hide studentList
         filteredTutorials.setPredicate(predicate);
     }
-
+    /*
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
         return filteredTutorialWithStudents;
     }
@@ -240,7 +240,7 @@ public class ModelManager implements Model {
 
         filteredTutorialWithStudents.setPredicate(isInList);
     }
-
+    */
     // =========== Filtered Attendance List Accessors
     // =============================================================
 

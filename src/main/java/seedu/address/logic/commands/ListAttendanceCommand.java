@@ -51,13 +51,13 @@ public class ListAttendanceCommand extends Command {
             List<Student> lastShownList = model.getFilteredStudentList();
             Student student = lastShownList.get(index.getZeroBased());
             name = student.getName().fullName;
-            model.updateFilteredAttendanceList(x -> x.student().equals(student));
+            model.updateFilteredAttendanceList(x -> x.student().hasSameIdentity(student));
         } else if (navigationMode.equals(TUTORIAL)) {
             logger.log(Level.INFO, "Coming from TUTORIAL VIEW");
             List<Tutorial> lastShownList = model.getFilteredTutorialList();
             Tutorial tutorial = lastShownList.get(index.getZeroBased());
             name = tutorial.name();
-            model.updateFilteredAttendanceList(x -> x.tutorial().equals(tutorial));
+            model.updateFilteredAttendanceList(x -> x.tutorial().hasSameIdentity(tutorial));
         } else {
             throw new CommandException(MESSAGE_INVALID_VIEW);
         }
