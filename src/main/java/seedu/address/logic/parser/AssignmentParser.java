@@ -22,7 +22,6 @@ public class AssignmentParser implements Parser<Command> {
     AssignmentParser() {
         subcmds = new HashMap<>();
 
-        // Add/List/Delete/Find tutorials.
         subcmds.put(AddTutorialCommand.COMMAND_WORD, new AddAssignmentCommandParser());
 
         usage = """
