@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 
 import java.util.List;
 
@@ -11,53 +12,57 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.tutorial.Assignment;
+import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
- * Adds an assignment to a tutorial
+ * Deletes an assignment from the address book.
  */
-public class AddAssignmentCommand extends Command {
+public class DeleteAssignmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_SUCCESS = "New assignment added";
-    public static final String MESSAGE_INVALID_NAME = """
-                    The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
-    public static final String MESSAGE_DUPLICATE_TUTORIAL = "Assignment already exists in tutorial";
+    public static final String MESSAGE_USAGE = "Usage: assignment delete ASSIGNMENT_NAME %sTUTORIAL_INDEX..."
+                    .formatted(PREFIX_TUTORIAL_IDX);
+
+    public static final String MESSAGE_SUCCESS = "Successfully deleted assignment";
+
     private static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
+    private static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment not found in %s";
 
-    private final Assignment toAdd;
-    private final List<Index> tutorialIdxList;
+    private final Assignment toDelete;
+    private final List<Index> indices;
 
     /**
-     * Creates an {@link AddAssignmentCommand} to add the specified {@code Tutorial}
+     * Creates a {@link DeleteAssignmentCommand} to delete the specified
+     * {@code Assignment}
      */
-    public AddAssignmentCommand(List<Index> tutorialIdxList, Assignment assignment) {
+    public DeleteAssignmentCommand(List<Index> indices, Assignment assignment) {
         requireNonNull(assignment);
-        toAdd = assignment;
-        this.tutorialIdxList = tutorialIdxList;
+        toDelete = assignment;
+        this.indices = indices;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        for (var idx : tutorialIdxList) {
-            var idxZeroBased = idx.getZeroBased();
+        for (Index idx : indices) {
+            int idxZeroBased = idx.getZeroBased();
 
-            var tutorials = model.getFilteredTutorialList();
+            List<Tutorial> tutorials = model.getFilteredTutorialList();
             if (idxZeroBased >= tutorials.size()) {
                 throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
             }
 
-            var tutorial = tutorials.get(idxZeroBased);
+            Tutorial tutorial = tutorials.get(idxZeroBased);
             if (tutorial == null) {
                 throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
             }
 
-            if (!tutorial.addAssignment(toAdd)) {
-                throw new CommandException(MESSAGE_DUPLICATE_TUTORIAL);
+            if (!tutorial.deleteAssignment(toDelete)) {
+                throw new CommandException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(tutorial));
             }
 
             try {
@@ -76,15 +81,16 @@ public class AddAssignmentCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddAssignmentCommand otherAddCommand)) {
+        if (!(other instanceof DeleteAssignmentCommand otherDeleteAssignmentCommand)) {
             return false;
         }
 
-        return toAdd.equals(otherAddCommand.toAdd);
+        return indices.equals(otherDeleteAssignmentCommand.indices)
+                        && toDelete.equals(otherDeleteAssignmentCommand.toDelete);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("toAdd", toAdd).toString();
+        return new ToStringBuilder(this).add("indices", indices).add("toDelete", toDelete).toString();
     }
 }
