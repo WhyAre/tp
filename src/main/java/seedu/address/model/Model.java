@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.attendance.Attendance;
@@ -84,6 +85,16 @@ public interface Model {
      * Deletes the given student. The student must exist in the address book.
      */
     void deleteStudent(Student target);
+
+    /**
+     * Returns a given student. The student must exist in the address book.
+     */
+    ObjectProperty<Student> getSelectedStudent();
+
+    /**
+     * Sets a given student. The student must exist in the address book.
+     */
+    void setSelectedStudent(Student target);
 
     /**
      * Adds the given student. {@code student} must not already exist in the address

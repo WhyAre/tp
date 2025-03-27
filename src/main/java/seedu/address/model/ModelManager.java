@@ -9,6 +9,8 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -31,9 +33,8 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
+    private ObjectProperty<Student> student;
     private final FilteredList<Attendance> filteredAttendances;
-    // private final FilteredList<TutorialWithStudents>
-    // filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,11 +46,10 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        student = new SimpleObjectProperty<>();
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
         filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
-        // filteredTutorialWithStudents = new
-        // FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -125,6 +125,16 @@ public class ModelManager implements Model {
     @Override
     public void deleteStudent(Student target) {
         addressBook.removeStudent(target);
+    }
+
+    @Override
+    public ObjectProperty<Student> getSelectedStudent() {
+        return student;
+    }
+
+    @Override
+    public void setSelectedStudent(Student target) {
+        student.set(target);
     }
 
     @Override
@@ -220,7 +230,6 @@ public class ModelManager implements Model {
     }
 
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
-        // return filteredTutorialWithStudents;
         return FXCollections.observableArrayList();
     }
 
@@ -241,7 +250,6 @@ public class ModelManager implements Model {
         Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
-        // filteredTutorialWithStudents.setPredicate(isInList);
     }
 
     // =========== Filtered Attendance List Accessors
