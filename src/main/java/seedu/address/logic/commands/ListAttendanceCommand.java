@@ -22,7 +22,7 @@ import seedu.address.model.tutorial.Tutorial;
 public class ListAttendanceCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = "Usage: attendance list s/INDEX"
+    public static final String MESSAGE_USAGE = "Usage: attendance list INDEX"
                     + "\nYou must be in STUDENTS or TUTORIAL view";
 
     public static final String MESSAGE_INVALID_VIEW = "Invalid view. Please switch to STUDENTS or TUTORIAL view first";

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.Objects;
 
@@ -24,16 +23,13 @@ public class ListAttendanceCommandParser implements Parser<ListAttendanceCommand
      */
     public ListAttendanceCommand parse(String args) throws ParseException {
         Objects.requireNonNull(args);
-
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(" " + args, PREFIX_INDEX);
-        if (!argMultimap.allPresent(PREFIX_INDEX)) {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new ListAttendanceCommand(index);
+        } catch (ParseException pe) {
             throw new ParseException(
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAttendanceCommand.MESSAGE_USAGE));
         }
-
-        Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
-
-        return new ListAttendanceCommand(index);
     }
 
 }
