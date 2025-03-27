@@ -34,10 +34,10 @@ public class ExportStudentsCommand extends Command {
     public static final String STUDENT_CSV_FILE = "students.csv";
     public static final String STUDENT_BELONGING_TO_CSV_FILE = "students-%s.csv";
 
+    private static final Logger logger = LogsCenter.getLogger(JsonAddressBookStorage.class);
+
     private final Optional<Tutorial> tutorial;
     private List<Student> toExport;
-
-    private static final Logger logger = LogsCenter.getLogger(JsonAddressBookStorage.class);
 
     /**
      * Creates a {@link ExportStudentsCommand} to export all students
@@ -87,7 +87,6 @@ public class ExportStudentsCommand extends Command {
             logger.info("IO Exception (" + exportStudentFilePath + "): " + ioe.getMessage());
             return new CommandResult(String.format(ExportCommand.FILE_OPS_ERROR_FORMAT, ioe.getMessage()));
         }
-
 
         return new CommandResult(MESSAGE_SUCCESS);
 

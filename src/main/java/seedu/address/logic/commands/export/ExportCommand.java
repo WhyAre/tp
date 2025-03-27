@@ -38,7 +38,7 @@ public class ExportCommand extends Command {
 
         Path addressBookFilePath = model.getAddressBookFilePath();
 
-        Path exportStudentFilePath = addressBookFilePath.resolveSibling(ExportStudentsCommand.STUDENT_CSV_FILE); // default for now
+        Path exportStudentFilePath = addressBookFilePath.resolveSibling(ExportStudentsCommand.STUDENT_CSV_FILE);
         CsvListStorage<Student> exportStudentStorage = new CsvListStorage<Student>(exportStudentFilePath);
 
         Path exportTutorialFilePath = addressBookFilePath.resolveSibling(ExportTutorialsCommand.TUTORIAL_CSV_FILE);
