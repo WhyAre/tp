@@ -69,6 +69,13 @@
           <StackPane fx:id="attendanceListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
 
+        <VBox fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"
+                   minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+          <padding>
+            <Insets top="5" right="10" bottom="5" left="10" />
+          </padding>
+        </VBox>
+
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>
