@@ -152,9 +152,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String details} into an {@code Details}. Leading and trailing
      * whitespaces will be trimmed.
-     *
-     * @throws ParseException
-     *             if the given {@code details} is invalid.
      */
     public static Details parseDetails(String details) {
         requireNonNull(details);

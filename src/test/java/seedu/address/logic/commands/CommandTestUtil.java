@@ -40,7 +40,7 @@ public class CommandTestUtil {
     public static final String VALID_HANDLE_AMY = "@amy_bee";
     public static final String VALID_HANDLE_BOB = "@b0bch00";
     public static final String VALID_DETAILS_BOB = "";
-    public static final String VALID_DETAILS_AMY = "";
+    public static final String VALID_DETAILS_AMY = "Amy is very hardworking";
     public static final String VALID_TUTORIAL_1 = "CS2103-T1";
     public static final String VALID_TUTORIAL_2 = "CS2106-T37";
 
