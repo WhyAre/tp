@@ -205,13 +205,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void markAttendance(Tutorial tutorial, int week, Student student) {
+    public void markAttendance(Tutorial tutorial, int week, Student student) throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
 
         for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
                 attendance.markAttendance(week);
+                attendances.set(attendance, attendance);
                 break;
             }
         }

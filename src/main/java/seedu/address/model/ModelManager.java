@@ -167,8 +167,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void markAttendance(Tutorial t, int w, Student s) {
-        addressBook.markAttendance(t, w, s);
+    public void markAttendance(Tutorial tutorial, int week, Student student) throws DuplicateItemException, ItemNotFoundException {
+        addressBook.markAttendance(tutorial, week, student);
     }
 
     // =========== Filtered Student List Accessors

@@ -127,7 +127,7 @@ public interface Model {
     /**
      * Marks students attendance
      */
-    void markAttendance(Tutorial tutorial, int week, Student student);
+    void markAttendance(Tutorial tutorial, int week, Student student) throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the

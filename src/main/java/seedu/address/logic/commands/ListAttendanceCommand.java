@@ -6,18 +6,23 @@ import static seedu.address.model.NavigationMode.STUDENT;
 import static seedu.address.model.NavigationMode.TUTORIAL;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.ui.AttendanceListPanel;
 
 /**
  * Lists attendances in the address book to the user.
  */
 public class ListAttendanceCommand extends Command {
+    private final Logger logger = LogsCenter.getLogger(ListAttendanceCommand.class);
 
     public static final String COMMAND_WORD = "list";
 
@@ -37,15 +42,17 @@ public class ListAttendanceCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        String name = "";
+        String name;
         requireNonNull(model);
         NavigationMode navigationMode = model.getNavigationMode();
         if (navigationMode.equals(STUDENT)) {
+            logger.log(Level.INFO, "Coming from STUDENT VIEW");
             List<Student> lastShownList = model.getFilteredStudentList();
             Student student = lastShownList.get(index.getZeroBased());
             name = student.getName().fullName;
             model.updateFilteredAttendanceList(x -> x.student().equals(student));
         } else if (navigationMode.equals(TUTORIAL)) {
+            logger.log(Level.INFO, "Coming from TUTORIAL VIEW");
             List<Tutorial> lastShownList = model.getFilteredTutorialList();
             Tutorial tutorial = lastShownList.get(index.getZeroBased());
             name = tutorial.name();
