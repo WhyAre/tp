@@ -86,10 +86,10 @@ public class LogicManager implements Logic {
         return model.getFilteredAttendanceList();
     }
 
-    /*@Override
+    @Override
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
         return model.getFilteredTutorialWithStudents();
-    }*/
+    }
 
     @Override
     public Path getAddressBookFilePath() {

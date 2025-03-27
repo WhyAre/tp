@@ -204,7 +204,7 @@ public interface Model {
      *
      * @return An observable list of TutorialWithStudents
      */
-    //ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents();
+    ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents();
 
     /**
      * Retrieves students who are enrolled in the given tutorial
@@ -213,7 +213,7 @@ public interface Model {
      *            The tutorial to filter students for.
      * @return A list of students in the given tutorial.
      */
-    //List<Student> getStudentsInTutorial(Tutorial tutorial);
+    List<Student> getStudentsInTutorial(Tutorial tutorial);
 
     /**
      * Updates the filter of the filtered tutorial list to filter by the given
@@ -223,5 +223,5 @@ public interface Model {
      * @throws NullPointerException
      *             if {@code predicate} is null.
      */
-    //void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
+    void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
 }

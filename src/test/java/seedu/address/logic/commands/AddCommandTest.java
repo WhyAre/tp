@@ -256,6 +256,7 @@ public class AddCommandTest {
         public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
     }
 
     /**

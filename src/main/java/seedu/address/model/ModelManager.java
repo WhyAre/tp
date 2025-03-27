@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -31,7 +32,8 @@ public class ModelManager implements Model {
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
     private final FilteredList<Attendance> filteredAttendances;
-    //private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
+    // private final FilteredList<TutorialWithStudents>
+    // filteredTutorialWithStudents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,7 +48,8 @@ public class ModelManager implements Model {
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
         filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
-        //filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
+        // filteredTutorialWithStudents = new
+        // FilteredList<>(this.addressBook.getTutorialWithStudentsList());
     }
 
     public ModelManager() {
@@ -216,9 +219,10 @@ public class ModelManager implements Model {
         // Hide studentList
         filteredTutorials.setPredicate(predicate);
     }
-    /*
+
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
-        return filteredTutorialWithStudents;
+        // return filteredTutorialWithStudents;
+        return FXCollections.observableArrayList();
     }
 
     @Override
@@ -238,9 +242,9 @@ public class ModelManager implements Model {
         Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
-        filteredTutorialWithStudents.setPredicate(isInList);
+        // filteredTutorialWithStudents.setPredicate(isInList);
     }
-    */
+
     // =========== Filtered Attendance List Accessors
     // =============================================================
 
