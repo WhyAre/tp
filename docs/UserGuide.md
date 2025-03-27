@@ -301,17 +301,20 @@ and overwrite the empty data file it creates with the file that contains the dat
 
 ## Command summary
 
-| **Action** | **Format, Examples** |
-|------------|----------------------|
-| **Help** | `help` |
-| **Add student** | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe t/CS2103_T01 t/CS2106_T02` |
-| **List students** | `list` |
-| **Edit student** | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`<br>e.g., `edit 1 p/91234567 e/johndoe@example.com` |
-| **Delete student** | `delete INDEX`<br>e.g., `delete 2` |
-| **Tutorial Add** | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15` |
-| **Tutorial Delete** | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15` |
-| **Tutorial List** | `tutorial list` |
-| **Add student to tutorial** | `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1` |
-| **Delete student from tutorial** | `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1` |
-| **Clear** | `clear` |
-| **Exit** | `exit` |
+| **Action**                        | **Format, Examples** |
+|-----------------------------------|----------------------|
+| **Help**                          | `help` |
+| **Add student**                   | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe t/CS2103_T01 t/CS2106_T02` |
+| **List students**                 | `list` |
+| **Edit student**                  | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`<br>e.g., `edit 1 p/91234567 e/johndoe@example.com` |
+| **Delete student**                | `delete INDEX`<br>e.g., `delete 2` |
+| **Tutorial Add**                  | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15` |
+| **Tutorial Delete**               | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15` |
+| **Tutorial List**                 | `tutorial list` |
+| **Add student to tutorial**       | `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1` |
+| **Delete student from tutorial**  | `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1` |
+| **Export students and tutorials** | `export` |
+| **Export students**               | `export students [TUTORIAL_NAME]`<br>e.g., `export students`<br>e.g., `export students CS2103-T2` |
+| **Export tutorials**              | `export tutorials` |                                
+| **Clear**                         | `clear` |
+| **Exit**                          | `exit` |
