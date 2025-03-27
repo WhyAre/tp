@@ -15,7 +15,7 @@ import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
- * Adds a tutorial to the address book.
+ * Adds an assignment to a tutorial
  */
 public class AddAssignmentCommand extends Command {
 
