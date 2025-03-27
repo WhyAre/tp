@@ -27,6 +27,8 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 import seedu.address.testutil.StudentBuilder;
 
 public class AddCommandTest {
@@ -166,6 +168,12 @@ public class AddCommandTest {
 
         @Override
         public void addTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setTutorial(Tutorial target, Tutorial editedStudent)
+                        throws DuplicateItemException, ItemNotFoundException {
             throw new AssertionError("This method should not be called.");
         }
 

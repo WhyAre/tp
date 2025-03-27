@@ -15,8 +15,8 @@ public class MarkAttendanceParserTest {
     @Test
     public void parseCommand_markAttendanceCommand_success() throws ParseException {
         var tutorialName = "Tutorial-_-Name1";
-        var cmd = "%s %s %s w/%d s/%d".formatted(AttendanceCommand.COMMAND_WORD, MarkAttendanceCommand.COMMAND_WORD,
-                        tutorialName, MarkAttendanceCommand.START_WEEK, MarkAttendanceCommand.END_WEEK);
+        var cmd = "%s w/%d s/%d".formatted(tutorialName, MarkAttendanceCommand.START_WEEK,
+                        MarkAttendanceCommand.END_WEEK);
 
         var actual = parser.parse(cmd);
         assertTrue(actual instanceof MarkAttendanceCommand);

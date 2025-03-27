@@ -28,6 +28,7 @@
                 <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
             </HBox>
             <FlowPane fx:id="students" />
+         <Label fx:id="assignments" VBox.vgrow="ALWAYS" />
         </VBox>
     </GridPane>
 </HBox>

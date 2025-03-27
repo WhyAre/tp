@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.stream.Collectors;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -29,6 +31,8 @@ public class TutorialCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
+    private Label assignments;
+    @FXML
     private Label id;
     @FXML
     private FlowPane students;
@@ -42,5 +46,13 @@ public class TutorialCard extends UiPart<Region> {
         this.tutorial = tutorial;
         id.setText(displayedIndex + ". ");
         name.setText(tutorial.name());
+
+        var assignList = tutorial.assignments().stream().map("- %s"::formatted).collect(Collectors.joining("\n"));
+        if (assignList.isEmpty()) {
+            assignments.setManaged(false);
+            assignments.setVisible(false);
+        } else {
+            assignments.setText(assignList);
+        }
     }
 }
