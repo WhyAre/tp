@@ -51,7 +51,7 @@ public class EditCommand extends Command {
                     + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE
                     + "91234567 " + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
+    public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
@@ -90,7 +90,7 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        String resultMessage = MESSAGE_EDIT_PERSON_SUCCESS;
+        String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
         final Set<Tutorial> existingTutorials = new HashSet<>();
         for (Tutorial tutorial : editedStudent.getTutorials()) {
             if (!model.hasTutorial(tutorial)) {
