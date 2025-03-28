@@ -3,7 +3,6 @@ package seedu.address.storage.json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tutorial.Tutorial;
 
 /**
@@ -23,16 +22,9 @@ public class JsonAdaptedTutorial {
 
     /**
      * Converts this Jackson-friendly adapted tutorial object into the model's
-     * {@code Tutorial} object.
-     *
-     * @throws IllegalValueException
-     *             if there were any data constraints violated in the adapted
-     *             student.
+     * {@link Tutorial} object.
      */
-    public Tutorial toModelType() throws IllegalValueException {
-        if (!Tutorial.isValidName(name)) {
-            throw new IllegalValueException("Tutorial name is not valid.");
-        }
+    public Tutorial toModelType() {
         return new Tutorial(name);
     }
 }
