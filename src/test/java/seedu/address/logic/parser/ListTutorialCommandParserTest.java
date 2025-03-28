@@ -11,7 +11,7 @@ public class ListTutorialCommandParserTest {
     private ListTutorialCommandParser parser = new ListTutorialCommandParser();
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_validArgs_returnsListTutorialCommand() {
 
         ListTutorialCommand expectedListTutorialCommand = new ListTutorialCommand();
 
