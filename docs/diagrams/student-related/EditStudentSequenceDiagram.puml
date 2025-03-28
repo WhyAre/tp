@@ -205,7 +205,7 @@ activate Model
 Model --> EditCommand
 deactivate Model
 
-EditCommand -> Model : updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS)
+EditCommand -> Model : updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS)
 activate Model
 
 Model --> EditCommand
