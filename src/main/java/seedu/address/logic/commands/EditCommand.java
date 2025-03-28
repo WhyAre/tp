@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -109,7 +109,7 @@ public class EditCommand extends Command {
             // Student is guaranteed to exist
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
         }
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         return new CommandResult(String.format(resultMessage, Messages.format(editedStudent)));
     }
 
