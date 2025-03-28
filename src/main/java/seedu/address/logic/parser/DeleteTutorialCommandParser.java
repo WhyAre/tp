@@ -30,7 +30,7 @@ public class DeleteTutorialCommandParser implements Parser<DeleteTutorialCommand
 
         if (tutorialName.contains(" ")) {
             throw new ParseException(
-                    MESSAGE_INVALID_COMMAND_FORMAT.formatted(DeleteTutorialCommand.MESSAGE_MULTIPLE_NAMES));
+                            MESSAGE_INVALID_COMMAND_FORMAT.formatted(DeleteTutorialCommand.MESSAGE_MULTIPLE_NAMES));
         }
 
         if (!Tutorial.isValidName(tutorialName)) {
