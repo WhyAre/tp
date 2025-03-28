@@ -53,7 +53,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
                     + "is edited into does not exist: ";
 
@@ -87,7 +87,7 @@ public class EditCommand extends Command {
         Student editedStudent = createEditedStudent(studentToEdit, editStudentDescriptor);
 
         if (!studentToEdit.isSamePerson(editedStudent) && model.hasStudent(editedStudent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
         String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
@@ -104,7 +104,7 @@ public class EditCommand extends Command {
         try {
             model.setStudent(studentToEdit, editedStudent);
         } catch (DuplicateItemException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         } catch (ItemNotFoundException e) {
             // Student is guaranteed to exist
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
