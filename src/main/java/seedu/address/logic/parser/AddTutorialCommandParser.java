@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import java.util.Objects;
 
 import seedu.address.logic.commands.AddTutorialCommand;
+import seedu.address.logic.commands.DeleteTutorialCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tutorial.Tutorial;
 
@@ -25,6 +26,11 @@ public class AddTutorialCommandParser implements Parser<AddTutorialCommand> {
 
         if (tutorialName.isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(AddTutorialCommand.MESSAGE_USAGE));
+        }
+
+        if (tutorialName.contains(" ")) {
+            throw new ParseException(
+                    MESSAGE_INVALID_COMMAND_FORMAT.formatted(AddTutorialCommand.MESSAGE_MULTIPLE_NAMES));
         }
 
         if (!Tutorial.isValidName(tutorialName)) {
