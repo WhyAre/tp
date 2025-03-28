@@ -11,6 +11,7 @@ import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.attendance.Attendance;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -26,16 +27,22 @@ public class Student implements Identifiable<Student> {
     private final Phone phone;
     private final Email email;
     private final TelegramHandle handle;
+    private final Details details;
 
     // Data fields
     private Set<Tutorial> tutorials;
     private List<Attendance> attendances;
+    private List<Submission> submissions;
 
     /**
-     * Every field must be present and not null.
+     * Constructs a {@code Student} object with the provided details and attendance.
+     * Every field other than {@code details} and {@code attendances} must be
+     * present and not null. If {@code details} or {@code attendances} are null,
+     * they will be initialized with default values.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
-                    Set<Tutorial> tutorials) {
+                    Set<Tutorial> tutorials, Details details, List<Attendance> attendances,
+                    List<Submission> submissions) {
         requireAllNonNull(name, studentId, phone, email, handle, tutorials);
         this.name = name;
         this.studentId = studentId;
@@ -43,22 +50,45 @@ public class Student implements Identifiable<Student> {
         this.email = email;
         this.handle = handle;
         this.tutorials = tutorials;
-        this.attendances = new ArrayList<>();
+        this.details = details;
+        this.attendances = attendances;
+        this.submissions = submissions;
     }
 
     /**
-     * Creates a student object with attendance
+     * Constructs a {@code Student} object with the provided required fields and
+     * default empty details and attendance.
+     */
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                    Set<Tutorial> tutorials, Details details, List<Attendance> attendances) {
+        this(name, studentId, phone, email, handle, tutorials, details, attendances, new ArrayList<>());
+    }
+
+    /**
+     * Constructs a {@code Student} object with the provided required fields and
+     * default empty details and attendance.
+     */
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                    Set<Tutorial> tutorials) {
+        this(name, studentId, phone, email, handle, tutorials, new ArrayList<>());
+    }
+
+    /**
+     * Constructs a {@code Student} object with the provided required fields and
+     * default empty details, and with a specified list of attendances.
      */
     public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
                     Set<Tutorial> tutorials, List<Attendance> attendances) {
-        requireAllNonNull(name, studentId, phone, email, handle, tutorials);
-        this.name = name;
-        this.studentId = studentId;
-        this.phone = phone;
-        this.email = email;
-        this.handle = handle;
-        this.tutorials = tutorials;
-        this.attendances = attendances;
+        this(name, studentId, phone, email, handle, tutorials, new Details(""), attendances, new ArrayList<>());
+    }
+
+    /**
+     * Constructs a {@code Student} object with the provided required fields and
+     * details field
+     */
+    public Student(Name name, StudentID studentId, Phone phone, Email email, TelegramHandle handle,
+                    Set<Tutorial> tutorials, Details details) {
+        this(name, studentId, phone, email, handle, tutorials, details, new ArrayList<>(), new ArrayList<>());
     }
 
     public Name getName() {
@@ -79,6 +109,15 @@ public class Student implements Identifiable<Student> {
 
     public TelegramHandle getHandle() {
         return handle;
+    }
+
+    /**
+     * Returns the details of the student.
+     *
+     * @return the details of the student
+     */
+    public Details getDetails() {
+        return details;
     }
 
     /**
@@ -113,6 +152,10 @@ public class Student implements Identifiable<Student> {
      */
     public void removeInvalidTutorials(Set<Tutorial> validTuts) {
         tutorials.removeIf(t -> !validTuts.contains(t));
+    }
+
+    public void addSubmission(Submission submission) {
+        submissions.add(submission);
     }
 
     /**
@@ -151,7 +194,7 @@ public class Student implements Identifiable<Student> {
      * Returns a clone of the current student.
      */
     public Student clone() {
-        return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials),
+        return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials), details,
                         new ArrayList<>(attendances));
     }
 
@@ -173,7 +216,8 @@ public class Student implements Identifiable<Student> {
         Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
                         && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle) && tutorials.equals(otherStudent.tutorials);
+                        && handle.equals(otherStudent.handle) && details.equals(otherStudent.details)
+                        && tutorials.equals(otherStudent.tutorials);
     }
 
     @Override
@@ -185,7 +229,8 @@ public class Student implements Identifiable<Student> {
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("name", name).add("studentId", studentId).add("phone", phone)
-                        .add("email", email).add("handle", handle).add("tutorials", tutorials).toString();
+                        .add("email", email).add("handle", handle).add("details", details).add("tutorials", tutorials)
+                        .toString();
     }
 
     @Override

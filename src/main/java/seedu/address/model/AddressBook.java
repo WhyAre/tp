@@ -13,6 +13,9 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
+import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.UniqueList;
@@ -28,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueList<Student> students;
     private final UniqueList<Tutorial> tutorials;
     private final UniqueList<Attendance> attendances;
+    private final UniqueList<Submission> submissions;
 
     /*
      * The 'unusual' code block below is a non-static initialization block,
@@ -41,6 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         students = new UniqueList<>();
         tutorials = new UniqueList<>();
         attendances = new UniqueList<>();
+        submissions = new UniqueList<>();
     }
 
     public AddressBook() {
@@ -73,6 +78,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setStudents(newData.getStudentList());
             setTutorials(newData.getTutorialList());
+            setAttendances(newData.getAttendanceList());
         } catch (DuplicateItemException e) {
             // Since it's coming from an address book, these errors shouldn't be thrown
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
@@ -189,6 +195,28 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Sets submission status on a submission, identified by tutorialName,
+     * assignmentName and student
+     */
+    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+                    SubmissionStatus status) {
+        var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
+        ) -> new IllegalArgumentException("Tutorial '%s' not found".formatted(tutorialName)));
+        var assign = tut.findAssignment(new Assignment(assignmentName)).orElseThrow((
+        ) -> new IllegalArgumentException("Assignment '%s' not found".formatted(assignmentName)));
+
+        var submission = new Submission(assign, student, status);
+        submissions.find(submission).ifPresentOrElse(s -> {
+            s.setStatus(status);
+        }, (
+        ) -> {
+            assign.addSubmission(submission);
+            student.addSubmission(submission);
+            submissions.add(submission);
+        });
+    }
+
+    /**
      * Creates attendance record for a student in specified tutorial
      */
     public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
@@ -211,29 +239,41 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent) {
+    public void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
+                    throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
 
         for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
                 attendance.setAttendance(week, isPresent);
+                attendances.set(attendance, attendance);
                 break;
             }
         }
     }
 
     /**
+     * Replaces the contents of the attendance list with {@code attendances}.
+     */
+    public void setAttendances(List<Attendance> attendances) throws DuplicateItemException {
+        requireNonNull(attendances);
+        this.attendances.setAll(attendances);
+    }
+
+    /**
      * Marks student as present
      */
-    public void markAttendance(Tutorial tutorial, int week, Student student) {
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         setAttendance(tutorial, week, student, true);
     }
 
     /**
      * Unmarks a student's attendance
      */
-    public void unmarkAttendance(Tutorial tutorial, int week, Student student) {
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         setAttendance(tutorial, week, student, false);
     }
 

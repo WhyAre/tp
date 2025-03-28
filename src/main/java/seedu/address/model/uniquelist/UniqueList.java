@@ -79,10 +79,16 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
     }
 
     /**
-     * Removes entity from the list
+     * Removes the first entity with the same identity as the specified object from
+     * the list.
      */
     public boolean remove(T toRemove) {
-        return internalList.remove(toRemove);
+        for (T e : internalList) {
+            if (toRemove.hasSameIdentity(e)) {
+                return internalList.remove(e);
+            }
+        }
+        return false;
     }
 
     @Override

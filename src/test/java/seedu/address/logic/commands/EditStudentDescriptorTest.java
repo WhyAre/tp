@@ -65,6 +65,7 @@ public class EditStudentDescriptorTest {
                         + editStudentDescriptor.getStudentId().orElse(null) + ", phone="
                         + editStudentDescriptor.getPhone().orElse(null) + ", email="
                         + editStudentDescriptor.getEmail().orElse(null) + ", handle="
+                        + editStudentDescriptor.getDetails().orElse(null) + ", details="
                         + editStudentDescriptor.getHandle().orElse(null) + ", tutorials="
                         + editStudentDescriptor.getTutorials().orElse(null) + "}";
         assertEquals(expected, editStudentDescriptor.toString());

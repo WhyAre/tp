@@ -4,9 +4,12 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -21,6 +24,9 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Tutorial> PREDICATE_SHOW_ALL_TUTORIALS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Attendance> PREDICATE_SHOW_ALL_ATTENDANCES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -82,6 +88,16 @@ public interface Model {
     void deleteStudent(Student target);
 
     /**
+     * Returns a given student. The student must exist in the address book.
+     */
+    ObjectProperty<Student> getSelectedStudent();
+
+    /**
+     * Sets a given student. The student must exist in the address book.
+     */
+    void setSelectedStudent(Student target);
+
+    /**
      * Adds the given student. {@code student} must not already exist in the address
      * book.
      */
@@ -101,12 +117,12 @@ public interface Model {
     void addTutorial(Tutorial tutorial);
 
     /**
-     * Replaces the given student {@code target} with {@code editedStudent}.
-     * {@code target} must exist in the address book. The student identity of
-     * {@code editedStudent} must not be the same as another existing student in the
-     * address book.
+     * Replaces the given tutorial {@code target} with {@code editedTutorial}.
+     * {@code target} must exist in the address book. The tutorial identity of
+     * {@code editedTutorial} must not be the same as another existing tutorial in
+     * the address book.
      */
-    void setTutorial(Tutorial target, Tutorial editedStudent) throws DuplicateItemException, ItemNotFoundException;
+    void setTutorial(Tutorial target, Tutorial editedTutorial) throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Deletes a tutorial slot
@@ -124,6 +140,11 @@ public interface Model {
     boolean hasTutorial(Tutorial tutorial);
 
     /**
+     * Sets submission status
+     */
+    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status);
+
+    /**
      * Creates attendance record for a student in specified tutorial
      */
     void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
@@ -131,12 +152,14 @@ public interface Model {
     /**
      * Marks student as present
      */
-    void markAttendance(Tutorial tutorial, int week, Student student);
+    void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Marks student as absent
      */
-    void unmarkAttendance(Tutorial tutorial, int week, Student student);
+    void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException;
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
@@ -176,6 +199,21 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredTutorialList(Predicate<Tutorial> predicate);
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Attendance} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
+    ObservableList<Attendance> getFilteredAttendanceList();
+
+    /**
+     * Updates the filter of the filtered attendance list to filter by the given
+     * {@code predicate}.
+     *
+     * @throws NullPointerException
+     *             if {@code predicate} is null.
+     */
+    void updateFilteredAttendanceList(Predicate<Attendance> predicate);
 
     /**
      * Returns an unmodifiable view of the list of TutorialWithStudents by mapping

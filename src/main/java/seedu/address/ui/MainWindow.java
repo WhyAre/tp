@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_NAVIGATION_MODE;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -22,6 +23,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.NavigationMode;
+import seedu.address.model.student.Student;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -39,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private StudentListPanel studentListPanel;
     private TutorialListPanel tutorialListPanel;
+    private AttendanceListPanel attendanceListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private StatusBarFooter statusBarFooter;
@@ -56,10 +59,22 @@ public class MainWindow extends UiPart<Stage> {
     private VBox tutorialList;
 
     @FXML
+    private VBox studentArea;
+
+    @FXML
+    private VBox attendanceList;
+
+    @FXML
     private StackPane studentListPanelPlaceholder;
 
     @FXML
     private StackPane tutorialListPanelPlaceholder;
+
+    @FXML
+    private VBox studentAreaPlaceholder;
+
+    @FXML
+    private StackPane attendanceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -136,6 +151,25 @@ public class MainWindow extends UiPart<Stage> {
         tutorialListPanel = new TutorialListPanel(logic.getFilteredTutorialList());
         tutorialListPanelPlaceholder.getChildren().add(tutorialListPanel.getRoot());
 
+        ObjectProperty<Student> selectedStudentProperty = logic.getSelectedStudent();
+        StudentArea studentArea = new StudentArea();
+
+        selectedStudentProperty.addListener((
+                        observable, oldValue, newValue
+        ) -> {
+            logger.info("Student selection changed from " + oldValue + " to " + newValue);
+            if (newValue != null) {
+                studentArea.updateStudent(newValue);
+            } else {
+                studentArea.updateStudent(null);
+            }
+            studentAreaPlaceholder.getChildren().clear();
+            studentAreaPlaceholder.getChildren().add(studentArea.getRoot());
+        });
+
+        attendanceListPanel = new AttendanceListPanel(logic.getFilteredAttendanceList());
+        attendanceListPanelPlaceholder.getChildren().add(attendanceListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -166,6 +200,8 @@ public class MainWindow extends UiPart<Stage> {
         var modes = new HashMap<NavigationMode, VBox>();
         modes.put(NavigationMode.STUDENT, studentList);
         modes.put(NavigationMode.TUTORIAL, tutorialList);
+        modes.put(NavigationMode.ATTENDANCE, attendanceList);
+        modes.put(NavigationMode.SINGLE_STUDENT, studentAreaPlaceholder);
 
         // Hide all modes
         if (navigationMode == NavigationMode.UNCHANGED) {

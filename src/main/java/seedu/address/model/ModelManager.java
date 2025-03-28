@@ -9,11 +9,16 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -29,7 +34,8 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Student> filteredStudents;
     private final FilteredList<Tutorial> filteredTutorials;
-    private final FilteredList<TutorialWithStudents> filteredTutorialWithStudents;
+    private ObjectProperty<Student> student;
+    private final FilteredList<Attendance> filteredAttendances;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,9 +47,10 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        student = new SimpleObjectProperty<>();
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
-        filteredTutorialWithStudents = new FilteredList<>(this.addressBook.getTutorialWithStudentsList());
+        filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
     }
 
     public ModelManager() {
@@ -122,6 +129,16 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObjectProperty<Student> getSelectedStudent() {
+        return student;
+    }
+
+    @Override
+    public void setSelectedStudent(Student target) {
+        student.set(target);
+    }
+
+    @Override
     public void addStudent(Student student) {
         addressBook.addStudent(student);
         updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
@@ -162,17 +179,25 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+                    SubmissionStatus status) {
+        addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
+    }
+
+    @Override
     public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
         addressBook.addAttendance(tutorial, student);
     }
 
     @Override
-    public void markAttendance(Tutorial tutorial, int week, Student student) {
+    public void markAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         addressBook.markAttendance(tutorial, week, student);
     }
 
     @Override
-    public void unmarkAttendance(Tutorial tutorial, int week, Student student) {
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
+                    throws DuplicateItemException, ItemNotFoundException {
         addressBook.unmarkAttendance(tutorial, week, student);
     }
 
@@ -208,12 +233,11 @@ public class ModelManager implements Model {
     @Override
     public void updateFilteredTutorialList(Predicate<Tutorial> predicate) {
         requireNonNull(predicate);
-        // Hide studentList
         filteredTutorials.setPredicate(predicate);
     }
 
     public ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents() {
-        return filteredTutorialWithStudents;
+        return FXCollections.observableArrayList();
     }
 
     @Override
@@ -233,7 +257,20 @@ public class ModelManager implements Model {
         Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
-        filteredTutorialWithStudents.setPredicate(isInList);
+    }
+
+    // =========== Filtered Attendance List Accessors
+    // =============================================================
+
+    @Override
+    public ObservableList<Attendance> getFilteredAttendanceList() {
+        return filteredAttendances;
+    }
+
+    @Override
+    public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+        requireNonNull(predicate);
+        filteredAttendances.setPredicate(predicate);
     }
 
     @Override

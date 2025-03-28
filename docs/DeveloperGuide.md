@@ -2,63 +2,66 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-{:toc}
 
---------------------------------------------------------------------------------------------------------------------
+- Table of Contents
+  {:toc}
+
+---
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Design**
 
 <div markdown="span" class="alert alert-primary">
 
 :bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+
 </div>
 
 ### Architecture
 
 <img src="images/ArchitectureDiagram.png" width="280" />
 
-The ***Architecture Diagram*** given above explains the high-level design of the App.
+The **_Architecture Diagram_** given above explains the high-level design of the App.
 
 Given below is a quick overview of main components and how they interact with each other.
 
 **Main components of the architecture**
 
 **`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
-* At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
-* At shut down, it shuts down the other components and invokes cleanup methods where necessary.
+
+- At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
+- At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
 The bulk of the app's work is done by the following four components:
 
-* [**`UI`**](#ui-component): The UI of the App.
-* [**`Logic`**](#logic-component): The command executor.
-* [**`Model`**](#model-component): Holds the data of the App in memory.
-* [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
+- [**`UI`**](#ui-component): The UI of the App.
+- [**`Logic`**](#logic-component): The command executor.
+- [**`Model`**](#model-component): Holds the data of the App in memory.
+- [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
-* defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+- defines its _API_ in an `interface` with the same name as the Component.
+- implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -72,16 +75,16 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `TutorialListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `TutorialListPanel`, `AttendanceListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
-* executes user commands using the `Logic` component.
-* listens for changes to `Model` data so that the UI can be updated with the modified data.
-* keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Student` and `Tutorial` objects residing in the `Model`.
+- executes user commands using the `Logic` component.
+- listens for changes to `Model` data so that the UI can be updated with the modified data.
+- keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
+- depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
 ### Logic component
 
@@ -111,8 +114,9 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+- When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+- All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 In addition to having simple single-word command,
 our app supports commands with subcommands (e.g. `tutorial add`, `tutorial delete`).
@@ -128,24 +132,24 @@ How the parsing works:
 
 1. The `AddressBookParser` will match the first word,
    and match against a `Command` object, or another `Parser` object
-    - The algorithm terminates if it maps to a `Command` object.
+   - The algorithm terminates if it maps to a `Command` object.
 1. If it maps to a `Parser` object,
    then it will call `Parser#parse` of that object
-    - The `parse` method will map the next word to either a `Command` or `Parser` object.
-    - The process repeats recursively until it eventually resolves to a `Command` object.
+   - The `parse` method will map the next word to either a `Command` or `Parser` object.
+   - The process repeats recursively until it eventually resolves to a `Command` object.
 
 ### Model component
+
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.svg" width="450" />
 
-
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+- stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+- stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+- does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
@@ -160,9 +164,10 @@ The `Model` component,
 <img src="images/StorageClassDiagram.png" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+
+- can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+- inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+- depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
 
@@ -174,15 +179,18 @@ The sequence diagram below illustrates the interactions within the `Logic` and `
 for executing the 3 key commands for functionalities related to students in TAskbook.
 
 #### `add` Command
+
 ![Interactions Inside the Logic and Model Component for the `add` Command](images/student-related/AddStudentSequenceDiagram.svg)
 
 #### `edit` Command
+
 ![Interactions Inside the Logic and Model Component for the `edit` Command](images/student-related/EditStudentSequenceDiagram.svg)
 
 #### `delete` Command
+
 ![Interactions Inside the Logic and Model Component for the `delete` Command](images/student-related/DeleteStudentSequenceDiagram.svg)
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Implementation**
 
@@ -194,9 +202,9 @@ This section describes some noteworthy details on how certain features are imple
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+- `VersionedAddressBook#commit()` — Saves the current address book state in its history.
+- `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
+- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
 
 These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
 
@@ -261,14 +269,15 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 **Aspect: How undo & redo executes:**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+- **Alternative 1 (current choice):** Saves the entire address book.
 
-* **Alternative 2:** Individual command knows how to undo/redo by
+  - Pros: Easy to implement.
+  - Cons: May have performance issues in terms of memory usage.
+
+- **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+  - Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  - Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -276,18 +285,17 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
-
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
-* [Documentation guide](Documentation.md)
-* [Testing guide](Testing.md)
-* [Logging guide](Logging.md)
-* [Configuration guide](Configuration.md)
-* [DevOps guide](DevOps.md)
+- [Documentation guide](Documentation.md)
+- [Testing guide](Testing.md)
+- [Logging guide](Logging.md)
+- [Configuration guide](Configuration.md)
+- [DevOps guide](DevOps.md)
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Appendix: Requirements**
 
@@ -295,41 +303,39 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* is a teaching assistant (TA) in higher education
-  * manages a significant number of student contacts
-  * assists professors in coursework and attendance
-    * tutorials
-    * assignments
+- is a teaching assistant (TA) in higher education
 
+  - manages a significant number of student contacts
+  - assists professors in coursework and attendance
+    - tutorials
+    - assignments
 
-* prefer desktop apps over other types
-* is reasonably comfortable using CLI apps
-  * prefers typing to mouse interactions
-  * can type fast
+- prefer desktop apps over other types
+- is reasonably comfortable using CLI apps
+  - prefers typing to mouse interactions
+  - can type fast
 
 **Value proposition**: manage TA student contacts & administrative tasks faster than a typical mouse/GUI driven app
 
-
 ### **User Stories**
 
-| Priority | As a … | I want to … | So that I can … | Accepted? |
-|----------|--------|-------------|----------------|------------|
-| High     | TA     | Save a student's data | Find their details to contact them if needed | No |
-| High     | TA     | View a list of all students | See all students I have created | No |
-| Medium   | TA     | Search for contacts using name, student ID, or email | Locate students efficiently | No |
-| Medium   | TA     | Add notes to each contact | Track important details like consultation requests, special accommodations, and weaknesses | No |
-| Medium   | TA     | View the student's data in tabular form | See how the class is doing in general | No |
-| Medium   | TA     | Access the contact details of my students | Message them | No |
-| High     | TA     | Create tutorial slots | Manage the lesson format for the students | No |
-| High     | TA     | Add students to groups | Manage them on a group level | No |
-| High     | TA     | Create an assignment entry with a deadline | Track student submissions | No |
-| Medium   | TA     | Track whether a student has submitted an assignment | Monitor completion rates | No |
-| Medium   | TA     | See submission rates | Assess overall assignment difficulty | No |
-| Medium   | TA     | Mark my student as present/unpresent for a specific tutorial slot | Track their attendance | No |
-| Medium   | TA     | View the overall performance of my students | Identify if my class is performing well overall | No |
-| High     | TA     | Delete tutorial groups | Remove outdated groups | No |
-| High     | TA     | Delete a student's data | Make space for the next semester's class | No |
-
+| Priority | As a … | I want to …                                                       | So that I can …                                                                            | Accepted? |
+| -------- | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
+| High     | TA     | Save a student's data                                             | Find their details to contact them if needed                                               | No        |
+| High     | TA     | View a list of all students                                       | See all students I have created                                                            | No        |
+| Medium   | TA     | Search for contacts using name, student ID, or email              | Locate students efficiently                                                                | No        |
+| Medium   | TA     | Add notes to each contact                                         | Track important details like consultation requests, special accommodations, and weaknesses | No        |
+| Medium   | TA     | View the student's data in tabular form                           | See how the class is doing in general                                                      | No        |
+| Medium   | TA     | Access the contact details of my students                         | Message them                                                                               | No        |
+| High     | TA     | Create tutorial slots                                             | Manage the lesson format for the students                                                  | No        |
+| High     | TA     | Add students to groups                                            | Manage them on a group level                                                               | No        |
+| High     | TA     | Create an assignment entry with a deadline                        | Track student submissions                                                                  | No        |
+| Medium   | TA     | Track whether a student has submitted an assignment               | Monitor completion rates                                                                   | No        |
+| Medium   | TA     | See submission rates                                              | Assess overall assignment difficulty                                                       | No        |
+| Medium   | TA     | Mark my student as present/unpresent for a specific tutorial slot | Track their attendance                                                                     | No        |
+| Medium   | TA     | View the overall performance of my students                       | Identify if my class is performing well overall                                            | No        |
+| High     | TA     | Delete tutorial groups                                            | Remove outdated groups                                                                     | No        |
+| High     | TA     | Delete a student's data                                           | Make space for the next semester's class                                                   | No        |
 
 ## **Use cases**
 
@@ -341,11 +347,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User sends request to System to create student
 2. System creates a new user
 3. Use case ends
 
 **Extensions**
+
 - 2a. If input is erroneous
   - 2a1. System displays an error message
   - 2a2. Use case resumes at step 1
@@ -358,6 +366,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to list persons
 2. System shows a list of persons
 3. User requests to delete a specific person in the list
@@ -365,6 +374,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If the given index is invalid
   - 2a1. System shows an error message
   - 2a2. Use case resumes at step 1
@@ -377,11 +387,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to list students
 2. System lists all students
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there are no students
   - 2a1. System doesn't display anything
   - 2a2. Use case ends
@@ -394,11 +406,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to list tutorial slots
 2. System lists all tutorial slots
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there are no tutorial slots
   - 2a1. System doesn't display anything
   - 2a2. Use case ends
@@ -411,11 +425,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to create tutorial slot
 2. System creates a new tutorial slot
 3. Use case ends
 
 **Extensions**
+
 - 2a. If tutorial slot already exists
   - 2a1. System shows an error message
   - 2a2. Use case continues at step 1
@@ -431,11 +447,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to delete tutorial slot
 2. System deletes specified tutorial slot
 3. Use case ends
 
 **Extensions**
+
 - 2a. If specified tutorial slot doesn't exist
   - 2a1. System shows an error message
   - 2a2. Use case ends
@@ -451,6 +469,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User lists all students
 2. System lists all students
 3. User sends the command to add students to tutorial slots
@@ -458,6 +477,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If user doesn't list students first
   - 2a1. System shows an error message
   - 2a2. Use case continues at step 1
@@ -473,6 +493,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User lists all students
 2. System lists all students
 3. User sends the command to delete students from tutorial slots
@@ -480,6 +501,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If user doesn't exist
   - 2a1. System shows an error message
   - 2a2. Use case ends
@@ -498,11 +520,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to save the current data to a file
 2. System saves the data to a file
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there is an error during the save process
   - 2a1. System displays an error message
   - 2a2. Use case ends
@@ -515,6 +539,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to search for a student
 2. System prompts for search criteria
 3. User enters the search criteria
@@ -522,6 +547,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 3a. If no students match the search criteria
   - 3a1. System displays a message indicating no results found
   - 3a2. Use case ends
@@ -534,6 +560,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User lists all tutorial slots
 2. System lists all tutorial slots
 3. User selects a tutorial slot and requests to create a lesson
@@ -541,6 +568,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If no tutorial slots are available
   - 2a1. System displays a message indicating no available slots
   - 2a2. Use case ends
@@ -556,6 +584,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User lists all students in a tutorial slot
 2. System lists all students in the selected tutorial slot
 3. User marks attendance for each student
@@ -563,6 +592,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If no students are listed in the tutorial slot
   - 2a1. System displays a message indicating no students in the slot
   - 2a2. Use case ends
@@ -578,6 +608,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User lists all lessons for a tutorial slot
 2. System lists all lessons for the selected tutorial slot
 3. User selects the lesson to be deleted
@@ -585,6 +616,7 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If no lessons exist in the selected tutorial slot
   - 2a1. System displays a message indicating no lessons found
   - 2a2. Use case ends
@@ -600,11 +632,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to view overall attendance
 2. System displays a summary of overall attendance
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there is no attendance data available
   - 2a1. System displays a message indicating no attendance data
   - 2a2. Use case ends
@@ -617,11 +651,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User requests to export the student contact list
 2. System exports the contact list to a file
 3. Use case ends
 
 **Extensions**
+
 - 2a. If there is an error during the export process
   - 2a1. System displays an error message
   - 2a2. Use case ends
@@ -634,6 +670,7 @@ _{Explain here how the data archiving feature will be implemented}_
 **Actor**: User
 
 **MSS**
+
 1. User selects students to receive an announcement
 2. System prompts for the email content
 3. User enters the announcement content
@@ -641,13 +678,13 @@ _{Explain here how the data archiving feature will be implemented}_
 5. Use case ends
 
 **Extensions**
+
 - 2a. If no students are selected
   - 2a1. System displays a message indicating no students selected
   - 2a2. Use case ends
 - 4a. If there is an error sending the email
   - 4a1. System displays an error message
   - 4a2. Use case ends
-
 
 ### Non-Functional Requirements
 
@@ -677,40 +714,63 @@ _{Explain here how the data archiving feature will be implemented}_
 ### Glossary
 
 #### A
-* **Address Book**: The system that manages student contacts and administrative tasks for TAs.
-* **Assignment Entry**: A record representing an assignment with an associated deadline.
-#### C
-* **CLI (Command-Line Interface)**: A text-based interface that allows users to interact with the system via commands.
-* **Command**: A specific instruction given by the user in the CLI to perform an action.
-* **Contact Details**: Information related to a student such as name, student ID, email, and notes.
-#### D
-* **Deadline**: The due date associated with an assignment entry.
-* **Desktop Application**: A software application designed to run on a computer rather than a web browser or mobile device.
-#### E
-* **Error Message**: A notification displayed when a user inputs invalid or incorrect data.
-#### G
-* **GUI (Graphical User Interface)**: A visual interface allowing users to interact with the system using a mouse, windows, and icons. Not preferred by the target user.
-* **Group**: A collection of students managed together, typically for tutorial purposes.
-#### I
-* **Invalid Command**: A user-entered command that TAskbook does not recognize or process correctly.
-#### L
-* **Local Storage**: The method by which TAskbook saves and retrieves data on the user's device rather than using a remote server.
-#### M
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-#### N
-* **Notes**: Additional information that a TA can attach to a student’s record.
-#### P
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-#### S
-* **Save File**: A file containing stored student data that TAskbook can read and write to.
-* **Student**: An entity in TAskbook representing an individual that a TA manages.
-* **Student ID**: A unique identifier assigned to each student by the school / institution.
-#### T
-* **TA (Teaching Assistant)**: The primary user of TAskbook, responsible for managing student contacts and administrative tasks.
-* **Tabular Format**: A structured way of displaying student data in rows and columns.
-* **Tutorial Slot**: A scheduled session that students can be assigned to and managed by the TA.
 
---------------------------------------------------------------------------------------------------------------------
+- **Address Book**: The system that manages student contacts and administrative tasks for TAs.
+- **Assignment Entry**: A record representing an assignment with an associated deadline.
+
+#### C
+
+- **CLI (Command-Line Interface)**: A text-based interface that allows users to interact with the system via commands.
+- **Command**: A specific instruction given by the user in the CLI to perform an action.
+- **Contact Details**: Information related to a student such as name, student ID, email, and notes.
+
+#### D
+
+- **Deadline**: The due date associated with an assignment entry.
+- **Desktop Application**: A software application designed to run on a computer rather than a web browser or mobile device.
+
+#### E
+
+- **Error Message**: A notification displayed when a user inputs invalid or incorrect data.
+
+#### G
+
+- **GUI (Graphical User Interface)**: A visual interface allowing users to interact with the system using a mouse, windows, and icons. Not preferred by the target user.
+- **Group**: A collection of students managed together, typically for tutorial purposes.
+
+#### I
+
+- **Invalid Command**: A user-entered command that TAskbook does not recognize or process correctly.
+
+#### L
+
+- **Local Storage**: The method by which TAskbook saves and retrieves data on the user's device rather than using a remote server.
+
+#### M
+
+- **Mainstream OS**: Windows, Linux, Unix, MacOS
+
+#### N
+
+- **Notes**: Additional information that a TA can attach to a student’s record.
+
+#### P
+
+- **Private contact detail**: A contact detail that is not meant to be shared with others
+
+#### S
+
+- **Save File**: A file containing stored student data that TAskbook can read and write to.
+- **Student**: An entity in TAskbook representing an individual that a TA manages.
+- **Student ID**: A unique identifier assigned to each student by the school / institution.
+
+#### T
+
+- **TA (Teaching Assistant)**: The primary user of TAskbook, responsible for managing student contacts and administrative tasks.
+- **Tabular Format**: A structured way of displaying student data in rows and columns.
+- **Tutorial Slot**: A scheduled session that students can be assigned to and managed by the TA.
+
+---
 
 ## **Appendix: Instructions for manual testing**
 
@@ -734,13 +794,14 @@ testers are expected to do more *exploratory* testing.
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+      Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
 
 ### Adding a student
 
 1. Adding a student
+
    1. Prerequisites: None.
    1. Test case: `add John Doe`<br>
       Expected: A new student named "John Doe" is added to the student list. A success message confirming the addition is displayed.
@@ -754,6 +815,7 @@ testers are expected to do more *exploratory* testing.
 ### Listing all students
 
 1. Listing all students
+
    1. Prerequisites: At least one student should be added to the list (e.g., `add John Doe`).
    1. Test case: `list`<br>
       Expected: A list of all students in the system is displayed.
@@ -764,6 +826,7 @@ testers are expected to do more *exploratory* testing.
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
+
    1. Prerequisites: List all students using the `list` command. There must be multiple students in the list (e.g., `add John Doe` and `add Jane Doe`).
    1. Test case: `delete 1`<br>
       Expected: The student with ID 1 (John Doe) is deleted from the list. A success message with the student details is shown.
@@ -777,6 +840,7 @@ testers are expected to do more *exploratory* testing.
 ### Adding a tutorial slot
 
 1. Adding a tutorial slot
+
    1. Prerequisites: None.
    1. Test case: `tutorial add cs2103-f15`<br>
       Expected: A new tutorial slot `cs2103-f15` is added. The list of tutorial slots is updated and the new slot appears at the bottom of the list. A success message is displayed confirming the addition.
@@ -793,6 +857,7 @@ testers are expected to do more *exploratory* testing.
 ### Adding students to tutorial group slots
 
 1. Adding students to a tutorial group slot
+
    1. Prerequisites: A tutorial slot should already exist (e.g., `tutorial add cs2103-f15`) and at least one student should be in the system (e.g., `add John Doe`).
    1. Test case: `addToSlot cs2103-f15 1`<br>
       Expected: Student with ID 1 (John Doe) is added to the "cs2103-f15" tutorial slot. A success message is displayed confirming the addition.
@@ -806,6 +871,7 @@ testers are expected to do more *exploratory* testing.
 ### Deleting a student from a tutorial slot
 
 1. Deleting a student from a tutorial group slot
+
    1. Prerequisites: A tutorial slot should already have at least one student (e.g., `addToSlot cs2103-f15 1`).
    1. Test case: `deleteFromSlot cs2103-f15 1`<br>
       Expected: Student with ID 1 (John Doe) is removed from the "cs2103-f15" tutorial slot. A success message confirming the removal is shown.
@@ -819,6 +885,7 @@ testers are expected to do more *exploratory* testing.
 ### Deleting tutorial group slots
 
 1. Deleting a tutorial slot
+
    1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
    1. Test case: `tutorial delete cs2103-f15`<br>
       Expected: The tutorial slot `cs2103-f15` is deleted from the system. A success message confirming the deletion is shown.
@@ -829,6 +896,7 @@ testers are expected to do more *exploratory* testing.
 ### Listing tutorial slots
 
 1. Listing tutorial slots
+
    1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
    1. Test case: `tutorial list`<br>
       Expected: A list of all tutorial slots is displayed.
@@ -839,6 +907,7 @@ testers are expected to do more *exploratory* testing.
 ### Retrieve and Save to file
 
 1. Saving data automatically
+
    1. Prerequisites: Data must exist (e.g., at least one student or tutorial slot).
    1. Test case: System automatically saves data when changes are made (e.g., adding or deleting a student).
       Expected: Data is automatically saved to the file. No additional user action is needed. There should be no error message unless there's an issue.
@@ -871,10 +940,10 @@ testers are expected to do more *exploratory* testing.
    1. Test case: Attempt to retrieve data when the system’s storage is full or unavailable.
       Expected: The system should display an error message indicating that the system cannot access or load data due to a storage issue. The user should be prompted to free up space or resolve the issue.
 
-
 ### Searching for students
 
 1. Searching for a student
+
    1. Prerequisites: At least one student must be added (e.g., `add John Doe`).
    1. Test case: `search John`<br>
       Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
@@ -885,6 +954,7 @@ testers are expected to do more *exploratory* testing.
 ### Creating a lesson under tutorial slot for each student
 
 1. Creating a lesson
+
    1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
    1. Test case: `createLesson cs2103-f15`<br>
       Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the creation.
@@ -895,6 +965,7 @@ testers are expected to do more *exploratory* testing.
 ### Marking lesson attendance
 
 1. Marking attendance for a lesson
+
    1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the tutorial slot.
    1. Test case: `markAttendance cs2103-f15 1 present`<br>
       Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
@@ -908,6 +979,7 @@ testers are expected to do more *exploratory* testing.
 ### Deleting a lesson under tutorial slot for each student
 
 1. Deleting a lesson
+
    1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`).
    1. Test case: `deleteLesson cs2103-f15`<br>
       Expected: The lesson for the `cs2103-f15` tutorial slot is deleted. A success message confirming the deletion is shown.
@@ -918,6 +990,7 @@ testers are expected to do more *exploratory* testing.
 ### Viewing overall attendance
 
 1. Viewing overall attendance
+
    1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
    1. Test case: `viewAttendance`<br>
       Expected: A summary of the overall attendance for all students is displayed.
@@ -928,6 +1001,7 @@ testers are expected to do more *exploratory* testing.
 ### Exporting student contact list
 
 1. Exporting contact list
+
    1. Prerequisites: At least one student should be added (e.g., `add John Doe`).
    1. Test case: `exportContacts`<br>
       Expected: The student contact list is exported successfully. A success message is shown.
@@ -938,10 +1012,10 @@ testers are expected to do more *exploratory* testing.
 ### Making announcements to students through email
 
 1. Making an announcement
+
    1. Prerequisites: At least one student should have an email address in the system (e.g., `add John Doe` with email).
    1. Test case: `announce email`<br>
       Expected: An announcement email is sent to all students. A success message is shown confirming the email was sent.
 
    1. Test case: `announce email` with invalid email format<br>
       Expected: Error message indicating that the email format is invalid.
-
