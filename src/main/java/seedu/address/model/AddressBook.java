@@ -333,7 +333,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             attendances.add(newAttendance);
         } else {
             var existingAttendance = maybeAttendance.orElseThrow();
-            existingAttendance.setAttendances(attendance.attendances());}
+            existingAttendance.setAttendances(attendance.attendances());
+        }
     }
 
     /**
