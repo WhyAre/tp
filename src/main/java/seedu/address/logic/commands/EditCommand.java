@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -51,9 +51,9 @@ public class EditCommand extends Command {
                     + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE
                     + "91234567 " + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Student: %1$s";
+    public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
                     + "is edited into does not exist: ";
 
@@ -80,17 +80,17 @@ public class EditCommand extends Command {
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
         Student studentToEdit = lastShownList.get(index.getZeroBased());
         Student editedStudent = createEditedStudent(studentToEdit, editStudentDescriptor);
 
-        if (!studentToEdit.isSamePerson(editedStudent) && model.hasStudent(editedStudent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!studentToEdit.isSameStudent(editedStudent) && model.hasStudent(editedStudent)) {
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        String resultMessage = MESSAGE_EDIT_PERSON_SUCCESS;
+        String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
         final Set<Tutorial> existingTutorials = new HashSet<>();
         for (Tutorial tutorial : editedStudent.getTutorials()) {
             if (!model.hasTutorial(tutorial)) {
@@ -104,12 +104,12 @@ public class EditCommand extends Command {
         try {
             model.setStudent(studentToEdit, editedStudent);
         } catch (DuplicateItemException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         } catch (ItemNotFoundException e) {
             // Student is guaranteed to exist
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
         }
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         return new CommandResult(String.format(resultMessage, Messages.format(editedStudent)));
     }
 

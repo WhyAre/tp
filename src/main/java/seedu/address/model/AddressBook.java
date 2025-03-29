@@ -24,7 +24,7 @@ import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Wraps all data at the address-book level Duplicates are not allowed (by
- * .isSamePerson comparison)
+ * .isSameStudent comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
 

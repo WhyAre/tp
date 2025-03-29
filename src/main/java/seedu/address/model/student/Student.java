@@ -179,7 +179,7 @@ public class Student implements Identifiable<Student> {
      * Returns true if both students have the same name. This defines a weaker
      * notion of equality between two students.
      */
-    public boolean isSamePerson(Student otherStudent) {
+    public boolean isSameStudent(Student otherStudent) {
         if (otherStudent == this) {
             return true;
         }
@@ -235,6 +235,6 @@ public class Student implements Identifiable<Student> {
 
     @Override
     public boolean hasSameIdentity(Student other) {
-        return isSamePerson(other);
+        return isSameStudent(other);
     }
 }
