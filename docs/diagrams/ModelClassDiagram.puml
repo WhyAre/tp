@@ -17,7 +17,7 @@ Class Tutorial
 
 class Student {
     name: String
-    studentID: String
+    studentId: String
     phone: String
     email: String
     handle: String
@@ -32,15 +32,14 @@ class Assignment {
 
 class Attendance {
     weekNo: int
-    lessonNo: int
 }
 
 class Submission
 
-enum "<<enumeration>>\nState" as State {
-    COMPLETED
-    VALID_REASON
-    NOT_COMPLETED
+enum "<<enumeration>>\nSubmissionStatus" as State {
+    SUBMITTED
+    NOT_SUBMITTED
+    GRADED
 }
 }
 
@@ -55,13 +54,15 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 ModelManager --> "*" Tutorial : filters >
 ModelManager --> "*" Student : filters >
+ModelManager --> "*" Submission : filters >
+ModelManager --> "*" Attendance : filters >
 
-Student "*" <--> "*" Tutorial
 Tutorial "1" *--> "*" Assignment
-Attendance "*" <-right- "1" Student
-Attendance "*" <-- "1" Tutorial
 
-Student "*" -- "*" Assignment
+Tutorial "*" -- "*" Student
+(Tutorial, Student) .. Attendance
+
+Student "*" -right- "*" Assignment
 (Student, Assignment) .. Submission
 
 Submission --> State

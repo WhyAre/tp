@@ -20,7 +20,7 @@ import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Student> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Student> PREDICATE_SHOW_ALL_STUDENTS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Tutorial> PREDICATE_SHOW_ALL_TUTORIALS = unused -> true;

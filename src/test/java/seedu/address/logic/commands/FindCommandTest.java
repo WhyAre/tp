@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.logic.Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBookInclTutorials;
 
@@ -64,7 +64,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noStudentFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate namePredicate = emptyNamePredicate;
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = emptyT;
         FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
@@ -77,7 +77,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multipleStudentsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = prepareNamePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate, null);
         expectedModel.updateFilteredStudentList(predicate);
@@ -86,7 +86,7 @@ public class FindCommandTest {
 
     @Test
     public void executeEmptyNameOneTutorialMultipleStudentsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 2);
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1");
         FindCommand command = new FindCommand(null, tutorialPredicate);
         expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
@@ -95,7 +95,7 @@ public class FindCommandTest {
 
     @Test
     public void executeEmptyNameTwoTutorialsMultipleStudentsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 3);
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1 CS2106-T37");
         FindCommand command = new FindCommand(null, tutorialPredicate);
         expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
@@ -104,7 +104,7 @@ public class FindCommandTest {
 
     @Test
     public void executeNameAliceTutorialCS2103T23SingleStudentFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 1);
         NameContainsKeywordsPredicate namePredicate = prepareNamePredicate("Alice");
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1");
         FindCommand command = new FindCommand(namePredicate, tutorialPredicate);
