@@ -85,17 +85,9 @@ public class TypicalAddressBook {
     } // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical students.
+     * Returns an {@code AddressBook} with all the typical information.
      */
     public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (Student student : getTypicalStudents()) {
-            ab.addStudent(student);
-        }
-        return ab;
-    }
-
-    public static AddressBook getAlmostTypicalAddressBook() {
         var students = getTypicalStudents();
         var tutorials = getTypicalTutorials();
 
@@ -110,7 +102,7 @@ public class TypicalAddressBook {
         }
 
         try {
-            ab.setAttendance(T1, 4, ALICE, true);
+            ab.markAttendance(T1, 4, ALICE);
         } catch (DuplicateItemException e) {
             throw new RuntimeException(e);
         } catch (ItemNotFoundException e) {
@@ -120,17 +112,6 @@ public class TypicalAddressBook {
         return ab;
     }
 
-    public static AddressBook getTypicalAddressBookInclTutorials() {
-        AddressBook ab = new AddressBook();
-        for (var tutorial : getTypicalTutorials()) {
-            ab.addTutorial(tutorial);
-        }
-
-        for (Student student : getTypicalStudents()) {
-            ab.addStudent(student);
-        }
-        return ab;
-    }
     public static List<Student> getTypicalStudents() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
@@ -150,6 +131,6 @@ public class TypicalAddressBook {
 
     // Used to generate the test files; modify accordingly
     public static void main(String[] args) throws JsonProcessingException {
-        System.out.println(JsonUtil.toJsonString(new JsonSerializableAddressBook(getAlmostTypicalAddressBook())));
+        System.out.println(JsonUtil.toJsonString(new JsonSerializableAddressBook(getTypicalAddressBook())));
     }
 }
