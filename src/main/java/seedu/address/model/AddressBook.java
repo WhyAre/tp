@@ -164,8 +164,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Deletes a tutorial slot
      */
     public void deleteTutorial(Tutorial tutorial) {
-        Tutorial toDelete = tutorials.find(tutorial).orElse(tutorial);
-        tutorials.remove(toDelete);
+        tutorials.remove(tutorial);
+        removeTutorialFromSubmissions(tutorial);
+        removeTutorialFromAttendances(tutorial);
     }
 
     /**
@@ -201,6 +202,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void removeStudentFromAttendances(Student stu) {
         attendances.removeIf(a -> a.student().hasSameIdentity(stu));
+    }
+
+    public void removeTutorialFromSubmissions(Tutorial tut) {
+        submissions.removeIf(s -> s.assignment().tutorial().hasSameIdentity(tut));
+    }
+
+    public void removeTutorialFromAttendances(Tutorial tut) {
+        attendances.removeIf(a -> a.tutorial().hasSameIdentity(tut));
     }
 
     /**
