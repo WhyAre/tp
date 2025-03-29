@@ -110,7 +110,7 @@ public class TypicalAddressBook {
         }
 
         try {
-            ab.addAttendance(T1, 4, ALICE, true);
+            ab.setAttendance(T1, 4, ALICE, true);
         } catch (DuplicateItemException e) {
             throw new RuntimeException(e);
         } catch (ItemNotFoundException e) {

@@ -1,7 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.*;
-
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Details;
 import seedu.address.model.student.Email;
@@ -12,6 +10,12 @@ import seedu.address.model.student.StudentID;
 import seedu.address.model.student.TelegramHandle;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.util.SampleDataUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A utility class to help with building Student objects.

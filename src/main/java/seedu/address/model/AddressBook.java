@@ -104,12 +104,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a student to the address book. The student must not already exist in the
      * address book.
      */
-    public void addStudent(Student p) { // Check that tutorial slots exists
+    public void addStudent(Student p) {
+        // Check that tutorial slots exists
         var student = p.clone();
         student.removeInvalidTutorials(new HashSet<>(tutorials));
 
         students.add(student);
 
+        // If adding via GUI, this list should be empty so nothing will happen
+        // If adding from JSON, this is needed for it to work
         for (var tutorial : student.getTutorials()) {
             assert tutorials.containsIdentity(tutorial);
             assert students.containsIdentity(student);
@@ -145,8 +148,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // - attendances
 
         students.remove(key);
-        deleteStudentFromAttendances(key);
-        deleteStudentFromSubmissions(key);
+        removeStudentFromAttendances(key);
+        removeStudentFromSubmissions(key);
     }
 
     //// Tutorial operations
@@ -193,11 +196,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    public void deleteStudentFromSubmissions(Student stu) {
+    public void removeStudentFromSubmissions(Student stu) {
         submissions.removeIf(s -> s.student().hasSameIdentity(stu));
     }
 
-    public void deleteStudentFromAttendances(Student stu) {
+    public void removeStudentFromAttendances(Student stu) {
         attendances.removeIf(a -> a.student().hasSameIdentity(stu));
     }
 
@@ -281,7 +284,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public void addAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
+    public void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
                     throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
@@ -339,7 +342,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void markAttendance(Tutorial tutorial, int week, Student student)
                     throws DuplicateItemException, ItemNotFoundException {
-        addAttendance(tutorial, week, student, true);
+        setAttendance(tutorial, week, student, true);
     }
 
     /**
@@ -347,7 +350,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void unmarkAttendance(Tutorial tutorial, int week, Student student)
                     throws DuplicateItemException, ItemNotFoundException {
-        addAttendance(tutorial, week, student, false);
+        setAttendance(tutorial, week, student, false);
     }
 
     /// / util methods

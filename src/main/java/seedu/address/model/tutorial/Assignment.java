@@ -68,6 +68,6 @@ public record Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial 
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, dueDate, tutorial);
+        return Objects.hash(name, dueDate);
     }
 }
