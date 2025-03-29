@@ -227,8 +227,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         tutorials.set(oldTut, newTut);
     }
 
+    /**
+     * Adds an assignment to the addressbook, the tutorial information should be
+     * within the assignment object
+     */
     public void addAssignment(Assignment assignment) throws ItemNotFoundException {
+        requireNonNull(assignment);
+
         // Resolve tutorial
+        assert assignment.tutorial() != null;
         var tut = tutorials.find(assignment.tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 

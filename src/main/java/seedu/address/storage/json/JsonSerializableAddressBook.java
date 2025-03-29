@@ -20,10 +20,10 @@ import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
  */
 @JsonRootName(value = "addressbook")
 public class JsonSerializableAddressBook {
-    private static final Logger LOGGER = Logger.getLogger(JsonSerializableAddressBook.class.getName());
-
-    public static final String MESSAGE_DUPLICATE_STUDENT = "Students list contains duplicate student(s).";
     public static final String MESSAGE_DUPLICATE_TUTORIAL = "Tutorials list contains duplicate tutorial(s).";
+    public static final String MESSAGE_DUPLICATE_STUDENT = "Students list contains duplicate student(s).";
+
+    private static final Logger LOGGER = Logger.getLogger(JsonSerializableAddressBook.class.getName());
 
     private final List<JsonAdaptedStudent> students;
     private final List<JsonAdaptedTutorial> tutorials;
