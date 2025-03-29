@@ -22,6 +22,10 @@ public class Messages {
     public static final String MESSAGE_INVALID_NAVIGATION_MODE = "Invalid navigation mode provided";
     public static final String MESSAGE_UNKNOWN_ERROR = "Something went wrong";
 
+    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial '%s' is not found";
+    public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment '%s' is not found";
+    public static final String MESSAGE_STUDENT_NOT_FOUND = "Student '%s' is not found";
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
