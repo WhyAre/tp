@@ -26,8 +26,7 @@ import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
- * Wraps all data at the address-book level Duplicates are not allowed (by
- * .isSameStudent comparison)
+ * Wraps all data at the address-book level
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
@@ -55,7 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Creates an AddressBook using the students in the {@code toBeCopied}
+     * Makes a copy of an address book
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -253,8 +252,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sets submission status on a submission, identified by tutorialName,
-     * assignmentName and student
+     * Sets submission status on a submission, identified by assignment, and student
+     *
+     * Note: Assignment also requires tutorial information
      */
     public void setSubmissionStatus(Submission submission) throws ItemNotFoundException {
         // Resolve assignment
@@ -289,9 +289,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Marks students attendance
+     * Sets a student's attendance for a tutorial slot on a given week
      */
-    public void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
+    private void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
                     throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
@@ -305,9 +305,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    /**
-     * Marks students attendance
-     */
     public void setAttendance(Attendance attendance) throws ItemNotFoundException {
         // Fetch tutorial from tutorial list
         Tutorial tutorialFromList = tutorials.find(attendance.tutorial()).orElseThrow((
@@ -327,8 +324,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             attendances.add(newAttendance);
         } else {
             var existingAttendance = maybeAttendance.orElseThrow();
-            existingAttendance.setAttendances(attendance.attendances());
-        }
+            existingAttendance.setAttendances(attendance.attendances());}
     }
 
     /**
@@ -360,7 +356,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setAttendance(tutorial, week, student, false);
     }
 
-    /// / util methods
+    //// util methods
 
     @Override
     public String toString() {
