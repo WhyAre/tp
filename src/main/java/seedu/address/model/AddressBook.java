@@ -1,7 +1,10 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.*;
+import static seedu.address.logic.Messages.MESSAGE_ASSIGNMENT_NOT_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_STUDENT_NOT_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +14,6 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
@@ -83,7 +85,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             setSubmissions(newData.getSubmissionList());
         } catch (DuplicateItemException e) {
             // Since it's coming from an address book, these errors shouldn't be thrown
-            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
         }
     }
 
@@ -186,7 +188,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             try {
                 this.setStudent(student, editedstudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
             }
         }
     }
@@ -318,6 +320,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             existingAttendance.setAttendances(attendance.attendances());
         }
     }
+
     /**
      * Replaces the contents of the attendance list with {@code attendances}.
      */
@@ -381,15 +384,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddressBook)) {
+        if (!(other instanceof AddressBook otherAddressBook)) {
             return false;
         }
 
-        AddressBook otherAddressBook = (AddressBook) other;
-        var a = students.equals(otherAddressBook.students);
-        var b = tutorials.equals(otherAddressBook.tutorials);
-        var c = attendances.equals(otherAddressBook.attendances);
-        var d = submissions.equals(otherAddressBook.submissions);
         return students.equals(otherAddressBook.students) && tutorials.equals(otherAddressBook.tutorials)
                         && attendances.equals(otherAddressBook.attendances)
                         && submissions.equals(otherAddressBook.submissions);
