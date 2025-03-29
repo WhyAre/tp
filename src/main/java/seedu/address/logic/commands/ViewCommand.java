@@ -24,7 +24,7 @@ public class ViewCommand extends Command {
                     + "number used in the displayed student list.\n"
                     + "Parameters: INDEX (must be a positive integer)\n" + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEWED_PERSON_SUCCESS = "Viewed Student: %1$s";
+    public static final String MESSAGE_VIEWED_STUDENT_SUCCESS = "Viewed Student: %1$s";
 
     private final Index targetIndex;
 
@@ -43,7 +43,7 @@ public class ViewCommand extends Command {
 
         Student studentToView = lastShownList.get(targetIndex.getZeroBased());
         model.setSelectedStudent(studentToView);
-        return new CommandResult(String.format(MESSAGE_VIEWED_PERSON_SUCCESS, Messages.format(studentToView)),
+        return new CommandResult(String.format(MESSAGE_VIEWED_STUDENT_SUCCESS, Messages.format(studentToView)),
                         NavigationMode.SINGLE_STUDENT);
     }
 
