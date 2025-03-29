@@ -26,7 +26,7 @@ import seedu.address.model.tutorial.Tutorial;
  * A utility class containing a list of {@code Student} objects to be used in
  * tests.
  */
-public class TypicalStudents {
+public class TypicalAddressBook {
 
     public static final Student ALICE = new StudentBuilder().withName("Alice Pauline").withStudentId("A0743062E")
                     .withHandle("@alice_pauline").withEmail("alice@example.com").withPhone("94351253")
@@ -63,7 +63,7 @@ public class TypicalStudents {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalStudents() {
+    private TypicalAddressBook() {
     } // prevents instantiation
 
     /**

@@ -14,7 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showStudentAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
-import static seedu.address.testutil.TypicalStudents.getTypicalAddressBookInclTutorials;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBookInclTutorials;
 
 import org.junit.jupiter.api.Test;
 

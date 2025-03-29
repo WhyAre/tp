@@ -11,11 +11,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.testutil.TypicalStudents;
+import seedu.address.testutil.TypicalAddressBook;
 
 public class AddTutorialCommandTest {
 
-    private static final Model modelStub = new ModelManager(TypicalStudents.getTypicalAddressBookInclTutorials(),
+    private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBookInclTutorials(),
                     new UserPrefs());
 
     @Test
