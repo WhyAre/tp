@@ -108,7 +108,7 @@ public class JsonAdaptedStudentTest {
         invalidTutorials.add(new JsonAdaptedTutorial(INVALID_TUTORIAL));
         JsonAdaptedStudent student = new JsonAdaptedStudent(VALID_NAME, VALID_STUDENT_ID, VALID_PHONE, VALID_EMAIL,
                         VALID_HANDLE, invalidTutorials);
-        assertThrows(IllegalValueException.class, student::toModelType);
+        assertThrows(IllegalArgumentException.class, student::toModelType);
     }
 
 }

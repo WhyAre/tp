@@ -142,7 +142,8 @@ public interface Model {
     /**
      * Sets submission status
      */
-    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status);
+    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status)
+                    throws ItemNotFoundException;
 
     /**
      * Creates attendance record for a student in specified tutorial

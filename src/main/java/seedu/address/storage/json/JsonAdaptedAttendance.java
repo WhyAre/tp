@@ -43,6 +43,7 @@ class JsonAdaptedAttendance {
      * {@link Submission} object.
      */
     public Attendance toModelType() throws IllegalValueException {
+        // Get the actual tutorial
         return new Attendance(tutorial.toModelType(), student.toModelType(), attendances);
     }
 }

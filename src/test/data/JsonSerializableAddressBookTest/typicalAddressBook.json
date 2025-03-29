@@ -1,0 +1,295 @@
+{
+  "students": [
+    {
+      "name": "Alice Pauline",
+      "phone": "94351253",
+      "email": "alice@example.com",
+      "handle": "@alice_pauline",
+      "tutorials": [
+        {
+          "name": "CS2103-T1"
+        }
+      ],
+      "id": "A0743062E"
+    },
+    {
+      "name": "Benson Meier",
+      "phone": "98765432",
+      "email": "johnd@example.com",
+      "handle": "@benson_meier",
+      "tutorials": [
+        {
+          "name": "CS2106-T02"
+        },
+        {
+          "name": "CS2103-T1"
+        }
+      ],
+      "id": "A0179034R"
+    },
+    {
+      "name": "Carl Kurz",
+      "phone": "95352563",
+      "email": "heinz@example.com",
+      "handle": "@carl_kurz",
+      "tutorials": [],
+      "id": "A0388094Q"
+    },
+    {
+      "name": "Daniel Meier",
+      "phone": "87652533",
+      "email": "cornelia@example.com",
+      "handle": "@dannn_mayor",
+      "tutorials": [
+        {
+          "name": "CS2106-T37"
+        }
+      ],
+      "id": "A0833488W"
+    },
+    {
+      "name": "Elle Meyer",
+      "phone": "9482224",
+      "email": "werner@example.com",
+      "handle": "@ellem",
+      "tutorials": [],
+      "id": "A0172925M"
+    },
+    {
+      "name": "Fiona Kunz",
+      "phone": "9482427",
+      "email": "lydia@example.com",
+      "handle": "@kunz_fiona",
+      "tutorials": [
+        {
+          "name": "CS2106-T37"
+        }
+      ],
+      "id": "A0005984F"
+    },
+    {
+      "name": "George Best",
+      "phone": "9482442",
+      "email": "anna@example.com",
+      "handle": "@the_best_george",
+      "tutorials": [],
+      "id": "A0443446N"
+    }
+  ],
+  "tutorials": [
+    {
+      "name": "CS2103-T1"
+    },
+    {
+      "name": "CS2106-T02"
+    },
+    {
+      "name": "CS2106-T37"
+    }
+  ],
+  "submissions": [
+    {
+      "assignment": {
+        "name": "Week 10 Tasks",
+        "dueDate": null,
+        "tutorial": {
+          "name": "CS2103-T1"
+        }
+      },
+      "student": {
+        "name": "Alice Pauline",
+        "phone": "94351253",
+        "email": "alice@example.com",
+        "handle": "@alice_pauline",
+        "tutorials": [
+          {
+            "name": "CS2103-T1"
+          }
+        ],
+        "id": "A0743062E"
+      },
+      "status": "SUBMITTED"
+    }
+  ],
+  "attendances": [
+    {
+      "student": {
+        "name": "Alice Pauline",
+        "phone": "94351253",
+        "email": "alice@example.com",
+        "handle": "@alice_pauline",
+        "tutorials": [
+          {
+            "name": "CS2103-T1"
+          }
+        ],
+        "id": "A0743062E"
+      },
+      "attendances": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tutorial": {
+        "name": "CS2103-T1"
+      }
+    },
+    {
+      "student": {
+        "name": "Benson Meier",
+        "phone": "98765432",
+        "email": "johnd@example.com",
+        "handle": "@benson_meier",
+        "tutorials": [
+          {
+            "name": "CS2106-T02"
+          },
+          {
+            "name": "CS2103-T1"
+          }
+        ],
+        "id": "A0179034R"
+      },
+      "attendances": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tutorial": {
+        "name": "CS2106-T02"
+      }
+    },
+    {
+      "student": {
+        "name": "Benson Meier",
+        "phone": "98765432",
+        "email": "johnd@example.com",
+        "handle": "@benson_meier",
+        "tutorials": [
+          {
+            "name": "CS2106-T02"
+          },
+          {
+            "name": "CS2103-T1"
+          }
+        ],
+        "id": "A0179034R"
+      },
+      "attendances": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tutorial": {
+        "name": "CS2103-T1"
+      }
+    },
+    {
+      "student": {
+        "name": "Daniel Meier",
+        "phone": "87652533",
+        "email": "cornelia@example.com",
+        "handle": "@dannn_mayor",
+        "tutorials": [
+          {
+            "name": "CS2106-T37"
+          }
+        ],
+        "id": "A0833488W"
+      },
+      "attendances": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tutorial": {
+        "name": "CS2106-T37"
+      }
+    },
+    {
+      "student": {
+        "name": "Fiona Kunz",
+        "phone": "9482427",
+        "email": "lydia@example.com",
+        "handle": "@kunz_fiona",
+        "tutorials": [
+          {
+            "name": "CS2106-T37"
+          }
+        ],
+        "id": "A0005984F"
+      },
+      "attendances": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tutorial": {
+        "name": "CS2106-T37"
+      }
+    }
+  ],
+  "assignments": [
+    {
+      "name": "Week 10 Tasks",
+      "dueDate": null,
+      "tutorial": {
+        "name": "CS2103-T1"
+      }
+    },
+    {
+      "name": "Week 10 Tasks",
+      "dueDate": null,
+      "tutorial": {
+        "name": "CS2106-T02"
+      }
+    },
+    {
+      "name": "Lab 1",
+      "dueDate": "2025-03-29T17:20:00",
+      "tutorial": {
+        "name": "CS2106-T37"
+      }
+    }
+  ]
+}

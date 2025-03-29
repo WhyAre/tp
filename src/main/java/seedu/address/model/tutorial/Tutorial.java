@@ -10,11 +10,19 @@ import seedu.address.model.uniquelist.UniqueList;
 /**
  * Represents a tutorial
  */
-public record Tutorial(String name, UniqueList<Attendance> attendances,
-                UniqueList<Assignment> assignments) implements Identifiable<Tutorial> {
+public record Tutorial(String name, UniqueList<Assignment> assignments,
+                UniqueList<Attendance> attendances) implements Identifiable<Tutorial> {
 
     public Tutorial(String name) {
         this(name, new UniqueList<>(), new UniqueList<>());
+    }
+
+    public Tutorial(String name, UniqueList<Assignment> assignments) {
+        this(name, assignments, new UniqueList<>());
+    }
+
+    public Tutorial(Tutorial t) {
+        this(t.name, t.assignments, t.attendances);
     }
 
     /**
@@ -40,7 +48,7 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
      */
     public boolean addAssignment(Assignment assignment) {
         Objects.requireNonNull(assignment);
-        return assignments.add(assignment);
+        return assignments.add(assignment.setTutorial(this));
     }
 
     /**
@@ -85,6 +93,24 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
         }
 
         return this.name.equals(other.name);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Tutorial t)) {
+            return false;
+        }
+
+        return this.name.equals(t.name) && assignments.equals(t.assignments);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override

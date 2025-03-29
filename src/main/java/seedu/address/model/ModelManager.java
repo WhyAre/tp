@@ -180,7 +180,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
-                    SubmissionStatus status) {
+                    SubmissionStatus status) throws ItemNotFoundException {
         addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
     }
 

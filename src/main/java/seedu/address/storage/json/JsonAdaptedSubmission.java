@@ -25,7 +25,7 @@ class JsonAdaptedSubmission {
                     @JsonProperty("status") SubmissionStatus status) {
         this.assignment = assignment;
         this.student = student;
-        this.status = SubmissionStatus.NOT_SUBMITTED;
+        this.status = status;
     }
 
     /**
@@ -41,5 +41,10 @@ class JsonAdaptedSubmission {
      */
     public Submission toModelType() throws IllegalValueException {
         return new Submission(assignment.toModelType(), student.toModelType(), status);
+    }
+
+    @Override
+    public String toString() {
+        return "%s %s %s".formatted(assignment, student, status);
     }
 }

@@ -20,6 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.testutil.StudentBuilder;
 
@@ -103,6 +104,7 @@ public class AddressBookTest {
         private final ObservableList<Student> students = FXCollections.observableArrayList();
         private final ObservableList<Tutorial> tutorials = FXCollections.observableArrayList();
         private final ObservableList<Attendance> attendances = FXCollections.observableArrayList();
+        private final ObservableList<Submission> submissions = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Student> students) {
             this.students.setAll(students);
@@ -121,6 +123,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Attendance> getAttendanceList() {
             return attendances;
+        }
+
+        @Override
+        public ObservableList<Submission> getSubmissionList() {
+            return submissions;
         }
     }
 

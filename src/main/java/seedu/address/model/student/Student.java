@@ -209,21 +209,19 @@ public class Student implements Identifiable<Student> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Student)) {
+        if (!(other instanceof Student otherStudent)) {
             return false;
         }
 
-        Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
                         && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle) && details.equals(otherStudent.details)
-                        && tutorials.equals(otherStudent.tutorials);
+                        && handle.equals(otherStudent.handle) && details.equals(otherStudent.details);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, studentId, phone, email, handle);
+        return Objects.hash(name, studentId, phone, email, handle, details);
     }
 
     @Override

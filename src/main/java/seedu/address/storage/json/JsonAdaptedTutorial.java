@@ -12,7 +12,7 @@ public class JsonAdaptedTutorial {
     private final String name;
 
     JsonAdaptedTutorial(Tutorial tutorial) {
-        name = tutorial.name();
+        this(tutorial.name());
     }
 
     @JsonCreator

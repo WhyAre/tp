@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.logic.Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBookInclTutorials;
+import static seedu.address.testutil.TypicalAddressBook.getAlmostTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,8 +28,8 @@ public class FindCommandTest {
     private static final StudentContainsTutorialKeywordsPredicate emptyT = new StudentContainsTutorialKeywordsPredicate(
                     Collections.emptyList());
 
-    private Model model = new ModelManager(getTypicalAddressBookInclTutorials(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAddressBookInclTutorials(), new UserPrefs());
+    private Model model = new ModelManager(getAlmostTypicalAddressBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getAlmostTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -95,7 +95,7 @@ public class FindCommandTest {
 
     @Test
     public void executeEmptyNameTwoTutorialsMultipleStudentsFound() {
-        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_STUDENTS_LISTED_OVERVIEW, 4);
         StudentContainsTutorialKeywordsPredicate tutorialPredicate = prepareTutorialPredicate("CS2103-T1 CS2106-T37");
         FindCommand command = new FindCommand(null, tutorialPredicate);
         expectedModel.updateFilteredStudentsByTutorialList(tutorialPredicate);
