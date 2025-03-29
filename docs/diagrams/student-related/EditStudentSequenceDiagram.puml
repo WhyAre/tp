@@ -167,7 +167,7 @@ deactivate Student
 EditCommand --> EditCommand : student
 deactivate EditCommand
 
-EditCommand -> Model : isSamePerson()
+EditCommand -> Model : isSameStudent()
 activate Model
 
 Model --> EditCommand
