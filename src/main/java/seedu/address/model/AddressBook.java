@@ -233,9 +233,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
                     SubmissionStatus status) throws ItemNotFoundException {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
-        ) -> new IllegalArgumentException("Tutorial '%s' not found".formatted(tutorialName)));
+        ) -> new IllegalArgumentException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
         var assign = tut.findAssignment(new Assignment(assignmentName)).orElseThrow((
-        ) -> new IllegalArgumentException("Assignment '%s' not found".formatted(assignmentName)));
+        ) -> new IllegalArgumentException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
 
         setSubmissionStatus(new Submission(assign, student, status));
     }
@@ -247,13 +247,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setSubmissionStatus(Submission submission) throws ItemNotFoundException {
         // Resolve assignment
         var tut = tutorials.find(submission.assignment().tutorial()).orElseThrow((
-        ) -> new ItemNotFoundException("Tutorial '%s' not found".formatted(submission.assignment().tutorial())));
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(submission.assignment().tutorial())));
         var assignment = tut.findAssignment(submission.assignment()).orElseThrow((
-        ) -> new ItemNotFoundException("Assignment '%s' not found".formatted(submission.assignment())));
+        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(submission.assignment())));
 
         // Resolve student
         var studentInList = students.find(submission.student()).orElseThrow((
-        ) -> new ItemNotFoundException("Student '%s' not found".formatted(submission.student())));
+        ) -> new ItemNotFoundException(MESSAGE_STUDENT_NOT_FOUND.formatted(submission.student())));
 
         // Add to submissions list
         var newSubmission = new Submission(submission).setAssignment(assignment).setStudent(studentInList);
