@@ -83,14 +83,14 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-### Adding a person: `add`
+### Adding a student: `add`
 
 Adds a student to the address book.
 
 Format: `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A student can have any number of tags (including 0)
 </div>
 
 Examples:
@@ -104,32 +104,32 @@ Shows a list of all students in the address book.
 
 Format: `list`
 
-### Editing a person: `edit`
+### Editing a student: `edit`
 
 Edits an existing student in the address book.
 
 Format: `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`
 
-- Edits the person at the specified `INDEX`.
-  The index refers to the index number shown in the displayed person list.
+- Edits the student at the specified `INDEX`.
+  The index refers to the index number shown in the displayed student list.
   The index **must be a positive integer** 1, 2, 3, ...
 - At least one of the optional fields must be provided.
 - Existing values will be updated to the input values.
 - When editing tutorial slots,
-  the existing set of tutorials allocated to the person will be replaced entirely with the new values provided i.e. adding of tutorials is not cumulative.
-- You can remove all the person’s tutorial slots by typing `t/` without
+  the existing set of tutorials allocated to the student will be replaced entirely with the new values provided i.e. adding of tutorials is not cumulative.
+- You can remove all the student’s tutorial slots by typing `t/` without
   specifying any tutorials after it.
 
 Examples:
 
 - `edit 1 p/91234567 e/johndoe@example.com`
-  Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+  Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
 - `edit 2 n/Betsy Crower t/`
-  Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tutorial slots.
+  Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tutorial slots.
 
-<!-- ### Locating persons by name: `find` -->
+<!-- ### Locating students by name: `find` -->
 <!---->
-<!-- Finds persons whose names contain any of the given keywords. -->
+<!-- Finds students whose names contain any of the given keywords. -->
 <!---->
 <!-- Format: `find KEYWORD [MORE_KEYWORDS]` -->
 <!---->
@@ -137,7 +137,7 @@ Examples:
 <!-- * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans` -->
 <!-- * Only the name is searched. -->
 <!-- * Only full words will be matched e.g. `Han` will not match `Hans` -->
-<!-- * Persons matching at least one keyword will be returned (i.e. `OR` search). -->
+<!-- * Students matching at least one keyword will be returned (i.e. `OR` search). -->
 <!--   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang` -->
 <!---->
 <!-- Examples: -->
@@ -151,14 +151,14 @@ Deletes the specified student from the address book.
 
 Format: `delete INDEX`
 
-- Deletes the person at the specified `INDEX`.
-- The index refers to the index number shown in the displayed person list.
+- Deletes the student at the specified `INDEX`.
+- The index refers to the index number shown in the displayed student list.
 - The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 
-- `list` followed by `delete 2` deletes the 2nd person in the address book.
-<!-- * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command. -->
+- `list` followed by `delete 2` deletes the 2nd student in the address book.
+<!-- * `find Betsy` followed by `delete 1` deletes the 1st student in the results of the `find` command. -->
 
 ### Adding a tutorial: `tutorial add`
 
