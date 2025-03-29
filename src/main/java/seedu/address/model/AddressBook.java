@@ -230,21 +230,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         tut.addAssignment(assignment);
     }
 
-    public Submission setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
                     SubmissionStatus status) throws ItemNotFoundException {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
         ) -> new IllegalArgumentException("Tutorial '%s' not found".formatted(tutorialName)));
         var assign = tut.findAssignment(new Assignment(assignmentName)).orElseThrow((
         ) -> new IllegalArgumentException("Assignment '%s' not found".formatted(assignmentName)));
 
-        return setSubmissionStatus(new Submission(assign, student, status));
+        setSubmissionStatus(new Submission(assign, student, status));
     }
 
     /**
      * Sets submission status on a submission, identified by tutorialName,
      * assignmentName and student
      */
-    public Submission setSubmissionStatus(Submission submission) throws ItemNotFoundException {
+    public void setSubmissionStatus(Submission submission) throws ItemNotFoundException {
         // Resolve assignment
         var tut = tutorials.find(submission.assignment().tutorial()).orElseThrow((
         ) -> new ItemNotFoundException("Tutorial '%s' not found".formatted(submission.assignment().tutorial())));
@@ -263,19 +263,17 @@ public class AddressBook implements ReadOnlyAddressBook {
             assignment.addSubmission(newSubmission);
             studentInList.addSubmission(newSubmission);
             submissions.add(newSubmission);
-            return newSubmission;
+        } else {
+            var existingSubmission = submissionInList.orElseThrow();
+            existingSubmission.setStatus(submission.status());
         }
-
-        var existingSubmission = submissionInList.orElseThrow();
-        existingSubmission.setStatus(submission.status());
-        return existingSubmission;
     }
 
     /**
      * Creates attendance record for a student in specified tutorial
      */
-    public Attendance addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
-        return setAttendance(new Attendance(tutorial, student));
+    public void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        setAttendance(new Attendance(tutorial, student));
     }
 
     /**
@@ -298,7 +296,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks students attendance
      */
-    public Attendance setAttendance(Attendance attendance) throws ItemNotFoundException {
+    public void setAttendance(Attendance attendance) throws ItemNotFoundException {
         // Fetch tutorial from tutorial list
         Tutorial tutorialFromList = tutorials.find(attendance.tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(attendance.tutorial())));
@@ -315,12 +313,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             tutorialFromList.addAttendance(newAttendance);
             studentFromList.addAttendance(newAttendance);
             attendances.add(newAttendance);
-            return newAttendance;
+        } else {
+            var existingAttendance = maybeAttendance.orElseThrow();
+            existingAttendance.setAttendances(attendance.attendances());
         }
-
-        var existingAttendance = maybeAttendance.orElseThrow();
-        existingAttendance.setAttendances(attendance.attendances());
-        return existingAttendance;
     }
     /**
      * Replaces the contents of the attendance list with {@code attendances}.
