@@ -149,7 +149,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         removeStudentFromAttendances(key);
         removeStudentFromSubmissions(key);
-        tutorials.forEach(t -> t.removeStudent(key));
+        tutorials.forEach(t -> {
+            t.removeStudent(key);
+            try {
+                tutorials.set(t, t);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(e);
+            }
+        });
 
         students.remove(key);
     }
@@ -169,7 +176,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTutorial(Tutorial tutorial) {
         removeTutorialFromSubmissions(tutorial);
         removeTutorialFromAttendances(tutorial);
-        students.forEach(s -> s.removeTutorial(tutorial));
+        students.forEach(s -> {
+            s.removeTutorial(tutorial);
+            try {
+                students.set(s, s);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(e);
+            }
+        });
 
         tutorials.remove(tutorial);
     }
