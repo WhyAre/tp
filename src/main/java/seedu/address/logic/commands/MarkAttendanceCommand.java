@@ -37,16 +37,16 @@ public class MarkAttendanceCommand extends Command {
 
     private final Tutorial tutorial;
     private final int week;
-    private final Index index;
+    private final List<Index> indices;
 
     /**
      * Creates a {@link MarkAttendanceCommand} to mark the specified student's
      * attendance {@code Attendance}
      */
-    public MarkAttendanceCommand(Tutorial tutorial, int week, Index index) {
+    public MarkAttendanceCommand(Tutorial tutorial, int week, List<Index> indices) {
         this.tutorial = tutorial;
         this.week = week;
-        this.index = index;
+        this.indices = indices;
     }
 
     @Override
@@ -56,21 +56,30 @@ public class MarkAttendanceCommand extends Command {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
 
-        List<Student> lastShownList = model.getFilteredStudentList();
-
-        Student studentToEdit = lastShownList.get(index.getZeroBased());
-        assert model.hasStudent(studentToEdit);
-
         assert week >= START_WEEK;
         assert week <= END_WEEK;
 
-        try {
-            model.markAttendance(tutorial, week, studentToEdit);
-        } catch (DuplicateItemException | ItemNotFoundException e) {
-            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        List<Student> students = model.getFilteredStudentList();
+
+        var errMsg = new StringBuilder();
+
+        for (Index index : indices) {
+            if (index.getZeroBased() >= students.size()) {
+                errMsg.append("Student at index %d is out of bounds\n".formatted(index.getOneBased()));
+                continue;
+            }
+            Student studentToEdit = students.get(index.getZeroBased());
+            assert model.hasStudent(studentToEdit);
+
+            try {
+                model.markAttendance(tutorial, week, studentToEdit);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.ATTENDANCE);
+        String msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());
+        return new CommandResult(msg, NavigationMode.ATTENDANCE);
     }
 
     @Override
@@ -85,11 +94,11 @@ public class MarkAttendanceCommand extends Command {
         }
 
         return tutorial.equals(otherMarkAttendanceCommand.tutorial) && week == otherMarkAttendanceCommand.week
-                        && index == otherMarkAttendanceCommand.index;
+                        && indices.equals(otherMarkAttendanceCommand.indices);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("tutorial", tutorial).add("week", week).add("index", index).toString();
+        return new ToStringBuilder(this).add("tutorial", tutorial).add("week", week).add("indices", indices).toString();
     }
 }
