@@ -445,7 +445,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Self check to verify that all links in the address book are valid
+     * Checks whether the address book is valid.
+     *
+     * @throws IllegalStateException if the data in the address book is inconsistent
      */
     public boolean check() {
         // Tutorials
