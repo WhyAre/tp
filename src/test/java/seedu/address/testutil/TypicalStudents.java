@@ -21,6 +21,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * A utility class containing a list of {@code Student} objects to be used in
@@ -78,6 +79,19 @@ public class TypicalStudents {
     }
 
     /**
+     * Adds attendances
+     */
+    public static void getSampleAttendences(AddressBook sampleAb, Student student) {
+        try {
+            for (Tutorial tutorial : student.getTutorials()) {
+                sampleAb.addAttendance(tutorial, student);
+            }
+        } catch (ItemNotFoundException e) {
+            assert false;
+        }
+    }
+
+    /**
      * Returns an {@code AddressBook} with all the typical students and tutorials.
      */
     public static AddressBook getTypicalAddressBookInclTutorials() {
@@ -87,6 +101,18 @@ public class TypicalStudents {
         }
         for (Student student : getTypicalStudents()) {
             ab.addStudent(student);
+        }
+        return ab;
+    }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical students, tutorials and
+     * attendences.
+     */
+    public static AddressBook getTypicalAddressBookInclAttendances() {
+        AddressBook ab = getTypicalAddressBookInclTutorials();
+        for (Student student : ab.getStudentList()) {
+            getSampleAttendences(ab, student);
         }
         return ab;
     }

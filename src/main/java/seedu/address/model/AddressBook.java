@@ -164,6 +164,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert students.contains(student);
 
             try {
+                Attendance attendanceToBeDeleted = attendances.find(new Attendance(tutorial, student))
+                                .orElseThrow(ItemNotFoundException::new);
+                editedstudent.deleteAttendance(attendanceToBeDeleted);
+                attendances.remove(attendanceToBeDeleted);
                 this.setStudent(student, editedstudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {
                 throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
