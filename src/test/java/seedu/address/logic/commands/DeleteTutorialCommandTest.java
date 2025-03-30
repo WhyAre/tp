@@ -15,7 +15,7 @@ import seedu.address.testutil.TypicalStudents;
 
 public class DeleteTutorialCommandTest {
 
-    private static final Model modelStub = new ModelManager(TypicalStudents.getTypicalAddressBookInclAttendances(),
+    private static final Model modelStub = new ModelManager(TypicalStudents.getTypicalAddressBookInclTutorials(),
                     new UserPrefs());
 
     @Test

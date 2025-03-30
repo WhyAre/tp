@@ -150,11 +150,6 @@ public interface Model {
     void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
 
     /**
-     * Deletes the attendance record for a student in specified tutorial
-     */
-    void deleteAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
-
-    /**
      * Marks student as present
      */
     void markAttendance(Tutorial tutorial, int week, Student student)

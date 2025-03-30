@@ -78,13 +78,6 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
         this.attendances.add(attendance);
     }
 
-    /**
-     * Deletes attendance
-     */
-    public void deleteAttendance(Attendance attendance) {
-        this.attendances.remove(attendance);
-    }
-
     @Override
     public boolean hasSameIdentity(Tutorial other) {
         if (other == null) {
