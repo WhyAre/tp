@@ -165,12 +165,12 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteTutorial(Tutorial t) {
-        addressBook.deleteTutorial(t);
+        addressBook.removeTutorial(t);
     }
 
     @Override
     public void deleteTutorialFromStudents(Tutorial tutorial) {
-        addressBook.deleteTutorialFromStudents(tutorial);
+        addressBook.removeTutorialFromStudents(tutorial);
     }
 
     @Override

@@ -147,9 +147,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         // - submissions
         // - attendances
 
-        students.remove(key);
         removeStudentFromAttendances(key);
         removeStudentFromSubmissions(key);
+        tutorials.forEach(t -> t.removeStudent(key));
+
+        students.remove(key);
     }
 
     //// Tutorial operations
@@ -164,16 +166,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Deletes a tutorial slot
      */
-    public void deleteTutorial(Tutorial tutorial) {
-        tutorials.remove(tutorial);
+    public void removeTutorial(Tutorial tutorial) {
         removeTutorialFromSubmissions(tutorial);
         removeTutorialFromAttendances(tutorial);
+        students.forEach(s -> s.removeTutorial(tutorial));
+
+        tutorials.remove(tutorial);
     }
 
     /**
      * Deletes a tutorial from all students that were allocated to it
      */
-    public void deleteTutorialFromStudents(Tutorial tutorial) {
+    public void removeTutorialFromStudents(Tutorial tutorial) {
         List<Student> currentList = this.getStudentList();
 
         for (Student student : currentList) {

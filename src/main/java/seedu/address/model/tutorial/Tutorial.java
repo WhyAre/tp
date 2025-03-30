@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import seedu.address.model.attendance.Attendance;
+import seedu.address.model.student.Student;
 import seedu.address.model.uniquelist.Identifiable;
 import seedu.address.model.uniquelist.UniqueList;
 
@@ -86,6 +87,11 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
         this.attendances.add(attendance);
     }
 
+    public void removeStudent(Student student) {
+        attendances.removeIf(a -> a.student().hasSameIdentity(student));
+        assignments.forEach(a -> a.removeStudent(student));
+    }
+
     @Override
     public boolean hasSameIdentity(Tutorial other) {
         if (other == null) {
@@ -105,7 +111,7 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
             return false;
         }
 
-        return this.name.equals(t.name) && assignments.equals(t.assignments);
+        return this.name.equals(t.name);
     }
 
     @Override

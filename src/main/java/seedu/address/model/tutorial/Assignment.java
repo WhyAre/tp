@@ -6,6 +6,7 @@ import java.time.format.FormatStyle;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
 import seedu.address.model.uniquelist.Identifiable;
 import seedu.address.model.uniquelist.UniqueList;
@@ -63,11 +64,16 @@ public record Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial 
             return false;
         }
 
-        return this.name.equals(otherAssignment.name) && this.dueDate.equals(otherAssignment.dueDate);
+        return this.name.equals(otherAssignment.name) && this.dueDate.equals(otherAssignment.dueDate)
+                        && tutorial.equals(otherAssignment.tutorial);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, dueDate);
+        return Objects.hash(name, dueDate, tutorial);
+    }
+
+    public void removeStudent(Student student) {
+        submissions.removeIf(s -> s.student().hasSameIdentity(student));
     }
 }
