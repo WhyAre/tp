@@ -158,6 +158,10 @@ public class Student implements Identifiable<Student> {
         submissions.add(submission);
     }
 
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+
     /**
      * Adds an attendance record for the student
      *

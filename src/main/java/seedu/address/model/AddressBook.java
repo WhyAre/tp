@@ -6,6 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_STUDENT_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -437,5 +438,59 @@ public class AddressBook implements ReadOnlyAddressBook {
     private List<Student> getStudentsInTutorial(Tutorial tutorial) {
         return this.getStudentList().stream().filter(student -> student.getTutorials().contains(tutorial))
                         .collect(Collectors.toList());
+    }
+
+    /**
+     * Self check to verify that all links in the address book are valid
+     */
+    public boolean check() {
+        // Tutorials
+        var tutorialsFromStudents = students.stream().flatMap(s -> s.getTutorials().stream()).toList();
+
+        if (!isSubsetOf(tutorialsFromStudents, tutorials)) {
+            throw new IllegalStateException("Tutorials are inconsistent");
+        }
+
+        // Assignments
+        var assignmentsFromTutorials = tutorials.stream().flatMap(t -> t.assignments().stream()).toList();
+        var assignmentsFromSubmissions = submissions.stream().map(s -> s.assignment()).toList();
+
+        if (!isSubsetOf(assignmentsFromSubmissions, assignmentsFromTutorials)) {
+            throw new IllegalStateException("Assignments are inconsistent");
+        }
+
+        // Submissions
+        var submissionsFromAssignments = assignmentsFromTutorials.stream().flatMap(a -> a.submissions().stream())
+                        .toList();
+        var submissionsFromStudents = students.stream().flatMap(s -> s.getSubmissions().stream()).toList();
+
+        if (!areListSame(submissionsFromAssignments, submissionsFromStudents, submissions)) {
+            throw new IllegalStateException("Submissions are inconsistent");
+        }
+
+        // Attendances
+        var attendancesFromStudents = students.stream().flatMap(s -> s.getAttendances().stream()).toList();
+        var attendancesFromTutorials = tutorials.stream().flatMap(t -> t.attendances().stream()).toList();
+
+        if (!areListSame(attendancesFromStudents, attendancesFromTutorials, attendances)) {
+            throw new IllegalStateException("Attendances are inconsistent");
+        }
+
+        return true;
+    }
+
+    private static <T> boolean isSubsetOf(List<T> child, List<T> parent) {
+        return new HashSet<>(parent).containsAll(child);
+    }
+
+    private static <T> boolean areListSame(List<T>... lists) {
+        var hashSets = Arrays.stream(lists).map(HashSet::new).toList();
+
+        for (int i = 0; i + 1 < hashSets.size(); i++) {
+            if (!hashSets.get(i).equals(hashSets.get(i + 1))) {
+                return false;
+            }
+        }
+        return true;
     }
 }
