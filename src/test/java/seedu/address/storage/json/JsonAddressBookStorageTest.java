@@ -1,5 +1,6 @@
 package seedu.address.storage.json;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -79,13 +80,16 @@ public class JsonAddressBookStorageTest {
         jsonAddressBookStorage.saveAddressBook(original, filePath);
         readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertDoesNotThrow(() -> original.check());
+        assertDoesNotThrow(() -> new AddressBook(jsonAddressBookStorage.readAddressBook(filePath).get()).check());
 
         // Save and read without specifying file path
         original.addStudent(IDA);
         jsonAddressBookStorage.saveAddressBook(original); // file path not specified
         readBack = jsonAddressBookStorage.readAddressBook().get(); // file path not specified
         assertEquals(original, new AddressBook(readBack));
-
+        assertDoesNotThrow(() -> original.check());
+        assertDoesNotThrow(() -> new AddressBook(jsonAddressBookStorage.readAddressBook(filePath).get()).check());
     }
 
     @Test
