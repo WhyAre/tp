@@ -259,6 +259,11 @@ public class ModelManager implements Model {
 
     }
 
+    @Override
+    public boolean check() {
+        return addressBook.check();
+    }
+
     // =========== Filtered Attendance List Accessors
     // =============================================================
 

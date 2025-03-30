@@ -242,4 +242,6 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
+
+    boolean check();
 }
