@@ -10,7 +10,7 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.model.submission.Submission;
 
 /**
- * Jackson-friendly version of {@link Submission}.
+ * Jackson-friendly version of {@link Attendance}.
  */
 class JsonAdaptedAttendance {
 
@@ -19,7 +19,7 @@ class JsonAdaptedAttendance {
     private final List<Integer> attendances;
 
     /**
-     * Constructs a {@link JsonAdaptedAssignment} with the given student details.
+     * Constructs a {@link JsonAdaptedAttendance} with the given student details.
      */
     @JsonCreator
     public JsonAdaptedAttendance(@JsonProperty("assignment") JsonAdaptedTutorial tutorial,
@@ -31,7 +31,7 @@ class JsonAdaptedAttendance {
     }
 
     /**
-     * Converts a given {@link Submission} into this class for Jackson use.
+     * Converts a given {@link Attendance} into this class for Jackson use.
      */
     public JsonAdaptedAttendance(Attendance source) {
         this(new JsonAdaptedTutorial(source.tutorial()), new JsonAdaptedStudent(source.student()),
@@ -40,7 +40,7 @@ class JsonAdaptedAttendance {
 
     /**
      * Converts this Jackson-friendly adapted student object into the model's
-     * {@link Submission} object.
+     * {@link Attendance} object.
      */
     public Attendance toModelType() throws IllegalValueException {
         // Get the actual tutorial
