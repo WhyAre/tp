@@ -87,6 +87,9 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
         this.attendances.add(attendance);
     }
 
+    /**
+     * Removes information related to student when student is removed
+     */
     public void removeStudent(Student student) {
         attendances.removeIf(a -> a.student().hasSameIdentity(student));
         assignments.forEach(a -> a.removeStudent(student));

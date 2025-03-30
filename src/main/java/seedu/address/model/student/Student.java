@@ -240,6 +240,9 @@ public class Student implements Identifiable<Student> {
         return isSameStudent(other);
     }
 
+    /**
+     * Removes information relating to a turoail when a tutorial is removed
+     */
     public void removeTutorial(Tutorial tutorial) {
         tutorials.removeIf(t -> t.hasSameIdentity(tutorial));
         attendances.removeIf(a -> a.tutorial().hasSameIdentity(tutorial));
