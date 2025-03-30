@@ -237,6 +237,29 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Deletes the attendance record for a student in specified tutorial
+     */
+    public void deleteAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        requireNonNull(tutorial);
+        requireNonNull(student);
+
+        // Fetch tutorial from tutorial list
+        Tutorial tutorialFromList = tutorials.find(tutorial).orElseThrow(ItemNotFoundException::new);
+
+        // Fetch student from student list
+        Student studentFromList = students.find(student).orElseThrow(ItemNotFoundException::new);
+
+        Attendance attendance = new Attendance(tutorialFromList, student);
+
+        // Fetch attendance from attendance list
+        Attendance attendanceToBeDeleted = attendances.find(attendance).orElseThrow(ItemNotFoundException::new);
+        tutorialFromList.deleteAttendance(attendance);
+        studentFromList.deleteAttendance(attendance);
+
+        this.attendances.remove(attendanceToBeDeleted);
+    }
+
+    /**
      * Marks students attendance
      */
     public void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)

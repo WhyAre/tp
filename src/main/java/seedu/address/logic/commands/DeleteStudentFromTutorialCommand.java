@@ -72,6 +72,7 @@ public class DeleteStudentFromTutorialCommand extends Command {
 
             try {
                 model.setStudent(studentToEdit, editedStudent);
+                model.deleteAttendance(tutorial, editedStudent);
             } catch (DuplicateItemException | ItemNotFoundException e) {
                 throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
             }

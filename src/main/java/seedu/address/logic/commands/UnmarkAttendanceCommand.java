@@ -78,6 +78,7 @@ public class UnmarkAttendanceCommand extends Command {
             }
         }
 
+        model.updateFilteredAttendanceList(x -> x.tutorial().hasSameIdentity(tutorial));
         String msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());
         return new CommandResult(msg, NavigationMode.ATTENDANCE);
     }

@@ -169,6 +169,16 @@ public class Student implements Identifiable<Student> {
     }
 
     /**
+     * Deletes attendance
+     *
+     * @param attendance
+     *            Attendance object
+     */
+    public void deleteAttendance(Attendance attendance) {
+        this.attendances.remove(attendance);
+    }
+
+    /**
      * Returns a list of attendances owned by the student
      */
     public List<Attendance> getAttendances() {
