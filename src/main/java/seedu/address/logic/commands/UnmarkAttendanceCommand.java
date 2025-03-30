@@ -28,7 +28,7 @@ public class UnmarkAttendanceCommand extends Command {
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
 
-    public static final String MESSAGE_INVALID_WEEK = "Weeks are from 3 to 13. If you are making up for tutorials, "
+    public static final String MESSAGE_INVALID_WEEK = "Weeks are from 3 to 13.\nIf you are making up for tutorials, "
                     + "enter the week that is being accounted for.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
 
@@ -37,16 +37,16 @@ public class UnmarkAttendanceCommand extends Command {
 
     private final Tutorial tutorial;
     private final int week;
-    private final Index index;
+    private final List<Index> indices;
 
     /**
      * Creates an {@link UnmarkAttendanceCommand} to unmark the specified student's
      * attendance {@code Attendance}
      */
-    public UnmarkAttendanceCommand(Tutorial tutorial, int week, Index index) {
+    public UnmarkAttendanceCommand(Tutorial tutorial, int week, List<Index> indices) {
         this.tutorial = tutorial;
         this.week = week;
-        this.index = index;
+        this.indices = indices;
     }
 
     @Override
@@ -56,21 +56,30 @@ public class UnmarkAttendanceCommand extends Command {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
 
-        List<Student> lastShownList = model.getFilteredStudentList();
-
-        Student studentToEdit = lastShownList.get(index.getZeroBased());
-        assert model.hasStudent(studentToEdit);
-
         assert week >= START_WEEK;
         assert week <= END_WEEK;
 
-        try {
-            model.unmarkAttendance(tutorial, week, studentToEdit);
-        } catch (DuplicateItemException | ItemNotFoundException e) {
-            throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+        List<Student> students = model.getFilteredStudentList();
+
+        var errMsg = new StringBuilder();
+
+        for (Index index : indices) {
+            if (index.getZeroBased() >= students.size()) {
+                errMsg.append("Student at index %d is out of bounds\n".formatted(index.getOneBased()));
+                continue;
+            }
+            Student studentToEdit = students.get(index.getZeroBased());
+            assert model.hasStudent(studentToEdit);
+
+            try {
+                model.unmarkAttendance(tutorial, week, studentToEdit);
+            } catch (DuplicateItemException | ItemNotFoundException e) {
+                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+            }
         }
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
+        String msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());
+        return new CommandResult(msg, NavigationMode.ATTENDANCE);
     }
 
     @Override
@@ -85,11 +94,11 @@ public class UnmarkAttendanceCommand extends Command {
         }
 
         return tutorial.equals(otherUnmarkAttendanceCommand.tutorial) && week == otherUnmarkAttendanceCommand.week
-                        && index == otherUnmarkAttendanceCommand.index;
+                        && indices.equals(otherUnmarkAttendanceCommand.indices);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("tutorial", tutorial).add("week", week).add("index", index).toString();
+        return new ToStringBuilder(this).add("tutorial", tutorial).add("week", week).add("index", indices).toString();
     }
 }

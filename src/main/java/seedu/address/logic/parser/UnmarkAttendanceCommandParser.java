@@ -5,6 +5,9 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEEK;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.commands.UnmarkAttendanceCommand;
@@ -40,16 +43,19 @@ public class UnmarkAttendanceCommandParser implements Parser<UnmarkAttendanceCom
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
         }
 
-        int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getZeroBased() + 1;
+        int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getOneBased();
 
         if (week < UnmarkAttendanceCommand.START_WEEK || week > UnmarkAttendanceCommand.END_WEEK) {
             throw new ParseException(String.format(MarkAttendanceCommand.MESSAGE_INVALID_WEEK));
         }
 
-        Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
+        List<Index> indices = new ArrayList<>();
+        for (String index : argMultimap.getAllValues(PREFIX_INDEX)) {
+            indices.add(ParserUtil.parseIndex(index));
+        }
 
         Tutorial tutorial = new Tutorial(tutorialString);
 
-        return new UnmarkAttendanceCommand(tutorial, week, index);
+        return new UnmarkAttendanceCommand(tutorial, week, indices);
     }
 }

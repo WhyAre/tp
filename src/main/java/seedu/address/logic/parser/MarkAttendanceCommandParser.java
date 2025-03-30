@@ -42,7 +42,7 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
         }
 
-        int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getZeroBased() + 1;
+        int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getOneBased();
 
         if (week < MarkAttendanceCommand.START_WEEK || week > MarkAttendanceCommand.END_WEEK) {
             throw new ParseException(String.format(MarkAttendanceCommand.MESSAGE_INVALID_WEEK));
