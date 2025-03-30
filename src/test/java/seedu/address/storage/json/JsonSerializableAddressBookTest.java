@@ -1,5 +1,6 @@
 package seedu.address.storage.json;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.TypicalAddressBook.ALICE;
 
@@ -25,6 +26,11 @@ public class JsonSerializableAddressBookTest {
                         .readJsonFile(TYPICAL_FILE_NAME, JsonSerializableAddressBook.class).get();
         AddressBook addressBookFromFile = dataFromFile.toModelType();
         AddressBook typicalStudentsAddressBook = TypicalAddressBook.getTypicalAddressBook();
+
+        assertDoesNotThrow((
+        ) -> addressBookFromFile.check());
+        assertDoesNotThrow((
+        ) -> typicalStudentsAddressBook.check());
         assertEquals(addressBookFromFile, typicalStudentsAddressBook);
     }
 
@@ -36,6 +42,10 @@ public class JsonSerializableAddressBookTest {
 
         var dataFromFile = JsonUtil.readJsonFile(filepath, JsonSerializableAddressBook.class).get().toModelType();
 
+        assertDoesNotThrow((
+        ) -> dataFromFile.check());
+        assertDoesNotThrow((
+        ) -> ab.check());
         assertEquals(dataFromFile, ab);
     }
 
@@ -43,10 +53,14 @@ public class JsonSerializableAddressBookTest {
     public void toModelType_missingTutorial() throws Exception {
         Path filepath = TEST_DATA_FOLDER.resolve("missingCS2103T1.json");
         var ab = TypicalAddressBook.getTypicalAddressBook();
-        ab.deleteTutorial(new Tutorial("CS2103-T1"));
+        ab.removeTutorial(new Tutorial("CS2103-T1"));
 
         var dataFromFile = JsonUtil.readJsonFile(filepath, JsonSerializableAddressBook.class).get().toModelType();
 
+        assertDoesNotThrow((
+        ) -> dataFromFile.check());
+        assertDoesNotThrow((
+        ) -> ab.check());
         assertEquals(dataFromFile, ab);
     }
 
@@ -57,6 +71,10 @@ public class JsonSerializableAddressBookTest {
 
         var dataFromFile = JsonUtil.readJsonFile(filepath, JsonSerializableAddressBook.class).get().toModelType();
 
+        assertDoesNotThrow((
+        ) -> dataFromFile.check());
+        assertDoesNotThrow((
+        ) -> ab.check());
         assertEquals(dataFromFile, ab);
     }
 }
