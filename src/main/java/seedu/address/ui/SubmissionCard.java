@@ -40,7 +40,8 @@ public class SubmissionCard extends UiPart<Region> {
         super(FXML);
         this.submissionInfo = submissionInfo;
         id.setText(displayedIndex + ". ");
-        name.setText("%s (%s)".formatted(submissionInfo.student().getName().toString(), submissionInfo.tutorial().name()));
+        name.setText("%s (%s)".formatted(submissionInfo.student().getName().toString(),
+                        submissionInfo.tutorial().name()));
 
         var submissionList = submissionInfo.submissions();
 
@@ -48,9 +49,10 @@ public class SubmissionCard extends UiPart<Region> {
             var label = new Label(submission.assignment().name());
 
             switch (submission.status()) {
-            case SUBMITTED -> label.getStyleClass().add("attendance-absent");
-            case GRADED -> label.getStyleClass().add("attendance-present");
-            default -> label.getStyleClass().add("attendance-absent");
+            case SUBMITTED -> label.getStyleClass().add("submitted");
+            case GRADED -> label.getStyleClass().add("graded");
+            case NOT_SUBMITTED -> label.getStyleClass().add("not-submitted");
+            default -> throw new IllegalStateException("Unexpected value: " + submission.status());
             }
 
             submissions.getChildren().add(label);

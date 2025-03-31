@@ -306,6 +306,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             var existingSubmission = submissionInList.orElseThrow();
             existingSubmission.setStatus(submission.status());
+            try {
+                submissions.set(existingSubmission, existingSubmission);
+            } catch (DuplicateItemException e) {
+                // Since I'm replacing a submission with itself, there should be no duplicates.
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -361,6 +367,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             var existingAttendance = maybeAttendance.orElseThrow();
             existingAttendance.setAttendances(attendance.attendances());
+            try {
+                attendances.set(existingAttendance, existingAttendance);
+            } catch (DuplicateItemException e) {
+                // You're setting the same thing to itself,
+                // therefore duplicate item exception should not happen
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -525,7 +538,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var hashSets = Arrays.stream(lists).map(HashSet::new).toList();
 
         for (int i = 0; i + 1 < hashSets.size(); i++) {
-            if (!(hashSets.get(i).equals(hashSets.get(i + 1)) && lists[i].size() == lists[i+1].size())) {
+            if (!(hashSets.get(i).equals(hashSets.get(i + 1)) && lists[i].size() == lists[i + 1].size())) {
                 return false;
             }
         }

@@ -37,55 +37,37 @@ public class SubmissionListPanel extends UiPart<Region> {
 
         ObservableList<SubmissionInfo> submissionInfoList = FXCollections.observableArrayList();
         for (var submission : submissionList) {
-            var existingSubmisson = submissionInfoList.stream().filter(
-                            s -> s.student.hasSameIdentity(submission.student()) && s.tutorial()
-                                    .hasSameIdentity(submission.assignment().tutorial()))
-                    .findAny();
+            var existingSubmisson = submissionInfoList.stream()
+                            .filter(s -> s.student.hasSameIdentity(submission.student())
+                                            && s.tutorial().hasSameIdentity(submission.assignment().tutorial()))
+                            .findAny();
             if (existingSubmisson.isPresent()) {
                 existingSubmisson.orElseThrow().submissions.add(submission);
             } else {
-                submissionInfoList.add(new SubmissionInfo(submission.assignment().tutorial(),
-                        submission.student(), new ArrayList<>(List.of(submission))));
+                submissionInfoList.add(new SubmissionInfo(submission.assignment().tutorial(), submission.student(),
+                                new ArrayList<>(List.of(submission))));
             }
         }
         submissionList.addListener((ListChangeListener<? super Submission>) (
                         change
         ) -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    var addedSubmissions = change.getAddedSubList();
-                    for (var addedSubmission : addedSubmissions) {
-                        var existingSubmisson = submissionInfoList.stream().filter(
-                                        s -> s.student.hasSameIdentity(addedSubmission.student()) && s.tutorial()
-                                                        .hasSameIdentity(addedSubmission.assignment().tutorial()))
-                                        .findAny();
+            submissionInfoList.clear();
 
-                        if (existingSubmisson.isPresent()) {
-                            existingSubmisson.orElseThrow().submissions.add(addedSubmission);
-                        } else {
-                            submissionInfoList.add(new SubmissionInfo(addedSubmission.assignment().tutorial(),
-                                            addedSubmission.student(), new ArrayList<>(List.of(addedSubmission))));
-                        }
-                    }
-                }
-
-                if (change.wasRemoved()) {
-                    var removedSubmissions = change.getRemoved();
-
-                    for (var removedSubmission : removedSubmissions) {
-                        var existingSubmisson = submissionInfoList.stream().filter(
-                                        s -> s.student.hasSameIdentity(removedSubmission.student()) && s.tutorial()
-                                                        .hasSameIdentity(removedSubmission.assignment().tutorial()))
-                                        .findAny().orElseThrow(); // This must exist at all cost
-
-                        existingSubmisson.submissions.removeIf(removedSubmission::equals);
-                        if (existingSubmisson.submissions.isEmpty()) {
-                            submissionInfoList.remove(removedSubmission);
-                        }
-                    }
+            var newOne = new ArrayList<SubmissionInfo>();
+            for (var submission : submissionList) {
+                var existingSubmisson = newOne.stream()
+                                .filter(s -> s.student.hasSameIdentity(submission.student())
+                                                && s.tutorial().hasSameIdentity(submission.assignment().tutorial()))
+                                .findAny();
+                if (existingSubmisson.isPresent()) {
+                    existingSubmisson.orElseThrow().submissions.add(submission);
+                } else {
+                    newOne.add(new SubmissionInfo(submission.assignment().tutorial(), submission.student(),
+                                    new ArrayList<>(List.of(submission))));
                 }
             }
 
+            submissionInfoList.setAll(newOne);
         });
 
         submissionListView.setItems(submissionInfoList);
