@@ -3,7 +3,7 @@ package seedu.address.storage.json;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.json.JsonAdaptedStudent.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.BENSON;
+import static seedu.address.testutil.TypicalAddressBook.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +108,7 @@ public class JsonAdaptedStudentTest {
         invalidTutorials.add(new JsonAdaptedTutorial(INVALID_TUTORIAL));
         JsonAdaptedStudent student = new JsonAdaptedStudent(VALID_NAME, VALID_STUDENT_ID, VALID_PHONE, VALID_EMAIL,
                         VALID_HANDLE, invalidTutorials);
-        assertThrows(IllegalValueException.class, student::toModelType);
+        assertThrows(IllegalArgumentException.class, student::toModelType);
     }
 
 }

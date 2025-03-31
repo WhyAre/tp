@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.ID_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.AMY;
+import static seedu.address.testutil.TypicalAddressBook.AMY;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;

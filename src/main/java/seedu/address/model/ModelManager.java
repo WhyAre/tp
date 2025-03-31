@@ -165,12 +165,12 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteTutorial(Tutorial t) {
-        addressBook.deleteTutorial(t);
+        addressBook.removeTutorial(t);
     }
 
     @Override
     public void deleteTutorialFromStudents(Tutorial tutorial) {
-        addressBook.deleteTutorialFromStudents(tutorial);
+        addressBook.removeTutorialFromStudents(tutorial);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
-                    SubmissionStatus status) {
+                    SubmissionStatus status) throws ItemNotFoundException {
         addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
     }
 
@@ -257,6 +257,11 @@ public class ModelManager implements Model {
         Predicate<TutorialWithStudents> isInList = tutorialWithStudents -> tutorialWithStudentsList.stream()
                         .anyMatch(item -> item.equals(tutorialWithStudents));
 
+    }
+
+    @Override
+    public boolean check() {
+        return addressBook.check();
     }
 
     // =========== Filtered Attendance List Accessors

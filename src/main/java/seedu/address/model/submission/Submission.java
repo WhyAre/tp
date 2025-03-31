@@ -1,5 +1,7 @@
 package seedu.address.model.submission;
 
+import java.util.Objects;
+
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.uniquelist.Identifiable;
@@ -21,6 +23,18 @@ public class Submission implements Identifiable<Submission> {
         this.status = status;
     }
 
+    public Submission(Submission submission) {
+        this(submission.assignment, submission.student, submission.status);
+    }
+
+    public Submission setAssignment(Assignment assignment) {
+        return new Submission(assignment, student, status);
+    }
+
+    public Submission setStudent(Student student) {
+        return new Submission(assignment, student, status);
+    }
+
     public Assignment assignment() {
         return assignment;
     }
@@ -40,5 +54,24 @@ public class Submission implements Identifiable<Submission> {
     @Override
     public boolean hasSameIdentity(Submission other) {
         return assignment.hasSameIdentity(other.assignment) && student.hasSameIdentity(other.student);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Submission otherSubmission)) {
+            return false;
+        }
+
+        return assignment.equals(otherSubmission.assignment) && student.equals(otherSubmission.student)
+                        && status.equals(otherSubmission.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(assignment, student, status);
     }
 }
