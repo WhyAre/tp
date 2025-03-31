@@ -35,6 +35,7 @@ public class AddAssignmentCommand extends Command {
      */
     public AddAssignmentCommand(List<Index> tutorialIdxList, Assignment assignment) {
         requireNonNull(assignment);
+        requireNonNull(tutorialIdxList);
         toAdd = assignment;
         this.tutorialIdxList = tutorialIdxList;
     }
