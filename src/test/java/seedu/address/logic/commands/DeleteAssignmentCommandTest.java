@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static seedu.address.logic.Messages.MESSAGE_ASSIGNMENT_NOT_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TUTORIAL;
 
@@ -44,11 +46,12 @@ public class DeleteAssignmentCommandTest {
     public void execute_outOfBoundsTutorialIndex_throwsCommandException() {
         Assignment assignment = new Assignment("new-assignment");
         int numTypicalTutorials = TypicalAddressBook.getTypicalAddressBook().getTutorialList().size();
-        List<Index> listOfOutOfBoundsIndex = List.of(Index.fromOneBased(numTypicalTutorials + 1));
+        Index outOfBoundsIndex = Index.fromOneBased(numTypicalTutorials + 1);
+        List<Index> listOfOutOfBoundsIndex = List.of(outOfBoundsIndex);
         DeleteAssignmentCommand deleteAssignmentCommand = new DeleteAssignmentCommand(listOfOutOfBoundsIndex,
                         assignment);
 
-        assertThrows(CommandException.class, DeleteAssignmentCommand.MESSAGE_TUTORIAL_NOT_FOUND, (
+        assertThrows(CommandException.class, MESSAGE_TUTORIAL_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
         ) -> deleteAssignmentCommand.execute(modelStub));
     }
 
@@ -58,9 +61,8 @@ public class DeleteAssignmentCommandTest {
         DeleteAssignmentCommand deleteAssignmentCommand = new DeleteAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL),
                         assignment);
 
-        assertThrows(CommandException.class,
-                        DeleteAssignmentCommand.MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(TypicalAddressBook.T1), (
-                        ) -> deleteAssignmentCommand.execute(modelStub));
+        assertThrows(CommandException.class, MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment), (
+        ) -> deleteAssignmentCommand.execute(modelStub));
     }
 
     @Test

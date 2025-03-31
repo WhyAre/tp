@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TUTORIAL;
 
@@ -44,12 +45,13 @@ public class AddAssignmentCommandTest {
     @Test
     public void execute_outOfBoundsTutorialIndex_throwsCommandException() {
         int numTypicalTutorials = TypicalAddressBook.getTypicalAddressBook().getTutorialList().size();
-        List<Index> listOfOutOfBoundsIndex = List.of(Index.fromOneBased(numTypicalTutorials + 1));
+        Index outOfBoundsIndex = Index.fromOneBased(numTypicalTutorials + 1);
+        List<Index> listOfOutOfBoundsIndex = List.of(outOfBoundsIndex);
 
         AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(listOfOutOfBoundsIndex,
                         new Assignment("new-assignment"));
 
-        assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_TUTORIAL_NOT_FOUND, (
+        assertThrows(CommandException.class, MESSAGE_TUTORIAL_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
         ) -> addAssignmentCommand.execute(modelStub));
     }
 
