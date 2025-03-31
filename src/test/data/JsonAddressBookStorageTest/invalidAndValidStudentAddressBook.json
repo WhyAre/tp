@@ -11,5 +11,8 @@
     "phone": "948asdf2424",
     "email": "hans@example.com",
     "handle": "@invalid_student"
-  } ]
+  } ],
+  "tutorials": [],
+  "submissions": [],
+  "attendances": []
 }

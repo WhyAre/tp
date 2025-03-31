@@ -21,6 +21,18 @@ public record Attendance(Tutorial tutorial, Student student,
         this(tutorial, student, new ArrayList<>(Collections.nCopies(NUMBER_OF_WEEKS, ABSENT)));
     }
 
+    public Attendance(Attendance other) {
+        this(other.tutorial, other.student, other.attendances);
+    }
+
+    public Attendance setTutorial(Tutorial t) {
+        return new Attendance(t, student, attendances);
+    }
+
+    public Attendance setStudent(Student s) {
+        return new Attendance(tutorial, s, attendances);
+    }
+
     /**
      * Marks or unmarks attendance for the specific week
      *
@@ -37,13 +49,17 @@ public record Attendance(Tutorial tutorial, Student student,
         }
     }
 
+    public void setAttendances(List<Integer> attendances) {
+        this.attendances.clear();
+        this.attendances.addAll(attendances);
+    }
+
     @Override
     public boolean hasSameIdentity(Attendance other) {
         if (other == null) {
             return false;
         }
 
-        return this.tutorial.name().equals(other.tutorial.name())
-                        && this.student.getName().equals(other.student.getName());
+        return this.tutorial.hasSameIdentity(other.tutorial) && this.student.hasSameIdentity(other.student);
     }
 }
