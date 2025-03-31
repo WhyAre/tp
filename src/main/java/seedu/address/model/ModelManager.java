@@ -190,14 +190,12 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void markAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException {
+    public void markAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         addressBook.markAttendance(tutorial, week, student);
     }
 
     @Override
-    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException {
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         addressBook.unmarkAttendance(tutorial, week, student);
     }
 

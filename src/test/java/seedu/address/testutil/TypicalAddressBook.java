@@ -27,7 +27,6 @@ import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 import seedu.address.storage.json.JsonSerializableAddressBook;
 
@@ -103,8 +102,6 @@ public class TypicalAddressBook {
 
         try {
             ab.markAttendance(T1, 4, ALICE);
-        } catch (DuplicateItemException e) {
-            throw new RuntimeException(e);
         } catch (ItemNotFoundException e) {
             throw new RuntimeException(e);
         }
