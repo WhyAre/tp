@@ -31,6 +31,7 @@ import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentID;
 import seedu.address.model.student.TelegramHandle;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
@@ -130,9 +131,10 @@ public class EditCommand extends Command {
         Details updatedDetails = editStudentDescriptor.getDetails().orElse(studentToEdit.getDetails());
         Set<Tutorial> updatedTutorials = editStudentDescriptor.getTutorials().orElse(studentToEdit.getTutorials());
         List<Attendance> updatedAttendances = studentToEdit.getAttendances();
+        List<Submission> updatedSubmissions = studentToEdit.getSubmissions();
 
         return new Student(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedHandle, updatedTutorials,
-                        updatedDetails, updatedAttendances);
+                        updatedDetails, updatedAttendances, updatedSubmissions);
     }
 
     @Override
