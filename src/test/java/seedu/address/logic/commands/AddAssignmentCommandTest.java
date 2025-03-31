@@ -24,7 +24,6 @@ public class AddAssignmentCommandTest {
 
     private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
                     new UserPrefs());
-    private static final List<Index> listOfFirstIndex = List.of(INDEX_FIRST_ASSIGNMENT);
 
     @Test
     public void constructor_nullTutorialIdxListNullAssignment_throwsNullPointerException() {
@@ -41,7 +40,7 @@ public class AddAssignmentCommandTest {
     @Test
     public void constructor_nullAssignment_throwsNullPointerException() {
         assertThrows(NullPointerException.class, (
-        ) -> new AddAssignmentCommand(listOfFirstIndex, null));
+        ) -> new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), null));
     }
 
     @Test
@@ -58,7 +57,7 @@ public class AddAssignmentCommandTest {
 
     @Test
     public void execute_duplicateAssignment_throwsCommandException() throws Exception {
-        AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(listOfFirstIndex, T1_ASSIGN1);
+        AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), T1_ASSIGN1);
 
         assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_DUPLICATE_ASSIGNMENT, (
         ) -> addAssignmentCommand.execute(modelStub));
@@ -67,7 +66,7 @@ public class AddAssignmentCommandTest {
     @Test
     public void execute_assignmentAcceptedByModel_addSuccessful() throws Exception {
         Assignment assignment = new Assignment("new-assignment");
-        CommandResult commandResult = new AddAssignmentCommand(listOfFirstIndex, assignment).execute(modelStub);
+        CommandResult commandResult = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment).execute(modelStub);
         List<Tutorial> tutorials = modelStub.getAddressBook().getTutorialList();
 
         assertEquals(AddAssignmentCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
