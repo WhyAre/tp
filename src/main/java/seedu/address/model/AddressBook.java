@@ -6,6 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_STUDENT_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -108,6 +109,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Check that tutorial slots exists
         var student = p.clone();
         student.removeInvalidTutorials(new HashSet<>(tutorials));
+
+        var existingTutorials = student.getTutorials().stream().map(t -> tutorials.find(t).orElseThrow())
+                        .collect(Collectors.toCollection(ArrayList::new));
+        student.setTutorials(new HashSet<>(existingTutorials));
 
         students.add(student);
 
@@ -258,7 +263,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds an assignment to the addressbook, the tutorial information should be
      * within the assignment object
      */
-    public void addAssignment(Assignment assignment) throws ItemNotFoundException {
+    public void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException {
         requireNonNull(assignment);
 
         // Resolve tutorial
@@ -266,7 +271,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         var tut = tutorials.find(assignment.tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 
-        tut.addAssignment(assignment);
+        if (!tut.addAssignment(assignment)) {
+            throw new DuplicateItemException();
+        }
+
+        // this.fixSubmissions();
     }
 
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
@@ -299,6 +308,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var newSubmission = new Submission(submission).setAssignment(assignment).setStudent(studentInList);
 
         var submissionInList = submissions.find(newSubmission);
+
         if (submissionInList.isEmpty()) {
             assignment.addSubmission(newSubmission);
             studentInList.addSubmission(newSubmission);
@@ -402,6 +412,28 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         setAttendance(tutorial, week, student, false);
+    }
+
+    /**
+     * Creates a submission object for every assignment-student pair
+     */
+    public void fixSubmissions() {
+        for (var student : students) {
+            var assignments = student.getTutorials().stream().flatMap(t -> t.assignments().stream()).toList();
+
+            var submissions = assignments.stream().map(a -> new Submission(a, student, SubmissionStatus.NOT_SUBMITTED))
+                            .collect(Collectors.toCollection(ArrayList::new));
+
+            submissions.removeIf(s -> this.submissions.find(s).isPresent());
+
+            submissions.stream().forEach(s -> {
+                try {
+                    setSubmissionStatus(s);
+                } catch (ItemNotFoundException e) {
+                    throw new IllegalStateException(e);
+                }
+            });
+        }
     }
 
     //// util methods

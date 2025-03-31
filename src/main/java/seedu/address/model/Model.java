@@ -11,6 +11,7 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -145,6 +146,11 @@ public interface Model {
      */
     void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status)
                     throws ItemNotFoundException;
+
+    /**
+     * Adds an assignment to tutorial slot
+     */
+    void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException;
 
     /**
      * Creates attendance record for a student in specified tutorial

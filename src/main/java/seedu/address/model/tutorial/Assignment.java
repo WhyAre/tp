@@ -43,7 +43,7 @@ public record Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial 
 
     @Override
     public boolean hasSameIdentity(Assignment other) {
-        return this.name.equals(other.name);
+        return name.equals(other.name) && tutorial.hasSameIdentity(other.tutorial);
     }
 
     @Override

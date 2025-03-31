@@ -106,6 +106,8 @@ public class TypicalAddressBook {
             throw new RuntimeException(e);
         }
 
+        ab.fixSubmissions();
+
         return ab;
     }
 
