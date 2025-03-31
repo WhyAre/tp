@@ -57,7 +57,8 @@ public class AddAssignmentCommandTest {
 
     @Test
     public void execute_duplicateAssignment_throwsCommandException() throws Exception {
-        AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), T1_ASSIGN1);
+        Assignment assignment = new Assignment("Week 10 Tasks");
+        AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment);
 
         assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_DUPLICATE_ASSIGNMENT, (
         ) -> addAssignmentCommand.execute(modelStub));
