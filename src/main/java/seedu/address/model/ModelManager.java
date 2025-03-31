@@ -285,6 +285,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateFilteredSubmissionList(Predicate<Submission> predicate) {
+        requireNonNull(predicate);
+        filteredSubmissions.setPredicate(predicate);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

@@ -222,6 +222,12 @@ public interface Model {
     void updateFilteredAttendanceList(Predicate<Attendance> predicate);
 
     /**
+     * Updates the filter of the filtered submission list to filter by the given
+     * {@code predicate}.
+     */
+    void updateFilteredSubmissionList(Predicate<Submission> predicate);
+
+    /**
      * Returns an unmodifiable view of the list of TutorialWithStudents by mapping
      * tutorials to their respective students
      *
