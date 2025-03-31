@@ -28,8 +28,8 @@ public class DeleteAssignmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Successfully deleted assignment";
 
-    private static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
-    private static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment not found in %s";
+    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
+    public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment not found in %s";
 
     private final Assignment toDelete;
     private final List<Index> indices;
