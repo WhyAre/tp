@@ -275,7 +275,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new DuplicateItemException();
         }
 
-        // this.fixSubmissions();
+        tutorials.set(tut, tut);
     }
 
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
