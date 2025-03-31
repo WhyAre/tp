@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
  * Creates a new submission
@@ -61,7 +62,11 @@ public class SetSubmissionCommand extends Command {
                 throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
             }
 
-            model.setSubmissionStatus(tutorialName, assignmentName, student, status);
+            try {
+                model.setSubmissionStatus(tutorialName, assignmentName, student, status);
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
+            }
         }
 
         var msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());

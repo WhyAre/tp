@@ -5,5 +5,9 @@
     "phone": "9482424",
     "email": "hans@example.com",
     "address": "@invalid_student"
-  } ]
+  } ],
+  "tutorials": [
+  ],
+  "assignments": [],
+  "attendances": []
 }

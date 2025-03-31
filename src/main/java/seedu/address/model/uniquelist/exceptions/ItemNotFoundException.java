@@ -7,4 +7,10 @@ import seedu.address.model.uniquelist.UniqueList;
  * found
  */
 public class ItemNotFoundException extends Exception {
+    public ItemNotFoundException() {
+    }
+
+    public ItemNotFoundException(String message) {
+        super(message);
+    }
 }
