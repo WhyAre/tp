@@ -24,7 +24,7 @@ public class AddAssignmentCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New assignment added";
     public static final String MESSAGE_INVALID_NAME = """
                     The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
-    public static final String MESSAGE_DUPLICATE_TUTORIAL = "Assignment already exists in tutorial";
+    public static final String MESSAGE_DUPLICATE_ASSIGNMENT = "Assignment already exists in tutorial";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
 
     private final Assignment toAdd;
@@ -58,7 +58,7 @@ public class AddAssignmentCommand extends Command {
             }
 
             if (!tutorial.addAssignment(toAdd)) {
-                throw new CommandException(MESSAGE_DUPLICATE_TUTORIAL);
+                throw new CommandException(MESSAGE_DUPLICATE_ASSIGNMENT);
             }
 
             try {
