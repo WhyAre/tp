@@ -18,6 +18,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -36,6 +37,7 @@ public class ModelManager implements Model {
     private final FilteredList<Tutorial> filteredTutorials;
     private ObjectProperty<Student> student;
     private final FilteredList<Attendance> filteredAttendances;
+    private final FilteredList<Submission> filteredSubmissions;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -51,6 +53,7 @@ public class ModelManager implements Model {
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
         filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
+        filteredSubmissions = new FilteredList<>(this.addressBook.getSubmissionList());
     }
 
     public ModelManager() {
@@ -268,6 +271,11 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Attendance> getFilteredAttendanceList() {
         return filteredAttendances;
+    }
+
+    @Override
+    public ObservableList<Submission> getFilteredSubmissionList() {
+        return filteredSubmissions;
     }
 
     @Override

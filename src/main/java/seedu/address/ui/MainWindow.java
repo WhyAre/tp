@@ -42,6 +42,7 @@ public class MainWindow extends UiPart<Stage> {
     private StudentListPanel studentListPanel;
     private TutorialListPanel tutorialListPanel;
     private AttendanceListPanel attendanceListPanel;
+    private SubmissionListPanel submissionListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private StatusBarFooter statusBarFooter;
@@ -65,6 +66,9 @@ public class MainWindow extends UiPart<Stage> {
     private VBox attendanceList;
 
     @FXML
+    private VBox submissionList;
+
+    @FXML
     private StackPane studentListPanelPlaceholder;
 
     @FXML
@@ -75,6 +79,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane attendanceListPanelPlaceholder;
+
+    @FXML
+    private StackPane submissionListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -170,6 +177,9 @@ public class MainWindow extends UiPart<Stage> {
         attendanceListPanel = new AttendanceListPanel(logic.getFilteredAttendanceList());
         attendanceListPanelPlaceholder.getChildren().add(attendanceListPanel.getRoot());
 
+        submissionListPanel = new SubmissionListPanel(logic.getFilteredSubmissionList());
+        submissionListPanelPlaceholder.getChildren().add(submissionListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -201,6 +211,7 @@ public class MainWindow extends UiPart<Stage> {
         modes.put(NavigationMode.STUDENT, studentList);
         modes.put(NavigationMode.TUTORIAL, tutorialList);
         modes.put(NavigationMode.ATTENDANCE, attendanceList);
+        modes.put(NavigationMode.SUBMISSION, submissionList);
         modes.put(NavigationMode.SINGLE_STUDENT, studentAreaPlaceholder);
 
         // Hide all modes

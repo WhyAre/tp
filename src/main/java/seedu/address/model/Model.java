@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
@@ -204,6 +205,12 @@ public interface Model {
      * internal list of {@code versionedAddressBook}
      */
     ObservableList<Attendance> getFilteredAttendanceList();
+
+    /**
+     * Returns an unmodifiable view of the list of {@link Submission} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
+    ObservableList<Submission> getFilteredSubmissionList();
 
     /**
      * Updates the filter of the filtered attendance list to filter by the given
