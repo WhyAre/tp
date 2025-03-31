@@ -525,7 +525,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var hashSets = Arrays.stream(lists).map(HashSet::new).toList();
 
         for (int i = 0; i + 1 < hashSets.size(); i++) {
-            if (!hashSets.get(i).equals(hashSets.get(i + 1))) {
+            if (!(hashSets.get(i).equals(hashSets.get(i + 1)) && lists[i].size() == lists[i+1].size())) {
                 return false;
             }
         }
