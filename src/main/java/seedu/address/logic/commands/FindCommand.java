@@ -57,6 +57,7 @@ public class FindCommand extends Command {
             model.updateFilteredStudentsByTutorialList(tutorialPredicate);
         }
 
+        assert model.check();
         return new CommandResult(String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW,
                         model.getFilteredStudentList().size()));
     }

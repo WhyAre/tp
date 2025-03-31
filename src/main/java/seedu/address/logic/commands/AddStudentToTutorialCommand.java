@@ -79,6 +79,8 @@ public class AddStudentToTutorialCommand extends Command {
             }
         }
 
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 

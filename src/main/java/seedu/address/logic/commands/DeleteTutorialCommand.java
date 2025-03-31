@@ -43,6 +43,8 @@ public class DeleteTutorialCommand extends Command {
 
         model.deleteTutorial(toDelete);
         model.deleteTutorialFromStudents(toDelete);
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS.formatted(toDelete), NavigationMode.UNCHANGED);
     }
 

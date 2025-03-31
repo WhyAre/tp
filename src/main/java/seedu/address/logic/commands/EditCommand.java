@@ -110,6 +110,8 @@ public class EditCommand extends Command {
             throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
         }
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+
+        assert model.check();
         return new CommandResult(String.format(resultMessage, Messages.format(editedStudent)));
     }
 

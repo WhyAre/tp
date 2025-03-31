@@ -36,6 +36,8 @@ public class ListSubmissionCommand extends Command {
                         && s.assignment().tutorial().name().startsWith(tutorialName)
                         && s.student().getName().toString().startsWith(studentName));
 
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.SUBMISSION);
     }
 

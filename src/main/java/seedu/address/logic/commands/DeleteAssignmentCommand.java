@@ -71,6 +71,8 @@ public class DeleteAssignmentCommand extends Command {
                 throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
             }
         }
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 
