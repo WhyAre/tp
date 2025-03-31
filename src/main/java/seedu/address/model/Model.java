@@ -153,14 +153,12 @@ public interface Model {
     /**
      * Marks student as present
      */
-    void markAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException;
+    void markAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException;
 
     /**
      * Marks student as absent
      */
-    void unmarkAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException;
+    void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException;
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the

@@ -316,18 +316,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         setAttendance(new Attendance(tutorial, student));
     }
 
+    private void setIndividualAttendance(Attendance attendance) throws ItemNotFoundException {
+        try {
+            attendances.set(attendance, attendance);
+        } catch (DuplicateItemException e) {
+            throw new IllegalStateException("Should not reach here");
+        }
+    }
+
     /**
      * Sets a student's attendance for a tutorial slot on a given week
      */
     private void setAttendance(Tutorial tutorial, int week, Student student, boolean isPresent)
-                    throws DuplicateItemException, ItemNotFoundException {
+                    throws ItemNotFoundException {
         requireNonNull(tutorial);
         requireNonNull(student);
 
         for (Attendance attendance : attendances) {
             if (attendance.tutorial().hasSameIdentity(tutorial) && attendance.student().hasSameIdentity(student)) {
                 attendance.setAttendance(week, isPresent);
-                attendances.set(attendance, attendance);
+                setIndividualAttendance(attendance);
                 break;
             }
         }
@@ -372,16 +380,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Marks student as present
      */
-    public void markAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException {
+    public void markAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         setAttendance(tutorial, week, student, true);
     }
 
     /**
      * Unmarks a student's attendance
      */
-    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException {
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         setAttendance(tutorial, week, student, false);
     }
 

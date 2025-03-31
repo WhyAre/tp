@@ -12,7 +12,6 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
@@ -73,7 +72,8 @@ public class MarkAttendanceCommand extends Command {
 
             try {
                 model.markAttendance(tutorial, week, studentToEdit);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
+            } catch (ItemNotFoundException e) {
+                // This should not be possible
                 throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
             }
         }
