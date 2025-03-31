@@ -29,6 +29,10 @@ public record Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial 
         this(name, dueDate, null, new UniqueList<>());
     }
 
+    public Assignment(String name, Tutorial tutorial) {
+        this(name, Optional.empty(), tutorial, new UniqueList<>());
+    }
+
     public Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial tutorial) {
         this(name, dueDate, tutorial, new UniqueList<>());
     }

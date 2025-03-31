@@ -282,7 +282,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     SubmissionStatus status) throws ItemNotFoundException {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
         ) -> new IllegalArgumentException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
-        var assign = tut.findAssignment(new Assignment(assignmentName)).orElseThrow((
+        var assign = tut.findAssignment(new Assignment(assignmentName, tut)).orElseThrow((
         ) -> new IllegalArgumentException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
 
         setSubmissionStatus(new Submission(assign, student, status));
