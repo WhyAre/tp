@@ -39,6 +39,7 @@ public class DeleteAssignmentCommand extends Command {
      * {@code Assignment}
      */
     public DeleteAssignmentCommand(List<Index> indices, Assignment assignment) {
+        requireNonNull(indices);
         requireNonNull(assignment);
         toDelete = assignment;
         this.indices = indices;
