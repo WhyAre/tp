@@ -3,8 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalAddressBook.T1_ASSIGN1;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ASSIGNMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TUTORIAL;
 
 import java.util.List;
@@ -67,7 +65,8 @@ public class AddAssignmentCommandTest {
     @Test
     public void execute_assignmentAcceptedByModel_addSuccessful() throws Exception {
         Assignment assignment = new Assignment("new-assignment");
-        CommandResult commandResult = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment).execute(modelStub);
+        CommandResult commandResult = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment)
+                        .execute(modelStub);
         List<Tutorial> tutorials = modelStub.getAddressBook().getTutorialList();
 
         assertEquals(AddAssignmentCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
