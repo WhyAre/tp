@@ -320,7 +320,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             attendances.set(attendance, attendance);
         } catch (DuplicateItemException e) {
-            throw new IllegalStateException("Should not reach here");
+            throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
         }
     }
 
