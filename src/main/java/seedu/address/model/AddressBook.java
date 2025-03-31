@@ -465,10 +465,21 @@ public class AddressBook implements ReadOnlyAddressBook {
      *             if the data in the address book is inconsistent
      */
     public boolean check() {
+        // Students
+        var studentsFromSubmissions = students.stream().flatMap(s -> s.getTutorials().stream()).toList();
+        var studentsFromAttendances = submissions.stream().map(s -> s.assignment().tutorial()).toList();
+
+        if (!(isSubsetOf(studentsFromSubmissions, tutorials) && isSubsetOf(studentsFromAttendances, tutorials))) {
+            throw new IllegalStateException("Students are inconsistent");
+        }
+
         // Tutorials
         var tutorialsFromStudents = students.stream().flatMap(s -> s.getTutorials().stream()).toList();
+        var tutorialsFromSubmissions = submissions.stream().map(s -> s.assignment().tutorial()).toList();
+        var tutorialsFromAttendances = attendances.stream().map(a -> a.tutorial()).toList();
 
-        if (!isSubsetOf(tutorialsFromStudents, tutorials)) {
+        if (!(isSubsetOf(tutorialsFromStudents, tutorials) && isSubsetOf(tutorialsFromSubmissions, tutorials)
+                        && isSubsetOf(tutorialsFromAttendances, tutorials))) {
             throw new IllegalStateException("Tutorials are inconsistent");
         }
 
