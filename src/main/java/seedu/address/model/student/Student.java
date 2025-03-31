@@ -199,7 +199,7 @@ public class Student implements Identifiable<Student> {
      */
     public Student clone() {
         return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials), details,
-                        new ArrayList<>(attendances));
+                        new ArrayList<>(attendances), new ArrayList<>(submissions));
     }
 
     /**
