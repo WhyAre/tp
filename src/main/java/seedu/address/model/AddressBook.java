@@ -536,8 +536,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         // Assignments
         var assignmentsFromTutorials = tutorials.stream().flatMap(t -> t.assignments().stream().peek(a -> {
-            if (!a.tutorial().hasSameIdentity(t))
+            if (!a.tutorial().hasSameIdentity(t)) {
                 throw new IllegalStateException("%s is not mapped to %s".formatted(a, t));
+            }
         })).toList();
         var assignmentsFromSubmissions = submissions.stream().map(s -> s.assignment()).toList();
 
@@ -548,8 +549,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Submissions
         var submissionsFromAssignments = assignmentsFromTutorials.stream()
                         .flatMap(a -> a.submissions().stream().peek(s -> {
-                            if (!s.assignment().hasSameIdentity(a))
+                            if (!s.assignment().hasSameIdentity(a)) {
                                 throw new IllegalStateException("%s is not mapped to %s".formatted(s, a));
+                            }
                         })).toList();
         var submissionsFromStudents = students.stream().flatMap(s -> s.getSubmissions().stream()).toList();
 
