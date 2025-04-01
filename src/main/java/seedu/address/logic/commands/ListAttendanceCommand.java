@@ -70,4 +70,18 @@ public class ListAttendanceCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS.formatted(name), NavigationMode.ATTENDANCE);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListAttendanceCommand otherListAttendanceCommand)) {
+            return false;
+        }
+
+        return index.equals(otherListAttendanceCommand.index);
+    }
 }

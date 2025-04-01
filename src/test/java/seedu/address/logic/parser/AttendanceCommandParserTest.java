@@ -5,11 +5,13 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.ListAttendanceCommand;
 import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.commands.UnmarkAttendanceCommand;
 import seedu.address.model.tutorial.Tutorial;
@@ -25,6 +27,7 @@ public class AttendanceCommandParserTest {
     private final AttendanceParser attendanceParser = new AttendanceParser();
     private final MarkAttendanceCommandParser markAttendanceParser = new MarkAttendanceCommandParser();
     private final UnmarkAttendanceCommandParser unmarkAttendanceParser = new UnmarkAttendanceCommandParser();
+    private final ListAttendanceCommandParser listAttendanceParser = new ListAttendanceCommandParser();
 
     @Test
     public void parseCommand_attendanceCommand_failure() {
@@ -193,5 +196,18 @@ public class AttendanceCommandParserTest {
     @Test
     public void parseCommand_unmarkAttendanceCommand_invalidNoStudent() {
         parseCommand_attendanceCommand_invalidNoStudent(unmarkAttendanceParser);
+    }
+
+    @Test
+    public void parseCommand_listAttendanceCommand_success() {
+        ListAttendanceCommand listAttendanceCommand = new ListAttendanceCommand(
+                        Optional.of(Index.fromOneBased(DUMMY_INDEX_ONE)));
+        assertParseSuccess(listAttendanceParser, "1", listAttendanceCommand);
+    }
+
+    @Test
+    public void parseCommand_listAttendanceCommand_successNoArg() {
+        ListAttendanceCommand listAttendanceCommand = new ListAttendanceCommand(Optional.empty());
+        assertParseSuccess(listAttendanceParser, "", listAttendanceCommand);
     }
 }
