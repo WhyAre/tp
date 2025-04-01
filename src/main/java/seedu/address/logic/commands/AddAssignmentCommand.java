@@ -26,6 +26,7 @@ public class AddAssignmentCommand extends Command {
     public static final String MESSAGE_INVALID_NAME = """
                     The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
     public static final String MESSAGE_DUPLICATE_ASSIGNMENT = "Assignment already exists in tutorial";
+    private static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
 
     private final Assignment toAdd;
     private final List<Index> tutorialIdxList;
@@ -57,14 +58,12 @@ public class AddAssignmentCommand extends Command {
                 throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
             }
 
-            if (!tutorial.addAssignment(toAdd)) {
-                throw new CommandException(MESSAGE_DUPLICATE_ASSIGNMENT);
-            }
-
             try {
-                model.setTutorial(tutorial, tutorial);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+                model.addAssignment(new Assignment(toAdd.name(), toAdd.dueDate(), tutorial));
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
+            } catch (DuplicateItemException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_ASSIGNMENT);
             }
         }
 
