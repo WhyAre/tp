@@ -110,9 +110,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         var student = p.clone();
         student.removeInvalidTutorials(new HashSet<>(tutorials));
 
+        // Map the tutorials into those that exists in the address book
         var existingTutorials = student.getTutorials().stream().map(t -> tutorials.find(t).orElseThrow())
-                        .collect(Collectors.toCollection(ArrayList::new));
-        student.setTutorials(new HashSet<>(existingTutorials));
+                        .collect(Collectors.toCollection(HashSet::new));
+        student.setTutorials(existingTutorials);
 
         students.add(student);
 
