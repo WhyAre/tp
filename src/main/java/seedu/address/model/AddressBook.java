@@ -618,6 +618,16 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new IllegalStateException("Attendances are inconsistent");
         }
 
+        // More checks (the more the merrier)
+        for (var s : students) {
+            for (var t : s.getTutorials()) {
+                if (tutorials.contains(t)) {
+                    continue;
+                }
+                throw new IllegalStateException("%s is not linked to %s".formatted(s, t));
+            }
+        }
+
         return true;
     }
 
