@@ -27,18 +27,13 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
     private final ObservableList<T> internalList;
     private final ObservableList<T> internalUnmodifiableList;
 
-    /**
-     * Returns true if {@code items} contains only unique entities.
-     */
-    private static <T extends Identifiable<T>> boolean areItemsUnique(List<T> items) {
-        return IntStream.range(0, items.size()).noneMatch(i -> IntStream.range(i + 1, items.size())
-                        .anyMatch(j -> items.get(i).hasSameIdentity(items.get(j))));
-    }
-
     public UniqueList() {
         this(new ArrayList<>());
     }
 
+    /**
+     * Constructs a UniqueList from the given list
+     */
     public UniqueList(List<T> list) {
         if (!areItemsUnique(list)) {
             throw new IllegalStateException("List contains duplicate items");
@@ -46,6 +41,14 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
 
         this.internalList = FXCollections.observableList(new ArrayList<>(list));
         this.internalUnmodifiableList = FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Returns true if {@code items} contains only unique entities.
+     */
+    private static <T extends Identifiable<T>> boolean areItemsUnique(List<T> items) {
+        return IntStream.range(0, items.size()).noneMatch(i -> IntStream.range(i + 1, items.size())
+                        .anyMatch(j -> items.get(i).hasSameIdentity(items.get(j))));
     }
 
     /**

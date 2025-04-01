@@ -260,6 +260,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tutorials.set(oldTut, newTut);
     }
 
+    /**
+     * Adds a student to tutorial
+     */
     public void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
         assert tutorials.containsIdentity(tutorial);
         assert students.find(student).orElseThrow() == student;
@@ -288,6 +291,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes a student from tutorial
+     */
     public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
         assert tutorials.containsIdentity(tutorial);
         assert students.find(student).orElseThrow() == student;
@@ -342,6 +348,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tutorials.set(tut, tut);
     }
 
+    /**
+     * Removes assignment from the addressbook
+     */
     public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
         requireNonNull(assignment);
 
