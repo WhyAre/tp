@@ -26,10 +26,7 @@ public class SubmissionParser implements Parser<Command> {
 
         usage = """
                         Usage: submission COMMAND
-
-                        COMMAND:
-                        %s""".formatted(
-                        subcmds.keySet().stream().map("  - %s"::formatted).collect(Collectors.joining("\n")));
+                        COMMAND: %s""".formatted(String.join(", ", subcmds.keySet()));
     }
 
     @Override
