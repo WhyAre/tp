@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_ASSIGNMENT_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 
 import java.util.List;
@@ -15,7 +13,6 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**

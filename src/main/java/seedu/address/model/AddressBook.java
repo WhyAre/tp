@@ -292,7 +292,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         assert tutorials.containsIdentity(tutorial);
         assert students.find(student).orElseThrow() == student;
 
-        var existingTutorial = tutorials.find(tutorial).orElseThrow(() -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial)));
+        var existingTutorial = tutorials.find(tutorial).orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial)));
 
         submissions.removeIf(s -> s.student().hasSameIdentity(student)
                         && s.assignment().tutorial().hasSameIdentity(tutorial));
@@ -325,8 +326,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         var addedAssignment = tut.addAssignment(assignment);
 
         // Handle submissions
-        var studentsAffected = students.stream().filter(s -> s.getTutorials().contains(addedAssignment.tutorial())).toList();
-        var newSubmissions = studentsAffected.stream().map(s -> new Submission(addedAssignment, s, SubmissionStatus.NOT_SUBMITTED)).toList();
+        var studentsAffected = students.stream().filter(s -> s.getTutorials().contains(addedAssignment.tutorial()))
+                        .toList();
+        var newSubmissions = studentsAffected.stream()
+                        .map(s -> new Submission(addedAssignment, s, SubmissionStatus.NOT_SUBMITTED)).toList();
 
         for (var s : newSubmissions) {
             try {
@@ -343,7 +346,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(assignment);
 
         // Resolve tutorial
-        var tut = tutorials.find(assignment.tutorial()).orElseThrow(() -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
+        var tut = tutorials.find(assignment.tutorial()).orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 
         if (tut.assignments().find(assignment).isEmpty()) {
             throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment));
@@ -556,7 +560,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             return false;
         }
 
-       return areListSame(submissions, otherAddressBook.submissions) &&  areListSame(students, otherAddressBook.students) &&  areListSame(tutorials, otherAddressBook.tutorials) &&  areListSame(attendances, otherAddressBook.attendances);
+        return areListSame(submissions, otherAddressBook.submissions)
+                        && areListSame(students, otherAddressBook.students)
+                        && areListSame(tutorials, otherAddressBook.tutorials)
+                        && areListSame(attendances, otherAddressBook.attendances);
     }
 
     @Override

@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 
 import java.util.List;
 

@@ -303,8 +303,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeStudentFromTutorial(Tutorial tutorial,
-                                              Student student) throws ItemNotFoundException {
+        public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
             throw new AssertionError("This method should not be called.");
         }
 

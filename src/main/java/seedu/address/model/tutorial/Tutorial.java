@@ -51,7 +51,7 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
     public Assignment addAssignment(Assignment assignment) throws DuplicateItemException {
         Objects.requireNonNull(assignment);
 
-        var newAssignment =assignment.setTutorial(this) ;
+        var newAssignment = assignment.setTutorial(this);
         if (!assignments.add(newAssignment)) {
             throw new DuplicateItemException("");
         }

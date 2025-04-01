@@ -2,9 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -14,7 +12,6 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**

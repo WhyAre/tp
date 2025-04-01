@@ -65,7 +65,8 @@ public class AddAssignmentCommandTest {
 
     @Test
     public void execute_assignmentAcceptedByModel_addSuccessful() throws Exception {
-        Assignment assignment = new Assignment("new-assignment", modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
+        Assignment assignment = new Assignment("new-assignment",
+                        modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
         CommandResult commandResult = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment)
                         .execute(modelStub);
         List<Tutorial> tutorials = modelStub.getAddressBook().getTutorialList();

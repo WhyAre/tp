@@ -39,7 +39,7 @@ public class UniqueList<T extends Identifiable<T>> implements List<T> {
         this(new ArrayList<>());
     }
 
-    public UniqueList(List<T> list){
+    public UniqueList(List<T> list) {
         if (!areItemsUnique(list)) {
             throw new IllegalStateException("List contains duplicate items");
         }

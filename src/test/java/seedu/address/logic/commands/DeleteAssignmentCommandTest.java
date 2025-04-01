@@ -66,7 +66,8 @@ public class DeleteAssignmentCommandTest {
 
     @Test
     public void execute_assignmentExists_success() throws Exception {
-        Assignment assignment = new Assignment("Week 10 Tasks", modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
+        Assignment assignment = new Assignment("Week 10 Tasks",
+                        modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
         CommandResult commandResult = new DeleteAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment)
                         .execute(modelStub);
         List<Assignment> assignments = modelStub.getAddressBook().getTutorialList()
