@@ -69,10 +69,11 @@ public class SetSubmissionCommand extends Command {
             }
         }
 
-        var msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());
+        if (!errMsg.isEmpty()) {
+            throw new CommandException("Warning: %s".formatted(errMsg.toString()));
+        }
 
-        assert model.check();
-        return new CommandResult(msg, NavigationMode.UNCHANGED);
+        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 
     @Override
