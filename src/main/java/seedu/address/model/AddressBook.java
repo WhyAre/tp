@@ -556,9 +556,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             return false;
         }
 
-        return students.equals(otherAddressBook.students) && tutorials.equals(otherAddressBook.tutorials)
-                        && attendances.equals(otherAddressBook.attendances)
-                        && submissions.equals(otherAddressBook.submissions);
+       return areListSame(submissions, otherAddressBook.submissions) &&  areListSame(students, otherAddressBook.students) &&  areListSame(tutorials, otherAddressBook.tutorials) &&  areListSame(attendances, otherAddressBook.attendances);
     }
 
     @Override
