@@ -74,4 +74,9 @@ public class Submission implements Identifiable<Submission> {
     public int hashCode() {
         return Objects.hash(assignment, student, status);
     }
+
+    @Override
+    public String toString() {
+        return "%s %s %s".formatted(assignment, student, status);
+    }
 }
