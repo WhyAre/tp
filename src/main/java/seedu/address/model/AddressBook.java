@@ -325,7 +325,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         var addedAssignment = tut.addAssignment(assignment);
 
         // Handle submissions
-        var newSubmissions = students.stream().map(s -> new Submission(addedAssignment, s, SubmissionStatus.NOT_SUBMITTED)).toList();
+        var studentsAffected = students.stream().filter(s -> s.getTutorials().contains(addedAssignment.tutorial())).toList();
+        var newSubmissions = studentsAffected.stream().map(s -> new Submission(addedAssignment, s, SubmissionStatus.NOT_SUBMITTED)).toList();
 
         for (var s : newSubmissions) {
             try {
