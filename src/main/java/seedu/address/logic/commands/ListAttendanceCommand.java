@@ -82,6 +82,8 @@ public class ListAttendanceCommand extends Command {
         } else {
             throw new CommandException(MESSAGE_INVALID_VIEW);
         }
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS.formatted(name), NavigationMode.ATTENDANCE);
     }
 

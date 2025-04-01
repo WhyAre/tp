@@ -18,6 +18,8 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

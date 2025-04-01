@@ -53,4 +53,9 @@ public class StudentID {
     public String toString() {
         return id;
     }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

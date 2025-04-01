@@ -12,6 +12,7 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.submission.Submission;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -199,7 +200,7 @@ public class Student implements Identifiable<Student> {
      */
     public Student clone() {
         return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials), details,
-                        new ArrayList<>(attendances));
+                        new ArrayList<>(attendances), new ArrayList<>(submissions));
     }
 
     /**
@@ -247,5 +248,13 @@ public class Student implements Identifiable<Student> {
         tutorials.removeIf(t -> t.hasSameIdentity(tutorial));
         attendances.removeIf(a -> a.tutorial().hasSameIdentity(tutorial));
         submissions.removeIf(s -> s.assignment().tutorial().hasSameIdentity(tutorial));
+    }
+
+    public void addTutorial(Tutorial tutorial) {
+        tutorials.add(tutorial);
+    }
+
+    public void removeAssignment(Assignment assignment) {
+        submissions.removeIf(s -> s.assignment().hasSameIdentity(assignment));
     }
 }

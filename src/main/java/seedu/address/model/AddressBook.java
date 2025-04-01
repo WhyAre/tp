@@ -6,6 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_STUDENT_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -109,6 +110,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         var student = p.clone();
         student.removeInvalidTutorials(new HashSet<>(tutorials));
 
+        // Map the tutorials into those that exists in the address book
+        var existingTutorials = student.getTutorials().stream().map(t -> tutorials.find(t).orElseThrow())
+                        .collect(Collectors.toCollection(HashSet::new));
+        student.setTutorials(existingTutorials);
+
         students.add(student);
 
         // If adding via GUI, this list should be empty so nothing will happen
@@ -167,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a tutorial slot
      */
     public void addTutorial(Tutorial tutorial) {
-        tutorials.add(tutorial);
+        tutorials.add(new Tutorial(tutorial));
     }
 
     /**
@@ -255,10 +261,67 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a student to tutorial
+     */
+    public void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        assert tutorials.containsIdentity(tutorial);
+        assert students.find(student).orElseThrow() == student;
+
+        var existingTutorial = tutorials.find(tutorial).orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial)));
+
+        student.addTutorial(existingTutorial);
+
+        addAttendance(existingTutorial, student);
+        var submissionsToAdd = existingTutorial.assignments().stream()
+                        .map(a -> new Submission(a, student, SubmissionStatus.NOT_SUBMITTED)).toList();
+        submissionsToAdd.stream().forEach(submission -> {
+            try {
+                setSubmissionStatus(submission);
+            } catch (ItemNotFoundException e) {
+                // Tutorial, assignment, and student should exist
+                throw new IllegalStateException(e);
+            }
+        });
+
+        try {
+            students.set(student, student);
+        } catch (DuplicateItemException | ItemNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Removes a student from tutorial
+     */
+    public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        assert tutorials.containsIdentity(tutorial);
+        assert students.find(student).orElseThrow() == student;
+
+        var existingTutorial = tutorials.find(tutorial).orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial)));
+
+        submissions.removeIf(s -> s.student().hasSameIdentity(student)
+                        && s.assignment().tutorial().hasSameIdentity(tutorial));
+        attendances.removeIf(s -> s.student().hasSameIdentity(student) && s.tutorial().hasSameIdentity(tutorial));
+
+        student.removeTutorial(existingTutorial);
+        existingTutorial.assignments().forEach(a -> a.removeStudent(student));
+        existingTutorial.removeStudent(student);
+
+        try {
+            students.set(student, student);
+            tutorials.set(existingTutorial, existingTutorial);
+        } catch (DuplicateItemException | ItemNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
      * Adds an assignment to the addressbook, the tutorial information should be
      * within the assignment object
      */
-    public void addAssignment(Assignment assignment) throws ItemNotFoundException {
+    public void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException {
         requireNonNull(assignment);
 
         // Resolve tutorial
@@ -266,14 +329,55 @@ public class AddressBook implements ReadOnlyAddressBook {
         var tut = tutorials.find(assignment.tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 
-        tut.addAssignment(assignment);
+        var addedAssignment = tut.addAssignment(assignment);
+
+        // Handle submissions
+        var studentsAffected = students.stream().filter(s -> s.getTutorials().contains(addedAssignment.tutorial()))
+                        .toList();
+        var newSubmissions = studentsAffected.stream()
+                        .map(s -> new Submission(addedAssignment, s, SubmissionStatus.NOT_SUBMITTED)).toList();
+
+        for (var s : newSubmissions) {
+            try {
+                setSubmissionStatus(s);
+            } catch (ItemNotFoundException e) {
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+            }
+        }
+
+        tutorials.set(tut, tut);
+    }
+
+    /**
+     * Removes assignment from the addressbook
+     */
+    public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
+        requireNonNull(assignment);
+
+        // Resolve tutorial
+        var tut = tutorials.find(assignment.tutorial()).orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
+
+        if (tut.assignments().find(assignment).isEmpty()) {
+            throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment));
+        }
+
+        tut.deleteAssignment(assignment);
+        submissions.removeIf(s -> s.assignment().hasSameIdentity(assignment));
+        students.stream().forEach(s -> s.removeAssignment(assignment));
+
+        try {
+            tutorials.set(tut, tut);
+        } catch (DuplicateItemException e) {
+            throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+        }
     }
 
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
                     SubmissionStatus status) throws ItemNotFoundException {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
         ) -> new IllegalArgumentException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
-        var assign = tut.findAssignment(new Assignment(assignmentName)).orElseThrow((
+        var assign = tut.findAssignment(new Assignment(assignmentName, tut)).orElseThrow((
         ) -> new IllegalArgumentException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
 
         setSubmissionStatus(new Submission(assign, student, status));
@@ -299,6 +403,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var newSubmission = new Submission(submission).setAssignment(assignment).setStudent(studentInList);
 
         var submissionInList = submissions.find(newSubmission);
+
         if (submissionInList.isEmpty()) {
             assignment.addSubmission(newSubmission);
             studentInList.addSubmission(newSubmission);
@@ -306,6 +411,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             var existingSubmission = submissionInList.orElseThrow();
             existingSubmission.setStatus(submission.status());
+            try {
+                submissions.set(existingSubmission, existingSubmission);
+            } catch (DuplicateItemException e) {
+                // Since I'm replacing a submission with itself, there should be no duplicates.
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -361,6 +472,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             var existingAttendance = maybeAttendance.orElseThrow();
             existingAttendance.setAttendances(attendance.attendances());
+            try {
+                attendances.set(existingAttendance, existingAttendance);
+            } catch (DuplicateItemException e) {
+                // You're setting the same thing to itself,
+                // therefore duplicate item exception should not happen
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+            }
         }
     }
 
@@ -389,6 +507,29 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         setAttendance(tutorial, week, student, false);
+    }
+
+    /**
+     * Creates a submission object for every assignment-student pair (if it doesn't
+     * already exists)
+     */
+    public void populateSubmissions() {
+        for (var student : students) {
+            var assignments = student.getTutorials().stream().flatMap(t -> t.assignments().stream()).toList();
+
+            var submissions = assignments.stream().map(a -> new Submission(a, student, SubmissionStatus.NOT_SUBMITTED))
+                            .collect(Collectors.toCollection(ArrayList::new));
+
+            submissions.removeIf(s -> this.submissions.find(s).isPresent());
+
+            submissions.stream().forEach(s -> {
+                try {
+                    setSubmissionStatus(s);
+                } catch (ItemNotFoundException e) {
+                    throw new IllegalStateException(e);
+                }
+            });
+        }
     }
 
     //// util methods
@@ -429,9 +570,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             return false;
         }
 
-        return students.equals(otherAddressBook.students) && tutorials.equals(otherAddressBook.tutorials)
-                        && attendances.equals(otherAddressBook.attendances)
-                        && submissions.equals(otherAddressBook.submissions);
+        return areListSame(submissions, otherAddressBook.submissions)
+                        && areListSame(students, otherAddressBook.students)
+                        && areListSame(tutorials, otherAddressBook.tutorials)
+                        && areListSame(attendances, otherAddressBook.attendances);
     }
 
     @Override
@@ -490,7 +632,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         // Assignments
-        var assignmentsFromTutorials = tutorials.stream().flatMap(t -> t.assignments().stream()).toList();
+        var assignmentsFromTutorials = tutorials.stream().flatMap(t -> t.assignments().stream().peek(a -> {
+            if (!a.tutorial().hasSameIdentity(t)) {
+                throw new IllegalStateException("%s is not mapped to %s".formatted(a, t));
+            }
+        })).toList();
         var assignmentsFromSubmissions = submissions.stream().map(s -> s.assignment()).toList();
 
         if (!isSubsetOf(assignmentsFromSubmissions, assignmentsFromTutorials)) {
@@ -498,8 +644,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         // Submissions
-        var submissionsFromAssignments = assignmentsFromTutorials.stream().flatMap(a -> a.submissions().stream())
-                        .toList();
+        var submissionsFromAssignments = assignmentsFromTutorials.stream()
+                        .flatMap(a -> a.submissions().stream().peek(s -> {
+                            if (!s.assignment().hasSameIdentity(a)) {
+                                throw new IllegalStateException("%s is not mapped to %s".formatted(s, a));
+                            }
+                        })).toList();
         var submissionsFromStudents = students.stream().flatMap(s -> s.getSubmissions().stream()).toList();
 
         if (!areListSame(submissionsFromAssignments, submissionsFromStudents, submissions)) {
@@ -514,6 +664,16 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new IllegalStateException("Attendances are inconsistent");
         }
 
+        // More checks (the more the merrier)
+        for (var s : students) {
+            for (var t : s.getTutorials()) {
+                if (tutorials.contains(t)) {
+                    continue;
+                }
+                throw new IllegalStateException("%s is not linked to %s".formatted(s, t));
+            }
+        }
+
         return true;
     }
 
@@ -525,7 +685,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var hashSets = Arrays.stream(lists).map(HashSet::new).toList();
 
         for (int i = 0; i + 1 < hashSets.size(); i++) {
-            if (!hashSets.get(i).equals(hashSets.get(i + 1))) {
+            if (!(hashSets.get(i).equals(hashSets.get(i + 1)) && lists[i].size() == lists[i + 1].size())) {
                 return false;
             }
         }

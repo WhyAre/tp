@@ -31,6 +31,7 @@ public class FindTutorialCommand extends Command {
         requireNonNull(model);
         model.updateFilteredTutorialList(tutorialPredicate);
 
+        assert model.check();
         return new CommandResult(String.format(Messages.MESSAGE_TUTORIALS_LISTED_OVERVIEW,
                         model.getFilteredTutorialList().size()), NavigationMode.TUTORIAL);
     }

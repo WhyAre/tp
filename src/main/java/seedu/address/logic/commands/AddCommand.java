@@ -71,6 +71,8 @@ public class AddCommand extends Command {
         toAdd.setTutorials(existingTutorials);
 
         model.addStudent(toAdd);
+
+        assert model.check();
         return new CommandResult(String.format(resultMessage, Messages.format(toAdd)));
     }
 

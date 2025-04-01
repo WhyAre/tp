@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_ERROR;
 
 import java.util.List;
 
@@ -57,16 +56,16 @@ public class AddAssignmentCommand extends Command {
                 throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
             }
 
-            if (!tutorial.addAssignment(toAdd)) {
+            try {
+                model.addAssignment(new Assignment(toAdd.name(), toAdd.dueDate(), tutorial));
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
+            } catch (DuplicateItemException e) {
                 throw new CommandException(MESSAGE_DUPLICATE_ASSIGNMENT);
             }
-
-            try {
-                model.setTutorial(tutorial, tutorial);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
-            }
         }
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 

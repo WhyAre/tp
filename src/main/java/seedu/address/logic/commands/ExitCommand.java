@@ -14,6 +14,8 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
+
+        assert model.check();
         return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, NavigationMode.UNCHANGED, false, true);
     }
 
