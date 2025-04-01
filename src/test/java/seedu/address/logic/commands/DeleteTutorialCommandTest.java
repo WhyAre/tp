@@ -49,4 +49,17 @@ public class DeleteTutorialCommandTest {
             assertFalse(student.hasTutorial(t));
         }
     }
+
+    @Test
+    public void execute_equalsTutorialDelete_successSameObj() throws Exception {
+        DeleteTutorialCommand deleteTutorialCommand = new DeleteTutorialCommand(new Tutorial("CS2103-T1"));
+        assertEquals(deleteTutorialCommand, deleteTutorialCommand);
+    }
+
+    @Test
+    public void execute_equalsTutorialDelete_successSameDetails() throws Exception {
+        DeleteTutorialCommand deleteTutorialCommand = new DeleteTutorialCommand(new Tutorial("CS2103-T1"));
+        DeleteTutorialCommand otherDeleteTutorialCommand = new DeleteTutorialCommand(new Tutorial("CS2103-T1"));
+        assertEquals(deleteTutorialCommand, otherDeleteTutorialCommand);
+    }
 }
