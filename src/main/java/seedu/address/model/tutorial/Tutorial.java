@@ -23,7 +23,7 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
     }
 
     public Tutorial(Tutorial t) {
-        this(t.name, t.assignments, t.attendances);
+        this(t.name, new UniqueList<>(t.assignments), new UniqueList<>(t.attendances));
     }
 
     /**

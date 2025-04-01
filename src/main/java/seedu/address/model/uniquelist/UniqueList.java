@@ -3,6 +3,7 @@ package seedu.address.model.uniquelist;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -23,15 +24,28 @@ import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
  */
 public class UniqueList<T extends Identifiable<T>> implements List<T> {
 
-    private final ObservableList<T> internalList = FXCollections.observableArrayList();
-    private final ObservableList<T> internalUnmodifiableList = FXCollections.unmodifiableObservableList(internalList);
+    private final ObservableList<T> internalList;
+    private final ObservableList<T> internalUnmodifiableList;
 
     /**
      * Returns true if {@code items} contains only unique entities.
      */
-    private boolean areItemsUnique(List<T> items) {
+    private static <T extends Identifiable<T>> boolean areItemsUnique(List<T> items) {
         return IntStream.range(0, items.size()).noneMatch(i -> IntStream.range(i + 1, items.size())
                         .anyMatch(j -> items.get(i).hasSameIdentity(items.get(j))));
+    }
+
+    public UniqueList() {
+        this(new ArrayList<>());
+    }
+
+    public UniqueList(List<T> list){
+        if (!areItemsUnique(list)) {
+            throw new IllegalStateException("List contains duplicate items");
+        }
+
+        this.internalList = FXCollections.observableList(new ArrayList<>(list));
+        this.internalUnmodifiableList = FXCollections.unmodifiableObservableList(internalList);
     }
 
     /**
