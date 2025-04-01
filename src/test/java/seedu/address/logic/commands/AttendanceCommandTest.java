@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
 
-public class MarkAttendanceCommandTest {
+public class AttendanceCommandTest {
 
 }
