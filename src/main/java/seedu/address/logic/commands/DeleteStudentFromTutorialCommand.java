@@ -62,18 +62,11 @@ public class DeleteStudentFromTutorialCommand extends Command {
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
-            Student editedStudent = studentToEdit.clone();
-            Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-            tutorials.remove(tutorial);
-            editedStudent.setTutorials(tutorials);
-
-            assert model.hasStudent(studentToEdit);
-            assert studentToEdit.hashCode() == editedStudent.hashCode();
 
             try {
-                model.setStudent(studentToEdit, editedStudent);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+                model.removeStudentFromTutorial(tutorial, studentToEdit);
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
             }
         }
 

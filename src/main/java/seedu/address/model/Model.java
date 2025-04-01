@@ -263,4 +263,6 @@ public interface Model {
     boolean check();
 
     void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
 }

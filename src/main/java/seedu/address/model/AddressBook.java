@@ -288,6 +288,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        assert tutorials.containsIdentity(tutorial);
+        assert students.find(student).orElseThrow() == student;
+
+        var existingTutorial = tutorials.find(tutorial).orElseThrow(() -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial)));
+
+        submissions.removeIf(s -> s.student().hasSameIdentity(student)
+                        && s.assignment().tutorial().hasSameIdentity(tutorial));
+        attendances.removeIf(s -> s.student().hasSameIdentity(student) && s.tutorial().hasSameIdentity(tutorial));
+
+        student.removeTutorial(existingTutorial);
+        existingTutorial.assignments().forEach(a -> a.removeStudent(student));
+        existingTutorial.removeStudent(student);
+
+        try {
+            students.set(student, student);
+            tutorials.set(existingTutorial, existingTutorial);
+        } catch (DuplicateItemException | ItemNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     /**
      * Adds an assignment to the addressbook, the tutorial information should be
      * within the assignment object
