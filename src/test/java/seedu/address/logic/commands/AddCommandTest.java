@@ -297,6 +297,11 @@ public class AddCommandTest {
             return true;
         }
 
+        @Override
+        public void addStudentToTutorial(Tutorial tutorial, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
     }
 
     /**

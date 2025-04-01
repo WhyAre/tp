@@ -260,6 +260,34 @@ public class AddressBook implements ReadOnlyAddressBook {
         tutorials.set(oldTut, newTut);
     }
 
+    public void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        assert tutorials.containsIdentity(tutorial);
+        assert students.find(student).orElseThrow() == student;
+
+        var existingTutorial = tutorials.find(tutorial).orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial)));
+
+        student.addTutorial(existingTutorial);
+
+        addAttendance(existingTutorial, student);
+        var submissionsToAdd = existingTutorial.assignments().stream()
+                        .map(a -> new Submission(a, student, SubmissionStatus.NOT_SUBMITTED)).toList();
+        submissionsToAdd.stream().forEach(submission -> {
+            try {
+                setSubmissionStatus(submission);
+            } catch (ItemNotFoundException e) {
+                // Tutorial, assignment, and student should exist
+                throw new IllegalStateException(e);
+            }
+        });
+
+        try {
+            students.set(student, student);
+        } catch (DuplicateItemException | ItemNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     /**
      * Adds an assignment to the addressbook, the tutorial information should be
      * within the assignment object

@@ -261,4 +261,6 @@ public interface Model {
     void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
 
     boolean check();
+
+    void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
 }

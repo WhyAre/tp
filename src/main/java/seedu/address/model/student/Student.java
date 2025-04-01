@@ -248,4 +248,8 @@ public class Student implements Identifiable<Student> {
         attendances.removeIf(a -> a.tutorial().hasSameIdentity(tutorial));
         submissions.removeIf(s -> s.assignment().tutorial().hasSameIdentity(tutorial));
     }
+
+    public void addTutorial(Tutorial tutorial) {
+        tutorials.add(tutorial);
+    }
 }
