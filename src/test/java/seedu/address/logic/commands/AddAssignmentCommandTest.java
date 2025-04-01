@@ -20,7 +20,6 @@ import seedu.address.model.tutorial.Tutorial;
 import seedu.address.testutil.TypicalAddressBook;
 
 public class AddAssignmentCommandTest {
-
     private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
                     new UserPrefs());
 
@@ -66,7 +65,7 @@ public class AddAssignmentCommandTest {
 
     @Test
     public void execute_assignmentAcceptedByModel_addSuccessful() throws Exception {
-        Assignment assignment = new Assignment("new-assignment");
+        Assignment assignment = new Assignment("new-assignment", modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
         CommandResult commandResult = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment)
                         .execute(modelStub);
         List<Tutorial> tutorials = modelStub.getAddressBook().getTutorialList();
