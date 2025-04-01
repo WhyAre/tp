@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.student.Student;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
@@ -95,7 +96,7 @@ public class JsonSerializableAddressBook {
             try {
                 var a = assignmentJson.toModelType();
                 addressBook.addAssignment(a);
-            } catch (ItemNotFoundException e) {
+            } catch (ItemNotFoundException | DuplicateItemException e) {
                 LOGGER.warning("Failed to add assignment %s: %s".formatted(assignmentJson, e.getMessage()));
             }
         }
@@ -122,6 +123,8 @@ public class JsonSerializableAddressBook {
                 LOGGER.warning("Failed to add submission %s: %s".formatted(submissionJson, e.getMessage()));
             }
         }
+
+        assert addressBook.check();
 
         return addressBook;
     }

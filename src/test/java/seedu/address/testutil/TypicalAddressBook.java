@@ -27,6 +27,7 @@ import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 import seedu.address.storage.json.JsonSerializableAddressBook;
 
@@ -106,6 +107,8 @@ public class TypicalAddressBook {
             throw new RuntimeException(e);
         }
 
+        ab.populateSubmissions();
+
         return ab;
     }
 
@@ -115,13 +118,25 @@ public class TypicalAddressBook {
 
     public static List<Tutorial> getTypicalTutorials() {
         var tutorial1 = new Tutorial(T1);
-        tutorial1.addAssignment(T1_ASSIGN1);
+        try {
+            tutorial1.addAssignment(T1_ASSIGN1);
+        } catch (DuplicateItemException e) {
+            throw new RuntimeException(e);
+        }
 
         var tutorial2 = new Tutorial(T2);
-        tutorial2.addAssignment(T2_ASSIGN1);
+        try {
+            tutorial2.addAssignment(T2_ASSIGN1);
+        } catch (DuplicateItemException e) {
+            throw new RuntimeException(e);
+        }
 
         var tutorial3 = new Tutorial(T3);
-        tutorial3.addAssignment(T3_ASSIGN1);
+        try {
+            tutorial3.addAssignment(T3_ASSIGN1);
+        } catch (DuplicateItemException e) {
+            throw new RuntimeException(e);
+        }
 
         return List.of(tutorial1, tutorial2, tutorial3);
     }

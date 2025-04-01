@@ -12,6 +12,7 @@ import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 
@@ -47,6 +48,11 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of attendances */
     ObservableList<Attendance> getFilteredAttendanceList();
+
+    /**
+     * Returns an unmodifiable view of the filtered list of submissions
+     */
+    ObservableList<Submission> getFilteredSubmissionList();
 
     /** Returns an unmodifiable view of the filtered list of tutorials */
     ObservableList<TutorialWithStudents> getFilteredTutorialWithStudents();
