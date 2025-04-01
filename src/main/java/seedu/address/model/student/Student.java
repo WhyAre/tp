@@ -12,6 +12,7 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.submission.Submission;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -251,5 +252,9 @@ public class Student implements Identifiable<Student> {
 
     public void addTutorial(Tutorial tutorial) {
         tutorials.add(tutorial);
+    }
+
+    public void removeAssignment(Assignment assignment) {
+        submissions.removeIf(s -> s.assignment().hasSameIdentity(assignment));
     }
 }

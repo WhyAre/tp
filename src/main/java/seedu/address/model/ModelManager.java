@@ -281,6 +281,11 @@ public class ModelManager implements Model {
         addressBook.removeStudentFromTutorial(tutorial, student);
     }
 
+    @Override
+    public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
+        addressBook.removeAssignment(assignment);
+    }
+
     // =========== Filtered Attendance List Accessors
     // =============================================================
 
