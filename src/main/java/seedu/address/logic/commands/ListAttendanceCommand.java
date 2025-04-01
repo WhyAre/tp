@@ -26,6 +26,10 @@ public class ListAttendanceCommand extends Command {
     public static final String MESSAGE_USAGE = "Usage: attendance list [INDEX]"
                     + "\nYou must be in STUDENTS or TUTORIAL view";
 
+    public static final String MESSAGE_INVALID_STUDENT = "Student not found";
+
+    public static final String MESSAGE_INVALID_TUTORIAL = "Tutorial not found";
+
     public static final String MESSAGE_INVALID_VIEW = "Invalid view. Please switch to STUDENTS or TUTORIAL view first";
 
     public static final String MESSAGE_SUCCESS = "Listed attendances for %s";
@@ -55,14 +59,24 @@ public class ListAttendanceCommand extends Command {
             name = "all";
         } else if (navigationMode.equals(STUDENT)) {
             logger.log(Level.INFO, "Coming from STUDENT view");
-            List<Student> lastShownList = model.getFilteredStudentList();
-            Student student = lastShownList.get(index.get().getZeroBased());
+            List<Student> students = model.getFilteredStudentList();
+
+            if (index.get().getZeroBased() >= students.size()) {
+                throw new CommandException(MESSAGE_INVALID_STUDENT);
+            }
+
+            Student student = students.get(index.get().getZeroBased());
             name = student.getName().fullName;
             model.updateFilteredAttendanceList(x -> x.student().hasSameIdentity(student));
         } else if (navigationMode.equals(TUTORIAL)) {
             logger.log(Level.INFO, "Coming from TUTORIAL view");
-            List<Tutorial> lastShownList = model.getFilteredTutorialList();
-            Tutorial tutorial = lastShownList.get(index.get().getZeroBased());
+            List<Tutorial> tutorials = model.getFilteredTutorialList();
+
+            if (index.get().getZeroBased() >= tutorials.size()) {
+                throw new CommandException(MESSAGE_INVALID_TUTORIAL);
+            }
+
+            Tutorial tutorial = tutorials.get(index.get().getZeroBased());
             name = tutorial.name();
             model.updateFilteredAttendanceList(x -> x.tutorial().hasSameIdentity(tutorial));
         } else {

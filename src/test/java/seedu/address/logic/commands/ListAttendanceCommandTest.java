@@ -65,6 +65,22 @@ public class ListAttendanceCommandTest {
     }
 
     @Test
+    public void execute_listIsFiltered_failureStudentNotFound() {
+        model.setNavigationMode(NavigationMode.STUDENT);
+        expectedModel.setNavigationMode(NavigationMode.STUDENT);
+        assertCommandFailure(new ListAttendanceCommand(Optional.of(Index.fromOneBased(100))), model,
+                        ListAttendanceCommand.MESSAGE_INVALID_STUDENT);
+    }
+
+    @Test
+    public void execute_listIsFiltered_failureTutorialNotFound() {
+        model.setNavigationMode(NavigationMode.TUTORIAL);
+        expectedModel.setNavigationMode(NavigationMode.TUTORIAL);
+        assertCommandFailure(new ListAttendanceCommand(Optional.of(Index.fromOneBased(100))), model,
+                        ListAttendanceCommand.MESSAGE_INVALID_TUTORIAL);
+    }
+
+    @Test
     public void execute_equalslistAttendance_successSameObj() {
         ListAttendanceCommand listAttendanceCommand = new ListAttendanceCommand(Optional.of(Index.fromOneBased(1)));
         assertEquals(listAttendanceCommand, listAttendanceCommand);
