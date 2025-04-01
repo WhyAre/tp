@@ -265,4 +265,6 @@ public interface Model {
     void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
 
     void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    void removeAssignment(Assignment assignment) throws ItemNotFoundException;
 }

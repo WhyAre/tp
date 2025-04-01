@@ -61,14 +61,10 @@ public class DeleteAssignmentCommand extends Command {
                 throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
             }
 
-            if (!tutorial.deleteAssignment(toDelete)) {
-                throw new CommandException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(toDelete));
-            }
-
             try {
-                model.setTutorial(tutorial, tutorial);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+                model.removeAssignment(toDelete.setTutorial(tutorial));
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
             }
         }
 

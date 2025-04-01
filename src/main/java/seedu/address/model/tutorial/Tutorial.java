@@ -7,6 +7,7 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.uniquelist.Identifiable;
 import seedu.address.model.uniquelist.UniqueList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 
 /**
  * Represents a tutorial
@@ -47,9 +48,15 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
      * @param assignment
      *            Assignment to add
      */
-    public boolean addAssignment(Assignment assignment) {
+    public Assignment addAssignment(Assignment assignment) throws DuplicateItemException {
         Objects.requireNonNull(assignment);
-        return assignments.add(assignment.setTutorial(this));
+
+        var newAssignment =assignment.setTutorial(this) ;
+        if (!assignments.add(newAssignment)) {
+            throw new DuplicateItemException("");
+        }
+
+        return assignment;
     }
 
     /**

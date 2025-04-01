@@ -173,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a tutorial slot
      */
     public void addTutorial(Tutorial tutorial) {
-        tutorials.add(tutorial);
+        tutorials.add(new Tutorial(tutorial));
     }
 
     /**
@@ -322,11 +322,41 @@ public class AddressBook implements ReadOnlyAddressBook {
         var tut = tutorials.find(assignment.tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 
-        if (!tut.addAssignment(assignment)) {
-            throw new DuplicateItemException();
+        var addedAssignment = tut.addAssignment(assignment);
+
+        // Handle submissions
+        var newSubmissions = students.stream().map(s -> new Submission(addedAssignment, s, SubmissionStatus.NOT_SUBMITTED)).toList();
+
+        for (var s : newSubmissions) {
+            try {
+                setSubmissionStatus(s);
+            } catch (ItemNotFoundException e) {
+                throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+            }
         }
 
         tutorials.set(tut, tut);
+    }
+
+    public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
+        requireNonNull(assignment);
+
+        // Resolve tutorial
+        var tut = tutorials.find(assignment.tutorial()).orElseThrow(() -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
+
+        if (tut.assignments().find(assignment).isEmpty()) {
+            throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment));
+        }
+
+        tut.deleteAssignment(assignment);
+        submissions.removeIf(s -> s.assignment().hasSameIdentity(assignment));
+        students.stream().forEach(s -> s.removeAssignment(assignment));
+
+        try {
+            tutorials.set(tut, tut);
+        } catch (DuplicateItemException e) {
+            throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
+        }
     }
 
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,

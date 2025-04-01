@@ -26,7 +26,6 @@ public class AddAssignmentCommand extends Command {
     public static final String MESSAGE_INVALID_NAME = """
                     The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
     public static final String MESSAGE_DUPLICATE_ASSIGNMENT = "Assignment already exists in tutorial";
-    private static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
 
     private final Assignment toAdd;
     private final List<Index> tutorialIdxList;
