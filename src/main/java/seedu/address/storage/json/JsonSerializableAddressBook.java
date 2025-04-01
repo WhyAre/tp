@@ -124,8 +124,6 @@ public class JsonSerializableAddressBook {
             }
         }
 
-        addressBook.fixSubmissions();
-
         assert addressBook.check();
 
         return addressBook;

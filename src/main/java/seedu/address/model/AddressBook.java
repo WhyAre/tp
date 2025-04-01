@@ -510,9 +510,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Creates a submission object for every assignment-student pair
+     * Creates a submission object for every assignment-student pair (if it doesn't
+     * already exists)
      */
-    public void fixSubmissions() {
+    public void populateSubmissions() {
         for (var student : students) {
             var assignments = student.getTutorials().stream().flatMap(t -> t.assignments().stream()).toList();
 

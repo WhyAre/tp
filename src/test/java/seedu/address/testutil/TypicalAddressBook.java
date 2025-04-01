@@ -107,7 +107,7 @@ public class TypicalAddressBook {
             throw new RuntimeException(e);
         }
 
-        ab.fixSubmissions();
+        ab.populateSubmissions();
 
         return ab;
     }
