@@ -31,8 +31,7 @@ public class AttendanceCommandParserTest {
 
     @Test
     public void parseCommand_attendanceCommand_failure() {
-        String errorMsg = "Invalid command format! \nUsage: attendance COMMAND"
-                        + "\n\nCOMMAND:\n  - list\n  - mark\n  - unmark";
+        String errorMsg = "Invalid command format! \nUsage: attendance COMMAND" + "\nCOMMAND: list, mark, unmark";
         assertParseFailure(attendanceParser, "", errorMsg);
         assertParseFailure(attendanceParser, "invalid", errorMsg);
     }

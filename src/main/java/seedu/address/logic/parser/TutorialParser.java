@@ -38,10 +38,7 @@ public class TutorialParser implements Parser<Command> {
 
         usage = """
                         Usage: tutorial COMMAND
-
-                        COMMAND:
-                        %s""".formatted(
-                        subcmds.keySet().stream().map("  - %s"::formatted).collect(Collectors.joining("\n")));
+                        COMMAND: %s""".formatted(String.join(", ", subcmds.keySet()));
     }
 
     @Override
