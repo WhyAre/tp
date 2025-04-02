@@ -15,6 +15,15 @@ Class "{abstract}\nCommand" as Command
 
 Class "<<interface>>\nLogic" as Logic
 Class LogicManager
+
+enum "<<enumeration>>\nNavigationMode" as NavigationMode {
+    STUDENT
+    TUTORIAL
+    ATTENDANCE
+    ASSIGNMENT
+    SINGLE_STUDENT
+    UNCHANGED
+}
 }
 
 package Model {
@@ -44,4 +53,5 @@ note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
 Logic ..> CommandResult
 LogicManager .down.> CommandResult
 Command .up.> CommandResult : <<create>>
+CommandResult -> NavigationMode
 @enduml

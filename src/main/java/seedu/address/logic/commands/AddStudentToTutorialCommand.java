@@ -2,9 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -14,7 +12,6 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
@@ -58,27 +55,20 @@ public class AddStudentToTutorialCommand extends Command {
         for (Index index : indices) {
             // Check that index is in bounds.
             if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             assert model.hasStudent(studentToEdit);
 
-            Student editedStudent = studentToEdit.clone();
-            assert studentToEdit.hashCode() == editedStudent.hashCode();
-
-            Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-            tutorials.add(tutorial);
-            editedStudent.setTutorials(tutorials);
-
             try {
-                model.setStudent(studentToEdit, editedStudent);
-                model.addAttendance(tutorial, editedStudent);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+                model.addStudentToTutorial(tutorial, studentToEdit);
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
             }
         }
 
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 

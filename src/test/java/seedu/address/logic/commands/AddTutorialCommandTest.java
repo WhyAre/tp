@@ -11,11 +11,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.testutil.TypicalStudents;
+import seedu.address.testutil.TypicalAddressBook;
 
 public class AddTutorialCommandTest {
 
-    private static final Model modelStub = new ModelManager(TypicalStudents.getTypicalAddressBookInclTutorials(),
+    private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
                     new UserPrefs());
 
     @Test
@@ -35,7 +35,7 @@ public class AddTutorialCommandTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicateTutorial_throwsCommandException() {
         var cmd = new AddTutorialCommand(new Tutorial("CS2103-T1"));
 
         assertThrows(CommandException.class, AddTutorialCommand.MESSAGE_DUPLICATE_TUTORIAL, (

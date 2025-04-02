@@ -1,19 +1,30 @@
 package seedu.address.model.tutorial;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.model.attendance.Attendance;
+import seedu.address.model.student.Student;
 import seedu.address.model.uniquelist.Identifiable;
 import seedu.address.model.uniquelist.UniqueList;
+import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 
 /**
  * Represents a tutorial
  */
-public record Tutorial(String name, UniqueList<Attendance> attendances,
-                UniqueList<Assignment> assignments) implements Identifiable<Tutorial> {
+public record Tutorial(String name, UniqueList<Assignment> assignments,
+                UniqueList<Attendance> attendances) implements Identifiable<Tutorial> {
 
     public Tutorial(String name) {
         this(name, new UniqueList<>(), new UniqueList<>());
+    }
+
+    public Tutorial(String name, UniqueList<Assignment> assignments) {
+        this(name, assignments, new UniqueList<>());
+    }
+
+    public Tutorial(Tutorial t) {
+        this(t.name, new UniqueList<>(t.assignments), new UniqueList<>(t.attendances));
     }
 
     /**
@@ -37,9 +48,15 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
      * @param assignment
      *            Assignment to add
      */
-    public boolean addAssignment(Assignment assignment) {
+    public Assignment addAssignment(Assignment assignment) throws DuplicateItemException {
         Objects.requireNonNull(assignment);
-        return assignments.add(assignment);
+
+        var newAssignment = assignment.setTutorial(this);
+        if (!assignments.add(newAssignment)) {
+            throw new DuplicateItemException("");
+        }
+
+        return assignment;
     }
 
     /**
@@ -55,6 +72,10 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
 
     public boolean hasAssignment(Assignment assignment) {
         return assignments.contains(assignment);
+    }
+
+    public Optional<Assignment> findAssignment(Assignment assignment) {
+        return assignments.find(assignment);
     }
 
     /**
@@ -73,6 +94,14 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
         this.attendances.add(attendance);
     }
 
+    /**
+     * Removes information related to student when student is removed
+     */
+    public void removeStudent(Student student) {
+        attendances.removeIf(a -> a.student().hasSameIdentity(student));
+        assignments.forEach(a -> a.removeStudent(student));
+    }
+
     @Override
     public boolean hasSameIdentity(Tutorial other) {
         if (other == null) {
@@ -80,6 +109,24 @@ public record Tutorial(String name, UniqueList<Attendance> attendances,
         }
 
         return this.name.equals(other.name);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Tutorial t)) {
+            return false;
+        }
+
+        return this.name.equals(t.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override

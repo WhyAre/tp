@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.ALICE;
+import static seedu.address.testutil.TypicalAddressBook.ALICE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
@@ -26,6 +27,9 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
+import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -58,7 +62,7 @@ public class AddCommandTest {
         AddCommand addCommand = new AddCommand(validStudent);
         ModelStub modelStub = new ModelStubWithStudent(validStudent);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, (
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_STUDENT, (
         ) -> addCommand.execute(modelStub));
     }
 
@@ -163,6 +167,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObjectProperty<Student> getSelectedStudent() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setSelectedStudent(Student target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setStudent(Student target, Student editedStudent) {
             throw new AssertionError("This method should not be called.");
         }
@@ -190,6 +204,17 @@ public class AddCommandTest {
 
         @Override
         public boolean hasTutorial(Tutorial tutorial) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+                        SubmissionStatus status) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -239,7 +264,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Submission> getFilteredSubmissionList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredSubmissionList(Predicate<Submission> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -254,6 +289,26 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean check() {
+            return true;
+        }
+
+        @Override
+        public void addStudentToTutorial(Tutorial tutorial, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -273,7 +328,7 @@ public class AddCommandTest {
         @Override
         public boolean hasStudent(Student student) {
             requireNonNull(student);
-            return this.student.isSamePerson(student);
+            return this.student.isSameStudent(student);
         }
     }
 
@@ -286,7 +341,7 @@ public class AddCommandTest {
         @Override
         public boolean hasStudent(Student student) {
             requireNonNull(student);
-            return studentsAdded.stream().anyMatch(student::isSamePerson);
+            return studentsAdded.stream().anyMatch(student::isSameStudent);
         }
 
         @Override

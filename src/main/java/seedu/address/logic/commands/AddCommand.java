@@ -37,7 +37,7 @@ public class AddCommand extends Command {
                     + "%sCS2103_T01 %sCS2106_T02".formatted(PREFIX_TUTORIAL_NAME, PREFIX_TUTORIAL_NAME);
 
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This student already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book";
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "One of the tutorial groups the student "
                     + "is added to does not exist: ";
 
@@ -56,7 +56,7 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasStudent(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
         String resultMessage = MESSAGE_SUCCESS;
@@ -71,6 +71,8 @@ public class AddCommand extends Command {
         toAdd.setTutorials(existingTutorials);
 
         model.addStudent(toAdd);
+
+        assert model.check();
         return new CommandResult(String.format(resultMessage, Messages.format(toAdd)));
     }
 

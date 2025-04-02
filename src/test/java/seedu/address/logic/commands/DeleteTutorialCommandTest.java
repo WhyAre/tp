@@ -11,11 +11,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.testutil.TypicalStudents;
+import seedu.address.testutil.TypicalAddressBook;
 
 public class DeleteTutorialCommandTest {
 
-    private static final Model modelStub = new ModelManager(TypicalStudents.getTypicalAddressBookInclTutorials(),
+    private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
                     new UserPrefs());
 
     @Test
@@ -48,5 +48,18 @@ public class DeleteTutorialCommandTest {
         for (var student : students) {
             assertFalse(student.hasTutorial(t));
         }
+    }
+
+    @Test
+    public void execute_equalsTutorialDelete_successSameObj() throws Exception {
+        DeleteTutorialCommand deleteTutorialCommand = new DeleteTutorialCommand(new Tutorial("CS2103-T1"));
+        assertEquals(deleteTutorialCommand, deleteTutorialCommand);
+    }
+
+    @Test
+    public void execute_equalsTutorialDelete_successSameDetails() throws Exception {
+        DeleteTutorialCommand deleteTutorialCommand = new DeleteTutorialCommand(new Tutorial("CS2103-T1"));
+        DeleteTutorialCommand otherDeleteTutorialCommand = new DeleteTutorialCommand(new Tutorial("CS2103-T1"));
+        assertEquals(deleteTutorialCommand, otherDeleteTutorialCommand);
     }
 }

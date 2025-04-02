@@ -4,10 +4,14 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
+import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -18,7 +22,7 @@ import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Student> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Student> PREDICATE_SHOW_ALL_STUDENTS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Tutorial> PREDICATE_SHOW_ALL_TUTORIALS = unused -> true;
@@ -86,6 +90,16 @@ public interface Model {
     void deleteStudent(Student target);
 
     /**
+     * Returns a given student. The student must exist in the address book.
+     */
+    ObjectProperty<Student> getSelectedStudent();
+
+    /**
+     * Sets a given student. The student must exist in the address book.
+     */
+    void setSelectedStudent(Student target);
+
+    /**
      * Adds the given student. {@code student} must not already exist in the address
      * book.
      */
@@ -128,6 +142,17 @@ public interface Model {
     boolean hasTutorial(Tutorial tutorial);
 
     /**
+     * Sets submission status
+     */
+    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status)
+                    throws ItemNotFoundException;
+
+    /**
+     * Adds an assignment to tutorial slot
+     */
+    void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException;
+
+    /**
      * Creates attendance record for a student in specified tutorial
      */
     void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
@@ -135,14 +160,12 @@ public interface Model {
     /**
      * Marks student as present
      */
-    void markAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException;
+    void markAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException;
 
     /**
      * Marks student as absent
      */
-    void unmarkAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException;
+    void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException;
 
     /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
@@ -190,6 +213,12 @@ public interface Model {
     ObservableList<Attendance> getFilteredAttendanceList();
 
     /**
+     * Returns an unmodifiable view of the list of {@link Submission} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
+    ObservableList<Submission> getFilteredSubmissionList();
+
+    /**
      * Updates the filter of the filtered attendance list to filter by the given
      * {@code predicate}.
      *
@@ -197,6 +226,12 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredAttendanceList(Predicate<Attendance> predicate);
+
+    /**
+     * Updates the filter of the filtered submission list to filter by the given
+     * {@code predicate}.
+     */
+    void updateFilteredSubmissionList(Predicate<Submission> predicate);
 
     /**
      * Returns an unmodifiable view of the list of TutorialWithStudents by mapping
@@ -224,4 +259,12 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
+
+    boolean check();
+
+    void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    void removeAssignment(Assignment assignment) throws ItemNotFoundException;
 }
