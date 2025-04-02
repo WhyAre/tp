@@ -510,6 +510,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Checks whether an attendance exists in the address book
+     */
+    public boolean hasAttendance(Attendance attendance) {
+        requireNonNull(attendance);
+        return attendances.containsIdentity(attendance);
+    }
+
+    /**
      * Creates a submission object for every assignment-student pair (if it doesn't
      * already exists)
      */

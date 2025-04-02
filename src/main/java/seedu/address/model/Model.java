@@ -168,6 +168,11 @@ public interface Model {
     void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException;
 
     /**
+     * Checks whether an attendance exists in the address book
+     */
+    public boolean hasAttendance(Attendance attendance);
+
+    /**
      * Returns an unmodifiable view of the list of {@code Student} backed by the
      * internal list of {@code versionedAddressBook}
      */
