@@ -43,6 +43,8 @@ public class UnmarkAttendanceCommandParser implements Parser<UnmarkAttendanceCom
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_WEEK);
+
         int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getOneBased();
 
         if (week < UnmarkAttendanceCommand.START_WEEK || week > UnmarkAttendanceCommand.END_WEEK) {

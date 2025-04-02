@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ListAttendanceCommand;
 import seedu.address.logic.commands.MarkAttendanceCommand;
@@ -111,6 +112,22 @@ public class AttendanceCommandParserTest {
     @Test
     public void parseCommand_unmarkAttendanceCommand_invalidWeekHigh() {
         parseCommand_attendanceCommand_invalidWeek(unmarkAttendanceParser, END_WEEK + 1);
+    }
+
+    private void parseCommand_attendanceCommand_invalidMultipleWeeks(Parser<? extends Command> parser) {
+        var tutorialName = "Tutorial-_-Name1";
+        var cmd = "%s w/%d w/%d s/%d".formatted(tutorialName, START_WEEK, END_WEEK, DUMMY_INDEX_ONE);
+        assertParseFailure(parser, cmd, Messages.getErrorMessageForDuplicatePrefixes(CliSyntax.PREFIX_WEEK));
+    }
+
+    @Test
+    public void parseCommand_markAttendanceCommand_invalidMultipleWeeks() {
+        parseCommand_attendanceCommand_invalidMultipleWeeks(markAttendanceParser);
+    }
+
+    @Test
+    public void parseCommand_unmarkAttendanceCommand_invalidMultipleWeeks() {
+        parseCommand_attendanceCommand_invalidMultipleWeeks(unmarkAttendanceParser);
     }
 
     private void parseCommand_attendanceCommand_invalidNoTutorial(Parser<? extends Command> parser) {
