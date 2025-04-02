@@ -175,7 +175,7 @@ public class AttendanceCommandParserTest {
         parseCommand_attendanceCommand_invalidNoIndex(unmarkAttendanceParser);
     }
 
-    private void parseCommand_attendanceCommandInvalidIndices(Parser<? extends Command> parser) {
+    private void parseCommand_attendanceCommand_invalidIndices(Parser<? extends Command> parser) {
         String invalidCmdOne = "w/a i/%d".formatted(DUMMY_INDEX_ONE);
         String invalidCmdTwo = "w/%d i/a".formatted(START_WEEK);
         String invalidCmdThree = "w/%d i/%d".formatted(-START_WEEK, DUMMY_INDEX_ONE);
@@ -188,13 +188,34 @@ public class AttendanceCommandParserTest {
     }
 
     @Test
-    public void parseCommand_markAttendanceCommandInvalidIndices() {
-        parseCommand_attendanceCommandInvalidIndices(markAttendanceParser);
+    public void parseCommand_markAttendanceCommand_invalidIndices() {
+        parseCommand_attendanceCommand_invalidIndices(markAttendanceParser);
     }
 
     @Test
-    public void parseCommand_unmarkAttendanceCommandInvalidIndices() {
-        parseCommand_attendanceCommandInvalidIndices(unmarkAttendanceParser);
+    public void parseCommand_unmarkAttendanceCommand_invalidIndices() {
+        parseCommand_attendanceCommand_invalidIndices(unmarkAttendanceParser);
+    }
+
+    private void parseCommand_attendanceCommand_invalidWithPreamble(Parser<? extends Command> parser) {
+        String cmd = "CS2103-T1 w/%d i/%d".formatted(START_WEEK, DUMMY_INDEX_ONE);
+        if (parser instanceof MarkAttendanceCommandParser) {
+            assertParseFailure(parser, cmd,
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
+        } else {
+            assertParseFailure(parser, cmd,
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
+        }
+    }
+
+    @Test
+    public void parseCommand_markAttendanceCommand_invalidWithPreamble() {
+        parseCommand_attendanceCommand_invalidWithPreamble(markAttendanceParser);
+    }
+
+    @Test
+    public void parseCommand_unmarkAttendanceCommand_invalidWithPreamble() {
+        parseCommand_attendanceCommand_invalidWithPreamble(unmarkAttendanceParser);
     }
 
     @Test
