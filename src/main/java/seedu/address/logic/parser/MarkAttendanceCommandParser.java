@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEEK;
 
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tutorial.Tutorial;
 
 /**
  * Parses input arguments and creates a new MarkAttendanceCommand object
@@ -28,19 +27,19 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
      */
     public MarkAttendanceCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_WEEK, PREFIX_INDEX);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(" " + args, PREFIX_WEEK, PREFIX_ATTENDANCE_INDEX);
 
-        if (!argMultimap.allPresent(PREFIX_WEEK, PREFIX_INDEX)) {
+        if (!argMultimap.allPresent(PREFIX_WEEK, PREFIX_ATTENDANCE_INDEX)) {
             throw new ParseException(
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
         }
 
-        String tutorialString = argMultimap.getPreamble();
-        // Throw parse error if no tutorial is specified.
-        if (tutorialString.isEmpty()) {
+        if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
         }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_WEEK);
 
         int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getOneBased();
 
@@ -49,12 +48,10 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
         }
 
         List<Index> indices = new ArrayList<>();
-        for (String index : argMultimap.getAllValues(PREFIX_INDEX)) {
+        for (String index : argMultimap.getAllValues(PREFIX_ATTENDANCE_INDEX)) {
             indices.add(ParserUtil.parseIndex(index));
         }
 
-        Tutorial tutorial = new Tutorial(tutorialString);
-
-        return new MarkAttendanceCommand(tutorial, week, indices);
+        return new MarkAttendanceCommand(week, indices);
     }
 }
