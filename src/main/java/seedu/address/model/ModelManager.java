@@ -184,9 +184,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+    public void setSubmissionStatus(String tutorialName, String assignmentName, String studentName,
                     SubmissionStatus status) throws ItemNotFoundException, CommandException {
-        addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
+        addressBook.setSubmissionStatus(tutorialName, assignmentName, studentName, status);
     }
 
     @Override
