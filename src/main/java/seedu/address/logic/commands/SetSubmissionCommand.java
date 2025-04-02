@@ -70,6 +70,8 @@ public class SetSubmissionCommand extends Command {
         }
 
         var msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());
+
+        assert model.check();
         return new CommandResult(msg, NavigationMode.UNCHANGED);
     }
 

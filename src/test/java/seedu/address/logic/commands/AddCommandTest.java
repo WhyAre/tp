@@ -27,7 +27,9 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -212,6 +214,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addAttendance(Tutorial tutorial, Student student) {
             throw new AssertionError("This method should not be called.");
         }
@@ -257,7 +264,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Submission> getFilteredSubmissionList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredSubmissionList(Predicate<Submission> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -278,6 +295,21 @@ public class AddCommandTest {
         @Override
         public boolean check() {
             return true;
+        }
+
+        @Override
+        public void addStudentToTutorial(Tutorial tutorial, Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
+            throw new AssertionError("This method should not be called.");
         }
 
     }

@@ -43,6 +43,8 @@ public class ViewCommand extends Command {
 
         Student studentToView = lastShownList.get(targetIndex.getZeroBased());
         model.setSelectedStudent(studentToView);
+
+        assert model.check();
         return new CommandResult(String.format(MESSAGE_VIEWED_STUDENT_SUCCESS, Messages.format(studentToView)),
                         NavigationMode.SINGLE_STUDENT);
     }

@@ -31,6 +31,7 @@ public class JsonSerializableAddressBookTest {
         ) -> addressBookFromFile.check());
         assertDoesNotThrow((
         ) -> typicalStudentsAddressBook.check());
+
         assertEquals(addressBookFromFile, typicalStudentsAddressBook);
     }
 

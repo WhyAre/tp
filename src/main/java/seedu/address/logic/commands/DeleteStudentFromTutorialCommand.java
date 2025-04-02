@@ -2,9 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -14,7 +12,6 @@ import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
@@ -62,21 +59,15 @@ public class DeleteStudentFromTutorialCommand extends Command {
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
-            Student editedStudent = studentToEdit.clone();
-            Set<Tutorial> tutorials = new HashSet<>(studentToEdit.getTutorials());
-            tutorials.remove(tutorial);
-            editedStudent.setTutorials(tutorials);
-
-            assert model.hasStudent(studentToEdit);
-            assert studentToEdit.hashCode() == editedStudent.hashCode();
 
             try {
-                model.setStudent(studentToEdit, editedStudent);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+                model.removeStudentFromTutorial(tutorial, studentToEdit);
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
             }
         }
 
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 

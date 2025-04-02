@@ -54,4 +54,8 @@ public class TelegramHandle {
         return handle;
     }
 
+    @Override
+    public int hashCode() {
+        return handle.hashCode();
+    }
 }

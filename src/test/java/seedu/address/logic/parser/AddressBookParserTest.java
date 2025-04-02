@@ -166,4 +166,12 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class, (
         ) -> parser.parseCommand(cmd));
     }
+
+    @Test
+    public void parseCommand_tutorialDeleteCommand_noName() {
+        var cmd = "%s %s".formatted(TutorialCommand.COMMAND_WORD, DeleteTutorialCommand.COMMAND_WORD);
+
+        assertThrows(ParseException.class, (
+        ) -> parser.parseCommand(cmd));
+    }
 }

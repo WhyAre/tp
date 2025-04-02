@@ -9,7 +9,9 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -146,6 +148,11 @@ public interface Model {
                     throws ItemNotFoundException;
 
     /**
+     * Adds an assignment to tutorial slot
+     */
+    void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException;
+
+    /**
      * Creates attendance record for a student in specified tutorial
      */
     void addAttendance(Tutorial tutorial, Student student) throws ItemNotFoundException;
@@ -206,6 +213,12 @@ public interface Model {
     ObservableList<Attendance> getFilteredAttendanceList();
 
     /**
+     * Returns an unmodifiable view of the list of {@link Submission} backed by the
+     * internal list of {@code versionedAddressBook}
+     */
+    ObservableList<Submission> getFilteredSubmissionList();
+
+    /**
      * Updates the filter of the filtered attendance list to filter by the given
      * {@code predicate}.
      *
@@ -213,6 +226,12 @@ public interface Model {
      *             if {@code predicate} is null.
      */
     void updateFilteredAttendanceList(Predicate<Attendance> predicate);
+
+    /**
+     * Updates the filter of the filtered submission list to filter by the given
+     * {@code predicate}.
+     */
+    void updateFilteredSubmissionList(Predicate<Submission> predicate);
 
     /**
      * Returns an unmodifiable view of the list of TutorialWithStudents by mapping
@@ -242,4 +261,10 @@ public interface Model {
     void updateFilteredTutorialWithStudentsList(Predicate<Tutorial> predicate);
 
     boolean check();
+
+    void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException;
+
+    void removeAssignment(Assignment assignment) throws ItemNotFoundException;
 }
