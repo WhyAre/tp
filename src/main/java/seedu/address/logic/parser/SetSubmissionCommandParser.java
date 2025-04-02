@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ASSIGNMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
@@ -45,9 +44,9 @@ public class SetSubmissionCommandParser implements Parser<SetSubmissionCommand> 
         var status = SubmissionStatus.parse(argMultimap.getPreamble());
 
         var tutorialName = argMultimap.getValue(PREFIX_TUTORIAL_IDX).orElseThrow((
-        ) -> new IllegalStateException(MESSAGE_UNKNOWN_COMMAND));
+        ) -> new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(MESSAGE_USAGE)));
         var assignmentName = argMultimap.getValue(PREFIX_ASSIGNMENT).orElseThrow((
-        ) -> new IllegalStateException(MESSAGE_UNKNOWN_COMMAND));
+        ) -> new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(MESSAGE_USAGE)));
 
         var studentList = argMultimap.getAllValues(PREFIX_STUDENT_NAME);
         if (studentList.isEmpty()) {
