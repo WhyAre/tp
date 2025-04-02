@@ -17,7 +17,7 @@ import seedu.address.model.submission.SubmissionStatus;
  */
 public class SetSubmissionCommandParser implements Parser<SetSubmissionCommand> {
 
-    public static final String MESSAGE_USAGE = "Usage: %s %s STATE %sTUTORIAL_NAME %sASSIGNMENT_NAME %sINDEX..."
+    public static final String MESSAGE_USAGE = "Usage: %s %s STATE %sTUTORIAL_NAME %sASSIGNMENT_NAME %sSTUDENT_NAME..."
                     .formatted(SubmissionParser.COMMAND_WORD, SetSubmissionCommand.COMMAND_WORD, PREFIX_TUTORIAL_NAME,
                                     PREFIX_ASSIGNMENT, PREFIX_STUDENT_NAME);
 
