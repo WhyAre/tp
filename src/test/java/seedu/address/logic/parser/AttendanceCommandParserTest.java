@@ -15,15 +15,14 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ListAttendanceCommand;
 import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.commands.UnmarkAttendanceCommand;
-import seedu.address.model.tutorial.Tutorial;
 
 public class AttendanceCommandParserTest {
     private static final int DUMMY_INDEX_ONE = 1;
     private static final int DUMMY_INDEX_TWO = 2;
+    private static final int START_WEEK = 3;
     private static final int END_WEEK = 13;
     private static final String MESSAGE_INVALID_WEEK = "Weeks are from 3 to 13.\nIf you are making up for tutorials, "
                     + "enter the week that is being accounted for.";
-    private static final int START_WEEK = 3;
 
     private final AttendanceParser attendanceParser = new AttendanceParser();
     private final MarkAttendanceCommandParser markAttendanceParser = new MarkAttendanceCommandParser();
@@ -39,33 +38,39 @@ public class AttendanceCommandParserTest {
 
     @Test
     public void parseCommand_attendanceCommand_success() {
-        Tutorial tutorial = new Tutorial("CS2106-T11");
-        assertParseSuccess(attendanceParser, "mark CS2106-T11 w/3 s/1",
-                        new MarkAttendanceCommand(tutorial, START_WEEK, List.of(Index.fromOneBased(DUMMY_INDEX_ONE))));
-        assertParseSuccess(attendanceParser, "unmark CS2106-T11 w/3 s/1", new UnmarkAttendanceCommand(tutorial,
-                        START_WEEK, List.of(Index.fromOneBased(DUMMY_INDEX_ONE))));
+        assertParseSuccess(attendanceParser, "mark w/3 i/1",
+                        new MarkAttendanceCommand(START_WEEK, List.of(Index.fromOneBased(DUMMY_INDEX_ONE))));
+        assertParseSuccess(attendanceParser, "unmark w/3 i/1",
+                        new UnmarkAttendanceCommand(START_WEEK, List.of(Index.fromOneBased(DUMMY_INDEX_ONE))));
     }
 
     private void parseCommand_attendanceCommand_success(Parser<? extends Command> parser, boolean isSingleIndex) {
-        var tutorialName = "Tutorial-_-Name1";
-        var cmd = "%s w/%d s/%d".formatted(tutorialName, START_WEEK, DUMMY_INDEX_ONE);
+        var cmd = "w/%d i/%d".formatted(START_WEEK, DUMMY_INDEX_ONE);
         List<Index> indices;
         Command actual;
 
         if (!isSingleIndex) {
-            cmd += " s/%d".formatted(DUMMY_INDEX_TWO);
+            cmd += " i/%d".formatted(DUMMY_INDEX_TWO);
             indices = List.of(Index.fromOneBased(DUMMY_INDEX_ONE), Index.fromOneBased(DUMMY_INDEX_TWO));
         } else {
             indices = List.of(Index.fromOneBased(DUMMY_INDEX_ONE));
         }
 
         if (parser instanceof MarkAttendanceCommandParser) {
-            actual = new MarkAttendanceCommand(new Tutorial(tutorialName), START_WEEK, indices);
+            actual = new MarkAttendanceCommand(START_WEEK, indices);
             assertParseSuccess(parser, cmd, actual);
         } else if (parser instanceof UnmarkAttendanceCommandParser) {
-            actual = new UnmarkAttendanceCommand(new Tutorial(tutorialName), START_WEEK, indices);
+            actual = new UnmarkAttendanceCommand(START_WEEK, indices);
             assertParseSuccess(parser, cmd, actual);
         }
+    }
+
+    @Test
+    public void parseCommand_attendanceCommand_successMultipleSpaces() {
+        assertParseSuccess(attendanceParser, "  mark   w/3   i/1",
+                        new MarkAttendanceCommand(START_WEEK, List.of(Index.fromOneBased(DUMMY_INDEX_ONE))));
+        assertParseSuccess(attendanceParser, "  unmark   w/3   i/1",
+                        new UnmarkAttendanceCommand(START_WEEK, List.of(Index.fromOneBased(DUMMY_INDEX_ONE))));
     }
 
     @Test
@@ -89,8 +94,7 @@ public class AttendanceCommandParserTest {
     }
 
     private void parseCommand_attendanceCommand_invalidWeek(Parser<? extends Command> parser, int week) {
-        var tutorialName = "Tutorial-_-Name1";
-        var cmd = "%s w/%d s/%d".formatted(tutorialName, week, DUMMY_INDEX_ONE);
+        var cmd = "w/%d i/%d".formatted(week, DUMMY_INDEX_ONE);
         assertParseFailure(parser, cmd, MESSAGE_INVALID_WEEK);
     }
 
@@ -115,8 +119,7 @@ public class AttendanceCommandParserTest {
     }
 
     private void parseCommand_attendanceCommand_invalidMultipleWeeks(Parser<? extends Command> parser) {
-        var tutorialName = "Tutorial-_-Name1";
-        var cmd = "%s w/%d w/%d s/%d".formatted(tutorialName, START_WEEK, END_WEEK, DUMMY_INDEX_ONE);
+        var cmd = "w/%d w/%d i/%d".formatted(START_WEEK, END_WEEK, DUMMY_INDEX_ONE);
         assertParseFailure(parser, cmd, Messages.getErrorMessageForDuplicatePrefixes(CliSyntax.PREFIX_WEEK));
     }
 
@@ -130,51 +133,9 @@ public class AttendanceCommandParserTest {
         parseCommand_attendanceCommand_invalidMultipleWeeks(unmarkAttendanceParser);
     }
 
-    private void parseCommand_attendanceCommand_invalidNoTutorial(Parser<? extends Command> parser) {
-        var cmd = " w/%d s/%d".formatted(START_WEEK, DUMMY_INDEX_ONE);
-        if (parser instanceof MarkAttendanceCommandParser) {
-            assertParseFailure(parser, cmd,
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
-        } else if (parser instanceof UnmarkAttendanceCommandParser) {
-            assertParseFailure(parser, cmd,
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
-        }
-    }
-
-    @Test
-    public void parseCommand_markAttendanceCommand_invalidNoTutorial() {
-        parseCommand_attendanceCommand_invalidNoTutorial(markAttendanceParser);
-    }
-
-    @Test
-    public void parseCommand_unmarkAttendanceCommand_invalidNoTutorial() {
-        parseCommand_attendanceCommand_invalidNoTutorial(unmarkAttendanceParser);
-    }
-
-    private void parseCommand_attendanceCommand_invalidNotComplete(Parser<? extends Command> parser) {
-        var cmd = "w/%d s/%d".formatted(START_WEEK, DUMMY_INDEX_ONE);
-        if (parser instanceof MarkAttendanceCommandParser) {
-            assertParseFailure(parser, cmd,
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
-        } else if (parser instanceof UnmarkAttendanceCommandParser) {
-            assertParseFailure(parser, cmd,
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkAttendanceCommand.MESSAGE_USAGE));
-        }
-    }
-
-    @Test
-    public void parseCommand_markAttendanceCommand_invalidNotComplete() {
-        parseCommand_attendanceCommand_invalidNotComplete(markAttendanceParser);
-    }
-
-    @Test
-    public void parseCommand_unmarkAttendanceCommand_invalidNotComplete() {
-        parseCommand_attendanceCommand_invalidNotComplete(unmarkAttendanceParser);
-    }
-
     private void parseCommand_attendanceCommand_invalidNoWeek(Parser<? extends Command> parser) {
-        var cmd = "CS2106-T10 s/%d".formatted(DUMMY_INDEX_ONE);
-        if (parser instanceof MarkAttendanceCommand) {
+        var cmd = "i/%d".formatted(DUMMY_INDEX_ONE);
+        if (parser instanceof MarkAttendanceCommandParser) {
             assertParseFailure(parser, cmd,
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
         } else if (parser instanceof UnmarkAttendanceCommandParser) {
@@ -193,9 +154,9 @@ public class AttendanceCommandParserTest {
         parseCommand_attendanceCommand_invalidNoWeek(unmarkAttendanceParser);
     }
 
-    private void parseCommand_attendanceCommand_invalidNoStudent(Parser<? extends Command> parser) {
-        var cmd = "CS2106-T10 w/%d".formatted(START_WEEK);
-        if (parser instanceof MarkAttendanceCommand) {
+    private void parseCommand_attendanceCommand_invalidNoIndex(Parser<? extends Command> parser) {
+        var cmd = "w/%d".formatted(START_WEEK);
+        if (parser instanceof MarkAttendanceCommandParser) {
             assertParseFailure(parser, cmd,
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE));
         } else if (parser instanceof UnmarkAttendanceCommandParser) {
@@ -205,13 +166,35 @@ public class AttendanceCommandParserTest {
     }
 
     @Test
-    public void parseCommand_markAttendanceCommand_invalidNoStudent() {
-        parseCommand_attendanceCommand_invalidNoStudent(markAttendanceParser);
+    public void parseCommand_markAttendanceCommand_invalidNoIndex() {
+        parseCommand_attendanceCommand_invalidNoIndex(markAttendanceParser);
     }
 
     @Test
-    public void parseCommand_unmarkAttendanceCommand_invalidNoStudent() {
-        parseCommand_attendanceCommand_invalidNoStudent(unmarkAttendanceParser);
+    public void parseCommand_unmarkAttendanceCommand_invalidNoIndex() {
+        parseCommand_attendanceCommand_invalidNoIndex(unmarkAttendanceParser);
+    }
+
+    private void parseCommand_attendanceCommandInvalidIndices(Parser<? extends Command> parser) {
+        String invalidCmdOne = "w/a i/%d".formatted(DUMMY_INDEX_ONE);
+        String invalidCmdTwo = "w/%d i/a".formatted(START_WEEK);
+        String invalidCmdThree = "w/%d i/%d".formatted(-START_WEEK, DUMMY_INDEX_ONE);
+        String invalidCmdFour = "w/%d i/%d".formatted(START_WEEK, -DUMMY_INDEX_ONE);
+
+        assertParseFailure(parser, invalidCmdOne, ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, invalidCmdTwo, ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, invalidCmdThree, ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, invalidCmdFour, ParserUtil.MESSAGE_INVALID_INDEX);
+    }
+
+    @Test
+    public void parseCommand_markAttendanceCommandInvalidIndices() {
+        parseCommand_attendanceCommandInvalidIndices(markAttendanceParser);
+    }
+
+    @Test
+    public void parseCommand_unmarkAttendanceCommandInvalidIndices() {
+        parseCommand_attendanceCommandInvalidIndices(unmarkAttendanceParser);
     }
 
     @Test
