@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,31 +48,44 @@ public class SetSubmissionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        var errMsg = new StringBuilder();
+        var result = new ArrayList<String>();
+        var hasError = false;
         for (var idx : studentIdxList) {
             var idxZeroBased = idx.getZeroBased();
 
             var students = model.getFilteredStudentList();
             if (idxZeroBased >= students.size()) {
-                errMsg.append("Student at index %d is out of bounds\n".formatted(idx.getOneBased()));
+                result.add("Student at index %d is out of bounds".formatted(idx.getOneBased()));
+                hasError = true;
                 continue;
             }
 
             var student = model.getFilteredStudentList().get(idxZeroBased);
             if (student == null) {
-                throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
+                result.add(MESSAGE_STUDENT_NOT_FOUND);
+                hasError = true;
+                continue;
             }
 
             try {
                 model.setSubmissionStatus(tutorialName, assignmentName, student, status);
-            } catch (ItemNotFoundException e) {
-                throw new CommandException(e.getMessage());
+            } catch (ItemNotFoundException|CommandException e) {
+                result.add(e.getMessage());
+                hasError = true;
+                continue;
             }
+
+            result.add("Successfully set submission status for '%s'".formatted(student.getName()));
         }
 
-        var msg = (errMsg.isEmpty()) ? MESSAGE_SUCCESS : "Warning: %s".formatted(errMsg.toString());
 
         assert model.check();
+
+        var msg = String.join("\n", result);
+        if (hasError) {
+            throw new CommandException(msg);
+        }
+
         return new CommandResult(msg, NavigationMode.UNCHANGED);
     }
 

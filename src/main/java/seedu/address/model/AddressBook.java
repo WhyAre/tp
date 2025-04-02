@@ -401,7 +401,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         ) -> new ItemNotFoundException(MESSAGE_STUDENT_NOT_FOUND.formatted(submission.student())));
 
         if (!studentInList.getTutorials().contains(tut)) {
-            throw new CommandException("%s not in %s".formatted(studentInList.getName(), tut));
+            throw new CommandException("'%s' not in '%s'".formatted(studentInList.getName(), tut));
         }
 
         // Add to submissions list
