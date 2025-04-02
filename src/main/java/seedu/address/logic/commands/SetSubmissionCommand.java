@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,31 +50,44 @@ public class SetSubmissionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        var errMsg = new StringBuilder();
+        var result = new ArrayList<String>();
+        var hasError = false;
+        for (var idx : studentIdxList) {
+            var idxZeroBased = idx.getZeroBased();
 
-        for (var studentId : studentIdList) {
-            Optional<Student> studentOptional = model.getFilteredStudentList().stream()
-                            .filter(s -> s.getStudentId().equals(studentId)).findFirst();
-
-            if (studentOptional.isEmpty()) {
-                errMsg.append(String.format(MESSAGE_STUDENT_NOT_FOUND, studentId)).append("\n");
+            var students = model.getFilteredStudentList();
+            if (idxZeroBased >= students.size()) {
+                result.add("Student at index %d is out of bounds".formatted(idx.getOneBased()));
+                hasError = true;
                 continue;
             }
 
-            Student student = studentOptional.get();
+            var student = model.getFilteredStudentList().get(idxZeroBased);
+            if (student == null) {
+                result.add(MESSAGE_STUDENT_NOT_FOUND);
+                hasError = true;
+                continue;
+            }
 
             try {
                 model.setSubmissionStatus(tutorialName, assignmentName, student, status);
-            } catch (ItemNotFoundException e) {
-                throw new CommandException(e.getMessage());
+            } catch (ItemNotFoundException|CommandException e) {
+                result.add(e.getMessage());
+                hasError = true;
+                continue;
             }
+
+            result.add("Successfully set submission status for '%s'".formatted(student.getName()));
         }
 
-        if (!errMsg.isEmpty()) {
-            throw new CommandException("Warning: %s".formatted(errMsg.toString()));
+        assert model.check();
+
+        var msg = String.join("\n", result);
+        if (hasError) {
+            throw new CommandException(msg);
         }
 
-        return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
+        return new CommandResult(msg, NavigationMode.UNCHANGED);
     }
 
     @Override
