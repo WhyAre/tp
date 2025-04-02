@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
@@ -184,7 +185,7 @@ public class ModelManager implements Model {
 
     @Override
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
-                    SubmissionStatus status) throws ItemNotFoundException {
+                    SubmissionStatus status) throws ItemNotFoundException, CommandException {
         addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
     }
 
