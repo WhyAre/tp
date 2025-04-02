@@ -145,8 +145,8 @@ public interface Model {
     /**
      * Sets submission status
      */
-    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status)
-            throws ItemNotFoundException, CommandException;
+    void setSubmissionStatus(String tutorialName, String assignmentName, String studentName, SubmissionStatus status)
+                    throws ItemNotFoundException, CommandException;
 
     /**
      * Adds an assignment to tutorial slot

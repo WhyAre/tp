@@ -28,21 +28,21 @@ public class SetSubmissionCommand extends Command {
 
     private final String tutorialName;
     private final String assignmentName;
-    private final List<StudentID> studentIdList;
+    private final List<String> studentList;
     private final SubmissionStatus status;
 
     /**
      * Creates a {@link SetSubmissionCommand} object
      */
-    public SetSubmissionCommand(String tutorialName, String assignmentName, List<StudentID> studentIdList,
+    public SetSubmissionCommand(String tutorialName, String assignmentName, List<String> studentList,
                     SubmissionStatus status) {
         Objects.requireNonNull(tutorialName);
         Objects.requireNonNull(assignmentName);
-        Objects.requireNonNull(studentIdList);
+        Objects.requireNonNull(studentList);
 
         this.tutorialName = tutorialName;
         this.assignmentName = assignmentName;
-        this.studentIdList = studentIdList;
+        this.studentList = studentList;
         this.status = status;
     }
 
@@ -52,32 +52,16 @@ public class SetSubmissionCommand extends Command {
 
         var result = new ArrayList<String>();
         var hasError = false;
-        for (var idx : studentIdxList) {
-            var idxZeroBased = idx.getZeroBased();
-
-            var students = model.getFilteredStudentList();
-            if (idxZeroBased >= students.size()) {
-                result.add("Student at index %d is out of bounds".formatted(idx.getOneBased()));
-                hasError = true;
-                continue;
-            }
-
-            var student = model.getFilteredStudentList().get(idxZeroBased);
-            if (student == null) {
-                result.add(MESSAGE_STUDENT_NOT_FOUND);
-                hasError = true;
-                continue;
-            }
-
+        for (var studentName : studentList) {
             try {
-                model.setSubmissionStatus(tutorialName, assignmentName, student, status);
-            } catch (ItemNotFoundException|CommandException e) {
+                model.setSubmissionStatus(tutorialName, assignmentName, studentName, status);
+            } catch (ItemNotFoundException | CommandException e) {
                 result.add(e.getMessage());
                 hasError = true;
                 continue;
             }
 
-            result.add("Successfully set submission status for '%s'".formatted(student.getName()));
+            result.add("Successfully set submission status for '%s'".formatted(studentName));
         }
 
         assert model.check();
@@ -103,13 +87,13 @@ public class SetSubmissionCommand extends Command {
 
         return tutorialName.equals(otherAddCommand.tutorialName)
                         && assignmentName.equals(otherAddCommand.assignmentName)
-                        && studentIdList.equals(otherAddCommand.studentIdList) && status == otherAddCommand.status;
+                        && studentList.equals(otherAddCommand.studentList) && status == otherAddCommand.status;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("tutorialName", tutorialName).add("assignmentName", assignmentName)
-                        .add("studentIdList", studentIdList).add("status", status).toString();
+                        .add("studentIdxList", studentList).add("status", status).toString();
 
     }
 }

@@ -374,12 +374,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+    public void setSubmissionStatus(String tutorialName, String assignmentName, String studentName,
                     SubmissionStatus status) throws ItemNotFoundException, CommandException {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
-        ) -> new IllegalArgumentException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
         var assign = tut.findAssignment(new Assignment(assignmentName, tut)).orElseThrow((
-        ) -> new IllegalArgumentException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
+        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
+
+        var student = students.stream().filter(s -> s.getName().toString().equals(studentName)).findAny().orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_STUDENT_NOT_FOUND.formatted(studentName)));
 
         setSubmissionStatus(new Submission(assign, student, status));
     }
