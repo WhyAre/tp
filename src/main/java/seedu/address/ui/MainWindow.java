@@ -27,6 +27,15 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
+import seedu.address.ui.attendence.AttendanceListPanel;
+import seedu.address.ui.misc.CommandBox;
+import seedu.address.ui.misc.HelpWindow;
+import seedu.address.ui.misc.ResultDisplay;
+import seedu.address.ui.misc.StatusBarFooter;
+import seedu.address.ui.student.StudentArea;
+import seedu.address.ui.student.StudentListPanel;
+import seedu.address.ui.submission.SubmissionListPanel;
+import seedu.address.ui.tutorial.TutorialListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar

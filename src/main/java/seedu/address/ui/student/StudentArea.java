@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.student;
 
 import java.util.Comparator;
 
@@ -7,13 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.model.student.Student;
+import seedu.address.ui.UiPart;
 
 /**
  * An UI component that displays specific information of a {@code Student}.
  */
 public class StudentArea extends UiPart<Region> {
 
-    private static final String FXML = "StudentArea.fxml";
+    private static final String FXML = "StudentComponents/StudentArea.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved

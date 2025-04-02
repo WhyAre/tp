@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.attendence;
 
 import java.util.logging.Logger;
 
@@ -9,12 +9,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.attendance.Attendance;
+import seedu.address.ui.UiPart;
 
 /**
  * Panel containing the list of attendances.
  */
 public class AttendanceListPanel extends UiPart<Region> {
-    private static final String FXML = "AttendanceListPanel.fxml";
+    private static final String FXML = "AttendenceComponents/AttendanceListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(AttendanceListPanel.class);
 
     @FXML

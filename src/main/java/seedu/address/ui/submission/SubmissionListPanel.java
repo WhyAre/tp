@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.submission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,13 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.ui.UiPart;
 
 /**
  * Panel containing the list of submissions.
  */
 public class SubmissionListPanel extends UiPart<Region> {
-    private static final String FXML = "SubmissionListPanel.fxml";
+    private static final String FXML = "SubmissionComponents/SubmissionListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(SubmissionListPanel.class);
 
     @FXML

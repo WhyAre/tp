@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
@@ -9,6 +10,9 @@
 <?import javafx.scene.image.ImageView?>
 
 <VBox fx:id="studentArea" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
+<ScrollPane fx:id="studentScrollPane" fitToWidth="true" hbarPolicy="NEVER">
+
+<VBox fx:id="studentAreaBox" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
 
   <Label fx:id="studentNameLabel" text="Student Name" styleClass="student-name"/>
 
@@ -67,3 +71,5 @@
   </VBox>
 
 </VBox>
+</ScrollPane>
+        </VBox>

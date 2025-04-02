@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,26 +10,24 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="tutorialCardPane" styleClass="card-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0" styleClass="card-content">
             <padding>
                 <Insets top="5" right="5" bottom="5" left="15" />
             </padding>
-            <HBox fx:id="studentCard" spacing="0.5" alignment="CENTER_LEFT">
-                <Label fx:id="id" styleClass="cell_big_label">
+            <HBox fx:id="tutorialCard" spacing="10" alignment="CENTER_LEFT" styleClass="tutorial-card">
+                <Label fx:id="tutorialId" styleClass="tutorial-id">
                     <minWidth>
-                        <!-- Ensures that the label text is never truncated -->
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="name" text="\$first" />
+                <Label fx:id="tutorialName" text="\$first" styleClass="tutorial-name" />
+                <FlowPane fx:id="assignments" styleClass="assignments-container"/>
             </HBox>
-            <FlowPane fx:id="students" />
-         <Label fx:id="assignments" VBox.vgrow="ALWAYS" />
         </VBox>
     </GridPane>
 </HBox>

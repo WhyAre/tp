@@ -26,8 +26,10 @@
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
+        <URL value="@MainTheme.css" />
+        <URL value="@MiscComponents/MiscComponents.css" />
+        <URL value="@StudentComponents/StudentComponents.css" />
+        <URL value="@TutorialComponents/TutorialComponents.css" />
       </stylesheets>
 
       <VBox>
@@ -61,6 +63,30 @@
               </padding>
               <StackPane fx:id="tutorialListPanelPlaceholder" VBox.vgrow="ALWAYS" />
             </VBox>
+
+            <VBox fx:id="attendanceList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
+                  visible="false" managed="false">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="attendanceListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <VBox fx:id="submissionList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
+                  visible="false" managed="false">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="submissionListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <VBox fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"
+                  minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets top="5" right="10" bottom="5" left="10" />
+              </padding>
+            </VBox>
+
           </VBox>
 
           <StackPane fx:id="resultDisplayPlaceholder" styleClass="pane-with-border">
@@ -68,30 +94,6 @@
               <Insets top="5" right="10" bottom="5" left="10" />
             </padding>
           </StackPane>
-
-        <VBox fx:id="attendanceList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
-              visible="false" managed="false">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="attendanceListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
-
-        <VBox fx:id="submissionList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
-              visible="false" managed="false">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="submissionListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
-
-        <VBox fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"
-                   minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </VBox>
-
         </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" />

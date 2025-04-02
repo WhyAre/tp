@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.attendence;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -9,13 +9,14 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.attendance.Attendance;
+import seedu.address.ui.UiPart;
 
 /**
  * An UI component that displays information of a {@code Tutorial}.
  */
 public class AttendanceCard extends UiPart<Region> {
 
-    private static final String FXML = "AttendanceListCard.fxml";
+    private static final String FXML = "AttendenceComponents/AttendanceListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved

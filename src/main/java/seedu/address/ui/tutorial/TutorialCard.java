@@ -1,8 +1,6 @@
-package seedu.address.ui;
+package seedu.address.ui.tutorial;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
@@ -10,15 +8,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
+import seedu.address.ui.UiPart;
 
 /**
  * An UI component that displays information of a {@code Tutorial}.
  */
 public class TutorialCard extends UiPart<Region> {
 
-    private static final String FXML = "TutorialListCard.fxml";
+    private static final String FXML = "TutorialComponents/TutorialListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved
@@ -33,13 +31,11 @@ public class TutorialCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label tutorialName;
     @FXML
-    private Label assignments;
+    private Label tutorialId;
     @FXML
-    private Label id;
-    @FXML
-    private FlowPane students;
+    private FlowPane assignments;
 
     /**
      * Creates a {@code TutorialCard} with the given {@code Tutorial} and index to
@@ -48,15 +44,15 @@ public class TutorialCard extends UiPart<Region> {
     public TutorialCard(Tutorial tutorial, int displayedIndex) {
         super(FXML);
         this.tutorial = tutorial;
-        id.setText(displayedIndex + ". ");
-        name.setText(tutorial.name());
+        tutorialId.setText(displayedIndex + "");
+        tutorialName.setText(tutorial.name());
 
-        var assignList = tutorial.assignments().stream().map("- %s"::formatted).collect(Collectors.joining("\n"));
-        if (assignList.isEmpty()) {
-            assignments.setManaged(false);
-            assignments.setVisible(false);
-        } else {
-            assignments.setText(assignList);
-        }
+        assignments.getChildren().clear();
+
+        tutorial.assignments().stream()
+                .forEach(assignment -> assignments.getChildren().add(new Label(assignment.toString())));
+
+        assignments.setManaged(!tutorial.assignments().isEmpty());
+        assignments.setVisible(!tutorial.assignments().isEmpty());
     }
 }
