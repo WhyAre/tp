@@ -5,59 +5,54 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import seedu.address.model.submission.Submission;
+import seedu.address.model.tutorial.Tutorial;
 import seedu.address.ui.UiPart;
 
-/**
- * An UI component that displays information of a {@code Tutorial}.
- */
+import java.util.List;
+
+// SubmissionTutorialCard.java
 public class SubmissionCard extends UiPart<Region> {
+    private static final String FXML = "SubmissionComponents/SubmissionCard.fxml";
 
-    private static final String FXML = "SubmissionComponents/SubmissionListCard.fxml";
-
-    /**
-     * Note: Certain keywords such as "location" and "resources" are reserved
-     * keywords in JavaFX. As a consequence, UI elements' variable names cannot be
-     * set to such keywords or an exception will be thrown by JavaFX during runtime.
-     *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The
-     *      issue on AddressBook level 4</a>
-     */
-
-    public final SubmissionListPanel.SubmissionInfo submissionInfo;
     @FXML
     private HBox cardPane;
     @FXML
     private Label id;
     @FXML
-    private Label name;
+    private Label studentName;
     @FXML
-    private FlowPane submissions;
+    private VBox submissionTutorialsContainer;
 
-    /**
-     * Creates an {@code AttendanceCard} with the given {@code Attendance} and index
-     * to display.
-     */
     public SubmissionCard(SubmissionListPanel.SubmissionInfo submissionInfo, int displayedIndex) {
         super(FXML);
-        this.submissionInfo = submissionInfo;
-        id.setText(displayedIndex + ". ");
-        name.setText("%s (%s)".formatted(submissionInfo.student().getName().toString(),
-                        submissionInfo.tutorial().name()));
 
-        var submissionList = submissionInfo.submissions();
+        studentName.setText(submissionInfo.student().getName() + "");
+        id.setText(displayedIndex + "");
 
-        for (var submission : submissionList) {
-            var label = new Label(submission.assignment().name());
-            label.getStyleClass().add("submission-status");
+        for (Tutorial tutorial : submissionInfo.getSortedTutorials()) {
+            Label tutorialLabel = new Label("Tutorial: " + tutorial.name());
+            tutorialLabel.getStyleClass().add("tutorial-header");
 
-            switch (submission.status()) {
-            case SUBMITTED -> label.getStyleClass().add("submitted");
-            case GRADED -> label.getStyleClass().add("graded");
-            case NOT_SUBMITTED -> label.getStyleClass().add("not-submitted");
-            default -> throw new IllegalStateException("Unexpected value: " + submission.status());
+            FlowPane submissionsPane = new FlowPane();
+            submissionsPane.getStyleClass().add("submissions-container");
+
+            for (Submission submission : submissionInfo.tutorialSubmissions().get(tutorial)) {
+                Label submissionLabel = new Label(submission.assignment().name());
+                submissionLabel.getStyleClass().add("submission-status");
+
+                switch (submission.status()) {
+                    case SUBMITTED -> submissionLabel.getStyleClass().add("submitted");
+                    case GRADED -> submissionLabel.getStyleClass().add("graded");
+                    case NOT_SUBMITTED -> submissionLabel.getStyleClass().add("not-submitted");
+                }
+                submissionsPane.getChildren().add(submissionLabel);
             }
 
-            submissions.getChildren().add(label);
+            VBox tutorialBox = new VBox(tutorialLabel, submissionsPane);
+            tutorialBox.getStyleClass().add("tutorial-section");
+            submissionTutorialsContainer.getChildren().add(tutorialBox);
         }
     }
 }

@@ -1,8 +1,8 @@
 package seedu.address.ui.submission;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -27,58 +27,49 @@ public class SubmissionListPanel extends UiPart<Region> {
     @FXML
     private ListView<SubmissionInfo> submissionListView;
 
-    record SubmissionInfo(Tutorial tutorial, Student student, List<Submission> submissions) {
+    record SubmissionInfo(Student student, Map<Tutorial, List<Submission>> tutorialSubmissions) {
+        public List<Tutorial> getSortedTutorials() {
+            return tutorialSubmissions.keySet().stream()
+                    .sorted(Comparator.comparing(Tutorial::name))
+                    .collect(Collectors.toList());
+        }
     }
 
-    /**
-     * Creates an {@code AttendanceListPanel} with the given {@code ObservableList}.
-     */
     public SubmissionListPanel(ObservableList<Submission> submissionList) {
         super(FXML);
 
         ObservableList<SubmissionInfo> submissionInfoList = FXCollections.observableArrayList();
-        for (var submission : submissionList) {
-            var existingSubmisson = submissionInfoList.stream()
-                            .filter(s -> s.student.hasSameIdentity(submission.student())
-                                            && s.tutorial().hasSameIdentity(submission.assignment().tutorial()))
-                            .findAny();
-            if (existingSubmisson.isPresent()) {
-                existingSubmisson.orElseThrow().submissions.add(submission);
-            } else {
-                submissionInfoList.add(new SubmissionInfo(submission.assignment().tutorial(), submission.student(),
-                                new ArrayList<>(List.of(submission))));
-            }
-        }
-        submissionList.addListener((ListChangeListener<? super Submission>) (
-                        change
-        ) -> {
-            submissionInfoList.clear();
+        updateGroupedList(submissionList, submissionInfoList);
 
-            var newOne = new ArrayList<SubmissionInfo>();
-            for (var submission : submissionList) {
-                var existingSubmisson = newOne.stream()
-                                .filter(s -> s.student.hasSameIdentity(submission.student())
-                                                && s.tutorial().hasSameIdentity(submission.assignment().tutorial()))
-                                .findAny();
-                if (existingSubmisson.isPresent()) {
-                    existingSubmisson.orElseThrow().submissions.add(submission);
-                } else {
-                    newOne.add(new SubmissionInfo(submission.assignment().tutorial(), submission.student(),
-                                    new ArrayList<>(List.of(submission))));
-                }
-            }
-
-            submissionInfoList.setAll(newOne);
+        submissionList.addListener((ListChangeListener<? super Submission>) change -> {
+            updateGroupedList(submissionList, submissionInfoList);
         });
 
         submissionListView.setItems(submissionInfoList);
         submissionListView.setCellFactory(listView -> new SubmissionListViewCell());
     }
 
-    /**
-     * Custom {@code ListCell} that displays the graphics of an {@code Attendance}
-     * using an {@code AttendanceCard}.
-     */
+    private void updateGroupedList(ObservableList<Submission> submissionList,
+                                   ObservableList<SubmissionInfo> groupedList) {
+        Map<Student, Map<Tutorial, List<Submission>>> studentMap = new HashMap<>();
+
+        for (Submission submission : submissionList) {
+            Student student = submission.student();
+            Tutorial tutorial = submission.assignment().tutorial();
+
+            studentMap.computeIfAbsent(student, k -> new HashMap<>())
+                    .computeIfAbsent(tutorial, k -> new ArrayList<>())
+                    .add(submission);
+        }
+
+        List<SubmissionInfo> newGroupedList = new ArrayList<>();
+        for (Map.Entry<Student, Map<Tutorial, List<Submission>>> entry : studentMap.entrySet()) {
+            newGroupedList.add(new SubmissionInfo(entry.getKey(), entry.getValue()));
+        }
+
+        groupedList.setAll(newGroupedList);
+    }
+
     class SubmissionListViewCell extends ListCell<SubmissionInfo> {
         @Override
         protected void updateItem(SubmissionInfo submissionInfo, boolean empty) {
@@ -93,5 +84,4 @@ public class SubmissionListPanel extends UiPart<Region> {
             }
         }
     }
-
 }
