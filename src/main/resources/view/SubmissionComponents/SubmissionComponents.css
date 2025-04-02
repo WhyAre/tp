@@ -24,6 +24,13 @@
     -fx-font-weight: 700;
     -fx-text-fill: #3D2B3D;
     -fx-padding: 5px 0 5px 0;
+}
+
+.submission-student-id {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 10px;
+    -fx-text-fill: gray;
+    -fx-padding: 5px 0 5px 0;
     -fx-border-color: #F0E6E6;
     -fx-border-width: 0 0 1px 0;
 }

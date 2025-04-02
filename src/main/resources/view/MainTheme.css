@@ -39,7 +39,7 @@
 .menu-bar > .container > .menu-button:hover,
 .menu-bar > .container > .menu-button:focused,
 .menu-bar > .container > .menu-button:showing {
-    -fx-background-color: #97C5C4; /* Your custom hover color */
+    -fx-background-color: #97C5C4;
 }
 
 .menu-item:hover,

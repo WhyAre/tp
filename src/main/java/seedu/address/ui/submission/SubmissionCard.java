@@ -10,9 +10,9 @@ import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.ui.UiPart;
 
-import java.util.List;
-
-// SubmissionTutorialCard.java
+/**
+ * An UI component that displays information of a {@code Submission}.
+ */
 public class SubmissionCard extends UiPart<Region> {
     private static final String FXML = "SubmissionComponents/SubmissionCard.fxml";
 
@@ -23,12 +23,19 @@ public class SubmissionCard extends UiPart<Region> {
     @FXML
     private Label studentName;
     @FXML
+    private Label studentId;
+    @FXML
     private VBox submissionTutorialsContainer;
 
+    /**
+     * Creates a {@code SubmissionCard} with the given
+     * {@code SubmissionListPanel.SubmissionInfo} and index to display.
+     */
     public SubmissionCard(SubmissionListPanel.SubmissionInfo submissionInfo, int displayedIndex) {
         super(FXML);
 
         studentName.setText(submissionInfo.student().getName() + "");
+        studentId.setText(submissionInfo.student().getStudentId() + "");
         id.setText(displayedIndex + "");
 
         for (Tutorial tutorial : submissionInfo.getSortedTutorials()) {
@@ -43,9 +50,10 @@ public class SubmissionCard extends UiPart<Region> {
                 submissionLabel.getStyleClass().add("submission-status");
 
                 switch (submission.status()) {
-                    case SUBMITTED -> submissionLabel.getStyleClass().add("submitted");
-                    case GRADED -> submissionLabel.getStyleClass().add("graded");
-                    case NOT_SUBMITTED -> submissionLabel.getStyleClass().add("not-submitted");
+                case SUBMITTED -> submissionLabel.getStyleClass().add("submitted");
+                case GRADED -> submissionLabel.getStyleClass().add("graded");
+                case NOT_SUBMITTED -> submissionLabel.getStyleClass().add("not-submitted");
+                default -> submissionLabel.getStyleClass().add("not-submitted");
                 }
                 submissionsPane.getChildren().add(submissionLabel);
             }

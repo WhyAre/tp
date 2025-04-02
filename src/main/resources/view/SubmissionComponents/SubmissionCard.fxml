@@ -15,6 +15,7 @@
                     </minWidth>
                 </Label>
                 <Label fx:id="studentName" styleClass="submission-student-name"/>
+                <Label fx:id="studentId" styleClass="submission-student-id"/>
             </HBox>
             <VBox fx:id="submissionTutorialsContainer" styleClass="submission-tutorials-container"/>
         </VBox>

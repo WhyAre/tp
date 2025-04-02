@@ -1,8 +1,5 @@
 package seedu.address.ui.tutorial;
 
-import java.util.Comparator;
-import java.util.stream.Collectors;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -50,7 +47,7 @@ public class TutorialCard extends UiPart<Region> {
         assignments.getChildren().clear();
 
         tutorial.assignments().stream()
-                .forEach(assignment -> assignments.getChildren().add(new Label(assignment.toString())));
+                        .forEach(assignment -> assignments.getChildren().add(new Label(assignment.toString())));
 
         assignments.setManaged(!tutorial.assignments().isEmpty());
         assignments.setVisible(!tutorial.assignments().isEmpty());
