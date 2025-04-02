@@ -30,6 +30,8 @@
         <URL value="@MiscComponents/MiscComponents.css" />
         <URL value="@StudentComponents/StudentComponents.css" />
         <URL value="@TutorialComponents/TutorialComponents.css" />
+        <URL value="@AttendanceComponents/AttendanceComponents.css" />
+        <URL value="@SubmissionComponents/SubmissionComponents.css" />
       </stylesheets>
 
       <VBox>

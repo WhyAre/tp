@@ -48,6 +48,7 @@ public class SubmissionCard extends UiPart<Region> {
 
         for (var submission : submissionList) {
             var label = new Label(submission.assignment().name());
+            label.getStyleClass().add("submission-status");
 
             switch (submission.status()) {
             case SUBMITTED -> label.getStyleClass().add("submitted");

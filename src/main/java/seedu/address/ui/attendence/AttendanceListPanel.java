@@ -15,7 +15,7 @@ import seedu.address.ui.UiPart;
  * Panel containing the list of attendances.
  */
 public class AttendanceListPanel extends UiPart<Region> {
-    private static final String FXML = "AttendenceComponents/AttendanceListPanel.fxml";
+    private static final String FXML = "AttendanceComponents/AttendanceListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(AttendanceListPanel.class);
 
     @FXML

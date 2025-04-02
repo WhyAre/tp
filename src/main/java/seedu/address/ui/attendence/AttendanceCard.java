@@ -16,7 +16,7 @@ import seedu.address.ui.UiPart;
  */
 public class AttendanceCard extends UiPart<Region> {
 
-    private static final String FXML = "AttendenceComponents/AttendanceListCard.fxml";
+    private static final String FXML = "AttendanceComponents/AttendanceListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved

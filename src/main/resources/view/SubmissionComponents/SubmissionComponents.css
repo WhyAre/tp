@@ -1,0 +1,71 @@
+.submission-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8px;
+    -fx-border-color: #E8D5D5;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(209, 171, 173, 0.15), 6, 0, 0, 1);
+}
+
+.submission-card:hover {
+    -fx-background-color: #FDFAFA;
+    -fx-border-color: #D1ABAD;
+}
+
+.submission-content {
+    -fx-spacing: 5px;
+}
+
+.submission-id {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to bottom, #5D3A4A, #3D2B3D);
+    -fx-background-radius: 8px;
+    -fx-padding: 4px 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+.student-name {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #3D2B3D;
+}
+
+.submission-status-container {
+    -fx-hgap: 7px;
+    -fx-vgap: 5px;
+    -fx-padding: 8px 0 0 5px;
+}
+
+.submission-status {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-padding: 3px 8px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+    -fx-min-width: 80px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 1, 0, 0, 1);
+}
+
+.submission-status.submitted {
+    -fx-background-color: #F0F3F5;
+    -fx-text-fill: #4A4A4A;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 1px;
+}
+
+.submission-status.not-submitted {
+    -fx-background-color: linear-gradient(to bottom, #BA3F38, #9E342D);
+    -fx-text-fill: white;
+}
+
+.submission-status.graded {
+    -fx-background-color: linear-gradient(to bottom, #00A651, #008744);
+    -fx-text-fill: white;
+}
