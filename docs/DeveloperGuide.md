@@ -351,7 +351,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Use case: Add student
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -368,30 +368,51 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student
+#### Use case: Edit student
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
 
 1. User requests to list students
 2. System shows a list of students
-3. User requests to delete a specific student in the list
+3. User sends request to edit a specific student index in the list with details to edit
+4. System edits a new user
+5. Use case ends
+
+**Extensions**
+
+- 3a. If input is erroneous or user does not exist
+  - 3a1. System displays an error message
+  - 3a2. Use case resumes at step 3
+
+---
+
+#### Use case: Delete student
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to list students
+2. System shows a list of students
+3. User requests to delete a specific student index in the list
 4. System deletes the student
 5. Use case ends
 
 **Extensions**
 
-- 2a. If the given index is invalid
-  - 2a1. System shows an error message
-  - 2a2. Use case resumes at step 1
+- 3a. If the given index is invalid
+  - 3a1. System shows an error message
+  - 3a2. Use case resumes at step 1
 
 ---
 
 #### Use case: List students
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -408,9 +429,70 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
+#### Use case: Find students
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User sends search request for students by name with or without a specific tutorial
+2. System lists all students matching the request
+3. Use case ends
+
+**Extensions**
+
+- 2a. If there are no students
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+
+---
+
+#### Use case: Search for students
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to search for a student
+2. System prompts for search criteria
+3. User enters the search criteria
+4. System displays a list of students matching the search criteria
+5. Use case ends
+
+**Extensions**
+
+- 3a. If no students match the search criteria
+  - 3a1. System displays a message indicating no results found
+  - 3a2. Use case ends
+
+---
+
+#### Use case: View student
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to list students
+2. System shows a list of students
+3. User requests to see a specific student's details based on student index
+4. System displays specified student's details (including unlisted details like description).
+5. Use case ends
+
+**Extensions**
+
+- 3a. If the given index is invalid
+  - 3a1. System shows an error message
+  - 3a2. Use case resumes at step 1
+
+---
+
 #### Use case: List tutorial slots
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -429,7 +511,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Use case: Create a tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -451,7 +533,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Use case: Delete a tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -473,7 +555,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Use case: Add student to tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -497,7 +579,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Use case: Delete student from tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -522,74 +604,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Retrieve and Save to file
-
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User requests to save the current data to a file
-2. System saves the data to a file
-3. Use case ends
-
-**Extensions**
-
-- 2a. If there is an error during the save process
-  - 2a1. System displays an error message
-  - 2a2. Use case ends
-
----
-
-#### Use case: Search for students
-
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User requests to search for a student
-2. System prompts for search criteria
-3. User enters the search criteria
-4. System displays a list of students matching the search criteria
-5. Use case ends
-
-**Extensions**
-
-- 3a. If no students match the search criteria
-  - 3a1. System displays a message indicating no results found
-  - 3a2. Use case ends
-
----
-
-#### Use case: List attendances
-
-**System**: Taskbook<br>
-**Actor**: User
-
-**MSS**
-
-1. User requests to list attendances
-2. System lists all attendances
-3. Use case ends
-
-**Extensions**
-
-- 2a. If there are no attendance records
-  - 2a1. System doesn't display anything
-  - 2a2. Use case ends
-- 2b. If an index is specified when student list is displayed
-  - 2b1. System displays the attendance of the student at specified index
-  - 2b2. Use case ends
-- 2c. If an index is specified when tutorial list is displayed
-  - 2c1. System displays the attendance of the tutorial at specified index
-  - 2c2. Use case ends
-
----
-
 #### Use case: Mark attendance
 
-**System**: Taskbook<br>
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -613,7 +630,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Use case: Unmark attendance
 
-**System**: Taskbook<br>
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -635,89 +652,28 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete a lesson under tutorial slot for each student
+#### Use case: Export Data
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all lessons for a tutorial slot
-2. System lists all lessons for the selected tutorial slot
-3. User selects the lesson to be deleted
-4. System deletes the selected lesson for each student in the tutorial slot
-5. Use case ends
-
-**Extensions**
-
-- 2a. If no lessons exist in the selected tutorial slot
-  - 2a1. System displays a message indicating no lessons found
-  - 2a2. Use case ends
-- 4a. If there is an error deleting a lesson for any student
-  - 4a1. System displays an error message for the affected student
-  - 4a2. Use case continues at step 4 for remaining students
-
----
-
-#### Use case: View overall attendance
-
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User requests to view overall attendance
-2. System displays a summary of overall attendance
+1. User specifies an export option (all students, students in a tutorial, tutorials)
+2. System generates and provides the export file
 3. Use case ends
 
 **Extensions**
 
-- 2a. If there is no attendance data available
-  - 2a1. System displays a message indicating no attendance data
+- 2a. If there is an error in the export command
+  - 2a1. System displays an error message
   - 2a2. Use case ends
 
----
-
-#### Use case: Export student contact list
-
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User requests to export the student contact list
-2. System exports the contact list to a file
-3. Use case ends
-
-**Extensions**
 
 - 2a. If there is an error during the export process
   - 2a1. System displays an error message
   - 2a2. Use case ends
 
----
-
-#### Use case: Make announcements to students through email
-
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User selects students to receive an announcement
-2. System prompts for the email content
-3. User enters the announcement content
-4. System sends the email announcement to selected students
-5. Use case ends
-
-**Extensions**
-
-- 2a. If no students are selected
-  - 2a1. System displays a message indicating no students selected
-  - 2a2. Use case ends
-- 4a. If there is an error sending the email
-  - 4a1. System displays an error message
-  - 4a2. Use case ends
 
 ### Non-Functional Requirements
 
