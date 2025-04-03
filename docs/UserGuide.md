@@ -133,7 +133,7 @@ Format: `exit`
 Adds a student to the address book.
 
 **Format**:  
-`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE desc/DESCRIPTION...`
+`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE desc/DESCRIPTION [t/TUTORIAL]...`
 
 > **Parameter Requirements:**
 > - `NAME`: Alphanumeric characters and spaces only (cannot be blank)
@@ -142,13 +142,14 @@ Adds a student to the address book.
 > - `EMAIL`: Valid email format (e.g., user@example.com)
 > - `HANDLE`: Format `@telegramhandle` (min 3 chars, cannot be blank)
 > - `DESCRIPTION`: Max 50 characters
+> - `TUTORIAL`: Must exist in system (silently ignored if invalid)
+> - There cannot be duplicate students with the same name, student id, phone number, email, handle
 
 Examples:
 
 - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
 
 > **Warning:**
-> - As of v1.5, tutorial tags (`t/`) do not integrate with submission functionalities
 > - As of v1.5, description attribute is temporary for the session and will disappear on reboot of app
 
 ---
