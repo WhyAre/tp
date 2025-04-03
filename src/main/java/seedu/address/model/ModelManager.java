@@ -208,6 +208,11 @@ public class ModelManager implements Model {
         addressBook.unmarkAttendance(tutorial, week, student);
     }
 
+    @Override
+    public boolean hasAttendance(Attendance attendance) {
+        return addressBook.hasAttendance(attendance);
+    }
+
     // =========== Filtered Student List Accessors
     // =============================================================
 
