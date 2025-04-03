@@ -28,15 +28,7 @@ public class JsonAdaptedTutorial {
      * Converts this Jackson-friendly adapted tutorial object into the model's
      * {@link Tutorial} object.
      */
-    public Tutorial toModelType() throws IllegalValueException {
-
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "name"));
-        }
-        if (!Tutorial.isValidName(name)) {
-            throw new IllegalValueException(MESSAGE_INVALID_TUTORIAL_NAME);
-        }
-
+    public Tutorial toModelType() {
         return new Tutorial(name);
     }
 
