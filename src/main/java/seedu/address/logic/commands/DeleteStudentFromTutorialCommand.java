@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 
 import java.util.List;
 
@@ -46,6 +47,11 @@ public class DeleteStudentFromTutorialCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getNavigationMode() != NavigationMode.STUDENT) {
+            throw new CommandException(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT));
+        }
+
         if (!model.hasTutorial(tutorial)) {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
