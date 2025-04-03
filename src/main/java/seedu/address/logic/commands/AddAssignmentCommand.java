@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 
 import java.util.List;
@@ -42,6 +43,11 @@ public class AddAssignmentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getNavigationMode() != NavigationMode.TUTORIAL) {
+            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.TUTORIAL),
+                            NavigationMode.TUTORIAL);
+        }
 
         for (var idx : tutorialIdxList) {
             var idxZeroBased = idx.getZeroBased();
