@@ -16,6 +16,7 @@ public record Attendance(Tutorial tutorial, Student student,
     private static final int NUMBER_OF_WEEKS = 11;
     private static final int ABSENT = 0;
     private static final int PRESENT = 1;
+    private static final int DIFFERENCE = 3;
 
     public Attendance(Tutorial tutorial, Student student) {
         this(tutorial, student, new ArrayList<>(Collections.nCopies(NUMBER_OF_WEEKS, ABSENT)));
@@ -43,9 +44,9 @@ public record Attendance(Tutorial tutorial, Student student,
      */
     public void setAttendance(int week, boolean isPresent) {
         if (isPresent) {
-            attendances.set(week - 3, PRESENT);
+            attendances.set(week - DIFFERENCE, PRESENT);
         } else {
-            attendances.set(week - 3, ABSENT);
+            attendances.set(week - DIFFERENCE, ABSENT);
         }
     }
 
