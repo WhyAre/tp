@@ -133,7 +133,7 @@ Format: `exit`
 Adds a student to the address book.
 
 **Format**:  
-`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE desc/DESCRIPTION [t/TUTORIAL]...`
+`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE desc/DESCRIPTION...`
 
 > **Parameter Requirements:**
 > - `NAME`: Alphanumeric characters and spaces only (cannot be blank)
@@ -142,15 +142,12 @@ Adds a student to the address book.
 > - `EMAIL`: Valid email format (e.g., user@example.com)
 > - `HANDLE`: Format `@telegramhandle` (min 3 chars, cannot be blank)
 > - `DESCRIPTION`: Max 50 characters
-> - `TUTORIAL`: Must exist in system (silently ignored if invalid)
-> - There cannot be duplicate students with the same name, student id, phone number, email, handle
 
 Examples:
 
 - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
 
 > **Warning:**
-> - As of v1.5, tutorial tags (`t/`) do not integrate with submission functionalities
 > - As of v1.5, description attribute is temporary for the session and will disappear on reboot of app
 
 ---
@@ -168,30 +165,21 @@ Format: `list`
 Edits an existing student in the address book.
 
 **Format**:  
-`edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`
+`edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE]...`
 
 > **Note:**
 > - The `INDEX` must be a positive integer (1, 2, 3, ...)
 > - At least one optional field must be provided
-> - Tutorial slots are completely replaced (not cumulative)
-> - Use `t/` without values to clear all tutorials
 
 **Behavior**:
 - Updates all specified fields with new values
-- Replaces entire tutorial list if `t/` parameter is provided
 - Preserves unspecified fields
-
 
 Examples:
 - `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
-- `edit 2 n/Betsy Crower t/`
-  Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tutorial slots.
-
-> **Warning:**
-> - Editing tutorial tags (`t/`) does not update submission records
-> - Changing name/ID/other attributes does not update existing submissions or attendance records
-> - These are known limitations in v1.5
+- `edit 2 n/Betsy Crower`
+  Edits the name of the 2nd student to be `Betsy Crower`
 
 ---
 ### Command - Finding students : `find`

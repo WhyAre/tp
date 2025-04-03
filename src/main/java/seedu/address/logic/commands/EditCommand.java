@@ -50,8 +50,8 @@ public class EditCommand extends Command {
                     + "Existing values will be overwritten by the input values.\n"
                     + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "["
                     + PREFIX_ID_STUDENT + "STUDENT_ID] " + "[" + PREFIX_PHONE + "PHONE] " + "[" + PREFIX_EMAIL
-                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_DETAILS + "DETAILS]\n" + "["
-                    + PREFIX_TUTORIAL_NAME + "TUTORIALS]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE
+                    + "EMAIL] " + "[" + PREFIX_HANDLE + "HANDLE] " + "[" + PREFIX_DETAILS + "DETAILS]\n"
+                    + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE
                     + "91234567 " + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited Student: %1$s";
@@ -100,15 +100,15 @@ public class EditCommand extends Command {
         }
 
         String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
-        final Set<Tutorial> existingTutorials = new HashSet<>();
-        for (Tutorial tutorial : editedStudent.getTutorials()) {
-            if (!model.hasTutorial(tutorial)) {
-                resultMessage += "\n" + MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name();
-            } else {
-                existingTutorials.add(tutorial);
-            }
-        }
-        editedStudent.setTutorials(existingTutorials);
+//        final Set<Tutorial> existingTutorials = new HashSet<>();
+//        for (Tutorial tutorial : editedStudent.getTutorials()) {
+//            if (!model.hasTutorial(tutorial)) {
+//                resultMessage += "\n" + MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name();
+//            } else {
+//                existingTutorials.add(tutorial);
+//            }
+//        }
+//        editedStudent.setTutorials(existingTutorials);
         assert model.hasStudent(studentToEdit);
         try {
             model.setStudent(studentToEdit, editedStudent);
