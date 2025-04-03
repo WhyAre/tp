@@ -42,6 +42,8 @@ public class AddTutorialCommand extends Command {
         }
 
         model.addTutorial(toAdd);
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS.formatted(toAdd), NavigationMode.TUTORIAL);
     }
 

@@ -12,8 +12,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TUTORIAL_2;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.ALICE;
-import static seedu.address.testutil.TypicalStudents.BOB;
+import static seedu.address.testutil.TypicalAddressBook.ALICE;
+import static seedu.address.testutil.TypicalAddressBook.BOB;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,40 +29,40 @@ public class StudentTest {
     }
 
     @Test
-    public void isSamePerson() {
+    public void isSameStudent() {
         // same object -> ok
-        assertTrue(ALICE.isSamePerson(ALICE));
+        assertTrue(ALICE.isSameStudent(ALICE));
 
         // null -> fail
-        assertFalse(ALICE.isSamePerson(null));
+        assertFalse(ALICE.isSameStudent(null));
 
         // same name, all other attributes different -> ok
         Student editedAlice = new StudentBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                         .withHandle(VALID_HANDLE_BOB).withTutorials(VALID_TUTORIAL_2).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
+        assertTrue(ALICE.isSameStudent(editedAlice));
 
         // different name, same student ID -> ok
         Student editedAliceWithSameId = new StudentBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertTrue(ALICE.isSamePerson(editedAliceWithSameId));
+        assertTrue(ALICE.isSameStudent(editedAliceWithSameId));
 
         // different name, different student ID, same phone -> ok
         Student editedAliceWithSamePhone = new StudentBuilder(ALICE).withName(VALID_NAME_BOB)
                         .withStudentId(VALID_ID_BOB).build();
-        assertTrue(ALICE.isSamePerson(editedAliceWithSamePhone));
+        assertTrue(ALICE.isSameStudent(editedAliceWithSamePhone));
 
         // different name, different student ID, different phone, same email -> ok
         Student editedAliceWithSameEmail = new StudentBuilder(ALICE).withName(VALID_NAME_BOB)
                         .withStudentId(VALID_ID_BOB).withPhone(VALID_PHONE_BOB).build();
-        assertTrue(ALICE.isSamePerson(editedAliceWithSameEmail));
+        assertTrue(ALICE.isSameStudent(editedAliceWithSameEmail));
 
         // different name, different student ID, different phone, different email, same
         // handle -> ok
         Student editedAliceWithSameHandle = new StudentBuilder(ALICE).withName(VALID_NAME_BOB)
                         .withStudentId(VALID_ID_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
-        assertTrue(ALICE.isSamePerson(editedAliceWithSameHandle));
+        assertTrue(ALICE.isSameStudent(editedAliceWithSameHandle));
 
         // completely different student -> fail
-        assertFalse(ALICE.isSamePerson(BOB));
+        assertFalse(ALICE.isSameStudent(BOB));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,6 +82,15 @@ public class StudentBuilder {
      */
     public StudentBuilder withStudentId(String studentId) {
         this.studentId = new StudentID(studentId);
+        return this;
+    }
+
+    /**
+     * Parses the {@code tutorials} into a {@code Set<Tutorial>} and set it to the
+     * {@code Student} that we are building.
+     */
+    public StudentBuilder appendTutorial(Tutorial... tutorials) {
+        this.tutorials.addAll(Arrays.asList(tutorials));
         return this;
     }
 

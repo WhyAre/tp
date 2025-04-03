@@ -1,12 +1,13 @@
 package seedu.address.storage.json;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalStudents.ALICE;
-import static seedu.address.testutil.TypicalStudents.HOON;
-import static seedu.address.testutil.TypicalStudents.IDA;
-import static seedu.address.testutil.TypicalStudents.getTypicalAddressBookInclTutorials;
+import static seedu.address.testutil.TypicalAddressBook.ALICE;
+import static seedu.address.testutil.TypicalAddressBook.HOON;
+import static seedu.address.testutil.TypicalAddressBook.IDA;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -65,7 +66,7 @@ public class JsonAddressBookStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
-        AddressBook original = getTypicalAddressBookInclTutorials();
+        AddressBook original = getTypicalAddressBook();
         JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
 
         // Save in new file and read back
@@ -79,13 +80,20 @@ public class JsonAddressBookStorageTest {
         jsonAddressBookStorage.saveAddressBook(original, filePath);
         readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertDoesNotThrow((
+        ) -> original.check());
+        assertDoesNotThrow((
+        ) -> new AddressBook(jsonAddressBookStorage.readAddressBook(filePath).get()).check());
 
         // Save and read without specifying file path
         original.addStudent(IDA);
         jsonAddressBookStorage.saveAddressBook(original); // file path not specified
         readBack = jsonAddressBookStorage.readAddressBook().get(); // file path not specified
         assertEquals(original, new AddressBook(readBack));
-
+        assertDoesNotThrow((
+        ) -> original.check());
+        assertDoesNotThrow((
+        ) -> new AddressBook(jsonAddressBookStorage.readAddressBook(filePath).get()).check());
     }
 
     @Test

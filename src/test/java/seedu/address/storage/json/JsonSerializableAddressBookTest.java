@@ -1,57 +1,81 @@
 package seedu.address.storage.json;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalAddressBook.ALICE;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.AddressBook;
-import seedu.address.testutil.TypicalStudents;
+import seedu.address.model.tutorial.Tutorial;
+import seedu.address.testutil.TypicalAddressBook;
 
 public class JsonSerializableAddressBookTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableAddressBookTest");
-    private static final Path TYPICAL_PERSONS_FILE = TEST_DATA_FOLDER.resolve("typicalStudentsAddressBook.json");
-    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidStudentAddressBook.json");
-    private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicateStudentAddressBook.json");
+    private static final Path TYPICAL_FILE_NAME = TEST_DATA_FOLDER.resolve("typicalAddressBook.json");
+    private static final Path DUPLICATE_STUDENT_FILE = TEST_DATA_FOLDER.resolve("duplicateStudentAddressBook.json");
 
     @Test
-    public void toModelType_typicalStudentsFile_success() throws Exception {
+    public void toModelType_typical_success() throws Exception {
         JsonSerializableAddressBook dataFromFile = JsonUtil
-                        .readJsonFile(TYPICAL_PERSONS_FILE, JsonSerializableAddressBook.class).get();
+                        .readJsonFile(TYPICAL_FILE_NAME, JsonSerializableAddressBook.class).get();
         AddressBook addressBookFromFile = dataFromFile.toModelType();
-        AddressBook typicalStudentsAddressBook = TypicalStudents.getTypicalAddressBook();
+        AddressBook typicalStudentsAddressBook = TypicalAddressBook.getTypicalAddressBook();
+
+        assertDoesNotThrow((
+        ) -> addressBookFromFile.check());
+        assertDoesNotThrow((
+        ) -> typicalStudentsAddressBook.check());
+
         assertEquals(addressBookFromFile, typicalStudentsAddressBook);
     }
 
     @Test
-    public void toModelType_invalidStudentFile_throwsIllegalValueException() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil
-                        .readJsonFile(INVALID_PERSON_FILE, JsonSerializableAddressBook.class).get();
-        assertThrows(IllegalValueException.class, dataFromFile::toModelType);
+    public void toModelType_missingAlice() throws Exception {
+        Path filepath = TEST_DATA_FOLDER.resolve("missingAlice.json");
+        var ab = TypicalAddressBook.getTypicalAddressBook();
+        ab.removeStudent(ALICE);
+
+        var dataFromFile = JsonUtil.readJsonFile(filepath, JsonSerializableAddressBook.class).get().toModelType();
+
+        assertDoesNotThrow((
+        ) -> dataFromFile.check());
+        assertDoesNotThrow((
+        ) -> ab.check());
+        assertEquals(dataFromFile, ab);
+    }
+
+    @Test
+    public void toModelType_missingTutorial() throws Exception {
+        Path filepath = TEST_DATA_FOLDER.resolve("missingCS2103T1.json");
+        var ab = TypicalAddressBook.getTypicalAddressBook();
+        ab.removeTutorial(new Tutorial("CS2103-T1"));
+
+        var dataFromFile = JsonUtil.readJsonFile(filepath, JsonSerializableAddressBook.class).get().toModelType();
+
+        assertDoesNotThrow((
+        ) -> dataFromFile.check());
+        assertDoesNotThrow((
+        ) -> ab.check());
+        assertEquals(dataFromFile, ab);
     }
 
     @Test
     public void toModelType_duplicateStudents_throwsIllegalValueException() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil
-                        .readJsonFile(DUPLICATE_PERSON_FILE, JsonSerializableAddressBook.class).get();
-        assertThrows(IllegalValueException.class, JsonSerializableAddressBook.MESSAGE_DUPLICATE_PERSON,
-                        dataFromFile::toModelType);
+        Path filepath = TEST_DATA_FOLDER.resolve("duplicateAlice.json");
+        var ab = TypicalAddressBook.getTypicalAddressBook();
+
+        var dataFromFile = JsonUtil.readJsonFile(filepath, JsonSerializableAddressBook.class).get().toModelType();
+
+        assertDoesNotThrow((
+        ) -> dataFromFile.check());
+        assertDoesNotThrow((
+        ) -> ab.check());
+        assertEquals(dataFromFile, ab);
     }
-
-    @Test
-    public void toModelType_inclTutorials_success() throws Exception {
-        final Path filename = TEST_DATA_FOLDER.resolve("typicalStudentsInclTutorials.json");
-        var dataFromFile = JsonUtil.readJsonFile(filename, JsonSerializableAddressBook.class).orElseThrow();
-        var modelType = dataFromFile.toModelType();
-
-        AddressBook typicalStudentsAddressBook = TypicalStudents.getTypicalAddressBookInclTutorials();
-        assertEquals(typicalStudentsAddressBook, modelType);
-    }
-
 }

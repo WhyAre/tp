@@ -1,15 +1,18 @@
 {
-  "persons": [ {
-    "name": "Valid Person",
+  "students": [ {
+    "name": "Valid Student",
     "studentId": "A0955648M",
     "phone": "9482424",
     "email": "hans@example.com",
-    "handle": "@valid_person"
+    "handle": "@valid_student"
   }, {
-    "name": "Person With Invalid Phone Field",
+    "name": "Student With Invalid Phone Field",
     "studentId": "A0374848R",
     "phone": "948asdf2424",
     "email": "hans@example.com",
-    "handle": "@invalid_person"
-  } ]
+    "handle": "@invalid_student"
+  } ],
+  "tutorials": [],
+  "submissions": [],
+  "attendances": []
 }

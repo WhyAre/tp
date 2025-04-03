@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.ListSubmissionCommand;
 import seedu.address.logic.commands.SetSubmissionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -23,13 +24,11 @@ public class SubmissionParser implements Parser<Command> {
         subcmds = new HashMap<>();
 
         subcmds.put(SetSubmissionCommand.COMMAND_WORD, new SetSubmissionCommandParser());
+        subcmds.put(ListSubmissionCommand.COMMAND_WORD, new ListSubmissionCommandParser());
 
         usage = """
                         Usage: submission COMMAND
-
-                        COMMAND:
-                        %s""".formatted(
-                        subcmds.keySet().stream().map("  - %s"::formatted).collect(Collectors.joining("\n")));
+                        COMMAND: %s""".formatted(String.join(", ", subcmds.keySet()));
     }
 
     @Override

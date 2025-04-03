@@ -5,6 +5,7 @@ import static seedu.address.model.NavigationMode.STUDENT;
 import static seedu.address.model.NavigationMode.TUTORIAL;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,21 +23,25 @@ import seedu.address.model.tutorial.Tutorial;
 public class ListAttendanceCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = "Usage: attendance list INDEX"
+    public static final String MESSAGE_USAGE = "Usage: attendance list [INDEX]"
                     + "\nYou must be in STUDENTS or TUTORIAL view";
+
+    public static final String MESSAGE_INVALID_STUDENT = "Student not found";
+
+    public static final String MESSAGE_INVALID_TUTORIAL = "Tutorial not found";
 
     public static final String MESSAGE_INVALID_VIEW = "Invalid view. Please switch to STUDENTS or TUTORIAL view first";
 
     public static final String MESSAGE_SUCCESS = "Listed attendances for %s";
 
     private final Logger logger = LogsCenter.getLogger(ListAttendanceCommand.class);
-    private final Index index;
+    private final Optional<Index> index;
 
     /**
      * Creates a {@link ListAttendanceCommand} to view the attendance for a specific
      * student or tutorial via an {@code Attendance} object
      */
-    public ListAttendanceCommand(Index index) {
+    public ListAttendanceCommand(Optional<Index> index) {
         requireNonNull(index);
         this.index = index;
     }
@@ -45,22 +50,54 @@ public class ListAttendanceCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         String name;
         requireNonNull(model);
+
         NavigationMode navigationMode = model.getNavigationMode();
-        if (navigationMode.equals(STUDENT)) {
-            logger.log(Level.INFO, "Coming from STUDENT VIEW");
-            List<Student> lastShownList = model.getFilteredStudentList();
-            Student student = lastShownList.get(index.getZeroBased());
+
+        if (index.isEmpty()) {
+            logger.log(Level.INFO, "Showing all attendances");
+            model.updateFilteredAttendanceList(Model.PREDICATE_SHOW_ALL_ATTENDANCES);
+            name = "all";
+        } else if (navigationMode.equals(STUDENT)) {
+            logger.log(Level.INFO, "Coming from STUDENT view");
+            List<Student> students = model.getFilteredStudentList();
+
+            if (index.get().getZeroBased() >= students.size()) {
+                throw new CommandException(MESSAGE_INVALID_STUDENT);
+            }
+
+            Student student = students.get(index.get().getZeroBased());
             name = student.getName().fullName;
             model.updateFilteredAttendanceList(x -> x.student().hasSameIdentity(student));
         } else if (navigationMode.equals(TUTORIAL)) {
-            logger.log(Level.INFO, "Coming from TUTORIAL VIEW");
-            List<Tutorial> lastShownList = model.getFilteredTutorialList();
-            Tutorial tutorial = lastShownList.get(index.getZeroBased());
+            logger.log(Level.INFO, "Coming from TUTORIAL view");
+            List<Tutorial> tutorials = model.getFilteredTutorialList();
+
+            if (index.get().getZeroBased() >= tutorials.size()) {
+                throw new CommandException(MESSAGE_INVALID_TUTORIAL);
+            }
+
+            Tutorial tutorial = tutorials.get(index.get().getZeroBased());
             name = tutorial.name();
             model.updateFilteredAttendanceList(x -> x.tutorial().hasSameIdentity(tutorial));
         } else {
             throw new CommandException(MESSAGE_INVALID_VIEW);
         }
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS.formatted(name), NavigationMode.ATTENDANCE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ListAttendanceCommand otherListAttendanceCommand)) {
+            return false;
+        }
+
+        return index.equals(otherListAttendanceCommand.index);
     }
 }

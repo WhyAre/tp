@@ -39,8 +39,8 @@
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+        <StackPane VBox.vgrow="ALWAYS" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+                   minHeight="100" prefHeight="120" maxHeight="150">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
@@ -67,6 +67,14 @@
             <Insets top="10" right="10" bottom="10" left="10" />
           </padding>
           <StackPane fx:id="attendanceListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+        <VBox fx:id="submissionList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
+              visible="false" managed="false">
+          <padding>
+            <Insets top="10" right="10" bottom="10" left="10" />
+          </padding>
+          <StackPane fx:id="submissionListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
 
         <VBox fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"

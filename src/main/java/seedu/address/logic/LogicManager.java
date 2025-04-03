@@ -19,6 +19,7 @@ import seedu.address.model.NavigationMode;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.storage.Storage;
@@ -56,6 +57,8 @@ public class LogicManager implements Logic {
         Command command = addressBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
+        assert model.check();
+
         try {
             storage.saveAddressBook(model.getAddressBook());
         } catch (AccessDeniedException e) {
@@ -85,6 +88,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Attendance> getFilteredAttendanceList() {
         return model.getFilteredAttendanceList();
+    }
+
+    @Override
+    public ObservableList<Submission> getFilteredSubmissionList() {
+        return model.getFilteredSubmissionList();
     }
 
     @Override

@@ -14,13 +14,17 @@ public class Messages {
 
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
-    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The student index provided is invalid";
-    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d students listed!";
+    public static final String MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX = "The student index provided is invalid";
+    public static final String MESSAGE_STUDENTS_LISTED_OVERVIEW = "%1$d students listed!";
     public static final String MESSAGE_TUTORIALS_LISTED_OVERVIEW = "%1$d tutorials listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS = "Multiple values specified for the following "
                     + "single-valued field(s): ";
     public static final String MESSAGE_INVALID_NAVIGATION_MODE = "Invalid navigation mode provided";
     public static final String MESSAGE_UNKNOWN_ERROR = "Something went wrong";
+
+    public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial '%s' is not found";
+    public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment '%s' is not found";
+    public static final String MESSAGE_STUDENT_NOT_FOUND = "Student '%s' is not found";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

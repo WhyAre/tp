@@ -18,7 +18,9 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
+import seedu.address.model.submission.Submission;
 import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.tutorial.TutorialWithStudents;
 import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
@@ -36,6 +38,7 @@ public class ModelManager implements Model {
     private final FilteredList<Tutorial> filteredTutorials;
     private ObjectProperty<Student> student;
     private final FilteredList<Attendance> filteredAttendances;
+    private final FilteredList<Submission> filteredSubmissions;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -51,6 +54,7 @@ public class ModelManager implements Model {
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
         filteredTutorials = new FilteredList<>(this.addressBook.getTutorialList());
         filteredAttendances = new FilteredList<>(this.addressBook.getAttendanceList());
+        filteredSubmissions = new FilteredList<>(this.addressBook.getSubmissionList());
     }
 
     public ModelManager() {
@@ -141,7 +145,7 @@ public class ModelManager implements Model {
     @Override
     public void addStudent(Student student) {
         addressBook.addStudent(student);
-        updateFilteredStudentList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
     }
 
     @Override
@@ -165,12 +169,12 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteTutorial(Tutorial t) {
-        addressBook.deleteTutorial(t);
+        addressBook.removeTutorial(t);
     }
 
     @Override
     public void deleteTutorialFromStudents(Tutorial tutorial) {
-        addressBook.deleteTutorialFromStudents(tutorial);
+        addressBook.removeTutorialFromStudents(tutorial);
     }
 
     @Override
@@ -180,8 +184,13 @@ public class ModelManager implements Model {
 
     @Override
     public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
-                    SubmissionStatus status) {
+                    SubmissionStatus status) throws ItemNotFoundException {
         addressBook.setSubmissionStatus(tutorialName, assignmentName, student, status);
+    }
+
+    @Override
+    public void addAssignment(Assignment assignment) throws ItemNotFoundException, DuplicateItemException {
+        addressBook.addAssignment(assignment);
     }
 
     @Override
@@ -190,15 +199,18 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void markAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException {
+    public void markAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         addressBook.markAttendance(tutorial, week, student);
     }
 
     @Override
-    public void unmarkAttendance(Tutorial tutorial, int week, Student student)
-                    throws DuplicateItemException, ItemNotFoundException {
+    public void unmarkAttendance(Tutorial tutorial, int week, Student student) throws ItemNotFoundException {
         addressBook.unmarkAttendance(tutorial, week, student);
+    }
+
+    @Override
+    public boolean hasAttendance(Attendance attendance) {
+        return addressBook.hasAttendance(attendance);
     }
 
     // =========== Filtered Student List Accessors
@@ -259,6 +271,26 @@ public class ModelManager implements Model {
 
     }
 
+    @Override
+    public boolean check() {
+        return addressBook.check();
+    }
+
+    @Override
+    public void addStudentToTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        addressBook.addStudentToTutorial(tutorial, student);
+    }
+
+    @Override
+    public void removeStudentFromTutorial(Tutorial tutorial, Student student) throws ItemNotFoundException {
+        addressBook.removeStudentFromTutorial(tutorial, student);
+    }
+
+    @Override
+    public void removeAssignment(Assignment assignment) throws ItemNotFoundException {
+        addressBook.removeAssignment(assignment);
+    }
+
     // =========== Filtered Attendance List Accessors
     // =============================================================
 
@@ -268,9 +300,20 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Submission> getFilteredSubmissionList() {
+        return filteredSubmissions;
+    }
+
+    @Override
     public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
         requireNonNull(predicate);
         filteredAttendances.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredSubmissionList(Predicate<Submission> predicate) {
+        requireNonNull(predicate);
+        filteredSubmissions.setPredicate(predicate);
     }
 
     @Override

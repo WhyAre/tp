@@ -23,6 +23,8 @@ public class ListTutorialCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.updateFilteredTutorialList(PREDICATE_SHOW_ALL_TUTORIALS);
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.TUTORIAL);
     }
 

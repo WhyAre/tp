@@ -17,6 +17,8 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
+
+        assert model.check();
         return new CommandResult(SHOWING_HELP_MESSAGE, NavigationMode.UNCHANGED, true, false);
     }
 }

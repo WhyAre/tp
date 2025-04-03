@@ -1,19 +1,18 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
-import seedu.address.model.uniquelist.exceptions.DuplicateItemException;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
 /**
@@ -28,9 +27,6 @@ public class DeleteAssignmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Successfully deleted assignment";
 
-    private static final String MESSAGE_TUTORIAL_NOT_FOUND = "Cannot find tutorial";
-    private static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment not found in %s";
-
     private final Assignment toDelete;
     private final List<Index> indices;
 
@@ -39,6 +35,7 @@ public class DeleteAssignmentCommand extends Command {
      * {@code Assignment}
      */
     public DeleteAssignmentCommand(List<Index> indices, Assignment assignment) {
+        requireNonNull(indices);
         requireNonNull(assignment);
         toDelete = assignment;
         this.indices = indices;
@@ -53,24 +50,22 @@ public class DeleteAssignmentCommand extends Command {
 
             List<Tutorial> tutorials = model.getFilteredTutorialList();
             if (idxZeroBased >= tutorials.size()) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
+                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
             }
 
             Tutorial tutorial = tutorials.get(idxZeroBased);
             if (tutorial == null) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
-            }
-
-            if (!tutorial.deleteAssignment(toDelete)) {
-                throw new CommandException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(tutorial));
+                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
             }
 
             try {
-                model.setTutorial(tutorial, tutorial);
-            } catch (DuplicateItemException | ItemNotFoundException e) {
-                throw new IllegalStateException(Messages.MESSAGE_UNKNOWN_ERROR);
+                model.removeAssignment(toDelete.setTutorial(tutorial));
+            } catch (ItemNotFoundException e) {
+                throw new CommandException(e.getMessage());
             }
         }
+
+        assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 

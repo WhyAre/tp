@@ -12,6 +12,7 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.submission.Submission;
+import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
 import seedu.address.model.uniquelist.Identifiable;
 
@@ -158,6 +159,10 @@ public class Student implements Identifiable<Student> {
         submissions.add(submission);
     }
 
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+
     /**
      * Adds an attendance record for the student
      *
@@ -179,7 +184,7 @@ public class Student implements Identifiable<Student> {
      * Returns true if both students have the same name. This defines a weaker
      * notion of equality between two students.
      */
-    public boolean isSamePerson(Student otherStudent) {
+    public boolean isSameStudent(Student otherStudent) {
         if (otherStudent == this) {
             return true;
         }
@@ -195,7 +200,7 @@ public class Student implements Identifiable<Student> {
      */
     public Student clone() {
         return new Student(name, studentId, phone, email, handle, new HashSet<>(tutorials), details,
-                        new ArrayList<>(attendances));
+                        new ArrayList<>(attendances), new ArrayList<>(submissions));
     }
 
     /**
@@ -209,21 +214,19 @@ public class Student implements Identifiable<Student> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Student)) {
+        if (!(other instanceof Student otherStudent)) {
             return false;
         }
 
-        Student otherStudent = (Student) other;
         return name.equals(otherStudent.name) && studentId.equals(otherStudent.studentId)
                         && phone.equals(otherStudent.phone) && email.equals(otherStudent.email)
-                        && handle.equals(otherStudent.handle) && details.equals(otherStudent.details)
-                        && tutorials.equals(otherStudent.tutorials);
+                        && handle.equals(otherStudent.handle) && details.equals(otherStudent.details);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, studentId, phone, email, handle);
+        return Objects.hash(name, studentId, phone, email, handle, details);
     }
 
     @Override
@@ -235,6 +238,23 @@ public class Student implements Identifiable<Student> {
 
     @Override
     public boolean hasSameIdentity(Student other) {
-        return isSamePerson(other);
+        return isSameStudent(other);
+    }
+
+    /**
+     * Removes information relating to a turoail when a tutorial is removed
+     */
+    public void removeTutorial(Tutorial tutorial) {
+        tutorials.removeIf(t -> t.hasSameIdentity(tutorial));
+        attendances.removeIf(a -> a.tutorial().hasSameIdentity(tutorial));
+        submissions.removeIf(s -> s.assignment().tutorial().hasSameIdentity(tutorial));
+    }
+
+    public void addTutorial(Tutorial tutorial) {
+        tutorials.add(tutorial);
+    }
+
+    public void removeAssignment(Assignment assignment) {
+        submissions.removeIf(s -> s.assignment().hasSameIdentity(assignment));
     }
 }

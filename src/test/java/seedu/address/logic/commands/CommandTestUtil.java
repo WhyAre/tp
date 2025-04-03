@@ -124,7 +124,7 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book, filtered person list and selected person in
+     * - the address book, filtered student list and selected student in
      * {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
@@ -139,14 +139,14 @@ public class CommandTestUtil {
         assertEquals(expectedFilteredList, actualModel.getFilteredStudentList());
     }
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given
+     * Updates {@code model}'s filtered list to show only the student at the given
      * {@code targetIndex} in the {@code model}'s address book.
      */
     public static void showStudentAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredStudentList().size());
 
-        Student person = model.getFilteredStudentList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        Student student = model.getFilteredStudentList().get(targetIndex.getZeroBased());
+        final String[] splitName = student.getName().fullName.split("\\s+");
         model.updateFilteredStudentList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredStudentList().size());
