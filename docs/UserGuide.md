@@ -231,8 +231,8 @@ Examples:
 
 - From student view, `attendance list 1` lists the attendance of the first student on the list.
 - From tutorial view, `attendance list 1` lists the attendance of the first tutorial on the list.
-- If there are invalid arguments, i.e. `attendance list a`, the default behaviour will list all attendances in the 
-address book.
+- If there are invalid arguments, i.e. `attendance list a`, the default behaviour will list all attendances in the
+  address book.
 
 ### Mark attendance: `attendance mark`
 
@@ -248,7 +248,8 @@ Examples:
 
 - `attendance list`, then `attendance mark w/3 i/1`
 - `attendance list`, then `attendance mark w/13 i/1 i/2`
-- From student view, tutorial view or submission view, `attendance mark` command will bring the user to attendance view and list all attendances.
+- From student view, tutorial view or submission view,
+  `attendance mark` command will bring the user to attendance view and list all attendances.
 
 ### Unmark attendance: `attendance unmark`
 
@@ -264,7 +265,8 @@ Examples:
 
 - `attendance list`, then `attendance unmark w/3 i/1`
 - `attendance list`, then `attendance unmark w/13 i/1 i/2`
-- From student view, tutorial view or submission view, `attendance unmark` command will bring the user to attendance view and list all attendances.
+- From student view, tutorial view or submission view,
+  `attendance unmark` command will bring the user to attendance view and list all attendances.
 
 ### Clearing all entries : `clear`
 
@@ -355,7 +357,7 @@ and overwrite the empty data file it creates with the file that contains the dat
 ## Command summary
 
 | **Action**                        | **Format, Examples**                                                                                                                                                         |
-|-----------------------------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Help**                          | `help`                                                                                                                                                                       |
 | **Add student**                   | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe t/CS2103_T01 t/CS2106_T02` |
 | **List students**                 | `list`                                                                                                                                                                       |
