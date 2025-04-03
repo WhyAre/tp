@@ -227,6 +227,7 @@ Format: `find NAME_1 [NAME_2 NAME_3 ...] [t/TUTORIAL_NAME]`
 - `TUTORIAL_NAME` has to be attached with 't/' and is optional
 
 Examples:
+
 - `find alice bob`:
   Finds any student(s) named alice or bob.
 - `find t/CS2103_T02`:
@@ -236,10 +237,9 @@ Examples:
 - `find alice bob t/CS2103_T02 t/CS2103_T03`:
   Finds any student(s) named alice or bob that is in any of the tutorials CS2103_T02 or CS2103_T03.
 
-
 ### Finding a tutorial : `tutorial find`
 
-Finds all tutorials whose names contain any of the specified keywords 
+Finds all tutorials whose names contain any of the specified keywords
 (case-insensitive) and displays them as a list with index numbers.
 
 Format: `tutorial find TUTORIAL_NAME_1 [TUTORIAL_NAME_2 TUTORIAL_NAME_3 ...]`
@@ -247,6 +247,7 @@ Format: `tutorial find TUTORIAL_NAME_1 [TUTORIAL_NAME_2 TUTORIAL_NAME_3 ...]`
 - `TUTORIAL_NAME` can be multiple, seperated by spaces
 
 Examples:
+
 - `tutorial find CS2103_T02`:
   Finds any tutorial(s) named CS2103_T02.
 - `tutorial find CS2103_T02 CS2103_T03`:
@@ -305,6 +306,39 @@ Examples:
 - `attendance list`, then `attendance unmark w/13 i/1 i/2`
 - From student view, tutorial view or submission view,
   `attendance unmark` command will bring the user to attendance view and list all attendances.
+
+### Adding an assignment: `assignment add`
+
+Adds an assignment to the specified tutorial(s), with an optional due date.
+
+Format: `assignment add ASSIGNMENT_NAME t/TUTORIAL_INDEX... [d/DUE_DATE]`
+
+- `TUTORIAL_INDEX` **must be a positive integer** 1, 2, 3, ...
+- `DUE_DATE` must be in one of the following formats:
+  - `uuuu-MM-dd HH:mm`
+  - `uuuu-MM-dd HHmm`
+  - `uuuu-MM-dd HH:mm:ss`
+  - `uuuu-MM-dd HHmmss`
+
+Examples:
+
+- `assignment add Homework t/1` adds an assignment `Homework` to the tutorial at index `1`
+- `assignment add Homework t/1 t/2` adds an assignment `Homework` to the tutorials at indexes `1` and `2`
+- `assignment add Homework t/1 d/2025-04-01 2359` adds an assignment `Homework` to the tutorial at index `1`,
+  with a due date of `1st April 2025, 11:59 PM`
+
+### Deleting an assignment: `assignment delete`
+
+Deletes the specified assignment from the specified tutorial(s).
+
+Format: `assignment delete ASSIGNMENT_NAME t/TUTORIAL_INDEX...`
+
+- `TUTORIAL_INDEX` **must be a positive integer** 1, 2, 3, ...
+
+Examples:
+
+- `assignment delete Homework t/1` deletes the assignment `Homework` from the tutorial at index `1`
+- `assignment delete Homework t/1 t/2` deletes the assignment `Homework` from the tutorials at indexes `1` and `2`
 
 ### Listing submissions: `submission list`
 
