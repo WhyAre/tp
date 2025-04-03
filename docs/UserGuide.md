@@ -306,6 +306,38 @@ Examples:
 - From student view, tutorial view or submission view,
   `attendance unmark` command will bring the user to attendance view and list all attendances.
 
+### Listing submissions: `submission list`
+
+Lists all submissions.
+
+Format: `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`
+
+- If `STUDENT_NAME_PREFIX` is specified,
+  it will list all submissions for students whose names **start with** `STUDENT_NAME_PREFIX`.
+- If `TUTORIAL_NAME_PREFIX` is specified,
+  it will list all submissions for tutorials whose names **start with** `TUTORIAL_NAME_PREFIX`.
+- If `ASSIGNMENT_NAME_PREFIX` is specified,
+  it will list all submissions for assignments whose names **start with** `ASSIGNMENT_NAME_PREFIX`.
+
+Examples:
+
+- `submission list`
+- `submission list t/CS2103` lists submissions of tutorial **starting with** `CS2103`
+- `submission list a/Lab 1` lists submissions of assignments that **starts with** `CS2103-F15`
+
+### Setting submission status: `submission set`
+
+Sets the submission status of a submission
+
+Format: `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`
+
+- `STATE` must be one of the following values: `not-submitted`, `submitted`, `graded`
+
+Examples:
+
+- `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Bernice Yu`
+- `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Bernice Yu s/Alex Yeoh`
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
