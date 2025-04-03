@@ -976,30 +976,57 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `search abc`<br>
       Expected: Message indicating that no students were found matching the search term.
 
-### Creating a lesson under tutorial slot for each student
+### Listing attendances
 
-1. Creating a lesson
+1. Listing attendances
 
-   1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `createLesson cs2103-f15`<br>
-      Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the creation.
+   1. Prerequisites: At least one student should be allocated to a tutorial (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`).
+   2. Test case: `list`, `attendance list 1`<br>
+      Expected: Attendance of student with ID 1 (John Doe) is displayed. A success message is displayed.
 
-   1. Test case: `createLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+   3. Test case: `tutorial list`, `attendance list 1`<br>
+      Expected: Attendance of tutorial with ID 1 (cs2103-f15) is displayed. A success message is displayed.
 
-### Marking lesson attendance
+   4. Test case: `attendance list`<br>
+      Expected: Attendance of student (John Doe) is displayed. A success message is displayed.
+
+   5. Test case: `attendance list abc`<br>
+      Expected: Attendance of student (John Doe) is displayed. A success message is displayed.
+
+### Marking attendance
 
 1. Marking attendance for a lesson
 
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the tutorial slot.
-   1. Test case: `markAttendance cs2103-f15 1 present`<br>
-      Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
+   1. Prerequisites: At least one student should be allocated to a tutorial (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`).
+   2. Test case: `list`, `attendance mark w/3 i/1`<br>
+      Expected: Attendance of student with ID 1 (John Doe) is displayed. An error message is displayed indicating that the wrong view was used.
 
-   1. Test case: `markAttendance cs2103-f15 1 absent`<br>
-      Expected: Student with ID 1 (John Doe) is marked as absent. A success message is displayed.
+   3. Test case: `attendance list`, `attendance mark w/3 i/1`<br>
+      Expected: Week 3 of student with ID 1 (John Doe) is marked as present. A success message is displayed.
 
-   1. Test case: `markAttendance cs9999-f15 1 present`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+   4. Test case: `attendance list`, `attendance mark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   5. Test case: `attendance list`, `attendance mark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
+
+### Unmarking attendance
+
+1. Unmarking attendance for a lesson
+
+1. Prerequisites: At least one student should be allocated to a tutorial. At least one week is marked.
+   (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`, `attendance list`, `attendance mark 1`).
+1. Test case: `list`, `attendance unmark w/3 i/1`<br>
+   Expected: Attendance of student with ID 1 (John Doe) is displayed. An error message is displayed indicating that the wrong view was used.
+
+1. Test case: `attendance list`, `attendance unmark w/3 i/1`<br>
+   Expected: Week 3 of student with ID 1 (John Doe) is unmarked. A success message is displayed.
+
+1. Test case: `attendance list`, `attendance unmark w/-1 i/1`<br>
+   Expected: Error message indicating that the specified week is invalid.
+
+1. Test case: `attendance list`, `attendance unmark w/3 i/a`<br>
+   Expected: Error message indicating that the specified index is invalid.
 
 ### Deleting a lesson under tutorial slot for each student
 
@@ -1011,17 +1038,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `deleteLesson cs9999-f15`<br>
       Expected: Error message indicating that the tutorial slot does not exist.
-
-### Viewing overall attendance
-
-1. Viewing overall attendance
-
-   1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
-   1. Test case: `viewAttendance`<br>
-      Expected: A summary of the overall attendance for all students is displayed.
-
-   1. Test case: `viewAttendance` with no attendance data<br>
-      Expected: Message indicating that no attendance data is available.
 
 ### Exporting student contact list
 
