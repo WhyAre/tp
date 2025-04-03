@@ -586,6 +586,56 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
+#### Use case: Add assignment
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to add assignment to specified tutorials
+4. System adds assignment to specified tutorials
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System adds assignment to valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
+
+---
+
+#### Use case: Delete assignment
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to delete assignment from specified tutorials
+4. System deletes assignment from specified tutorials
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System deletes assignment from valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
+
+---
+
 #### Use case: Mark attendance
 
 **System**: Taskbook<br>
