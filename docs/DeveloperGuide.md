@@ -3,8 +3,9 @@ layout: page
 title: Developer Guide
 ---
 
+<!-- prettier-ignore -->
 - Table of Contents
-  {:toc}
+{:toc}
 
 ---
 
@@ -319,23 +320,29 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### **User Stories**
 
-| Priority | As a … | I want to …                                                       | So that I can …                                                                            | Accepted? |
-| -------- | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
-| High     | TA     | Save a student's data                                             | Find their details to contact them if needed                                               | No        |
-| High     | TA     | View a list of all students                                       | See all students I have created                                                            | No        |
-| Medium   | TA     | Search for contacts using name, student ID, or email              | Locate students efficiently                                                                | No        |
-| Medium   | TA     | Add notes to each contact                                         | Track important details like consultation requests, special accommodations, and weaknesses | No        |
-| Medium   | TA     | View the student's data in tabular form                           | See how the class is doing in general                                                      | No        |
-| Medium   | TA     | Access the contact details of my students                         | Message them                                                                               | No        |
-| High     | TA     | Create tutorial slots                                             | Manage the lesson format for the students                                                  | No        |
-| High     | TA     | Add students to groups                                            | Manage them on a group level                                                               | No        |
-| High     | TA     | Create an assignment entry with a deadline                        | Track student submissions                                                                  | No        |
-| Medium   | TA     | Track whether a student has submitted an assignment               | Monitor completion rates                                                                   | No        |
-| Medium   | TA     | See submission rates                                              | Assess overall assignment difficulty                                                       | No        |
-| Medium   | TA     | Mark my student as present/unpresent for a specific tutorial slot | Track their attendance                                                                     | No        |
-| Medium   | TA     | View the overall performance of my students                       | Identify if my class is performing well overall                                            | No        |
-| High     | TA     | Delete tutorial groups                                            | Remove outdated groups                                                                     | No        |
-| High     | TA     | Delete a student's data                                           | Make space for the next semester's class                                                   | No        |
+| Priority | As a … | I want to …                                                      | So that I can …                                                                            | Accepted? |
+| -------- | ------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
+| High     | TA     | Add a student's data                                             | Find their details to contact them if needed                                               | Yes       |
+| High     | TA     | View a list of all students                                      | See all students I have created                                                            | Yes       |
+| High     | TA     | Delete a student's data                                          | Make space for the next semester's class                                                   | Yes       |
+| Medium   | TA     | Edit a student's data                                            | Make changes to students without deleting and adding them again                            | Yes       |
+| Medium   | TA     | Search for student's data entry using name                       | Locate students efficiently                                                                | Yes       |
+| Medium   | TA     | Add notes to each student                                        | Track important details like consultation requests, special accommodations, and weaknesses | Yes       |
+| Medium   | TA     | View the student's data in detail                                | See more information about the student                                                     | Yes       |
+| High     | TA     | Create tutorials                                                 | Manage the tutorial groups I am in charge of                                               | Yes       |
+| High     | TA     | View a list of all tutorials                                     | See all tutorials I have created                                                           | Yes       |
+| High     | TA     | Delete tutorials                                                 | Remove outdated groups                                                                     | Yes       |
+| High     | TA     | Add students to tutorials                                        | Manage them on a tutorial group level                                                      | Yes       |
+| High     | TA     | Delete students from tutorials                                   | Remove them or reassign them to the appropriate tutorials                                  | Yes       |
+| Medium   | TA     | Search for tutorial's data entry using name                      | Locate tutorials efficiently                                                               | Yes       |
+| High     | TA     | Create an assignment entry with a deadline                       | Track assignments to a tutorial                                                            | Yes       |
+| High     | TA     | Delete an assignment entry                                       | Remove assignments or reassign assignments to appropriate tutorials                        | Yes       |
+| Medium   | TA     | Set the submission state for an assignment for specific students | Track which students have completed which assignments                                      | Yes       |
+| Medium   | TA     | View assignment submissions across students and tutorials        | Monitor completion rates                                                                   | Yes       |
+| High     | TA     | Mark and unmark my students' attendances for any of the weeks    | Track their attendance                                                                     | Yes       |
+| High     | TA     | List attendance records for students across tutorials            | Review past attendance to tutorials                                                        | Yes       |
+| Medium   | TA     | Export a list of all students or students in a specific tutorial | Keep records of students or share information with professors                              | Yes       |
+| Medium   | TA     | Export a list of all tutorials                                   | Have an organized record of tutorial groups                                                | Yes       |
 
 ## **Use cases**
 
@@ -554,49 +561,124 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Create a lesson under tutorial slot for each student
+#### Use case: List attendances
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all tutorial slots
-2. System lists all tutorial slots
-3. User selects a tutorial slot and requests to create a lesson
-4. System creates a lesson for each student in the selected tutorial slot
+1. User requests to list attendances
+2. System lists all attendances
+3. Use case ends
+
+**Extensions**
+
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 2b. If an index is specified when student list is displayed
+  - 2b1. System displays the attendance of the student at specified index
+  - 2b2. Use case ends
+- 2c. If an index is specified when tutorial list is displayed
+  - 2c1. System displays the attendance of the tutorial at specified index
+  - 2c2. Use case ends
+
+---
+
+#### Use case: Add assignment
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to add assignment to specified tutorials
+4. System adds assignment to specified tutorials
 5. Use case ends
 
 **Extensions**
 
-- 2a. If no tutorial slots are available
-  - 2a1. System displays a message indicating no available slots
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
-- 4a. If there is an error creating a lesson for any student
-  - 4a1. System displays an error message for the affected student
-  - 4a2. Use case continues at step 4 for remaining students
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System adds assignment to valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
 
 ---
 
-#### Use case: Mark lesson attendance
+#### Use case: Delete assignment
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all students in a tutorial slot
-2. System lists all students in the selected tutorial slot
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to delete assignment from specified tutorials
+4. System deletes assignment from specified tutorials
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System deletes assignment from valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
+
+---
+
+#### Use case: Mark attendance
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of attendances
+2. System lists attendances
 3. User marks attendance for each student
 4. System updates attendance status for each student
 5. Use case ends
 
 **Extensions**
 
-- 2a. If no students are listed in the tutorial slot
-  - 2a1. System displays a message indicating no students in the slot
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
 - 3a. If attendance cannot be marked for a student
+  - 3a1. System displays an error message for the affected student
+  - 3a2. Use case continues at step 3 for remaining students
+
+---
+
+#### Use case: Unmark attendance
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of attendances
+2. System lists attendances
+3. User unmarks attendance for each student
+4. System updates attendance status for each student
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If attendance cannot be unmarked for a student
   - 3a1. System displays an error message for the affected student
   - 3a2. Use case continues at step 3 for remaining students
 
@@ -789,132 +871,306 @@ testers are expected to do more *exploratory* testing.
 
    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
-
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
-
-   1. Re-launch the app by double-clicking the jar file.<br>
-      Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
-
 ### Adding a student
 
 1. Adding a student
 
    1. Prerequisites: None.
-   1. Test case: `add John Doe`<br>
-      Expected: A new student named "John Doe" is added to the student list. A success message confirming the addition is displayed.
+
+   <!-- Success case -->
+   <!-- 1. Test case: `add John Doe`<br> -->
+   <!--    Expected: A new student named "John Doe" is added to the student list. -->
+   <!--    A success message confirming the addition is displayed. -->
 
    1. Test case: `add`<br>
-      Expected: Error message indicating that student details are incomplete. The system should ask for both first name and last name.
+      Expected: Shows the usage of the command.
 
    1. Test case: `add 12345`<br>
-      Expected: Error message indicating that the student name is invalid (numeric values are not allowed).
+      Expected: Shows the usage of the command
 
 ### Listing all students
 
 1. Listing all students
 
-   1. Prerequisites: At least one student should be added to the list (e.g., `add John Doe`).
+   1. Prerequisites: At least one student should be added to the list.
+
    1. Test case: `list`<br>
       Expected: A list of all students in the system is displayed.
 
+1. Listing all students when there are no students in the addressbook
+
+   1. Prerequisites: There should be no student in the address book
+
    1. Test case: `list` with no students<br>
-      Expected: A message saying "No students available" is displayed if the list is empty.
+      Expected: An empty list will be shown.
 
 ### Deleting a student
 
-1. Deleting a student while all students are being shown
+1. Deleting a student in `STUDENTS` view
 
-   1. Prerequisites: List all students using the `list` command. There must be multiple students in the list (e.g., `add John Doe` and `add Jane Doe`).
+   1. Prerequisites: List all students using the `list` command.
+      There must at least one student in the list.
+
    1. Test case: `delete 1`<br>
-      Expected: The student with ID 1 (John Doe) is deleted from the list. A success message with the student details is shown.
+      Expected: The student with index 1 is deleted from the list.
+      A success message with the student details is shown.
 
    1. Test case: `delete 0`<br>
-      Expected: No student is deleted. An error message is shown indicating that the student ID 0 is invalid.
+      Expected: No student is deleted.
+      An error message is shown indicating that the index 0 is invalid.
 
-   1. Test case: `delete x` (where x is larger than the list size)<br>
-      Expected: Error message indicating that the student ID `x` does not exist.
+   1. Test case: `delete 999` (where x is larger than the list size)<br>
+      Expected: Error message indicating that index is invalid.
+
+1. Deleting a student in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` mode
+
+   1. Test case: `delete 0`<br>
+      Expected: Error message saying the command format is invalid.
+
+   1. Test case: `delete 1`<br>
+      Expected: Error message saying mode is wrong,
+      and switching to the correct mode.
+
+### Listing tutorial slots
+
+1. Listing tutorial slots
+
+   1. Prerequisites: At least one tutorial slot should exist.
+      `tutorial add cs2103-f15` to add a tutorial slot.
+
+   1. Test case: `tutorial list`<br>
+      Expected: A list of all tutorial slots is displayed.
+
+1. Listing tutorial slots with no tutorials in the address book
+
+   1. Test case: `tutorial list` with no tutorial slots<br>
+      Expected: An empty list of tutorial slots.
 
 ### Adding a tutorial slot
 
 1. Adding a tutorial slot
 
    1. Prerequisites: None.
-   1. Test case: `tutorial add cs2103-f15`<br>
-      Expected: A new tutorial slot `cs2103-f15` is added. The list of tutorial slots is updated and the new slot appears at the bottom of the list. A success message is displayed confirming the addition.
+
+   1. Test case: `tutorial add CS2103-_-f15`<br>
+      Expected: A new tutorial slot is added.
 
    1. Test case: `tutorial add cs2103+f15`<br>
-      Expected: Error message indicating that the slot name contains invalid characters (e.g., "+" is not allowed).
+      Expected: Error message showing the list of valid characters
 
-### Creating a tutorial slot with a duplicate name
+   1. Test case: `tutorial add cs2103 f15`<br>
+      Expected: Error message showing the list of valid characters
 
-1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`. If not, create it using `tutorial add cs2103-f15`.
-   1. Test case: `tutorial add cs2103-f15`<br>
-      Expected: Error message indicating that a tutorial slot with the name `cs2103-f15` already exists.
+1. Adding a tutorial slot with a duplicate name
 
-### Adding students to tutorial group slots
+   1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`.
+      If not, create it using `tutorial add cs2103-f15`.
 
-1. Adding students to a tutorial group slot
+      1. Test case: `tutorial add cs2103-f15`<br>
+         Expected: Error message indicating that a tutorial slot already exists.
 
-   1. Prerequisites: A tutorial slot should already exist (e.g., `tutorial add cs2103-f15`) and at least one student should be in the system (e.g., `add John Doe`).
-   1. Test case: `addToSlot cs2103-f15 1`<br>
-      Expected: Student with ID 1 (John Doe) is added to the "cs2103-f15" tutorial slot. A success message is displayed confirming the addition.
+### Adding students to tutorial slot
 
-   1. Test case: `addToSlot cs2103-f15`<br>
-      Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
+1. Adding students to a tutorial slot in `STUDENT` view
 
-   1. Test case: `addToSlot cs9999-f15 1`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+   1. Prerequisites: There should be at least 1 student
+      and 1 tutorial slot (e.g. `cs2103-f15`).
+      List all students with the `list` command.
+
+   1. Test case: `tutorial add-student cs2103-f15 s/1`<br>
+      Expected: Student at index 1 is added to the "cs2103-f15" tutorial slot.
+      A success message is displayed confirming the addition.
+
+   1. Test case: `tutorial add-student cs2103-f15`<br>
+      Expected: Error message that shows the command usage.
+
+   1. Test case: `tutorial add-student cs9999-f15 s/1`<br>
+      Expected: Error message indicating that the tutorial slot cannot be found.
+
+1. Adding students to a tutorial slot in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` view
+
+   1. Prerequisite: Be in some other mode
+
+   1. Test case: `tutorial add-student cs2103-f15 s/1`<br>
+      Expected: Error messaging saying the mode is incorrect,
+      and switching to the correct mode.
 
 ### Deleting a student from a tutorial slot
 
-1. Deleting a student from a tutorial group slot
+1. Deleting a student from a tutorial slot in `STUDENT` view
 
-   1. Prerequisites: A tutorial slot should already have at least one student (e.g., `addToSlot cs2103-f15 1`).
-   1. Test case: `deleteFromSlot cs2103-f15 1`<br>
-      Expected: Student with ID 1 (John Doe) is removed from the "cs2103-f15" tutorial slot. A success message confirming the removal is shown.
+   1. Prerequisites: A tutorial slot should already have at least one student.
+      Type `list` to list all the students.
+      In our example, we assume the tutorial name is `cs2103-f15`,
+      and the student at index 1 of the `STUDENT` view is in tutorial `cs2103-f15`.
 
-   1. Test case: `deleteFromSlot cs2103-f15`<br>
-      Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
+   1. Test case: `tutorial delete-student cs2103-f15 s/1`<br>
+      Expected: Student at index 1 is removed from the "cs2103-f15" tutorial slot.
+      A success message confirming the removal is shown.
 
-   1. Test case: `deleteFromSlot cs9999-f15 1`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+   1. Test case: `tutorial delete-student cs2103-f15`<br>
+      Expected: Error message indicating invalid command format.
+      It also shows the usage of the command.
 
-### Deleting tutorial group slots
+   1. Test case: `tutorial delete-student cs9999-f15 s/1`<br>
+      Expected: Error message indicating that the tutorial slot is not found.
+
+### Deleting a tutorial slot
 
 1. Deleting a tutorial slot
 
-   1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
+   1. Prerequisites: At least one tutorial slot should exist.
+      `tutorial add cs2103-f15` to create a new tutorial slot if it doesn't already exist.
+
    1. Test case: `tutorial delete cs2103-f15`<br>
       Expected: The tutorial slot `cs2103-f15` is deleted from the system. A success message confirming the deletion is shown.
 
    1. Test case: `tutorial delete cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+      Expected: Error message indicating that the tutorial slot does not exist.
 
-### Listing tutorial slots
+### Adding an assignment
 
-1. Listing tutorial slots
+1. Adding an assignment in `TUTORIAL` view
 
-   1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `tutorial list`<br>
-      Expected: A list of all tutorial slots is displayed.
+   1. Prerequisite: Be in `TUTORIAL` view.
+      Have at least 1 tutorial.
 
-   1. Test case: `tutorial list` with no tutorial slots<br>
-      Expected: Message indicating that no tutorial slots are available.
+   1. Test case: `assignment add assign1 t/1`<br>
+      Expected: Successful addition of assignment.
+
+   1. Test case: `assignment add assign2 t/1 d/2025-04-03 0800`<br>
+      Expected: Successful addition of assignment.
+
+   1. Test case: `assignment add assign3 t/1 d/2025-4-3 0800`<br>
+      Expected: Error messaging saying unknown date format.
+
+### Deleting an assignment
+
+1. Deleting an assignment
+
+   1. Prerequisite: Be in `TUTORIAL` view.<br>
+      Have at least 1 tutorial slot with 1 assignment called "assign1".
+
+   1. Test case: `assignment delete assign1 t/1`<br>
+      Expected: Assignment successfully deleted.
+
+   1. Test case: `assignment delete lab 1 t/1`<br>
+      Expected: Error message saying cannot find assignment.
+
+### Listing submissions
+
+1. Listing submissions
+
+   1. Test case: `submission list`
+      Expected: List of all submissions
+
+### Set submission status
+
+1. Setting submission status
+
+   1. Prerequisite: A student with name "Alex", a tutorial called "cs2103-f15",
+      and assignment called `pe` under `cs2103-f15`.
+
+   1. Test case: `submission set submitted t/cs2103-f15 a/pe s/Alex`<br>
+      Expected: Submission updated successfully.
+
+### Listing attendances
+
+1. Listing attendances
+
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+
+   1. Test case: `list`, `attendance list 1`<br>
+      Expected: Attendance of student with index 1 is successfully displayed
+
+   1. Test case: `tutorial list`, `attendance list 1`<br>
+      Expected: Attendance of tutorial with index 1 is displayed.
+
+   1. Test case: `attendance list`<br>
+      Expected: All attendances are displayed.
+
+   1. Test case: `attendance list abc`<br>
+      Expected: All attendances are displayed.
+
+### Marking attendance
+
+1. Marking attendance for a lesson
+
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+
+   1. Test case: `list`, `attendance mark w/3 i/1`<br>
+      Expected: All attendances are displayed.
+      An error message is displayed indicating that the wrong view was used.
+
+   1. Test case: `attendance list`, `attendance mark w/3 i/1`<br>
+      Expected: Week 3 of student with index 1 is marked as present.
+
+   1. Test case: `attendance list`, `attendance mark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   1. Test case: `attendance list`, `attendance mark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
+
+### Unmarking attendance
+
+1. Unmarking attendance for a lesson
+
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+      At least one week is marked.
+
+   1. Test case: `list`, `attendance unmark w/3 i/1`<br>
+      Expected: Attendance of all students are displayed.
+      An error message is displayed indicating that the wrong view was used.
+
+   1. Test case: `attendance list`, `attendance unmark w/3 i/1`<br>
+      Expected: Week 3 of student with index 1 is unmarked.
+
+   1. Test case: `attendance list`, `attendance unmark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   1. Test case: `attendance list`, `attendance unmark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
+
+### Searching for students
+
+1. Searching for a student
+
+   1. Prerequisites: At least one student must be added.
+
+   1. Test case: `find John`<br>
+      Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
+
+   1. Test case: `find abc`<br>
+      Expected: Message indicating that no students were found matching the search term.
+
+### Exporting student contact list
+
+1. Exporting contact list
+
+   1. Prerequisites: At least one student should be added.
+
+   1. Test case: `export`<br>
+      Expected: The student contact list is exported successfully. A success message is shown.
+
+   1. Test case: `export students` with invalid file path<br>
+      Expected: Error message indicating invalid file path.
+
+   1. Test case: `export tutorials` with invalid file path<br>
+      Expected: Error message indicating invalid file path.
 
 ### Retrieve and Save to file
 
 1. Saving data automatically
 
    1. Prerequisites: Data must exist (e.g., at least one student or tutorial slot).
+
    1. Test case: System automatically saves data when changes are made (e.g., adding or deleting a student).
       Expected: Data is automatically saved to the file. No additional user action is needed. There should be no error message unless there's an issue.
 
 1. Retrieving data from the file
 
    1. Prerequisites: A valid file with data exists (e.g., after a previous session or when data was previously saved).
+
    1. Test case: Upon starting the application, the system automatically loads the data from the saved file.
       Expected: Data from the saved file should be loaded correctly. All students, tutorial slots, and other saved information should be available without any errors.
 
@@ -939,83 +1195,3 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: Attempt to retrieve data when the system’s storage is full or unavailable.
       Expected: The system should display an error message indicating that the system cannot access or load data due to a storage issue. The user should be prompted to free up space or resolve the issue.
-
-### Searching for students
-
-1. Searching for a student
-
-   1. Prerequisites: At least one student must be added (e.g., `add John Doe`).
-   1. Test case: `search John`<br>
-      Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
-
-   1. Test case: `search abc`<br>
-      Expected: Message indicating that no students were found matching the search term.
-
-### Creating a lesson under tutorial slot for each student
-
-1. Creating a lesson
-
-   1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `createLesson cs2103-f15`<br>
-      Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the creation.
-
-   1. Test case: `createLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
-
-### Marking lesson attendance
-
-1. Marking attendance for a lesson
-
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the tutorial slot.
-   1. Test case: `markAttendance cs2103-f15 1 present`<br>
-      Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
-
-   1. Test case: `markAttendance cs2103-f15 1 absent`<br>
-      Expected: Student with ID 1 (John Doe) is marked as absent. A success message is displayed.
-
-   1. Test case: `markAttendance cs9999-f15 1 present`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
-
-### Deleting a lesson under tutorial slot for each student
-
-1. Deleting a lesson
-
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`).
-   1. Test case: `deleteLesson cs2103-f15`<br>
-      Expected: The lesson for the `cs2103-f15` tutorial slot is deleted. A success message confirming the deletion is shown.
-
-   1. Test case: `deleteLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
-
-### Viewing overall attendance
-
-1. Viewing overall attendance
-
-   1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
-   1. Test case: `viewAttendance`<br>
-      Expected: A summary of the overall attendance for all students is displayed.
-
-   1. Test case: `viewAttendance` with no attendance data<br>
-      Expected: Message indicating that no attendance data is available.
-
-### Exporting student contact list
-
-1. Exporting contact list
-
-   1. Prerequisites: At least one student should be added (e.g., `add John Doe`).
-   1. Test case: `exportContacts`<br>
-      Expected: The student contact list is exported successfully. A success message is shown.
-
-   1. Test case: `exportContacts` with invalid file path<br>
-      Expected: Error message indicating invalid file path.
-
-### Making announcements to students through email
-
-1. Making an announcement
-
-   1. Prerequisites: At least one student should have an email address in the system (e.g., `add John Doe` with email).
-   1. Test case: `announce email`<br>
-      Expected: An announcement email is sent to all students. A success message is shown confirming the email was sent.
-
-   1. Test case: `announce email` with invalid email format<br>
-      Expected: Error message indicating that the email format is invalid.

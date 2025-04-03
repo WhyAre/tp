@@ -14,6 +14,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.model.tutorial.Tutorial;
@@ -50,8 +51,10 @@ public class AddAssignmentCommandTest {
         AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(listOfOutOfBoundsIndex,
                         new Assignment("new-assignment"));
 
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
         assertThrows(CommandException.class, MESSAGE_TUTORIAL_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
         ) -> addAssignmentCommand.execute(modelStub));
+        modelStub.setNavigationMode(NavigationMode.SUBMISSION);
     }
 
     @Test
@@ -59,12 +62,15 @@ public class AddAssignmentCommandTest {
         Assignment assignment = new Assignment("Week 10 Tasks");
         AddAssignmentCommand addAssignmentCommand = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment);
 
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
         assertThrows(CommandException.class, AddAssignmentCommand.MESSAGE_DUPLICATE_ASSIGNMENT, (
         ) -> addAssignmentCommand.execute(modelStub));
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 
     @Test
     public void execute_assignmentAcceptedByModel_addSuccessful() throws Exception {
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
         Assignment assignment = new Assignment("new-assignment",
                         modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
         CommandResult commandResult = new AddAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment)
@@ -73,5 +79,6 @@ public class AddAssignmentCommandTest {
 
         assertEquals(AddAssignmentCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
         assertTrue(tutorials.get(INDEX_FIRST_TUTORIAL.getZeroBased()).assignments().containsIdentity(assignment));
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 }

@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tutorial.Assignment;
 import seedu.address.testutil.TypicalAddressBook;
@@ -50,8 +51,10 @@ public class DeleteAssignmentCommandTest {
         DeleteAssignmentCommand deleteAssignmentCommand = new DeleteAssignmentCommand(listOfOutOfBoundsIndex,
                         assignment);
 
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
         assertThrows(CommandException.class, MESSAGE_TUTORIAL_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
         ) -> deleteAssignmentCommand.execute(modelStub));
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 
     @Test
@@ -61,12 +64,15 @@ public class DeleteAssignmentCommandTest {
         DeleteAssignmentCommand deleteAssignmentCommand = new DeleteAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL),
                         assignment);
 
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
         assertThrows(CommandException.class, MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment, tut), (
         ) -> deleteAssignmentCommand.execute(modelStub));
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 
     @Test
     public void execute_assignmentExists_success() throws Exception {
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
         Assignment assignment = new Assignment("Week 10 Tasks",
                         modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
         CommandResult commandResult = new DeleteAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL), assignment)
@@ -76,5 +82,7 @@ public class DeleteAssignmentCommandTest {
 
         assertEquals(DeleteAssignmentCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
         assertFalse(assignments.contains(assignment));
+
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 }

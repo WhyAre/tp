@@ -33,6 +33,6 @@ public class AddTutorialCommandParserTest {
     public void parse_multipleArgs_throwsParseException() {
         // multiple valid tutorial names is invalid (because of space)
         assertParseFailure(parser, "CS2103-F15 CS2103-F14",
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_MULTIPLE_NAMES));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_INVALID_NAME));
     }
 }
