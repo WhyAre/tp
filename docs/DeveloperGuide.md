@@ -321,7 +321,7 @@ _{Explain here how the data archiving feature will be implemented}_
 ### **User Stories**
 
 | Priority | As a … | I want to …                                                      | So that I can …                                                                            | Accepted? |
-|----------| ------ |------------------------------------------------------------------|--------------------------------------------------------------------------------------------|-----------|
+| -------- | ------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
 | High     | TA     | Add a student's data                                             | Find their details to contact them if needed                                               | Yes       |
 | High     | TA     | View a list of all students                                      | See all students I have created                                                            | Yes       |
 | High     | TA     | Delete a student's data                                          | Make space for the next semester's class                                                   | Yes       |
@@ -343,8 +343,6 @@ _{Explain here how the data archiving feature will be implemented}_
 | High     | TA     | List attendance records for students across tutorials            | Review past attendance to tutorials                                                        | Yes       |
 | Medium   | TA     | Export a list of all students or students in a specific tutorial | Keep records of students or share information with professors                              | Yes       |
 | Medium   | TA     | Export a list of all tutorials                                   | Have an organized record of tutorial groups                                                | Yes       |
-
-
 
 ## **Use cases**
 

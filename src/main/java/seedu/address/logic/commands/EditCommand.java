@@ -82,7 +82,8 @@ public class EditCommand extends Command {
         requireNonNull(model);
 
         if (model.getNavigationMode() != NavigationMode.STUDENT) {
-            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT), NavigationMode.STUDENT);
+            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT),
+                            NavigationMode.STUDENT);
         }
 
         List<Student> lastShownList = model.getFilteredStudentList();

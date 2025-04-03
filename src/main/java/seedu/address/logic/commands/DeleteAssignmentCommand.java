@@ -47,7 +47,8 @@ public class DeleteAssignmentCommand extends Command {
         requireNonNull(model);
 
         if (model.getNavigationMode() != NavigationMode.TUTORIAL) {
-            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.TUTORIAL), NavigationMode.TUTORIAL);
+            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.TUTORIAL),
+                            NavigationMode.TUTORIAL);
         }
 
         for (Index idx : indices) {
