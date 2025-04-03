@@ -318,12 +318,13 @@ Format: `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASS
   it will list all submissions for tutorials whose names **start with** `TUTORIAL_NAME_PREFIX`.
 - If `ASSIGNMENT_NAME_PREFIX` is specified,
   it will list all submissions for assignments whose names **start with** `ASSIGNMENT_NAME_PREFIX`.
+- Note: The filtering is performed in a **case-insensitive** manner.
 
 Examples:
 
 - `submission list`
-- `submission list t/CS2103` lists submissions of tutorial **starting with** `CS2103`
-- `submission list a/Lab 1` lists submissions of assignments that **starts with** `Lab 1`
+- `submission list t/cs2103` lists submissions of tutorial **starting with** `cs2103`
+- `submission list a/lab 1` lists submissions of assignments that **starts with** `lab 1`
 
 ### Setting submission status: `submission set`
 
@@ -441,8 +442,8 @@ and overwrite the empty data file it creates with the file that contains the dat
 | **List attendances**              | `attendance list [INDEX]`<br>e.g., `attendance list`                                                                                                                         |
 | **Mark attendance**               | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                                       |
 | **Unmark attendance**             | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                                                   |
-| **List submissions**              | `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`<br>e.g., `submission list s/Alex t/CS2103 a/Week 10`                           |
-| **Set submission status**         | `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`<br>e.g., `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Alex Yeoh`                      |
+| **List submissions**              | `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`<br>e.g., `submission list s/alex t/cs2103 a/week 10`                           |
+| **Set submission status**         | `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`<br>e.g., `submission set submitted t/cs2103-f15 a/week 10 tasks s/alex yeoh`                      |
 | **Export students and tutorials** | `export`                                                                                                                                                                     |
 | **Export students**               | `export students [TUTORIAL_NAME]`<br>e.g., `export students`<br>e.g., `export students CS2103-T2`                                                                            |
 | **Export tutorials**              | `export tutorials`                                                                                                                                                           |
