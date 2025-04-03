@@ -24,7 +24,7 @@
     -fx-effect: dropshadow(gaussian, rgba(209, 171, 173, 0.3), 10, 0, 0, 3);
 }
 
-.tutorial-id {
+#tutorialId {
     -fx-font-family: "Livvic", sans-serif;
     -fx-font-size: 13px;
     -fx-font-weight: 800;
