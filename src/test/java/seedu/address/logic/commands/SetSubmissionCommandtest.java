@@ -44,7 +44,7 @@ public class SetSubmissionCommandtest {
 
         var exception = assertThrows(CommandException.class, (
         ) -> cmd.execute(model));
-        assertTrue(exception.getMessage().matches("Assignment '.*' is not found"),
+        assertTrue(exception.getMessage().matches("Assignment '.*' is not found in Tutorial '.*'"),
                         "Actual: %s".formatted(exception.getMessage()));
 
     }

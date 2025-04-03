@@ -360,7 +360,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 
         if (tut.assignments().find(assignment).isEmpty()) {
-            throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment));
+            throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment, tut));
         }
 
         tut.deleteAssignment(assignment);
@@ -379,7 +379,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
         var assign = tut.findAssignment(new Assignment(assignmentName, tut)).orElseThrow((
-        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
+        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName, tut)));
 
         var student = students.stream().filter(s -> s.getName().toString().equals(studentName)).findAny().orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_STUDENT_NOT_FOUND.formatted(studentName)));
@@ -397,7 +397,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         var tut = tutorials.find(submission.assignment().tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(submission.assignment().tutorial())));
         var assignment = tut.findAssignment(submission.assignment()).orElseThrow((
-        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(submission.assignment())));
+        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(submission.assignment(), tut)));
 
         // Resolve student
         var studentInList = students.find(submission.student()).orElseThrow((
