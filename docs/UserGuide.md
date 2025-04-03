@@ -2,6 +2,8 @@
 layout: page
 title: User Guide
 ---
+<!-- prettier-ignore -->
+
 ## TAskbook User Guide  <a name="about-taskbook"></a>
 
 TAskbook is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
