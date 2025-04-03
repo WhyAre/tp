@@ -906,9 +906,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: None.
 
    1. Test case: `tutorial add CS2103-_-f15`<br>
-      Expected: A new tutorial slot `cs2103-f15` is added.
-      The list of tutorial slots is updated and the new slot appears at the bottom of the list.
-      A success message is displayed confirming the addition.
+      Expected: A new tutorial slot is added.
 
    1. Test case: `tutorial add cs2103+f15`<br>
       Expected: Error message showing the list of valid characters
@@ -920,8 +918,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`.
       If not, create it using `tutorial add cs2103-f15`.
-      Be in any view other than `STUDENT` view.
-      One option is the `TUTORIAL` view which can be assessed via `tutorial list`
 
       1. Test case: `tutorial add cs2103-f15`<br>
          Expected: Error message indicating that a tutorial slot already exists.
@@ -1005,12 +1001,12 @@ testers are expected to do more *exploratory* testing.
 1. Deleting an assignment
 
    1. Prerequisite: Be in `TUTORIAL` view.<br>
-      Have at least 1 tutorial slot with 1 assignment called "lab 1".
+      Have at least 1 tutorial slot with 1 assignment called "assign1".
 
-   1. Test case: `assignment delete lab 1 t/1`<br>
+   1. Test case: `assignment delete assign1 t/1`<br>
       Expected: Assignment successfully deleted.
 
-   1. Test case: `assignment delete lab 2 t/1`<br>
+   1. Test case: `assignment delete lab 1 t/1`<br>
       Expected: Error message saying cannot find assignment.
 
 ### Listing submissions
@@ -1034,53 +1030,58 @@ testers are expected to do more *exploratory* testing.
 
 1. Listing attendances
 
-1. Prerequisites: At least one student should be allocated to a tutorial (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`).
-1. Test case: `list`, `attendance list 1`<br>
-   Expected: Attendance of student with ID 1 (John Doe) is displayed. A success message is displayed.
+   1. Prerequisites: At least one student should be allocated to a tutorial.
 
-1. Test case: `tutorial list`, `attendance list 1`<br>
-   Expected: Attendance of tutorial with ID 1 (cs2103-f15) is displayed. A success message is displayed.
+   1. Test case: `list`, `attendance list 1`<br>
+      Expected: Attendance of student with index 1 is successfully displayed
 
-1. Test case: `attendance list`<br>
-   Expected: Attendance of student (John Doe) is displayed. A success message is displayed.
+   1. Test case: `tutorial list`, `attendance list 1`<br>
+      Expected: Attendance of tutorial with index 1 is displayed.
 
-1. Test case: `attendance list abc`<br>
-   Expected: Attendance of student (John Doe) is displayed. A success message is displayed.
+   1. Test case: `attendance list`<br>
+      Expected: All attendances are displayed.
+
+   1. Test case: `attendance list abc`<br>
+      Expected: All attendances are displayed.
 
 ### Marking attendance
 
 1. Marking attendance for a lesson
 
-1. Prerequisites: At least one student should be allocated to a tutorial (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`).
-1. Test case: `list`, `attendance mark w/3 i/1`<br>
-   Expected: Attendance of student with ID 1 (John Doe) is displayed. An error message is displayed indicating that the wrong view was used.
+   1. Prerequisites: At least one student should be allocated to a tutorial.
 
-1. Test case: `attendance list`, `attendance mark w/3 i/1`<br>
-   Expected: Week 3 of student with ID 1 (John Doe) is marked as present. A success message is displayed.
+   1. Test case: `list`, `attendance mark w/3 i/1`<br>
+      Expected: All attendances are displayed.
+      An error message is displayed indicating that the wrong view was used.
 
-1. Test case: `attendance list`, `attendance mark w/-1 i/1`<br>
-   Expected: Error message indicating that the specified week is invalid.
+   1. Test case: `attendance list`, `attendance mark w/3 i/1`<br>
+      Expected: Week 3 of student with index 1 is marked as present.
 
-1. Test case: `attendance list`, `attendance mark w/3 i/a`<br>
-   Expected: Error message indicating that the specified index is invalid.
+   1. Test case: `attendance list`, `attendance mark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   1. Test case: `attendance list`, `attendance mark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
 
 ### Unmarking attendance
 
 1. Unmarking attendance for a lesson
 
-1. Prerequisites: At least one student should be allocated to a tutorial. At least one week is marked.
-   (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`, `attendance list`, `attendance mark 1`).
-1. Test case: `list`, `attendance unmark w/3 i/1`<br>
-   Expected: Attendance of student with ID 1 (John Doe) is displayed. An error message is displayed indicating that the wrong view was used.
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+      At least one week is marked.
 
-1. Test case: `attendance list`, `attendance unmark w/3 i/1`<br>
-   Expected: Week 3 of student with ID 1 (John Doe) is unmarked. A success message is displayed.
+   1. Test case: `list`, `attendance unmark w/3 i/1`<br>
+      Expected: Attendance of all students are displayed.
+      An error message is displayed indicating that the wrong view was used.
 
-1. Test case: `attendance list`, `attendance unmark w/-1 i/1`<br>
-   Expected: Error message indicating that the specified week is invalid.
+   1. Test case: `attendance list`, `attendance unmark w/3 i/1`<br>
+      Expected: Week 3 of student with index 1 is unmarked.
 
-1. Test case: `attendance list`, `attendance unmark w/3 i/a`<br>
-   Expected: Error message indicating that the specified index is invalid.
+   1. Test case: `attendance list`, `attendance unmark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   1. Test case: `attendance list`, `attendance unmark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
 
 ### Searching for students
 
