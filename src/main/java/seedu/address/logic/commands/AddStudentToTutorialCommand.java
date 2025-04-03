@@ -27,6 +27,7 @@ public class AddStudentToTutorialCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Students added to tutorial!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
+    public static final String MESSAGE_TUTORIAL_HAS_BEEN_ADDED = "Student is already enrolled in the tutorial!";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
 
     private final List<Index> indices;
@@ -68,11 +69,16 @@ public class AddStudentToTutorialCommand extends Command {
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             assert model.hasStudent(studentToEdit);
 
-            try {
-                model.addStudentToTutorial(tutorial, studentToEdit);
-            } catch (ItemNotFoundException e) {
-                throw new CommandException(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
+            if (studentToEdit.hasTutorial(tutorial)){
+                throw new CommandException(MESSAGE_TUTORIAL_HAS_BEEN_ADDED);
+            } else {
+                try {
+                    model.addStudentToTutorial(tutorial, studentToEdit);
+                } catch (ItemNotFoundException e) {
+                    throw new CommandException(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
+                }
             }
+
         }
 
         assert model.check();
