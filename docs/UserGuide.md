@@ -507,12 +507,6 @@ Updates the completion status of specified student submissions.
 - `submission set graded t/CS2103-F15 a/Midterm s/Alex Yeoh s/Charlotte Li`:
   Records "graded" status for two students' midterms.
 
-> **Warning (v1.5)**:
-> - As stated earlier, using tutorial tags (`t/`) when adding student records will not:
-    >   - Automatically update existing submissions
->   - Synchronize with attendance records
-> - Resolution planned for v1.6
-
 ---
 
 ## Attendance Commands  <a name="attendance-commands"></a>
@@ -709,7 +703,7 @@ Therefore, edit the data file only if you are confident that you can update it c
    *Fix*: Manually restore the window.
 
 3. **Data Synchronization (v1.5)**:
-    - Tutorial tags (`t/`) don't integrate with submission functionalities
+    - Add the ability to edit tutorial by using Tutorial tags (`t/`)
     - Student descriptions are session-only (lost on app restart)
 
 4. **Data Export (v1.5)**:
