@@ -3,8 +3,9 @@ layout: page
 title: Developer Guide
 ---
 
+<!-- prettier-ignore -->
 - Table of Contents
-  {:toc}
+{:toc}
 
 ---
 
