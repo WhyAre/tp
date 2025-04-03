@@ -5,14 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
-import seedu.address.model.student.Student;
-import seedu.address.model.student.StudentID;
 import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
