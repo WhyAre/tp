@@ -216,6 +216,46 @@ Examples:
 - `list` then `tutorial delete-student cs2103-f15 s/1`:
   Deletes the 1st student in the list from the tutorial slot `cs2103-f15`.
 
+
+### Finding students : `find`
+
+Finds all students whose names contain any of the specified keywords (case-insensitive) or who are in the
+specified tutorial group(s), and displays them as a list with index numbers.
+
+Format: `find NAME_1 [NAME_2 NAME_3 ...] [t/TUTORIAL_NAME]`
+
+- `NAME` can have multiple, seperated by spaces
+- `TUTORIAL_NAME` has to be attached with 't/' and is optional
+
+Examples:
+- `find alice bob`:
+  Finds any student(s) named alice or bob.
+- `find t/CS2103_T02`:
+  Finds any student(s) that has a tutorial CS2103_T02.
+- `find alice bob t/CS2103_T02`:
+  Finds any student(s) named alice or bob that has a tutorial CS2103_T02.
+- `find alice bob t/CS2103_T02 t/CS2103_T03`:
+  Finds any student(s) named alice or bob that is in any of the tutorials CS2103_T02 or CS2103_T03.
+
+
+### Finding a tutorial : `tutorial find`
+
+Finds all tutorials whose names contain any of the specified keywords 
+(case-insensitive) and displays them as a list with index numbers.
+
+Format: `tutorial find TUTORIAL_NAME_1 [TUTORIAL_NAME_2 TUTORIAL_NAME_3 ...]`
+
+- `TUTORIAL_NAME` can be multiple, seperated by spaces
+
+Examples:
+- `tutorial find CS2103_T02`:
+  Finds any tutorial(s) named CS2103_T02.
+- `tutorial find CS2103_T02 CS2103_T03`:
+  Finds any tutorial(s) named CS2103_T02 or CS2103_T03.
+- `tutorial find CS2103`:
+  Finds any tutorial(s) that has CS2103 in the name.
+
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
