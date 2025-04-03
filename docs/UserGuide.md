@@ -274,12 +274,6 @@ Displays comprehensive information for a specific student.
 - `view 1`:
   Displays full details for the first student in the current list.
 
-> **Warning (v1.5)**:
-> - Advanced profile parameters may display outdated information
-> - Known synchronization issues with:
-    >   - Recently modified tutorial enrollments
->   - Newly created assignments
-> - Fix scheduled for v1.6 release
 ---
 
 ## Tutorial Commands  <a name="tutorial-commands"></a>
