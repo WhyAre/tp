@@ -216,7 +216,6 @@ Examples:
 - `list` then `tutorial delete-student cs2103-f15 s/1`:
   Deletes the 1st student in the list from the tutorial slot `cs2103-f15`.
 
-
 ### Finding students : `find`
 
 Finds all students whose names contain any of the specified keywords (case-insensitive) or who are in the
@@ -255,6 +254,57 @@ Examples:
 - `tutorial find CS2103`:
   Finds any tutorial(s) that has CS2103 in the name.
 
+### Listing attendance: `attendance list`
+
+Shows a list of attendances in the address book. It can list all attendances, the attendance for a specific student or
+attendance for a specific tutorial.
+
+Format: `attendance list [INDEX]`
+
+- `INDEX` **must be a positive integer** 1, 2, 3, ...
+- If the command is run from the student view, `INDEX` refers to the index number shown in the student list.
+- If the command is run from the tutorial view, `INDEX` refers to the index number shown in the tutorial list.
+
+Examples:
+
+- From student view, `attendance list 1` lists the attendance of the first student on the list.
+- From tutorial view, `attendance list 1` lists the attendance of the first tutorial on the list.
+- If there are invalid arguments, i.e. `attendance list a`, the default behaviour will list all attendances in the
+  address book.
+
+### Mark attendance: `attendance mark`
+
+Marks student(s) attendance for a specified week.
+
+Format: `attendance mark w/WEEK i/INDEX...`
+
+- `WEEK` **must be a positive integer** from 3 to 13 (inclusive).
+- `INDEX` **must be a positive integer** 1, 2, 3, ...
+- `INDEX` refers to the index number shown in the displayed attendance list.
+
+Examples:
+
+- `attendance list`, then `attendance mark w/3 i/1`
+- `attendance list`, then `attendance mark w/13 i/1 i/2`
+- From student view, tutorial view or submission view,
+  `attendance mark` command will bring the user to attendance view and list all attendances.
+
+### Unmark attendance: `attendance unmark`
+
+Unmarks student(s) attendance for a specified week.
+
+Format: `attendance unmark w/WEEK i/INDEX...`
+
+- `WEEK` **must be a positive integer** from 3 to 13 (inclusive).
+- `INDEX` **must be a positive integer** 1, 2, 3, ...
+- `INDEX` refers to the index number shown in the displayed attendance list.
+
+Examples:
+
+- `attendance list`, then `attendance unmark w/3 i/1`
+- `attendance list`, then `attendance unmark w/13 i/1 i/2`
+- From student view, tutorial view or submission view,
+  `attendance unmark` command will bring the user to attendance view and list all attendances.
 
 ### Clearing all entries : `clear`
 
@@ -356,6 +406,9 @@ and overwrite the empty data file it creates with the file that contains the dat
 | **Tutorial List**                 | `tutorial list`                                                                                                                                                              |
 | **Add student to tutorial**       | `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                                          |
 | **Delete student from tutorial**  | `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                                    |
+| **List attendances**              | `attendance list [INDEX]`<br>e.g., `attendance list`                                                                                                                         |
+| **Mark attendance**               | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                                       |
+| **Unmark attendance**             | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                                                   |
 | **Export students and tutorials** | `export`                                                                                                                                                                     |
 | **Export students**               | `export students [TUTORIAL_NAME]`<br>e.g., `export students`<br>e.g., `export students CS2103-T2`                                                                            |
 | **Export tutorials**              | `export tutorials`                                                                                                                                                           |
