@@ -554,49 +554,74 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Create a lesson under tutorial slot for each student
+#### Use case: List attendances
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all tutorial slots
-2. System lists all tutorial slots
-3. User selects a tutorial slot and requests to create a lesson
-4. System creates a lesson for each student in the selected tutorial slot
-5. Use case ends
+1. User requests to list attendances
+2. System lists all attendances
+3. Use case ends
 
 **Extensions**
 
-- 2a. If no tutorial slots are available
-  - 2a1. System displays a message indicating no available slots
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
-- 4a. If there is an error creating a lesson for any student
-  - 4a1. System displays an error message for the affected student
-  - 4a2. Use case continues at step 4 for remaining students
+- 2b. If an index is specified when student list is displayed
+  - 2b1. System displays the attendance of the student at specified index
+  - 2b2. Use case ends
+- 2c. If an index is specified when tutorial list is displayed
+  - 2c1. System displays the attendance of the tutorial at specified index
+  - 2c2. Use case ends
 
 ---
 
-#### Use case: Mark lesson attendance
+#### Use case: Mark attendance
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all students in a tutorial slot
-2. System lists all students in the selected tutorial slot
+1. User requests for a list of attendances
+2. System lists attendances
 3. User marks attendance for each student
 4. System updates attendance status for each student
 5. Use case ends
 
 **Extensions**
 
-- 2a. If no students are listed in the tutorial slot
-  - 2a1. System displays a message indicating no students in the slot
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
 - 3a. If attendance cannot be marked for a student
+  - 3a1. System displays an error message for the affected student
+  - 3a2. Use case continues at step 3 for remaining students
+
+---
+
+#### Use case: Unmark attendance
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of attendances
+2. System lists attendances
+3. User unmarks attendance for each student
+4. System updates attendance status for each student
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If attendance cannot be unmarked for a student
   - 3a1. System displays an error message for the affected student
   - 3a2. Use case continues at step 3 for remaining students
 
@@ -951,30 +976,57 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `search abc`<br>
       Expected: Message indicating that no students were found matching the search term.
 
-### Creating a lesson under tutorial slot for each student
+### Listing attendances
 
-1. Creating a lesson
+1. Listing attendances
 
-   1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `createLesson cs2103-f15`<br>
-      Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the creation.
+   1. Prerequisites: At least one student should be allocated to a tutorial (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`).
+   2. Test case: `list`, `attendance list 1`<br>
+      Expected: Attendance of student with ID 1 (John Doe) is displayed. A success message is displayed.
 
-   1. Test case: `createLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+   3. Test case: `tutorial list`, `attendance list 1`<br>
+      Expected: Attendance of tutorial with ID 1 (cs2103-f15) is displayed. A success message is displayed.
 
-### Marking lesson attendance
+   4. Test case: `attendance list`<br>
+      Expected: Attendance of student (John Doe) is displayed. A success message is displayed.
+
+   5. Test case: `attendance list abc`<br>
+      Expected: Attendance of student (John Doe) is displayed. A success message is displayed.
+
+### Marking attendance
 
 1. Marking attendance for a lesson
 
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the tutorial slot.
-   1. Test case: `markAttendance cs2103-f15 1 present`<br>
-      Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
+   1. Prerequisites: At least one student should be allocated to a tutorial (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`).
+   2. Test case: `list`, `attendance mark w/3 i/1`<br>
+      Expected: Attendance of student with ID 1 (John Doe) is displayed. An error message is displayed indicating that the wrong view was used.
 
-   1. Test case: `markAttendance cs2103-f15 1 absent`<br>
-      Expected: Student with ID 1 (John Doe) is marked as absent. A success message is displayed.
+   3. Test case: `attendance list`, `attendance mark w/3 i/1`<br>
+      Expected: Week 3 of student with ID 1 (John Doe) is marked as present. A success message is displayed.
 
-   1. Test case: `markAttendance cs9999-f15 1 present`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+   4. Test case: `attendance list`, `attendance mark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   5. Test case: `attendance list`, `attendance mark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
+
+### Unmarking attendance
+
+1. Unmarking attendance for a lesson
+
+1. Prerequisites: At least one student should be allocated to a tutorial. At least one week is marked.
+   (e.g. `add John Doe`, `tutorial add cs2103-f15`, `tutorial add-student 1`, `attendance list`, `attendance mark 1`).
+1. Test case: `list`, `attendance unmark w/3 i/1`<br>
+   Expected: Attendance of student with ID 1 (John Doe) is displayed. An error message is displayed indicating that the wrong view was used.
+
+1. Test case: `attendance list`, `attendance unmark w/3 i/1`<br>
+   Expected: Week 3 of student with ID 1 (John Doe) is unmarked. A success message is displayed.
+
+1. Test case: `attendance list`, `attendance unmark w/-1 i/1`<br>
+   Expected: Error message indicating that the specified week is invalid.
+
+1. Test case: `attendance list`, `attendance unmark w/3 i/a`<br>
+   Expected: Error message indicating that the specified index is invalid.
 
 ### Deleting a lesson under tutorial slot for each student
 
@@ -986,17 +1038,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `deleteLesson cs9999-f15`<br>
       Expected: Error message indicating that the tutorial slot does not exist.
-
-### Viewing overall attendance
-
-1. Viewing overall attendance
-
-   1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
-   1. Test case: `viewAttendance`<br>
-      Expected: A summary of the overall attendance for all students is displayed.
-
-   1. Test case: `viewAttendance` with no attendance data<br>
-      Expected: Message indicating that no attendance data is available.
 
 ### Exporting student contact list
 
