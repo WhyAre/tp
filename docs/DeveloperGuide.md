@@ -603,6 +603,52 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
+#### Use case: Search for students
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to search for a student
+2. System prompts for search criteria
+3. User enters the search criteria
+4. System displays a list of students matching the search criteria
+5. Use case ends
+
+**Extensions**
+
+- 3a. If no students match the search criteria
+  - 3a1. System displays a message indicating no results found
+  - 3a2. Use case ends
+
+---
+
+#### Use case: List attendances
+
+**System**: Taskbook<br>
+**Actor**: User
+ 
+**MSS**
+ 
+1. User requests to list attendances
+2. System lists all attendances
+3. Use case ends
+
+**Extensions**
+
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 2b. If an index is specified when student list is displayed
+  - 2b1. System displays the attendance of the student at specified index
+  - 2b2. Use case ends
+- 2c. If an index is specified when tutorial list is displayed
+  - 2c1. System displays the attendance of the tutorial at specified index
+  - 2c2. Use case ends
+
+---
+
 #### Use case: Mark attendance
 
 **System**: TAskbook <br>
@@ -651,7 +697,75 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Export Data
+#### Use case: Add assignment
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to add assignment to specified tutorials
+4. System adds assignment to specified tutorials
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System adds assignment to valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
+
+---
+
+#### Use case: Delete assignment
+
+**System**: Taskbook<br>
+**Actor**: User
+
+**MSS**
+
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to delete assignment from specified tutorials
+4. System deletes assignment from specified tutorials
+5. Use case ends
+
+
+**Extensions**
+
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System deletes assignment from valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
+
+---
+
+#### Use case: Set submission
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to set submission state of students for a specified assignment
+2. System updates submission states accordingly
+3. Use case ends
+
+**Extensions**
+
+- 1a. If there is an error in the command
+  - 1a1. System displays an error message
+  - 1a2. Use case continues at step 1
+
+#### Use case: Export data
 
 **System**: TAskbook <br>
 **Actor**: User
