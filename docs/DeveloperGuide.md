@@ -665,14 +665,13 @@ _{Explain here how the data archiving feature will be implemented}_
 **Extensions**
 
 - 2a. If there is an error in the export command
+
   - 2a1. System displays an error message
   - 2a2. Use case ends
-
 
 - 2a. If there is an error during the export process
   - 2a1. System displays an error message
   - 2a2. Use case ends
-
 
 ### Non-Functional Requirements
 
@@ -1108,57 +1107,52 @@ Team size: 6 (maximum 12 enhancements)
 
 1. Tutorial-Submission Synchronization:  
    Automatically update submission records when students are added/removed from tutorials using t/ tag in add/edit commands.  
-   *Example*: edit 1 t/CS2103_T01 will now sync all CS2103_T01 submissions.
-
+   _Example_: edit 1 t/CS2103_T01 will now sync all CS2103_T01 submissions.
 
 2. Persistent Description Field:  
    Save student descriptions between sessions in the data file.  
-   *Implementation*: New "description" field in student JSON structure.
-
+   _Implementation_: New "description" field in student JSON structure.
 
 3. Submission Status Preservation:  
    Prevent submission status reset when re-adding students to existing tutorials.  
-   *Behavior*: Maintain current submission states during tutorial re-enrollment.
-
+   _Behavior_: Maintain current submission states during tutorial re-enrollment.
 
 4. Attendance Record Preservation:  
    Keep existing attendance marks when re-adding students to tutorials.  
-   *Logic*: Check tutorial membership before resetting attendance.
-
+   _Logic_: Check tutorial membership before resetting attendance.
 
 5. Export Completeness:  
    Include full submission histories and attendance records in exports.  
-   *New Files*:
-  - submissions.csv (all submission states with timestamps)
-  - attendance.csv (weekly records per student-tutorial pair)
+   _New Files_:
 
+- submissions.csv (all submission states with timestamps)
+- attendance.csv (weekly records per student-tutorial pair)
 
 6. Enhanced Error Messages:  
    Specific warnings for:
-  - Invalid parameters (show expected format)
-  - Duplicate tutorial additions ("Tutorial already exists: CS2103_T01")  
-    *Example*: tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
 
+- Invalid parameters (show expected format)
+- Duplicate tutorial additions ("Tutorial already exists: CS2103*T01")  
+  \_Example*: tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
 
 7. Window Auto-Resizing:  
    Dynamic UI adjustment for long content (names, descriptions, assignments).  
-   *Thresholds*:
-  - Auto-expand for >15 character assignments
-  - Scrollable panels for >30 character descriptions
+   _Thresholds_:
 
+- Auto-expand for >15 character assignments
+- Scrollable panels for >30 character descriptions
 
 8. Data Preloading:  
    Load student data on application startup instead of first list command.
 
-
 9. Session State Preservation:  
    Maintain temporary data between app restarts:
-  - Active filters
-  - Description edits
-  - Current view preferences  
-    *Storage*: New session.json file in data directory.
 
+- Active filters
+- Description edits
+- Current view preferences  
+  _Storage_: New session.json file in data directory.
 
 10. Help Window Management:  
     Proper handling of minimized help windows with new instances.  
-    *Fix*: Detect and restore/minimize state on help commands
+    _Fix_: Detect and restore/minimize state on help commands
