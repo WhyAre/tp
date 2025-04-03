@@ -319,23 +319,31 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### **User Stories**
 
-| Priority | As a … | I want to …                                                       | So that I can …                                                                            | Accepted? |
-| -------- | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
-| High     | TA     | Save a student's data                                             | Find their details to contact them if needed                                               | No        |
-| High     | TA     | View a list of all students                                       | See all students I have created                                                            | No        |
-| Medium   | TA     | Search for contacts using name, student ID, or email              | Locate students efficiently                                                                | No        |
-| Medium   | TA     | Add notes to each contact                                         | Track important details like consultation requests, special accommodations, and weaknesses | No        |
-| Medium   | TA     | View the student's data in tabular form                           | See how the class is doing in general                                                      | No        |
-| Medium   | TA     | Access the contact details of my students                         | Message them                                                                               | No        |
-| High     | TA     | Create tutorial slots                                             | Manage the lesson format for the students                                                  | No        |
-| High     | TA     | Add students to groups                                            | Manage them on a group level                                                               | No        |
-| High     | TA     | Create an assignment entry with a deadline                        | Track student submissions                                                                  | No        |
-| Medium   | TA     | Track whether a student has submitted an assignment               | Monitor completion rates                                                                   | No        |
-| Medium   | TA     | See submission rates                                              | Assess overall assignment difficulty                                                       | No        |
-| Medium   | TA     | Mark my student as present/unpresent for a specific tutorial slot | Track their attendance                                                                     | No        |
-| Medium   | TA     | View the overall performance of my students                       | Identify if my class is performing well overall                                            | No        |
-| High     | TA     | Delete tutorial groups                                            | Remove outdated groups                                                                     | No        |
-| High     | TA     | Delete a student's data                                           | Make space for the next semester's class                                                   | No        |
+| Priority | As a … | I want to …                                                      | So that I can …                                                                            | Accepted? |
+|----------| ------ |------------------------------------------------------------------|--------------------------------------------------------------------------------------------|-----------|
+| High     | TA     | Add a student's data                                             | Find their details to contact them if needed                                               | Yes       |
+| High     | TA     | View a list of all students                                      | See all students I have created                                                            | Yes       |
+| High     | TA     | Delete a student's data                                          | Make space for the next semester's class                                                   | Yes       |
+| Medium   | TA     | Edit a student's data                                            | Make changes to students without deleting and adding them again                            | Yes       |
+| Medium   | TA     | Search for student's data entry using name                       | Locate students efficiently                                                                | Yes       |
+| Medium   | TA     | Add notes to each student                                        | Track important details like consultation requests, special accommodations, and weaknesses | Yes       |
+| Medium   | TA     | View the student's data in detail                                | See more information about the student                                                     | Yes       |
+| High     | TA     | Create tutorials                                                 | Manage the tutorial groups I am in charge of                                               | Yes       |
+| High     | TA     | View a list of all tutorials                                     | See all tutorials I have created                                                           | Yes       |
+| High     | TA     | Delete tutorials                                                 | Remove outdated groups                                                                     | Yes       |
+| High     | TA     | Add students to tutorials                                        | Manage them on a tutorial group level                                                      | Yes       |
+| High     | TA     | Delete students from tutorials                                   | Remove them or reassign them to the appropriate tutorials                                  | Yes       |
+| Medium   | TA     | Search for tutorial's data entry using name                      | Locate tutorials efficiently                                                               | Yes       |
+| High     | TA     | Create an assignment entry with a deadline                       | Track assignments to a tutorial                                                            | Yes       |
+| High     | TA     | Delete an assignment entry                                       | Remove assignments or reassign assignments to appropriate tutorials                        | Yes       |
+| Medium   | TA     | Set the submission state for an assignment for specific students | Track which students have completed which assignments                                      | Yes       |
+| Medium   | TA     | View assignment submissions across students and tutorials        | Monitor completion rates                                                                   | Yes       |
+| High     | TA     | Mark and unmark my students' attendances for any of the weeks    | Track their attendance                                                                     | Yes       |
+| High     | TA     | List attendance records for students across tutorials            | Review past attendance to tutorials                                                        | Yes       |
+| Medium   | TA     | Export a list of all students or students in a specific tutorial | Keep records of students or share information with professors                              | Yes       |
+| Medium   | TA     | Export a list of all tutorials                                   | Have an organized record of tutorial groups                                                | Yes       |
+
+
 
 ## **Use cases**
 
