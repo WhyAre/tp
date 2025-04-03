@@ -69,7 +69,7 @@ public class AddStudentToTutorialCommand extends Command {
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             assert model.hasStudent(studentToEdit);
 
-            if (studentToEdit.hasTutorial(tutorial)){
+            if (studentToEdit.hasTutorial(tutorial)) {
                 throw new CommandException(MESSAGE_TUTORIAL_HAS_BEEN_ADDED);
             } else {
                 try {
