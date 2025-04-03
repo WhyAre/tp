@@ -835,12 +835,10 @@ testers are expected to do more *exploratory* testing.
    <!--    A success message confirming the addition is displayed. -->
 
    1. Test case: `add`<br>
-      Expected: Error message indicating that student details are incomplete.
-      The system should ask for both first name and last name.
+      Expected: Shows the usage of the command.
 
    1. Test case: `add 12345`<br>
-      Expected: Error message indicating that the student name is invalid
-      (numeric values are not allowed).
+      Expected: Shows the usage of the command
 
 ### Listing all students
 
@@ -863,10 +861,10 @@ testers are expected to do more *exploratory* testing.
 1. Deleting a student in `STUDENTS` view
 
    1. Prerequisites: List all students using the `list` command.
-      There must be multiple students in the list.
+      There must at least one student in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: The student with ID 1 (John Doe) is deleted from the list.
+      Expected: The student with index 1 is deleted from the list.
       A success message with the student details is shown.
 
    1. Test case: `delete 0`<br>
@@ -876,13 +874,14 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 999` (where x is larger than the list size)<br>
       Expected: Error message indicating that index is invalid.
 
-1. Deleting a student in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` view
+1. Deleting a student in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` mode
 
    1. Test case: `delete 0`<br>
       Expected: Error message saying the command format is invalid.
 
    1. Test case: `delete 1`<br>
-      Expected: Error message saying mode is wrong.
+      Expected: Error message saying mode is wrong,
+      and switching to the correct mode.
 
 ### Listing tutorial slots
 
@@ -945,7 +944,8 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisite: Be in some other mode
 
    1. Test case: `tutorial add-student cs2103-f15 s/1`<br>
-      Expected: Error messaging saying the mode is incorrect.
+      Expected: Error messaging saying the mode is incorrect,
+      and switching to the correct mode.
 
 ### Deleting a student from a tutorial slot
 
