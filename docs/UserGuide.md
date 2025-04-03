@@ -248,8 +248,7 @@ Examples:
 
 - `attendance list`, then `attendance mark w/3 i/1`
 - `attendance list`, then `attendance mark w/13 i/1 i/2`
-- From student view, tutorial view or submission view, `attendance mark` command will bring the user to attendance
-view and list all attendances.
+- From student view, tutorial view or submission view, `attendance mark` command will bring the user to attendance view and list all attendances.
 
 ### Unmark attendance: `attendance unmark`
 
@@ -265,8 +264,7 @@ Examples:
 
 - `attendance list`, then `attendance unmark w/3 i/1`
 - `attendance list`, then `attendance unmark w/13 i/1 i/2`
-- From student view, tutorial view or submission view, `attendance unmark` command will bring the user to attendance 
-view and list all attendances.
+- From student view, tutorial view or submission view, `attendance unmark` command will bring the user to attendance view and list all attendances.
 
 ### Clearing all entries : `clear`
 
