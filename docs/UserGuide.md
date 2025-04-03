@@ -323,7 +323,7 @@ Examples:
 
 - `submission list`
 - `submission list t/CS2103` lists submissions of tutorial **starting with** `CS2103`
-- `submission list a/Lab 1` lists submissions of assignments that **starts with** `CS2103-F15`
+- `submission list a/Lab 1` lists submissions of assignments that **starts with** `Lab 1`
 
 ### Setting submission status: `submission set`
 
