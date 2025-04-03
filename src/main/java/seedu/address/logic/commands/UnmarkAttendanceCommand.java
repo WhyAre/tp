@@ -36,8 +36,11 @@ public class UnmarkAttendanceCommand extends Command {
     public static final String MESSSAGE_SWITCHED_TO_ATTENDANCE = "Unable to mark attendance "
                     + "due to being in wrong view!\nListing all attendances";
 
+    public static final String MESSAGE_INCORRECT_NUMBER_OF_WEEKS = "Incorrect number of weeks detected at index %d\n";
+
     public static final int START_WEEK = 3;
     public static final int END_WEEK = 13;
+    public static final int NUMBER_OF_WEEKS = 11;
 
     private final int week;
     private final List<Index> indices;
@@ -74,6 +77,11 @@ public class UnmarkAttendanceCommand extends Command {
             }
             Attendance attendanceToEdit = attendances.get(index.getZeroBased());
             assert model.hasAttendance(attendanceToEdit);
+
+            if (attendanceToEdit.attendances().size() != NUMBER_OF_WEEKS) {
+                errMsg.append(MESSAGE_INCORRECT_NUMBER_OF_WEEKS.formatted(index.getOneBased()));
+                continue;
+            }
 
             Student studentToEdit = attendanceToEdit.student();
             assert model.hasStudent(studentToEdit);
