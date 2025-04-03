@@ -1113,39 +1113,31 @@ Team size: 6 (maximum 12 enhancements)
    Save student descriptions between sessions in the data file.  
    _Implementation_: New "description" field in student JSON structure.
 
-3. Submission Status Preservation:  
-   Prevent submission status reset when re-adding students to existing tutorials.  
-   _Behavior_: Maintain current submission states during tutorial re-enrollment.
-
-4. Attendance Record Preservation:  
-   Keep existing attendance marks when re-adding students to tutorials.  
-   _Logic_: Check tutorial membership before resetting attendance.
-
-5. Export Completeness:  
+3. Export Completeness:  
    Include full submission histories and attendance records in exports.  
    _New Files_:
 
 - submissions.csv (all submission states with timestamps)
 - attendance.csv (weekly records per student-tutorial pair)
 
-6. Enhanced Error Messages:  
+4. Enhanced Error Messages:  
    Specific warnings for:
 
 - Invalid parameters (show expected format)
 - Duplicate tutorial additions ("Tutorial already exists: CS2103*T01")  
   \_Example*: tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
 
-7. Window Auto-Resizing:  
+5. Window Auto-Resizing:  
    Dynamic UI adjustment for long content (names, descriptions, assignments).  
    _Thresholds_:
 
 - Auto-expand for >15 character assignments
 - Scrollable panels for >30 character descriptions
 
-8. Data Preloading:  
+6. Data Preloading:  
    Load student data on application startup instead of first list command.
 
-9. Session State Preservation:  
+7. Session State Preservation:  
    Maintain temporary data between app restarts:
 
 - Active filters
@@ -1153,6 +1145,6 @@ Team size: 6 (maximum 12 enhancements)
 - Current view preferences  
   _Storage_: New session.json file in data directory.
 
-10. Help Window Management:  
+8. Help Window Management:  
     Proper handling of minimized help windows with new instances.  
     _Fix_: Detect and restore/minimize state on help commands

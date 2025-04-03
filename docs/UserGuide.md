@@ -150,7 +150,6 @@ Examples:
 - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
 
 > **Warning:**
-> - As of v1.5, tutorial tags (`t/`) do not integrate with submission functionalities
 > - As of v1.5, description attribute is temporary for the session and will disappear on reboot of app
 
 ---
@@ -168,30 +167,21 @@ Format: `list`
 Edits an existing student in the address book.
 
 **Format**:  
-`edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`
+`edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE]...`
 
 > **Note:**
 > - The `INDEX` must be a positive integer (1, 2, 3, ...)
 > - At least one optional field must be provided
-> - Tutorial slots are completely replaced (not cumulative)
-> - Use `t/` without values to clear all tutorials
 
 **Behavior**:
 - Updates all specified fields with new values
-- Replaces entire tutorial list if `t/` parameter is provided
 - Preserves unspecified fields
-
 
 Examples:
 - `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
-- `edit 2 n/Betsy Crower t/`
-  Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tutorial slots.
-
-> **Warning:**
-> - Editing tutorial tags (`t/`) does not update submission records
-> - Changing name/ID/other attributes does not update existing submissions or attendance records
-> - These are known limitations in v1.5
+- `edit 2 n/Betsy Crower`
+  Edits the name of the 2nd student to be `Betsy Crower`
 
 ---
 ### Command - Finding students : `find`
@@ -274,12 +264,6 @@ Displays comprehensive information for a specific student.
 - `view 1`:
   Displays full details for the first student in the current list.
 
-> **Warning (v1.5)**:
-> - Advanced profile parameters may display outdated information
-> - Known synchronization issues with:
-    >   - Recently modified tutorial enrollments
->   - Newly created assignments
-> - Fix scheduled for v1.6 release
 ---
 
 ## Tutorial Commands  <a name="tutorial-commands"></a>
@@ -396,11 +380,6 @@ Adds a student to a tutorial slot.
 - `find Alice` then `tutorial add-student cs2101-t03 s/1`:
   Adds Alice (1st in filtered list) to tutorial "cs2101-t03".
 
-> **Warning:**  
-> In v1.5:
-> - Readdition of students to tutorials resets their:
-    >   - Submission statuses to "not-submitted"
->   - Attendance records to "unmarked"
 
 ---
 
@@ -527,12 +506,6 @@ Updates the completion status of specified student submissions.
   Marks Bernice Yu's submission as "submitted".
 - `submission set graded t/CS2103-F15 a/Midterm s/Alex Yeoh s/Charlotte Li`:
   Records "graded" status for two students' midterms.
-
-> **Warning (v1.5)**:
-> - As stated earlier, using tutorial tags (`t/`) when editing student records will not:
-    >   - Automatically update existing submissions
->   - Synchronize with attendance records
-> - Resolution planned for v1.6
 
 ---
 
@@ -696,11 +669,6 @@ Generates CSV files of system data for external use.
 > - Export directory must exist
 > - Partial exports may occur if data is corrupted
 
-> **Warning (v1.5)**:
-> - Export doesn't include:
-    >   - Submission histories
->   - Attendance records
-
 ---
 
 ## Saving the data <a name="saving-the-data"></a>
@@ -735,27 +703,20 @@ Therefore, edit the data file only if you are confident that you can update it c
    *Fix*: Manually restore the window.
 
 3. **Data Synchronization (v1.5)**:
-    - Tutorial tags (`t/`) don't integrate with submission functionalities
+    - Add the ability to edit tutorial by using Tutorial tags (`t/`)
     - Student descriptions are session-only (lost on app restart)
-    - Editing student records doesn't update existing submissions/attendance
-    - View may show outdated tutorial/assignment information
 
-4. **Attendance Tracking (v1.5)**:
-    - Readdition of students to tutorials they are already in resets their:
-        - Submission statuses to "not-submitted"
-        - Attendance records to "unmarked"
-
-5. **Data Export (v1.5)**:
+4. **Data Export (v1.5)**:
     - Doesn't include:
         - Submission histories
         - Attendance records
     - Limited to current session data
 
-6. **Interface Issues**:
+5. **Interface Issues**:
     - Window resizing required for long assignment names (>5 chars)
     - Tutorial indexes change after filtering/sorting
 
-7. **System Limitations**:
+6. **System Limitations**:
     - No bulk operations across multiple tutorials
     - Orphaned submissions may exist after deletions
 
@@ -763,38 +724,38 @@ Therefore, edit the data file only if you are confident that you can update it c
 
 ## Command Summary <a name="command-summary"></a>
 
-| **Action**                        | **Format, Examples**                                                                                                                                                         |
-|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Student Management**            |                                                                                                                                                                               |
+| **Action**                        | **Format, Examples**                                                                                                                                                       |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Student Management**            |                                                                                                                                                                             |
 | `Add student`                     | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe t/CS2103_T01 t/CS2106_T02` |
-| `Edit student`                    | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`<br>e.g., `edit 1 p/91234567 e/johndoe@example.com`                                      |
-| `Delete student`                  | `delete INDEX`<br>e.g., `delete 2`                                                                                                                                           |
-| `List students`                   | `list`                                                                                                                                                                       |
-| `View student`                   | `view INDEX`<br>e.g., `view 2`                                                                                                                                                                       |
-| `Find students`                   | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                                                                      |
-| **Tutorial Management**           |                                                                                                                                                                               |
-| `Add tutorial`                    | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                                       |
-| `Delete tutorial`                 | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                                                 |
-| `List tutorials`                  | `tutorial list`                                                                                                                                                              |
-| `Find tutorials`                  | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                                                                         |
-| `Add student to tutorial`         | `tutorial add-student TUTORIAL s/INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                                                       |
-| `Remove student from tutorial`    | `tutorial delete-student TUTORIAL s/INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                                                 |
-| **Academic Tracking**             |                                                                                                                                                                               |
-| `Add assignment`                  | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                                                           |
-| `Delete assignment`               | `assignment delete NAME t/TUTORIAL`<br>e.g., `assignment delete Lab1 t/1`                                                                                                    |
-| `Mark attendance`                 | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                                       |
-| `Unmark attendance`               | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                                                   |
-| `List attendance`                 | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                                                                       |
-| `Set submission status`           | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`                                                      |
-| `List submissions`                | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                                                                         |
-| **Data Export**                   |                                                                                                                                                                               |
-| `Export all`                      | `export`                                                                                                                                                                     |
-| `Export students`                 | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                                                            |
-| `Export tutorials`                | `export tutorials`                                                                                                                                                           |
-| **System**                        |                                                                                                                                                                               |
-| `Clear data`                      | `clear`                                                                                                                                                                      |
-| `Help`                            | `help`                                                                                                                                                                       |
-| `Exit`                            | `exit`                                                                                                                                                                       |
+| `Edit student`                    | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] ...`<br>e.g., `edit 1 p/91234567`                                      |
+| `Delete student`                  | `delete INDEX`<br>e.g., `delete 2`                                                                                                                                         |
+| `List students`                   | `list`                                                                                                                                                                     |
+| `View student`                   | `view INDEX`<br>e.g., `view 2`                                                                                                                                                                     |
+| `Find students`                   | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                                                                    |
+| **Tutorial Management**           |                                                                                                                                                                             |
+| `Add tutorial`                    | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                                     |
+| `Delete tutorial`                 | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                                               |
+| `List tutorials`                  | `tutorial list`                                                                                                                                                            |
+| `Find tutorials`                  | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                                                                       |
+| `Add student to tutorial`         | `tutorial add-student TUTORIAL s/INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                                                     |
+| `Remove student from tutorial`    | `tutorial delete-student TUTORIAL s/INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                                               |
+| **Academic Tracking**             |                                                                                                                                                                             |
+| `Add assignment`                  | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                                                         |
+| `Delete assignment`               | `assignment delete NAME t/TUTORIAL`<br>e.g., `assignment delete Lab1 t/1`                                                                                                  |
+| `Mark attendance`                 | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                                     |
+| `Unmark attendance`               | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                                                 |
+| `List attendance`                 | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                                                                     |
+| `Set submission status`           | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`                                                    |
+| `List submissions`                | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                                                                       |
+| **Data Export**                   |                                                                                                                                                                             |
+| `Export all`                      | `export`                                                                                                                                                                   |
+| `Export students`                 | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                                                          |
+| `Export tutorials`                | `export tutorials`                                                                                                                                                         |
+| **System**                        |                                                                                                                                                                             |
+| `Clear data`                      | `clear`                                                                                                                                                                    |
+| `Help`                            | `help`                                                                                                                                                                     |
+| `Exit`                            | `exit`                                                                                                                                                                     |
 
 ## Troubleshooting <a name="troubleshooting"></a>
 1. **Data not saving**: Ensure you have write permissions in the installation directory.

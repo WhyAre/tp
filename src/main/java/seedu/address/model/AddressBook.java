@@ -131,6 +131,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                 throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
             }
         }
+
+        this.populateSubmissions();
     }
 
     /**
