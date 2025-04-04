@@ -21,8 +21,7 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.testutil.TypicalAddressBook;
 
 public class AttendanceCommandTest {
-    private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
-                    new UserPrefs());
+    private static Model modelStub;
     private static final int START_WEEK = 3;
     private static final int END_WEEK = 13;
     private static final int TEST_WEEK = 5;
@@ -32,6 +31,7 @@ public class AttendanceCommandTest {
 
     @BeforeAll
     public static void setUp() {
+        modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
         modelStub.setNavigationMode(NavigationMode.ATTENDANCE);
     }
 
