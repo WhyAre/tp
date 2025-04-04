@@ -2,7 +2,6 @@
 layout: page
 title: User Guide
 ---
-<!-- prettier-ignore -->
 
 ## TAskbook User Guide  <a name="about-taskbook"></a>
 
@@ -11,23 +10,10 @@ If you can type fast,
 TAskbook can get your contact management tasks done faster than traditional GUI apps.
 
 ## Table of Contents
-- [About TAskbook](#about-taskbook)
-- [Quick start](#quick-start)
-- [Feature formats](#features)
-- [Commands](#commands)
-    - [Student Commands](#student-commands)
-    - [Tutorial Commands](#tutorial-commands)
-    - [Assignment Commands](#assignment-commands)
-    - [Submission Commands](#submission-commands)
-    - [Attendance Commands](#attendance-commands)
-    - [Export Commands](#export-commands)
-- [Saving the Data](#saving-the-data)
-- [Editing the Data File](#editing-the-data-file)
-- [FAQ](#faq)
-- [Known Issues](#known-issues)
-- [Command Summary](#command-summary)
-- [Troubleshooting](#troubleshooting)
-- [Acknowledgements](#acknowledgements)
+
+<!-- prettier-ignore -->
+- Table of Content
+{:toc}
 
 ---
 
@@ -254,7 +240,7 @@ Displays comprehensive information for a specific student.
 
 > **Parameters**:
 > - `INDEX`:
-    >   - Must be a positive integer (1, 2, 3,...)
+>   - Must be a positive integer (1, 2, 3,...)
 >   - Corresponds to displayed student list position
 
 - **Behavior**:
@@ -277,7 +263,7 @@ Adds a tutorial slot to the address book.
 
 > **Note:**
 > - `NAME` requirements:
-    >   - Must be unique (no duplicate tutorials)
+>   - Must be unique (no duplicate tutorials)
 >   - Maximum 15 characters
 >   - Only alphanumeric, underscore (_) and hyphen (-) allowed
 >   - Case-sensitive (CS2103 ≠ cs2103)
@@ -340,7 +326,7 @@ Deletes a tutorial slot from the address book.
 
 > **Note:**
 > - `TUTORIAL_NAME` must:
-    >   - Exactly match an existing tutorial name (case-sensitive)
+>   - Exactly match an existing tutorial name (case-sensitive)
 >   - Contain only alphanumeric characters, underscores (_), and hyphens (-)
 >   - Not be blank
 
@@ -365,7 +351,7 @@ Adds a student to a tutorial slot.
 
 > **Note:**
 > - `STUDENT_INDEX` must be:
-    >   - A positive integer (1, 2, 3,...)
+>   - A positive integer (1, 2, 3,...)
 >   - Valid for current student list display
 > - `TUTORIAL_NAME` must exactly match an existing tutorial (case sensitive)
 > - Students cannot be added to the same tutorial multiple times
@@ -392,7 +378,7 @@ Removes a student from a tutorial slot.
 
 > **Note:**
 > - `STUDENT_INDEX` must be:
-    >   - A positive integer (1, 2, 3,...)
+>   - A positive integer (1, 2, 3,...)
 >   - Valid for current student list display
 > - `TUTORIAL_NAME` must exactly match an existing tutorial (case sensitive)
 > - Operation affects only tutorial enrollment
@@ -420,16 +406,16 @@ Creates a new assignment for specified tutorials.
 
 > **Note:**
 > - `ASSIGNMENT_NAME` must:
-    >   - Be 1-35 characters long
+>   - Be 1-35 characters long
 >   - Contain only: letters (A-Z,a-z), digits (0-9), underscores (_), hyphens (-)
 >   - Be case-sensitive ("Lab_1" ≠ "lab_1")
 >   - Be unique per tutorial
 > - `TUTORIAL_INDEX` must:
-    >   - Be a positive integer for existing tutorials
+>   - Be a positive integer for existing tutorials
 >   - Invalid indexes are silently ignored
 >   - Can be multiple
 > - `DUE_DATE` (optional) must:
-    >   - Use exact format: `uuuu-MM-dd HH:mm`
+>   - Use exact format: `uuuu-MM-dd HH:mm`
 > - Interface will require manual adjustment for long names (>5 chars)
 > - Tutorial indexes refer to current display order
 > - Duplicate assignments will be rejected with error
@@ -453,10 +439,10 @@ Removes an assignment from specified tutorials.
 
 > **Note:**
 > - `ASSIGNMENT_NAME` must:
-    >   - Match exactly (case-sensitive)
+>   - Match exactly (case-sensitive)
 >   - Exist in the specified tutorial
 > - `TUTORIAL_INDEX` refers to:
-    >   - Current display position (after any filters)
+>   - Current display position (after any filters)
 >   - Must be a positive integer
 >   - Can be multiple
 
@@ -521,9 +507,9 @@ Displays attendance records for students or tutorials.
 
 > **Parameters**:
 > - `INDEX`:
-    >   - Positive integer (1, 2, 3,...)
+>   - Positive integer (1, 2, 3,...)
 >   - Context-sensitive interpretation:
-      >     - In student view: refers to student index
+>     - In student view: refers to student index
 >     - In tutorial view: refers to tutorial index
 
 - **Behavior**:
@@ -547,7 +533,7 @@ Displays attendance records for students or tutorials.
 > For accurate results:
 > 1. First use `list` or `tutorial list`
 > 2. Then specify the desired index  
-     > This ensures correct context for the attendance query
+>   - This ensures correct context for the attendance query
 
 ---
 ### Command - Marking attendance: `attendance mark`
@@ -559,10 +545,10 @@ Records student attendance for a specific week.
 
 > **Parameters**:
 > - `WEEK`:
-    >   - Single week number (3-13 inclusive)
+>   - Single week number (3-13 inclusive)
 >   - Only one `w/` parameter allowed per command
 > - `INDEX`:
-    >   - One or more positive integers
+>   - One or more positive integers
 >   - Refers to positions in current attendance list
 >   - Invalid indexes are silently ignored
 
@@ -590,10 +576,10 @@ Removes attendance records for specified students in a given week.
 
 > **Parameters**:
 > - `WEEK`:
-    >   - Single week number (3-13 inclusive)
+>   - Single week number (3-13 inclusive)
 >   - Only one `w/` parameter allowed per command
 > - `INDEX`:
-    >   - One or more positive integers
+>   - One or more positive integers
 >   - Refers to positions in current attendance list
 >   - Invalid indexes are silently ignored
 
@@ -638,7 +624,7 @@ Generates CSV files of system data for external use.
 
 > **Parameters**:
 > - `TUTORIAL_NAME`:
-    >   - Case-sensitive exact tutorial name
+>   - Case-sensitive exact tutorial name
 >   - Optional (exports all students if omitted)
 
 - **Behavior**:
