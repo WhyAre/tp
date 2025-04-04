@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -49,29 +50,47 @@ public class AddAssignmentCommand extends Command {
                             NavigationMode.TUTORIAL);
         }
 
+        var msgs = new ArrayList<String>();
+        var hasErrors = false;
         for (var idx : tutorialIdxList) {
             var idxZeroBased = idx.getZeroBased();
 
             var tutorials = model.getFilteredTutorialList();
             if (idxZeroBased >= tutorials.size()) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                msgs.add(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                hasErrors = true;
+                continue;
             }
 
             var tutorial = tutorials.get(idxZeroBased);
             if (tutorial == null) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                msgs.add(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                hasErrors = true;
+                continue;
             }
 
             try {
                 model.addAssignment(new Assignment(toAdd.name(), toAdd.dueDate(), tutorial));
             } catch (ItemNotFoundException e) {
-                throw new CommandException(e.getMessage());
+                msgs.add(e.getMessage());
+                hasErrors = true;
+                continue;
             } catch (DuplicateItemException e) {
-                throw new CommandException(MESSAGE_DUPLICATE_ASSIGNMENT);
+                msgs.add(MESSAGE_DUPLICATE_ASSIGNMENT);
+                hasErrors = true;
+                continue;
             }
+
+            msgs.add("Successfully deleted assignment '%s' for tutorial '%s'".formatted(toAdd, tutorial));
         }
 
         assert model.check();
+
+        if (hasErrors) {
+            var res = String.join("\n", msgs);
+            throw new CommandException(res);
+        }
+
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.UNCHANGED);
     }
 
