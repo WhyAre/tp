@@ -2,7 +2,6 @@
 layout: page
 title: User Guide
 ---
-<!-- prettier-ignore -->
 
 ## TAskbook User Guide  <a name="about-taskbook"></a>
 
@@ -11,23 +10,10 @@ If you can type fast,
 TAskbook can get your contact management tasks done faster than traditional GUI apps.
 
 ## Table of Contents
-- [About TAskbook](#about-taskbook)
-- [Quick start](#quick-start)
-- [Feature formats](#features)
-- [Commands](#commands)
-    - [Student Commands](#student-commands)
-    - [Tutorial Commands](#tutorial-commands)
-    - [Assignment Commands](#assignment-commands)
-    - [Submission Commands](#submission-commands)
-    - [Attendance Commands](#attendance-commands)
-    - [Export Commands](#export-commands)
-- [Saving the Data](#saving-the-data)
-- [Editing the Data File](#editing-the-data-file)
-- [FAQ](#faq)
-- [Known Issues](#known-issues)
-- [Command Summary](#command-summary)
-- [Troubleshooting](#troubleshooting)
-- [Acknowledgements](#acknowledgements)
+
+<!-- prettier-ignore -->
+- Table of Content
+{:toc}
 
 ---
 
