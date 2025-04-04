@@ -54,14 +54,6 @@ public class StudentUtil {
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getHandle().ifPresent(handle -> sb.append(PREFIX_HANDLE).append(handle.handle).append(" "));
         descriptor.getDetails().ifPresent(details -> sb.append(PREFIX_DETAILS).append(details.value).append(" "));
-        if (descriptor.getTutorials().isPresent()) {
-            Set<Tutorial> tags = descriptor.getTutorials().get();
-            if (tags.isEmpty()) {
-                sb.append(PREFIX_TUTORIAL_NAME);
-            } else {
-                tags.forEach(s -> sb.append(PREFIX_TUTORIAL_NAME).append(s.name()).append(" "));
-            }
-        }
         return sb.toString();
     }
 }
