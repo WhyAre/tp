@@ -99,18 +99,12 @@ public class EditCommand extends Command {
         }
 
         String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
-        final Set<Tutorial> existingTutorials = new HashSet<>();
-        for (Tutorial tutorial : editedStudent.getTutorials()) {
-            if (!model.hasTutorial(tutorial)) {
-                resultMessage += "\n" + MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name();
-            } else {
-                existingTutorials.add(tutorial);
-            }
-        }
-        editedStudent.setTutorials(existingTutorials);
+
         assert model.hasStudent(studentToEdit);
+
         try {
-            model.setStudent(studentToEdit, editedStudent);
+            setStudent(studentToEdit, editStudentDescriptor);
+            model.setStudent(studentToEdit, studentToEdit);
         } catch (DuplicateItemException e) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         } catch (ItemNotFoundException e) {
@@ -142,6 +136,21 @@ public class EditCommand extends Command {
 
         return new Student(updatedName, updatedStudentId, updatedPhone, updatedEmail, updatedHandle, updatedTutorials,
                         updatedDetails, updatedAttendances, updatedSubmissions);
+    }
+
+    /**
+     * Creates and returns a {@code Student} with the details of
+     * {@code studentToEdit} edited with {@code editStudentDescriptor}.
+     */
+    private static void setStudent(Student studentToEdit, EditStudentDescriptor editStudentDescriptor) {
+        assert studentToEdit != null;
+
+        studentToEdit.setName(editStudentDescriptor.getName().orElse(studentToEdit.getName()));
+        studentToEdit.setEmail(editStudentDescriptor.getEmail().orElse(studentToEdit.getEmail()));
+        studentToEdit.setHandle(editStudentDescriptor.getHandle().orElse(studentToEdit.getHandle()));
+        studentToEdit.setStudentId(editStudentDescriptor.getStudentId().orElse(studentToEdit.getStudentId()));
+        studentToEdit.setDetails(editStudentDescriptor.getDetails().orElse(studentToEdit.getDetails()));
+        studentToEdit.setPhone(editStudentDescriptor.getPhone().orElse(studentToEdit.getPhone()));
     }
 
     @Override

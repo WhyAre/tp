@@ -23,12 +23,37 @@ import seedu.address.model.uniquelist.Identifiable;
 public class Student implements Identifiable<Student> {
 
     // Identity fields
-    private final Name name;
-    private final StudentID studentId;
-    private final Phone phone;
-    private final Email email;
-    private final TelegramHandle handle;
-    private final Details details;
+    private Name name;
+    private StudentID studentId;
+    private Phone phone;
+    private Email email;
+    private TelegramHandle handle;
+
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public void setHandle(TelegramHandle handle) {
+        this.handle = handle;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
+    }
+
+    public void setStudentId(StudentID studentId) {
+        this.studentId = studentId;
+    }
+
+    private Details details;
 
     // Data fields
     private Set<Tutorial> tutorials;
