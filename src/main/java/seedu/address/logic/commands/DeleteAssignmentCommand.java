@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -51,24 +52,40 @@ public class DeleteAssignmentCommand extends Command {
                             NavigationMode.TUTORIAL);
         }
 
+        var msgs = new ArrayList<String>();
+        var hasErrors = false;
+
         for (Index idx : indices) {
             int idxZeroBased = idx.getZeroBased();
 
             List<Tutorial> tutorials = model.getFilteredTutorialList();
             if (idxZeroBased >= tutorials.size()) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                msgs.add(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                hasErrors = true;
+                continue;
             }
 
             Tutorial tutorial = tutorials.get(idxZeroBased);
             if (tutorial == null) {
-                throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                msgs.add(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                hasErrors = true;
+                continue;
             }
 
             try {
                 model.removeAssignment(toDelete.setTutorial(tutorial));
             } catch (ItemNotFoundException e) {
-                throw new CommandException(e.getMessage());
+                msgs.add(e.getMessage());
+                hasErrors = true;
+                continue;
             }
+
+            msgs.add("Successfully deleted assignment '%s' for tutorial '%s'".formatted(toDelete, tutorial));
+        }
+
+        if (hasErrors) {
+            var res = String.join("\n", msgs);
+            throw new CommandException(res);
         }
 
         assert model.check();
