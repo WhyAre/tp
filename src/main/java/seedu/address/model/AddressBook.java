@@ -145,6 +145,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedstudent);
 
         students.set(target, editedstudent);
+
+        for (var s : target.getSubmissions()) {
+            submissions.set(s, s);
+        }
+
+        for (var a : target.getAttendances()) {
+            attendances.set(a, a);
+        }
     }
 
     /**
