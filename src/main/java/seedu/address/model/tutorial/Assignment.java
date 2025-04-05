@@ -37,6 +37,24 @@ public record Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial 
         this(name, dueDate, tutorial, new UniqueList<>());
     }
 
+    /**
+     * Constructs new Assignment object
+     */
+    public Assignment {
+        name = name.trim();
+        if (!isNameValid(name)) {
+            var msg = """
+                            Assignment name can only consist of alphanumeric characters, \
+                            hyphens (-), underscores (_) and spaces
+                            Length must be between 1 and 35""".formatted(name);
+            throw new IllegalArgumentException(msg);
+        }
+    }
+
+    private boolean isNameValid(String name) {
+        return name.matches("[a-zA-Z0-9-_ ]{1,35}");
+    }
+
     public void addSubmission(Submission submission) {
         submissions.add(submission);
     }
