@@ -125,7 +125,7 @@ Exits the program.
 Adds a student to the address book.
 
 **Format**:  
-`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE desc/DESCRIPTION`
+`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`
 
 <div markdown="block" class="alert alert-info">
 **Parameters**:
@@ -814,38 +814,38 @@ _View Planned resolutions in Developer Guide for more information_
 
 ## Command Summary
 
-| **Action**                     | **Format, Examples**                                                                                                               |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Student Management**         |                                                                                                                                    |
-| `Add student`                  | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |
-| `Edit student`                 | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`<br>e.g., `edit 1 p/91234567`                |
-| `Delete student`               | `delete INDEX`<br>e.g., `delete 2`                                                                                                 |
-| `List students`                | `list`                                                                                                                             |
-| `View student`                 | `view INDEX`<br>e.g., `view 2`                                                                                                     |
-| `Find students`                | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                            |
-| **Tutorial Management**        |                                                                                                                                    |
-| `Add tutorial`                 | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                             |
-| `Delete tutorial`              | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                       |
-| `List tutorials`               | `tutorial list`                                                                                                                    |
-| `Find tutorials`               | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                               |
-| `Add student to tutorial`      | `tutorial add-student TUTORIAL s/INDEX...`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                          |
-| `Remove student from tutorial` | `tutorial delete-student TUTORIAL s/INDEX...`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                    |
-| **Academic Tracking**          |                                                                                                                                    |
-| `Add assignment`               | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                 |
-| `Delete assignment`            | `assignment delete NAME t/TUTORIAL...`<br>e.g., `assignment delete Lab1 t/1`                                                       |
-| `Mark attendance`              | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                             |
-| `Unmark attendance`            | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                         |
-| `List attendance`              | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                             |
-| `Set submission status`        | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`            |
-| `List submissions`             | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                               |
-| **Data Export**                |                                                                                                                                    |
-| `Export all`                   | `export`                                                                                                                           |
-| `Export students`              | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                  |
-| `Export tutorials`             | `export tutorials`                                                                                                                 |
-| **System**                     |                                                                                                                                    |
-| `Clear data`                   | `clear`                                                                                                                            |
-| `Help`                         | `help`                                                                                                                             |
-| `Exit`                         | `exit`                                                                                                                             |
+| **Action**                     | **Format, Examples**                                                                                                                                  |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Student Management**         |                                                                                                                                                       |
+| `Add student`                  | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |
+| `Edit student`                 | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`<br>e.g., `edit 1 p/91234567`                                   |
+| `Delete student`               | `delete INDEX`<br>e.g., `delete 2`                                                                                                                    |
+| `List students`                | `list`                                                                                                                                                |
+| `View student`                 | `view INDEX`<br>e.g., `view 2`                                                                                                                        |
+| `Find students`                | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                                               |
+| **Tutorial Management**        |                                                                                                                                                       |
+| `Add tutorial`                 | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                |
+| `Delete tutorial`              | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                          |
+| `List tutorials`               | `tutorial list`                                                                                                                                       |
+| `Find tutorials`               | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                                                  |
+| `Add student to tutorial`      | `tutorial add-student TUTORIAL s/INDEX...`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                             |
+| `Remove student from tutorial` | `tutorial delete-student TUTORIAL s/INDEX...`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                       |
+| **Academic Tracking**          |                                                                                                                                                       |
+| `Add assignment`               | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                                    |
+| `Delete assignment`            | `assignment delete NAME t/TUTORIAL...`<br>e.g., `assignment delete Lab1 t/1`                                                                          |
+| `Mark attendance`              | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                |
+| `Unmark attendance`            | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                            |
+| `List attendance`              | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                                                |
+| `Set submission status`        | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`                               |
+| `List submissions`             | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                                                  |
+| **Data Export**                |                                                                                                                                                       |
+| `Export all`                   | `export`                                                                                                                                              |
+| `Export students`              | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                                     |
+| `Export tutorials`             | `export tutorials`                                                                                                                                    |
+| **System**                     |                                                                                                                                                       |
+| `Clear data`                   | `clear`                                                                                                                                               |
+| `Help`                         | `help`                                                                                                                                                |
+| `Exit`                         | `exit`                                                                                                                                                |
 
 ## Troubleshooting
 
