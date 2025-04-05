@@ -64,7 +64,7 @@ public class DeleteAssignmentCommandTest {
     @Test
     public void execute_assignmentDoesNotExist_throwsCommandException() {
         var tut = modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased());
-        Assignment assignment = new Assignment("nonExistentAssignment", tut);
+        Assignment assignment = new Assignment("nonExistAssign", tut);
         DeleteAssignmentCommand deleteAssignmentCommand = new DeleteAssignmentCommand(List.of(INDEX_FIRST_TUTORIAL),
                         assignment);
 
