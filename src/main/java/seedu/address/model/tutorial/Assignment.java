@@ -42,7 +42,7 @@ public record Assignment(String name, Optional<LocalDateTime> dueDate, Tutorial 
     }
 
     public Assignment setTutorial(Tutorial t) {
-        return new Assignment(name, dueDate, t, submissions);
+        return new Assignment(name, dueDate, t, new UniqueList<>(submissions));
     }
 
     @Override

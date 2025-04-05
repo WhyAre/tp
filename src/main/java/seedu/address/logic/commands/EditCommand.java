@@ -94,20 +94,7 @@ public class EditCommand extends Command {
         Student studentToEdit = lastShownList.get(index.getZeroBased());
         Student editedStudent = createEditedStudent(studentToEdit, editStudentDescriptor);
 
-        if (!studentToEdit.isSameStudent(editedStudent) && model.hasStudent(editedStudent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
-        }
-
         String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
-        final Set<Tutorial> existingTutorials = new HashSet<>();
-        for (Tutorial tutorial : editedStudent.getTutorials()) {
-            if (!model.hasTutorial(tutorial)) {
-                resultMessage += "\n" + MESSAGE_TUTORIAL_NOT_FOUND + tutorial.name();
-            } else {
-                existingTutorials.add(tutorial);
-            }
-        }
-        editedStudent.setTutorials(existingTutorials);
         assert model.hasStudent(studentToEdit);
         try {
             model.setStudent(studentToEdit, editedStudent);
