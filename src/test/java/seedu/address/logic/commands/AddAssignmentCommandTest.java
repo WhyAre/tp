@@ -85,4 +85,20 @@ public class AddAssignmentCommandTest {
         assertTrue(tutorials.get(INDEX_FIRST_TUTORIAL.getZeroBased()).assignments().containsIdentity(assignment));
         modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
+
+    @Test
+    public void execute_duplicateTutorialIndex_success() throws Exception {
+        // EP: Duplicate tutorial index
+
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
+        Assignment assignment = new Assignment("new-assignment",
+                        modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
+        CommandResult commandResult = new AddAssignmentCommand(List.of(Index.fromOneBased(1), Index.fromOneBased(1)),
+                        assignment).execute(modelStub);
+        List<Tutorial> tutorials = modelStub.getAddressBook().getTutorialList();
+
+        assertEquals(AddAssignmentCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
+        assertTrue(tutorials.get(INDEX_FIRST_TUTORIAL.getZeroBased()).assignments().containsIdentity(assignment));
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
+    }
 }

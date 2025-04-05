@@ -89,4 +89,20 @@ public class DeleteAssignmentCommandTest {
 
         modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
+
+    @Test
+    public void execute_duplicateTutorialIndex_success() throws Exception {
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
+        Assignment assignment = new Assignment("Week 10 Tasks",
+                        modelStub.getFilteredTutorialList().get(INDEX_FIRST_TUTORIAL.getZeroBased()));
+        CommandResult commandResult = new DeleteAssignmentCommand(List.of(Index.fromOneBased(1), Index.fromOneBased(1)),
+                        assignment).execute(modelStub);
+        List<Assignment> assignments = modelStub.getAddressBook().getTutorialList()
+                        .get(INDEX_FIRST_TUTORIAL.getZeroBased()).assignments();
+
+        assertEquals(DeleteAssignmentCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
+        assertFalse(assignments.contains(assignment));
+
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
+    }
 }
