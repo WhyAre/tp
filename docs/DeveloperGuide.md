@@ -631,9 +631,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **System**: Taskbook<br>
 **Actor**: User
- 
+
 **MSS**
- 
+
 1. User requests to list attendances
 2. System lists all attendances
 3. Use case ends
@@ -737,7 +737,6 @@ _{Explain here how the data archiving feature will be implemented}_
 3. User requests to delete assignment from specified tutorials
 4. System deletes assignment from specified tutorials
 5. Use case ends
-
 
 **Extensions**
 
@@ -1263,5 +1262,5 @@ Team size: 6 (maximum 12 enhancements)
   _Storage_: New session.json file in data directory.
 
 8. Help Window Management:  
-    Proper handling of minimized help windows with new instances.  
-    _Fix_: Detect and restore/minimize state on help commands
+   Proper handling of minimized help windows with new instances.  
+   _Fix_: Detect and restore/minimize state on help commands
