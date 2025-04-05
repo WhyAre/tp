@@ -144,7 +144,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setStudent(Student target, Student editedstudent) throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(editedstudent);
 
-        students.set(target, editedstudent);
+        // Check
+        if (students.containsIdentity(editedstudent, target)) {
+            throw new DuplicateItemException();
+        }
+
+        // Copy details over
+        target.setName(editedstudent.getName());
+        target.setEmail(editedstudent.getEmail());
+        target.setHandle(editedstudent.getHandle());
+        target.setStudentId(editedstudent.getStudentId());
+        target.setDetails(editedstudent.getDetails());
+        target.setPhone(editedstudent.getPhone());
+
+        students.set(target, target);
 
         for (var s : target.getSubmissions()) {
             submissions.set(s, s);
