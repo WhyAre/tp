@@ -352,8 +352,6 @@ Finds tutorials matching specified keywords in their names.
   Finds tutorials containing either "cs2103_t02" or "cs2103_t03".
 - `tutorial find CS2103`:
   Finds all tutorials with "cs2103" anywhere in their names.
-- `tutorial find`:
-  Displays all existing tutorials.
 
 ---
 
