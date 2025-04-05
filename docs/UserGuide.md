@@ -5,9 +5,9 @@ title: User Guide
 
 ## TAskbook User Guide
 
-TAskbook is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+TAskbook is a **desktop app for managing students, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
 If you can type fast,
-TAskbook can get your contact management tasks done faster than traditional GUI apps.
+TAskbook can get your student management tasks done faster than traditional GUI apps.
 
 ## Table of Contents
 
@@ -37,14 +37,14 @@ TAskbook can get your contact management tasks done faster than traditional GUI 
    e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   - `list`: Lists all contacts.
+   - `list`: Lists all students.
 
    - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`:
-     Adds a contact named `John Doe` to the Address Book.
+     Adds a student named `John Doe` to the Address Book.
 
-   - `delete 1`: Deletes the 1st contact shown in the current list.
+   - `delete 1`: Deletes the 1st student shown in the current list.
 
-   - `clear`: Deletes all contacts.
+   - `clear`: Deletes all students.
 
    - `exit`: Exits the app.
 
