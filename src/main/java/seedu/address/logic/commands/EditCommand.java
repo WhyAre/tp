@@ -95,9 +95,7 @@ public class EditCommand extends Command {
         Student editedStudent = createEditedStudent(studentToEdit, editStudentDescriptor);
 
         String resultMessage = MESSAGE_EDIT_STUDENT_SUCCESS;
-
         assert model.hasStudent(studentToEdit);
-
         try {
             model.setStudent(studentToEdit, editedStudent);
         } catch (DuplicateItemException e) {
