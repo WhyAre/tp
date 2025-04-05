@@ -534,7 +534,7 @@ Removes an assignment from specified tutorials.
   Deletes "Lab1" from tutorial at position 1 in current view.
 - `list` then `assignment delete Final_Project t/2 t/3`:
   Deletes "Final_Project" from tutorials at positions 2 and 3.
-- `filtertag CS2103` then `assignment delete Quiz1 t/1`:
+- `tutorial find cs2103` then `assignment delete Quiz1 t/1`:
   Deletes "Quiz1" from first tutorial in filtered CS2103 list.
 
 ---
