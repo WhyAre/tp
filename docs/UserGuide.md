@@ -483,6 +483,12 @@ Creates a new assignment for specified tutorials.
 - `assignment add Quiz-1 t/1 t/99`:
   Only creates for valid tutorial (ignores invalid).
 
+**Behaviour**:
+
+- An error will be shown (but the rest of the tutorials will be processed):
+  - Invalid tutorial indexes will
+  - Assignments not in specified tutorial
+
 ---
 
 ### Command - Deleting an assignment: `assignment delete`
@@ -506,9 +512,9 @@ Removes an assignment from specified tutorials.
 **Behavior**:
 
 - Removes assignment from all specified tutorials
-- Fails silently for:  
-  -- Invalid tutorial indexes  
-  -- Assignments not in specified tutorial
+- An error will be shown (but the rest of the tutorials will be processed):
+  - Invalid tutorial indexes will
+  - Assignments not in specified tutorial
 - Preserves all student submissions
 
 **Examples**:
@@ -624,7 +630,7 @@ Records student attendance for a specific week.
 - `INDEX`:
   - One or more positive integers
   - Refers to positions in current attendance list
-  - Invalid indexes are silently ignored
+  - Invalid indexes are skipped and an error message will be shown
 </div>
 
 **Behavior**:
@@ -661,7 +667,7 @@ Removes attendance records for specified students in a given week.
 - `INDEX`:
   - One or more positive integers
   - Refers to positions in current attendance list
-  - Invalid indexes are silently ignored
+  - Invalid indexes are skipped and an error message will be shown
 </div>
 
 **Behavior**:
