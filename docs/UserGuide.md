@@ -130,7 +130,8 @@ Adds a student to the address book.
 <div markdown="block" class="alert alert-info">
 **Parameters**:
 - `NAME`: Alphanumeric characters and spaces only (cannot be blank)
-- `STUDENT_ID`: Format `AXXXXXXX[A-Z]` (cannot be blank, must be unique)
+- `STUDENT_ID`: Format `AXXXXXXX[A-Z]` where `X` is a number between 0 - 9
+    - cannot be blank, must be unique
 - `PHONE`: Exactly 8 digits
 - `EMAIL`: Valid email format (e.g., user@example.com)
 - `HANDLE`: Format `@telegramhandle` (min 3 chars, cannot be blank)
