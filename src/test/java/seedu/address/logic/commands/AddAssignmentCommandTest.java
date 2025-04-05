@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TUTORIAL;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,9 +24,16 @@ import seedu.address.testutil.TypicalAddressBook;
 
 public class AddAssignmentCommandTest {
     private static Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
+
     @BeforeEach
     void setUp() {
         modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
+        modelStub.setNavigationMode(NavigationMode.TUTORIAL);
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 
     @Test
