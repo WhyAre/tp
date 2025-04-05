@@ -37,6 +37,7 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
      */
     public Tutorial {
         Objects.requireNonNull(name);
+        name = name.trim();
         if (!isValidName(name)) {
             throw new IllegalArgumentException("Tutorial name is invalid.");
         }
