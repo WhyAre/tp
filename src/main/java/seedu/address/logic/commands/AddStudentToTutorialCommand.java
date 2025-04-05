@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -60,7 +61,7 @@ public class AddStudentToTutorialCommand extends Command {
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        for (Index index : indices) {
+        for (Index index : new LinkedHashSet<>(indices)) {
             // Check that index is in bounds.
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);

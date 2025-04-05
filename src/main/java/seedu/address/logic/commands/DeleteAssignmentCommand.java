@@ -6,6 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -55,7 +56,7 @@ public class DeleteAssignmentCommand extends Command {
         var msgs = new ArrayList<String>();
         var hasErrors = false;
 
-        for (Index idx : indices) {
+        for (Index idx : new LinkedHashSet<>(indices)) {
             int idxZeroBased = idx.getZeroBased();
 
             List<Tutorial> tutorials = model.getFilteredTutorialList();
