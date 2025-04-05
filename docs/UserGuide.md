@@ -449,6 +449,17 @@ Removes a student from a tutorial slot.
 
 ## Assignment Commands
 
+### Command - Listing assignments
+
+<div markdown="block" class="alert alert-info">
+**Note**
+
+There is no command for listing assignments.
+They can be viewed in the `TUTORIAL` view.
+Type `tutorial list` to view tutorials and its corresponding assignments.
+
+</div>
+
 ### Command - Adding an assignment: `assignment add`
 
 Creates a new assignment for specified tutorials.
