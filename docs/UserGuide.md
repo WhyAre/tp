@@ -470,7 +470,7 @@ Creates a new assignment for specified tutorials.
 **Parameters**:
 - `ASSIGNMENT_NAME` must:
   - Be 1-35 characters long
-  - Contain only: letters (A-Z,a-z), digits (0-9), underscores (_), hyphens (-)
+  - Contain only: letters (A-Z,a-z), digits (0-9), underscores (_), hyphens (-) and spaces
   - Be case-sensitive ("Lab_1" ≠ "lab_1")
   - Be unique per tutorial
 - `TUTORIAL_INDEX` must:
