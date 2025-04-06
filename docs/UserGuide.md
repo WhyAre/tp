@@ -559,7 +559,8 @@ Updates the completion status of specified student submissions.
 
 <div markdown="block" class="alert alert-info">
 **Parameters**:
-- `STATE`: Required completion state (`not-submitted` | `submitted` | `graded`)
+
+- `STATE`: Required completion state (`not-submitted` \| `submitted` \| `graded`)
 - `TUTORIAL_NAME`: Case-sensitive exact tutorial name match
 - `ASSIGNMENT_NAME`: Case-sensitive exact assignment name match
 - `STUDENT_NAME`: Case-sensitive exact student name match
@@ -755,13 +756,15 @@ Generates CSV files of system data for external use.
 - Includes all tutorial metadata
 - Maintains original creation timestamps
 
-> **System Notes**:
->
-> - CSV format uses UTF-8 encoding
-> - First row contains column headers
-> - Files are overwritten silently
-> - Export directory must exist
-> - Partial exports may occur if data is corrupted
+<div markdown="block" class="alert alert-secondary">
+**System Notes**:
+
+- CSV format uses UTF-8 encoding
+- First row contains column headers
+- Files are overwritten silently
+- Export directory must exist
+- Partial exports may occur if data is corrupted
+</div>
 
 ---
 
