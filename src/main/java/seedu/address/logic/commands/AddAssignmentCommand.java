@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -52,7 +53,7 @@ public class AddAssignmentCommand extends Command {
 
         var msgs = new ArrayList<String>();
         var hasErrors = false;
-        for (var idx : tutorialIdxList) {
+        for (var idx : new LinkedHashSet<>(tutorialIdxList)) {
             var idxZeroBased = idx.getZeroBased();
 
             var tutorials = model.getFilteredTutorialList();

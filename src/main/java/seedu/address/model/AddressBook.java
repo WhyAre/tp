@@ -132,7 +132,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
 
-        this.populateSubmissions();
     }
 
     /**

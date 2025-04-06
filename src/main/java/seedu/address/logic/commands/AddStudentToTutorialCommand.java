@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -60,25 +62,30 @@ public class AddStudentToTutorialCommand extends Command {
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        for (Index index : indices) {
+        var errMsg = new ArrayList<String>();
+        for (Index index : new LinkedHashSet<>(indices)) {
             // Check that index is in bounds.
             if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+                errMsg.add(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+                continue;
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             assert model.hasStudent(studentToEdit);
 
             if (studentToEdit.hasTutorial(tutorial)) {
-                throw new CommandException(MESSAGE_TUTORIAL_HAS_BEEN_ADDED);
+                errMsg.add(MESSAGE_TUTORIAL_HAS_BEEN_ADDED);
             } else {
                 try {
                     model.addStudentToTutorial(tutorial, studentToEdit);
                 } catch (ItemNotFoundException e) {
-                    throw new CommandException(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
+                    errMsg.add(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
                 }
             }
 
+        }
+        if (!errMsg.isEmpty()) {
+            throw new CommandException("Warning: %s".formatted(errMsg.toString()));
         }
 
         assert model.check();
