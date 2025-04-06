@@ -162,6 +162,7 @@ Shows a list of all students in the address book.
 ### Command - Editing a student: `edit`
 
 Edits an existing student in the address book.
+You must be in `STUDENT` view.
 
 **Format**:  
 `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`
@@ -224,6 +225,7 @@ or who are in the specified tutorial group(s).
 ### Command - Deleting a student: `delete`
 
 Deletes the specified student from the address book.
+You must be in `STUDENT` view.
 
 **Format**:  
 `delete INDEX`
@@ -261,6 +263,7 @@ Deleted students are immediately removed from:
 ### Command - Viewing student details: `view`
 
 Displays comprehensive information for a specific student.
+You must be in `STUDENT` view.
 
 **Format**:  
 `view INDEX`
@@ -389,6 +392,7 @@ Deletes a tutorial slot from the address book.
 ### Command - Adding a student to tutorial: `tutorial add-student`
 
 Adds a student to a tutorial slot.
+You must be in `STUDENT` view.
 
 **Format**:  
 `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...`
@@ -419,6 +423,7 @@ Adds a student to a tutorial slot.
 ### Command - Deleting a student from tutorial: `tutorial delete-student`
 
 Removes a student from a tutorial slot.
+You must be in `STUDENT` view.
 
 **Format**:  
 `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
@@ -462,6 +467,7 @@ Type `tutorial list` to view tutorials and its corresponding assignments.
 ### Command - Adding an assignment: `assignment add`
 
 Creates a new assignment for specified tutorials.
+You must be in `TUTORIAL` view.
 
 **Format**:  
 `assignment add ASSIGNMENT_NAME [t/TUTORIAL_INDEX]... [d/DUE_DATE]`
@@ -504,6 +510,7 @@ Creates a new assignment for specified tutorials.
 ### Command - Deleting an assignment: `assignment delete`
 
 Removes an assignment from specified tutorials.
+You must be in `TUTORIAL` view.
 
 **Format**:  
 `assignment delete ASSIGNMENT_NAME [t/TUTORIAL_INDEX]...`
@@ -584,6 +591,8 @@ Updates the completion status of specified student submissions.
 ### Command - Listing attendance: `attendance list`
 
 Displays attendance records for students or tutorials.
+You can be in any mode to execute this command,
+but different modes have different behaviors.
 
 **Format**:  
 `attendance list [INDEX]`
@@ -629,6 +638,7 @@ For accurate results:
 ### Command - Marking attendance: `attendance mark`
 
 Records student attendance for a specific week.
+You must be in `ATTENDANCE` view.
 
 **Format**:  
 `attendance mark w/WEEK i/INDEX...`
@@ -666,6 +676,7 @@ Records student attendance for a specific week.
 ### Command - Unmarking attendance: `attendance unmark`
 
 Removes attendance records for specified students in a given week.
+You must be in `ATTENDANCE` view.
 
 **Format**:  
 `attendance unmark w/WEEK i/INDEX...`
@@ -827,38 +838,38 @@ _View Planned resolutions in Developer Guide for more information_
 
 ## Command Summary
 
-| **Action**                     | **Format, Examples**                                                                                                                                  |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Student Management**         |                                                                                                                                                       |
-| `Add student`                  | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |
-| `Edit student`                 | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`<br>e.g., `edit 1 p/91234567`                                   |
-| `Delete student`               | `delete INDEX`<br>e.g., `delete 2`                                                                                                                    |
-| `List students`                | `list`                                                                                                                                                |
-| `View student`                 | `view INDEX`<br>e.g., `view 2`                                                                                                                        |
-| `Find students`                | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                                               |
-| **Tutorial Management**        |                                                                                                                                                       |
-| `Add tutorial`                 | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                |
-| `Delete tutorial`              | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                          |
-| `List tutorials`               | `tutorial list`                                                                                                                                       |
-| `Find tutorials`               | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                                                  |
-| `Add student to tutorial`      | `tutorial add-student TUTORIAL s/INDEX...`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                             |
-| `Remove student from tutorial` | `tutorial delete-student TUTORIAL s/INDEX...`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                       |
-| **Academic Tracking**          |                                                                                                                                                       |
-| `Add assignment`               | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                                    |
-| `Delete assignment`            | `assignment delete NAME t/TUTORIAL...`<br>e.g., `assignment delete Lab1 t/1`                                                                          |
-| `Mark attendance`              | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                |
-| `Unmark attendance`            | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                            |
-| `List attendance`              | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                                                |
-| `Set submission status`        | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`                               |
-| `List submissions`             | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                                                  |
-| **Data Export**                |                                                                                                                                                       |
-| `Export all`                   | `export`                                                                                                                                              |
-| `Export students`              | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                                     |
-| `Export tutorials`             | `export tutorials`                                                                                                                                    |
-| **System**                     |                                                                                                                                                       |
-| `Clear data`                   | `clear`                                                                                                                                               |
-| `Help`                         | `help`                                                                                                                                                |
-| `Exit`                         | `exit`                                                                                                                                                |
+| **Action**                     | **Mode**                                        | **Format, Examples**                                                                                                                                  |
+| ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Student Management**         |                                                 |                                                                                                                                                       |
+| `Add student`                  |                                                 | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |
+| `Edit student`                 | `STUDENT`                                       | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`<br>e.g., `edit 1 p/91234567`                                   |
+| `Delete student`               | `STUDENT`                                       | `delete INDEX`<br>e.g., `delete 2`                                                                                                                    |
+| `List students`                |                                                 | `list`                                                                                                                                                |
+| `View student`                 | `STUDENT`                                       | `view INDEX`<br>e.g., `view 2`                                                                                                                        |
+| `Find students`                |                                                 | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                                               |
+| **Tutorial Management**        |                                                 |                                                                                                                                                       |
+| `Add tutorial`                 |                                                 | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                |
+| `Delete tutorial`              |                                                 | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                          |
+| `List tutorials`               |                                                 | `tutorial list`                                                                                                                                       |
+| `Find tutorials`               |                                                 | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                                                  |
+| `Add student to tutorial`      | `STUDENT`                                       | `tutorial add-student TUTORIAL s/INDEX...`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                             |
+| `Remove student from tutorial` | `STUDENT`                                       | `tutorial delete-student TUTORIAL s/INDEX...`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                       |
+| **Academic Tracking**          |                                                 |                                                                                                                                                       |
+| `Add assignment`               | `TUTORIAL`                                      | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                                    |
+| `Delete assignment`            | `TUTORIAL`                                      | `assignment delete NAME t/TUTORIAL...`<br>e.g., `assignment delete Lab1 t/1`                                                                          |
+| `Mark attendance`              | `ATTENDANCE`                                    | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                |
+| `Unmark attendance`            | `ATTENDANCE`                                    | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                            |
+| `List attendance`              | `STUDENT` or `TUTORIAL` if `INDEX` is specified | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                                                |
+| `Set submission status`        |                                                 | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`                               |
+| `List submissions`             |                                                 | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                                                  |
+| **Data Export**                |                                                 |                                                                                                                                                       |
+| `Export all`                   |                                                 | `export`                                                                                                                                              |
+| `Export students`              |                                                 | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                                     |
+| `Export tutorials`             |                                                 | `export tutorials`                                                                                                                                    |
+| **System**                     |                                                 |                                                                                                                                                       |
+| `Clear data`                   |                                                 | `clear`                                                                                                                                               |
+| `Help`                         |                                                 | `help`                                                                                                                                                |
+| `Exit`                         |                                                 | `exit`                                                                                                                                                |
 
 ## Troubleshooting
 
