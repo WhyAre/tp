@@ -1,51 +1,39 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.testutil.TypicalAddressBook.ALICE;
+import static seedu.address.testutil.TypicalAddressBook.T1;
+import static seedu.address.testutil.TypicalAddressBook.T1_ASSIGN1;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.submission.SubmissionStatus;
+import seedu.address.testutil.TypicalAddressBook;
 
-/**
- * Consists of tests for the SetSubmissionCommand class
- */
-public class SetSubmissionCommandtest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+public class SetSubmissionCommandTest {
+    private Model modelStub;
 
-    /**
-     * Tests that should fail if the student is not in the tutorial slot
-     */
-    @Test
-    public void execute_studentNotInTutorial_throwCommandException() throws CommandException {
-        var cmd = new SetSubmissionCommand("CS2106-T02", "Week 10 Tasks", List.of("Alice Pauline"),
-                        SubmissionStatus.NOT_SUBMITTED);
-
-        var exception = assertThrows(CommandException.class, (
-        ) -> cmd.execute(model));
-        assertTrue(exception.getMessage().matches("'.*' not in '.*'"), "Actual: %s".formatted(exception.getMessage()));
-
+    @BeforeEach
+    public void setUp() {
+        modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
     }
 
-    /**
-     * Tests that should fail if the assignment not in tutorial
-     */
     @Test
-    public void execute_assignmentNotInTutorial_throwCommandException() throws CommandException {
-        var cmd = new SetSubmissionCommand("CS2106-T02", "Lab 1", List.of("Alice Pauline"),
-                        SubmissionStatus.NOT_SUBMITTED);
+    public void execute_setSubmissionDuplicateStudent_success() {
+        // EP: Duplicate student
+        var cmd = new SetSubmissionCommand(T1.name(), T1_ASSIGN1.name(),
+                        List.of(ALICE.getName().toString(), ALICE.getName().toString()), SubmissionStatus.SUBMITTED);
+        var result = assertDoesNotThrow((
+        ) -> cmd.execute(modelStub));
 
-        var exception = assertThrows(CommandException.class, (
-        ) -> cmd.execute(model));
-        assertTrue(exception.getMessage().matches("Assignment '.*' is not found in Tutorial '.*'"),
-                        "Actual: %s".formatted(exception.getMessage()));
-
+        assertEquals(result.getFeedbackToUser(),
+                        "Successfully set submission status for '%s'".formatted(ALICE.getName()));
     }
 }

@@ -28,7 +28,7 @@ public class ParserUtilTest {
     private static final String INVALID_TUTORIAL = "#TU+OR!A/";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PHONE = "12345678";
     private static final String VALID_HANDLE = "@some_student";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TUTORIAL_1 = "T-23";
