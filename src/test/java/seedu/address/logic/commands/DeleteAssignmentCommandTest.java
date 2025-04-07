@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.logic.Messages.MESSAGE_ASSIGNMENT_NOT_FOUND;
-import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_INDEX_NOT_FOUND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TUTORIAL;
 
@@ -56,8 +56,9 @@ public class DeleteAssignmentCommandTest {
                         assignment);
 
         modelStub.setNavigationMode(NavigationMode.TUTORIAL);
-        assertThrows(CommandException.class, MESSAGE_TUTORIAL_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
-        ) -> deleteAssignmentCommand.execute(modelStub));
+        assertThrows(CommandException.class, MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()),
+                        (
+                        ) -> deleteAssignmentCommand.execute(modelStub));
         modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 

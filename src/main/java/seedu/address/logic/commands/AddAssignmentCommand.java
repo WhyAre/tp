@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
-import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_NOT_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_INDEX_NOT_FOUND;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -58,14 +58,14 @@ public class AddAssignmentCommand extends Command {
 
             var tutorials = model.getFilteredTutorialList();
             if (idxZeroBased >= tutorials.size()) {
-                msgs.add(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                msgs.add(MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(idx.getOneBased()));
                 hasErrors = true;
                 continue;
             }
 
             var tutorial = tutorials.get(idxZeroBased);
             if (tutorial == null) {
-                msgs.add(MESSAGE_TUTORIAL_NOT_FOUND.formatted(idx.getOneBased()));
+                msgs.add(MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(idx.getOneBased()));
                 hasErrors = true;
                 continue;
             }
