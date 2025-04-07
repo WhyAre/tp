@@ -74,27 +74,27 @@ The current view is indicated in the bottom-right corner of the application wind
 
 ### Types of Views
 
-#### **STUDENT view**
+#### STUDENT view
 
 For managing students and their tutorial enrollment.  
 ![STUDENT view screenshot](images/student_view.png)
 
-#### **TUTORIAL view**
+#### TUTORIAL view
 
 For managing tutorials and their assignments.  
 ![TUTORIAL view screenshot](images/tutorial_view.png)
 
-#### **ATTENDANCE view**
+#### ATTENDANCE view
 
 For tracking student attendance.  
 ![ATTENDANCE view screenshot](images/attendance_view.png)
 
-#### **SUBMISSION view**
+#### SUBMISSION view
 
 For managing student submissions and their statuses.  
 ![SUBMISSION view screenshot](images/submission_view.png)
 
-#### **SINGLE_STUDENT view**
+#### SINGLE_STUDENT view
 
 For viewing comprehensive details of a specific student.  
 ![SINGLE_STUDENT view screenshot](images/single_student_view.png)
