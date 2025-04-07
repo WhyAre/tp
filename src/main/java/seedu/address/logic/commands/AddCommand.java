@@ -27,9 +27,9 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = "%s: Adds a student to the address book.\n".formatted(COMMAND_WORD)
-                    + "Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE %sDETAILS [%sTUTORIAL]...\n".formatted(
-                                    PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HANDLE,
-                                    PREFIX_DETAILS, PREFIX_TUTORIAL_NAME)
+                    + "Parameters: %sNAME %sSTUDENT_ID %sPHONE %sEMAIL %sHANDLE [%sDETAILS] [%sTUTORIAL]...\n"
+                                    .formatted(PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL,
+                                                    PREFIX_HANDLE, PREFIX_DETAILS, PREFIX_TUTORIAL_NAME)
                     + ("Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe %sJohn has "
                                     + "faster understanding of concepts. ").formatted(COMMAND_WORD, PREFIX_NAME,
                                                     PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HANDLE,
