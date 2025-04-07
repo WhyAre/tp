@@ -191,7 +191,7 @@ for a particular student.
 
 **API** : [`Storage.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<img src="images/StorageClassDiagram.png" width="550" />
+<img src="images/StorageClassDiagram.png" width="800" />
 
 The `Storage` component,
 
