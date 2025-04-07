@@ -33,8 +33,7 @@ public class AddCommand extends Command {
                     + ("Example: %s %sJohn Doe %sA0123456Z %s98765432 %sjohn@example.com %s@john_doe %sJohn has "
                                     + "faster understanding of concepts. ").formatted(COMMAND_WORD, PREFIX_NAME,
                                                     PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HANDLE,
-                                                    PREFIX_DETAILS)
-                    + "%sCS2103_T01 %sCS2106_T02".formatted(PREFIX_TUTORIAL_NAME, PREFIX_TUTORIAL_NAME);
+                                                    PREFIX_DETAILS);
 
     public static final String MESSAGE_SUCCESS = "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book";
