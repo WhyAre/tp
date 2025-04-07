@@ -177,9 +177,9 @@ Exits the program.
 
 ---
 
-## Student Commands
+### Student Commands
 
-### Command - Adding a student: `add`
+#### Command - Adding a student: `add`
 
 Adds a student to the address book.
 
@@ -209,7 +209,7 @@ Adds a student to the address book.
 
 ---
 
-### Command - Listing all students: `list`
+#### Command - Listing all students: `list`
 
 Shows a list of all students in the address book.
 
@@ -218,7 +218,7 @@ Shows a list of all students in the address book.
 
 ---
 
-### Command - Editing a student: `edit`
+#### Command - Editing a student: `edit`
 
 Edits an existing student in the address book.
 You must be in `STUDENT` view.
@@ -246,7 +246,7 @@ You must be in `STUDENT` view.
 
 ---
 
-### Command - Finding students: `find`
+#### Command - Finding students: `find`
 
 Finds all students whose names contain any of the specified keywords (case-insensitive)
 or who are in the specified tutorial group(s).
@@ -281,7 +281,7 @@ or who are in the specified tutorial group(s).
 
 ---
 
-### Command - Deleting a student: `delete`
+#### Command - Deleting a student: `delete`
 
 Deletes the specified student from the address book.
 You must be in `STUDENT` view.
@@ -319,7 +319,7 @@ Deleted students are immediately removed from:
 
 ---
 
-### Command - Viewing student details: `view`
+#### Command - Viewing student details: `view`
 
 Displays comprehensive information for a specific student.
 You must be in `STUDENT` view.
@@ -345,9 +345,9 @@ You must be in `STUDENT` view.
 
 ---
 
-## Tutorial Commands
+### Tutorial Commands
 
-### Command - Adding a tutorial: `tutorial add`
+#### Command - Adding a tutorial: `tutorial add`
 
 Adds a tutorial slot to the address book.
 
@@ -379,7 +379,7 @@ Adds a tutorial slot to the address book.
 
 ---
 
-### Command - Listing all tutorials: `tutorial list`
+#### Command - Listing all tutorials: `tutorial list`
 
 Shows a list of all tutorials and created assignments in the address book.
 
@@ -388,7 +388,7 @@ Shows a list of all tutorials and created assignments in the address book.
 
 ---
 
-### Command - Finding a tutorial: `tutorial find`
+#### Command - Finding a tutorial: `tutorial find`
 
 Finds tutorials matching specified keywords in their names.
 
@@ -418,7 +418,7 @@ Finds tutorials matching specified keywords in their names.
 
 ---
 
-### Command - Deleting a tutorial: `tutorial delete`
+#### Command - Deleting a tutorial: `tutorial delete`
 
 Deletes a tutorial slot from the address book.
 
@@ -448,7 +448,7 @@ Deletes a tutorial slot from the address book.
 
 ---
 
-### Command - Adding a student to tutorial: `tutorial add-student`
+#### Command - Adding a student to tutorial: `tutorial add-student`
 
 Adds a student to a tutorial slot.
 You must be in `STUDENT` view.
@@ -479,7 +479,7 @@ You must be in `STUDENT` view.
 
 ---
 
-### Command - Deleting a student from tutorial: `tutorial delete-student`
+#### Command - Deleting a student from tutorial: `tutorial delete-student`
 
 Removes a student from a tutorial slot.
 You must be in `STUDENT` view.
@@ -510,9 +510,9 @@ You must be in `STUDENT` view.
 
 ---
 
-## Assignment Commands
+### Assignment Commands
 
-### Command - Listing assignments
+#### Command - Listing assignments
 
 <div markdown="block" class="alert alert-info">
 **Note**
@@ -523,7 +523,7 @@ Type `tutorial list` to view tutorials and its corresponding assignments.
 
 </div>
 
-### Command - Adding an assignment: `assignment add`
+#### Command - Adding an assignment: `assignment add`
 
 Creates a new assignment for specified tutorials.
 You must be in `TUTORIAL` view.
@@ -566,7 +566,7 @@ You must be in `TUTORIAL` view.
 
 ---
 
-### Command - Deleting an assignment: `assignment delete`
+#### Command - Deleting an assignment: `assignment delete`
 
 Removes an assignment from specified tutorials.
 You must be in `TUTORIAL` view.
@@ -604,9 +604,9 @@ You must be in `TUTORIAL` view.
 
 ---
 
-## Submission Commands
+### Submission Commands
 
-### Command - Listing submissions: `submission list`
+#### Command - Listing submissions: `submission list`
 
 Displays a comprehensive overview of all student enrollments
 and their assignment completion status across tutorials.
@@ -616,7 +616,7 @@ and their assignment completion status across tutorials.
 
 ---
 
-### Command - Setting submission status: `submission set`
+#### Command - Setting submission status: `submission set`
 
 Updates the completion status of specified student submissions.
 
@@ -645,9 +645,9 @@ Updates the completion status of specified student submissions.
 
 ---
 
-## Attendance Commands
+### Attendance Commands
 
-### Command - Listing attendance: `attendance list`
+#### Command - Listing attendance: `attendance list`
 
 Displays attendance records for students or tutorials.
 You can be in any view to execute this command,
@@ -694,7 +694,7 @@ For accurate results:
 
 ---
 
-### Command - Marking attendance: `attendance mark`
+#### Command - Marking attendance: `attendance mark`
 
 Records student attendance for a specific week.
 You must be in `ATTENDANCE` view.
@@ -732,7 +732,7 @@ You must be in `ATTENDANCE` view.
 
 ---
 
-### Command - Unmarking attendance: `attendance unmark`
+#### Command - Unmarking attendance: `attendance unmark`
 
 Removes attendance records for specified students in a given week.
 You must be in `ATTENDANCE` view.
@@ -770,13 +770,13 @@ You must be in `ATTENDANCE` view.
 
 ---
 
-## Export Commands
+### Export Commands
 
-### Command - Command - Exporting data: `export`
+#### Command - Command - Exporting data: `export`
 
 Generates CSV files of system data for external use.
 
-#### Export All Data
+##### Export All Data
 
 **Format**:  
 `export`
@@ -789,7 +789,7 @@ Generates CSV files of system data for external use.
 - Overwrites existing files without confirmation
 - Includes all active records regardless of current view
 
-#### Export Students
+##### Export Students
 
 **Format**:  
 `export students [TUTORIAL_NAME]`
@@ -815,7 +815,7 @@ Generates CSV files of system data for external use.
 - `export students CS2103-T2`:
   Creates students-CS2103-T2.csv with tutorial-specific enrollments.
 
-#### Export Tutorials
+##### Export Tutorials
 
 **Format**:  
 `export tutorials`
