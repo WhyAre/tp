@@ -31,7 +31,7 @@ TAskbook can get your student management tasks done faster than traditional GUI 
    and use the `java -jar taskbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds.
    Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   <img src="images/Ui.png" width="500" />
 
 1. Type the command in the command box and press Enter to execute it.
    e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -77,27 +77,27 @@ The current view is indicated in the bottom-right corner of the application wind
 #### STUDENT view
 
 For managing students and their tutorial enrollment.  
-![STUDENT view screenshot](images/student_view.png)
+<img src="images/student_view.png" width="500" />
 
 #### TUTORIAL view
 
 For managing tutorials and their assignments.  
-![TUTORIAL view screenshot](images/tutorial_view.png)
+<img src="images/tutorial_view.png" width="500" />
 
 #### ATTENDANCE view
 
 For tracking student attendance.  
-![ATTENDANCE view screenshot](images/attendance_view.png)
+<img src="images/attendance_view.png" width="500" />
 
 #### SUBMISSION view
 
 For managing student submissions and their statuses.  
-![SUBMISSION view screenshot](images/submission_view.png)
+<img src="images/submission_view.png" width="500" />
 
 #### SINGLE_STUDENT view
 
 For viewing comprehensive details of a specific student.  
-![SINGLE_STUDENT view screenshot](images/single_student_view.png)
+<img src="images/single_student_view.png" width="500" />
 
 ---
 
