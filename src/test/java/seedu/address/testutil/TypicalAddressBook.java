@@ -52,7 +52,7 @@ public class TypicalAddressBook {
                     .appendTutorial(T1).build();
     public static final Student BENSON = new StudentBuilder().withName("Benson Meier").withStudentId("A0179034R")
                     .withHandle("@benson_meier").withEmail("johnd@example.com").withPhone("98765432")
-                    .appendTutorial(T1, T2).build();
+                    .appendTutorial(T1, T2).withDetails("").build();
     public static final Student CARL = new StudentBuilder().withName("Carl Kurz").withPhone("95352563")
                     .withStudentId("A0388094Q").withEmail("heinz@example.com").withHandle("@carl_kurz").build();
     public static final Student DANIEL = new StudentBuilder().withName("Daniel Meier").withPhone("87652533")
