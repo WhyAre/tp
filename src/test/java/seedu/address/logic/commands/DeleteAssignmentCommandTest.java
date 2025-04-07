@@ -56,9 +56,9 @@ public class DeleteAssignmentCommandTest {
                         assignment);
 
         modelStub.setNavigationMode(NavigationMode.TUTORIAL);
-        assertThrows(CommandException.class, MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()),
-                        (
-                        ) -> deleteAssignmentCommand.execute(modelStub));
+        assertThrows(CommandException.class,
+                MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
+                ) -> deleteAssignmentCommand.execute(modelStub));
         modelStub.setNavigationMode(NavigationMode.STUDENT);
     }
 

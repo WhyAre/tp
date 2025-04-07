@@ -64,9 +64,9 @@ public class AddAssignmentCommandTest {
                         new Assignment("new-assignment"));
 
         modelStub.setNavigationMode(NavigationMode.TUTORIAL);
-        assertThrows(CommandException.class, MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()),
-                        (
-                        ) -> addAssignmentCommand.execute(modelStub));
+        assertThrows(CommandException.class,
+                MESSAGE_TUTORIAL_INDEX_NOT_FOUND.formatted(outOfBoundsIndex.getOneBased()), (
+                ) -> addAssignmentCommand.execute(modelStub));
         modelStub.setNavigationMode(NavigationMode.SUBMISSION);
     }
 
