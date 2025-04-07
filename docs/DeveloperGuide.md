@@ -11,7 +11,16 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+TAskbook is a brownfield software project based off [AddressBook Level-3](https://github.com/se-edu/addressbook-level3),
+taken under the CS2103 Software Engineering module held by the School of Computing at the National University of Singapore.
+
+- Java Dependencies
+  - Jackson for JSON-related operations
+  - Javafx for GUI
+  - JUnit5 for testing
+- Documentation
+  - Jekyll for static site generation
+  - PlantUML for diagramming
 
 ---
 
