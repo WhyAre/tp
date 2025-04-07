@@ -860,7 +860,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete 0`<br>
       Expected: No student is deleted.
-      An error message is shown indicating that the index 0 is invalid.
+      An error message for invalid command format is shown, indicating that the index 0 is not a positive integer (invalid).
 
    1. Test case: `delete 999` (where x is larger than the list size)<br>
       Expected: Error message indicating that index is invalid.
