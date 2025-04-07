@@ -351,7 +351,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 (For all use cases below, the **System** is the `Taskbook` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Add student
+#### Use case: UC01 - Add student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -370,7 +370,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Edit student
+#### Use case: UC02 - Edit student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -391,7 +391,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student
+#### Use case: UC03 - Delete student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -412,7 +412,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List students
+#### Use case: UC04 - List students
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -431,7 +431,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Find students
+#### Use case: UC05 - Find students
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -450,7 +450,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Search for students
+#### Use case: UC06 - Search for students
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -471,7 +471,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: View student
+#### Use case: UC07 - View student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -492,7 +492,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List tutorial slots
+#### Use case: UC08 - List tutorial slots
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -511,7 +511,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Create a tutorial slot
+#### Use case: UC09 - Create a tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -533,7 +533,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete a tutorial slot
+#### Use case: UC10 - Delete a tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -555,7 +555,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Add student to tutorial slot
+#### Use case: UC11 - Add student to tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -579,7 +579,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student from tutorial slot
+#### Use case: UC12 - Delete student from tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -606,7 +606,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Search for students
+#### Use case: UC13 - Search for students
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -627,7 +627,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List attendances
+#### Use case: UC14 - List attendances
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -652,7 +652,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Mark attendance
+#### Use case: UC15 - Mark attendance
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -676,7 +676,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Unmark attendance
+#### Use case: UC16 - Unmark attendance
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -700,7 +700,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Add assignment
+#### Use case: UC17 - Add assignment
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -725,7 +725,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete assignment
+#### Use case: UC18 - Delete assignment
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -750,7 +750,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Set submission
+#### Use case: UC19 - Set submission
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -767,7 +767,7 @@ _{Explain here how the data archiving feature will be implemented}_
   - 1a1. System displays an error message
   - 1a2. Use case continues at step 1
 
-#### Use case: Export data
+#### Use case: UC20 - Export data
 
 **System**: TAskbook <br>
 **Actor**: User
