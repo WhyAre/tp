@@ -196,8 +196,8 @@ Adds a student to the address book.
     - cannot be blank, must be unique
 - `PHONE`: Exactly 8 digits
 - `EMAIL`: Valid email format (e.g., user@example.com)
-- `HANDLE`: Format `@telegramhandle` (min 3 chars, cannot be blank)
-- `DESCRIPTION`: Max 50 characters
+- `HANDLE`: Format `@telegramhandle` (5 - 32 alphanumeric characters (excluding @ symbol), underscores allowed, cannot be blank)
+- `DESCRIPTION`: Can be any length (viewable only via `view` command)
 - There cannot be duplicate students with the same `NAME`, `STUDENT_ID`,
   `PHONE`, `EMAIL` or `HANDLE`.
 </div>

@@ -9,9 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class TelegramHandle {
 
-    public static final String VALIDATION_REGEX = "^@[a-z0-9_]{4,31}$";
+    public static final String VALIDATION_REGEX = "^@[a-z0-9_]{5,32}$";
     public static final String MESSAGE_CONSTRAINTS = "Telegram handles should be in the form @telegramhandle, "
-                    + "and it should not be blank";
+                    + "and it should not be blank. They should only be 5 - 32 alphanumeric (including underscores)"
+                    + " characters long (excluding the @ symbol)";
 
     public final String handle;
 

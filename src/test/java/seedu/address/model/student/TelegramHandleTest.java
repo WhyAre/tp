@@ -33,7 +33,7 @@ public class TelegramHandleTest {
         // invalid handles
         assertFalse(TelegramHandle.isValidHandle("")); // empty string
         assertFalse(TelegramHandle.isValidHandle(" ")); // spaces only
-        assertFalse(TelegramHandle.isValidHandle("@joe")); // less than 4 characters
+        assertFalse(TelegramHandle.isValidHandle("@joe")); // less than 5 characters
         assertFalse(TelegramHandle.isValidHandle("someone")); // no '@' prefix
         assertFalse(TelegramHandle.isValidHandle("@h@//o")); // special characters
         assertFalse(TelegramHandle.isValidHandle("@CAPITAL_LETTERS")); // capital letters

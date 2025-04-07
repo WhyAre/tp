@@ -58,18 +58,18 @@ public class TypicalAddressBook {
     public static final Student DANIEL = new StudentBuilder().withName("Daniel Meier").withPhone("87652533")
                     .withStudentId("A0833488W").withEmail("cornelia@example.com").withHandle("@dannn_mayor")
                     .appendTutorial(T3).build();
-    public static final Student ELLE = new StudentBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final Student ELLE = new StudentBuilder().withName("Elle Meyer").withPhone("94823224")
                     .withStudentId("A0172925M").withEmail("werner@example.com").withHandle("@ellem").build();
-    public static final Student FIONA = new StudentBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final Student FIONA = new StudentBuilder().withName("Fiona Kunz").withPhone("94820427")
                     .withStudentId("A0005984F").withEmail("lydia@example.com").withHandle("@kunz_fiona")
                     .appendTutorial(T3).build();
-    public static final Student GEORGE = new StudentBuilder().withName("George Best").withPhone("9482442")
+    public static final Student GEORGE = new StudentBuilder().withName("George Best").withPhone("91182442")
                     .withStudentId("A0443446N").withEmail("anna@example.com").withHandle("@the_best_george").build();
 
     // Manually added
-    public static final Student HOON = new StudentBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final Student HOON = new StudentBuilder().withName("Hoon Meier").withPhone("84802424")
                     .withStudentId("A0478925C").withEmail("stefan@example.com").withHandle("@bee_hoon").build();
-    public static final Student IDA = new StudentBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final Student IDA = new StudentBuilder().withName("Ida Mueller").withPhone("82382131")
                     .withStudentId("A0840139C").withEmail("hans@example.com").withHandle("@ida_pro").build();
 
     // Manually added - Student's details found in {@code CommandTestUtil}
