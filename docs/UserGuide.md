@@ -31,7 +31,7 @@ TAskbook can get your student management tasks done faster than traditional GUI 
    and use the `java -jar taskbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds.
    Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   <img src="images/Ui.png" width="500" />
 
 1. Type the command in the command box and press Enter to execute it.
    e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -48,11 +48,79 @@ TAskbook can get your student management tasks done faster than traditional GUI 
 
    - `exit`: Exits the app.
 
-1. Refer to the [Feature formats](#features) below for details of each command.
+1. Refer to the [Features](#features) section below for details of each command.
 
 ---
 
-## Feature formats
+## Application Views
+
+TAskbook operates in distinct views, which determine the information shown in the UI and what commands are available.
+The current view is indicated in the bottom-right corner of the application window.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note about views:**<br>
+
+- Some commands are only available in specific views.
+  If a command is entered in the wrong view, the application will automatically switch to the correct view.
+
+- The current view is remembered across reboots of the application.
+
+- The terms **"view"** and **"mode"** are used interchangeably in TAskbook.
+  They refer to the same concept.
+
+- For command-specific view requirements, please refer to the [Features](#features) section.
+
+</div>
+
+---
+
+### Types of Views
+
+#### STUDENT view
+
+For managing students and their tutorial enrollment.  
+<img src="images/student_view.png" width="500" />
+
+#### TUTORIAL view
+
+For managing tutorials and their assignments.  
+<img src="images/tutorial_view.png" width="500" />
+
+#### ATTENDANCE view
+
+For tracking student attendance.  
+<img src="images/attendance_view.png" width="500" />
+
+#### SUBMISSION view
+
+For managing student submissions and their statuses.  
+<img src="images/submission_view.png" width="500" />
+
+#### SINGLE_STUDENT view
+
+For viewing comprehensive details of a specific student.  
+<img src="images/single_student_view.png" width="500" />
+
+---
+
+### Switching Views
+
+The user can switch between views using the following commands:
+
+| Command           | View                    |
+| ----------------- | ----------------------- |
+| `list`            | **STUDENT view**        |
+| `tutorial list`   | **TUTORIAL view**       |
+| `attendance list` | **ATTENDANCE view**     |
+| `submission list` | **SUBMISSION view**     |
+| `view INDEX`      | **SINGLE_STUDENT view** |
+
+For more information on these commands, please refer to the [Features](#features) section.
+
+---
+
+## Features
 
 <div markdown="block" class="alert alert-info">
 
@@ -83,12 +151,6 @@ TAskbook can get your student management tasks done faster than traditional GUI 
 
 ---
 
-# Commands
-
-List of commands are found below
-
-# System Commands
-
 ### Command - Viewing help: `help`
 
 **Format**:  
@@ -118,9 +180,9 @@ Exits the program.
 
 ---
 
-## Student Commands
+### Student Commands
 
-### Command - Adding a student: `add`
+#### Command - Adding a student: `add`
 
 Adds a student to the address book.
 
@@ -150,7 +212,7 @@ Adds a student to the address book.
 
 ---
 
-### Command - Listing all students: `list`
+#### Command - Listing all students: `list`
 
 Shows a list of all students in the address book.
 
@@ -159,7 +221,7 @@ Shows a list of all students in the address book.
 
 ---
 
-### Command - Editing a student: `edit`
+#### Command - Editing a student: `edit`
 
 Edits an existing student in the address book.
 You must be in `STUDENT` view.
@@ -187,7 +249,7 @@ You must be in `STUDENT` view.
 
 ---
 
-### Command - Finding students: `find`
+#### Command - Finding students: `find`
 
 Finds all students whose names contain any of the specified keywords (case-insensitive)
 or who are in the specified tutorial group(s).
@@ -222,7 +284,7 @@ or who are in the specified tutorial group(s).
 
 ---
 
-### Command - Deleting a student: `delete`
+#### Command - Deleting a student: `delete`
 
 Deletes the specified student from the address book.
 You must be in `STUDENT` view.
@@ -260,7 +322,7 @@ Deleted students are immediately removed from:
 
 ---
 
-### Command - Viewing student details: `view`
+#### Command - Viewing student details: `view`
 
 Displays comprehensive information for a specific student.
 You must be in `STUDENT` view.
@@ -286,9 +348,9 @@ You must be in `STUDENT` view.
 
 ---
 
-## Tutorial Commands
+### Tutorial Commands
 
-### Command - Adding a tutorial: `tutorial add`
+#### Command - Adding a tutorial: `tutorial add`
 
 Adds a tutorial slot to the address book.
 
@@ -320,7 +382,7 @@ Adds a tutorial slot to the address book.
 
 ---
 
-### Command - Listing all tutorials: `tutorial list`
+#### Command - Listing all tutorials: `tutorial list`
 
 Shows a list of all tutorials and created assignments in the address book.
 
@@ -329,7 +391,7 @@ Shows a list of all tutorials and created assignments in the address book.
 
 ---
 
-### Command - Finding a tutorial: `tutorial find`
+#### Command - Finding a tutorial: `tutorial find`
 
 Finds tutorials matching specified keywords in their names.
 
@@ -359,7 +421,7 @@ Finds tutorials matching specified keywords in their names.
 
 ---
 
-### Command - Deleting a tutorial: `tutorial delete`
+#### Command - Deleting a tutorial: `tutorial delete`
 
 Deletes a tutorial slot from the address book.
 
@@ -389,7 +451,7 @@ Deletes a tutorial slot from the address book.
 
 ---
 
-### Command - Adding a student to tutorial: `tutorial add-student`
+#### Command - Adding a student to tutorial: `tutorial add-student`
 
 Adds a student to a tutorial slot.
 You must be in `STUDENT` view.
@@ -420,7 +482,7 @@ You must be in `STUDENT` view.
 
 ---
 
-### Command - Deleting a student from tutorial: `tutorial delete-student`
+#### Command - Deleting a student from tutorial: `tutorial delete-student`
 
 Removes a student from a tutorial slot.
 You must be in `STUDENT` view.
@@ -451,9 +513,9 @@ You must be in `STUDENT` view.
 
 ---
 
-## Assignment Commands
+### Assignment Commands
 
-### Command - Listing assignments
+#### Command - Listing assignments
 
 <div markdown="block" class="alert alert-info">
 **Note**
@@ -464,7 +526,7 @@ Type `tutorial list` to view tutorials and its corresponding assignments.
 
 </div>
 
-### Command - Adding an assignment: `assignment add`
+#### Command - Adding an assignment: `assignment add`
 
 Creates a new assignment for specified tutorials.
 You must be in `TUTORIAL` view.
@@ -507,7 +569,7 @@ You must be in `TUTORIAL` view.
 
 ---
 
-### Command - Deleting an assignment: `assignment delete`
+#### Command - Deleting an assignment: `assignment delete`
 
 Removes an assignment from specified tutorials.
 You must be in `TUTORIAL` view.
@@ -545,9 +607,9 @@ You must be in `TUTORIAL` view.
 
 ---
 
-## Submission Commands
+### Submission Commands
 
-### Command - Listing submissions: `submission list`
+#### Command - Listing submissions: `submission list`
 
 Displays a comprehensive overview of all student enrollments
 and their assignment completion status across tutorials.
@@ -557,7 +619,7 @@ and their assignment completion status across tutorials.
 
 ---
 
-### Command - Setting submission status: `submission set`
+#### Command - Setting submission status: `submission set`
 
 Updates the completion status of specified student submissions.
 
@@ -586,13 +648,13 @@ Updates the completion status of specified student submissions.
 
 ---
 
-## Attendance Commands
+### Attendance Commands
 
-### Command - Listing attendance: `attendance list`
+#### Command - Listing attendance: `attendance list`
 
 Displays attendance records for students or tutorials.
-You can be in any mode to execute this command,
-but different modes have different behaviors.
+You can be in any view to execute this command,
+but different views have different behaviors.
 
 **Format**:  
 `attendance list [INDEX]`
@@ -635,7 +697,7 @@ For accurate results:
 
 ---
 
-### Command - Marking attendance: `attendance mark`
+#### Command - Marking attendance: `attendance mark`
 
 Records student attendance for a specific week.
 You must be in `ATTENDANCE` view.
@@ -673,7 +735,7 @@ You must be in `ATTENDANCE` view.
 
 ---
 
-### Command - Unmarking attendance: `attendance unmark`
+#### Command - Unmarking attendance: `attendance unmark`
 
 Removes attendance records for specified students in a given week.
 You must be in `ATTENDANCE` view.
@@ -711,13 +773,13 @@ You must be in `ATTENDANCE` view.
 
 ---
 
-## Export Commands
+### Export Commands
 
-### Command - Command - Exporting data: `export`
+#### Command - Command - Exporting data: `export`
 
 Generates CSV files of system data for external use.
 
-#### Export All Data
+##### Export All Data
 
 **Format**:  
 `export`
@@ -730,7 +792,7 @@ Generates CSV files of system data for external use.
 - Overwrites existing files without confirmation
 - Includes all active records regardless of current view
 
-#### Export Students
+##### Export Students
 
 **Format**:  
 `export students [TUTORIAL_NAME]`
@@ -756,7 +818,7 @@ Generates CSV files of system data for external use.
 - `export students CS2103-T2`:
   Creates students-CS2103-T2.csv with tutorial-specific enrollments.
 
-#### Export Tutorials
+##### Export Tutorials
 
 **Format**:  
 `export tutorials`
@@ -838,7 +900,7 @@ _View Planned resolutions in Developer Guide for more information_
 
 ## Command Summary
 
-| **Action**                     | **Mode**                                        | **Format, Examples**                                                                                                                                  |
+| **Action**                     | **Required View**                               | **Format, Examples**                                                                                                                                  |
 | ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Student Management**         |                                                 |                                                                                                                                                       |
 | `Add student`                  |                                                 | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |

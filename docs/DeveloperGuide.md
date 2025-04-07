@@ -943,14 +943,14 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 999` (where x is larger than the list size)<br>
       Expected: Error message indicating that index is invalid.
 
-1. Deleting a student in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` mode
+1. Deleting a student in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` view
 
    1. Test case: `delete 0`<br>
       Expected: Error message saying the command format is invalid.
 
    1. Test case: `delete 1`<br>
-      Expected: Error message saying mode is wrong,
-      and switching to the correct mode.
+      Expected: Error message saying view is wrong,
+      and switching to the correct view.
 
 ### Listing tutorial slots
 
@@ -1010,11 +1010,11 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding students to a tutorial slot in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` view
 
-   1. Prerequisite: Be in some other mode
+   1. Prerequisite: Be in some other view
 
    1. Test case: `tutorial add-student cs2103-f15 s/1`<br>
-      Expected: Error messaging saying the mode is incorrect,
-      and switching to the correct mode.
+      Expected: Error messaging saying the view is incorrect,
+      and switching to the correct view.
 
 ### Deleting a student from a tutorial slot
 
