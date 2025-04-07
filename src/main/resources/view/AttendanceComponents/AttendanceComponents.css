@@ -31,12 +31,12 @@
 }
 
 .attendance-present {
-    -fx-text-fill: white;
+    -fx-text-fill: white !important;
     -fx-background-color: linear-gradient(to bottom, #00A651, #008744);
 }
 
 .attendance-absent {
-    -fx-text-fill: white;
+    -fx-text-fill: white !important;
     -fx-background-color: linear-gradient(to bottom, #BA3F38, #9E342D);
 }
 
