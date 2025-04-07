@@ -349,7 +349,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## **Use cases**
 
-(For all use cases below, the **System** is the `Taskbook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `TAskbook` and the **Actor** is the `user`, unless specified otherwise)
 
 #### Use case: UC01 - Add student
 
