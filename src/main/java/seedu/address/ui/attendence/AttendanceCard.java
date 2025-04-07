@@ -46,7 +46,7 @@ public class AttendanceCard extends UiPart<Region> {
     public AttendanceCard(Attendance attendance, int displayedIndex) {
         super(FXML);
         this.attendance = attendance;
-        id.setText(displayedIndex + ". ");
+        id.setText(displayedIndex + "");
         studentName.setText(attendance.student().getName().toString());
         tutorialName.setText(attendance.tutorial().name());
         List<Integer> attendanceList = attendance.attendances();

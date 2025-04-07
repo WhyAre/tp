@@ -36,13 +36,13 @@
           <HBox spacing="10" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
             <!-- Name -->
             <VBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
-                <Label fx:id="name" text="John Doe" />
+                <Label fx:id="name" text="John Doe" wrapText="true" maxWidth="100.0"/>
             </VBox>
 
             <!-- StudentId and Email -->
             <VBox spacing="10" HBox.hgrow="ALWAYS">
               <Label fx:id="studentId" text="Student ID" />
-              <Label fx:id="email" text="john.doe@example.com" />
+              <Label fx:id="email" text="john.doe@example.com" wrapText="true"/>
             </VBox>
 
             <!-- Phone and Telegram -->
@@ -53,7 +53,7 @@
               </HBox>
               <HBox spacing="5">
                 <Label text="📱"/>
-                <Label fx:id="handle" text="@1231" />
+                <Label fx:id="handle" text="@1231" wrapText="true"/>
               </HBox>
             </VBox>
           </HBox>
