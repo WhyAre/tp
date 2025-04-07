@@ -48,38 +48,7 @@ TAskbook can get your student management tasks done faster than traditional GUI 
 
    - `exit`: Exits the app.
 
-1. Refer to the [Commands](#Commands) section below for details of each command.
-
----
-
-## Feature formats
-
-<div markdown="block" class="alert alert-info">
-
-**:information_source: Notes about the command format:**<br>
-
-- Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-
-- Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-- Items with `...` after them can be used multiple times including zero times.<br>
-  e.g. `[t/TUTORIAL_NAME]...` can be used as ` ` (i.e. 0 times), `t/cs2103`,
-  `t/cs2103 t/cs2040s` etc.
-
-- Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
-
-- Extraneous parameters for commands that do not take in parameters
-  (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
-- If you are using a PDF version of this document,
-  be careful when copying and pasting commands that span multiple lines
-  as space characters surrounding line-breaks may be omitted when copied over to the application.
-
-</div>
+1. Refer to the [Features](#features) section below for details of each command.
 
 ---
 
@@ -97,7 +66,7 @@ The current view is indicated in the bottom-right corner of the application wind
 
 - The current view is remembered across reboots of the application.
 
-- For command-specific view requirements, please refer to the [Command Summary](#Command-Summary) section.
+- For command-specific view requirements, please refer to the [Features](#features) section.
 
 </div>
 
@@ -144,15 +113,40 @@ The user can switch between views using the following commands:
 | `submission list` | **SUBMISSION view**     |
 | `view INDEX`      | **SINGLE_STUDENT view** |
 
-For more information on these commands, please refer to the [Commands](#Commands) section.
+For more information on these commands, please refer to the [Features](#features) section.
 
 ---
 
-# Commands
+## Features
 
-List of commands are found below
+<div markdown="block" class="alert alert-info">
 
-# System Commands
+**:information_source: Notes about the command format:**<br>
+
+- Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
+  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+
+- Items in square brackets are optional.<br>
+  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+
+- Items with `...` after them can be used multiple times including zero times.<br>
+  e.g. `[t/TUTORIAL_NAME]...` can be used as ` ` (i.e. 0 times), `t/cs2103`,
+  `t/cs2103 t/cs2040s` etc.
+
+- Parameters can be in any order.<br>
+  e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
+
+- Extraneous parameters for commands that do not take in parameters
+  (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+
+- If you are using a PDF version of this document,
+  be careful when copying and pasting commands that span multiple lines
+  as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+</div>
+
+---
 
 ### Command - Viewing help: `help`
 
