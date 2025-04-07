@@ -83,6 +83,71 @@ TAskbook can get your student management tasks done faster than traditional GUI 
 
 ---
 
+## Application Views
+
+TAskbook operates in distinct views, which determine the information shown in the UI and what commands are available.
+The current view is indicated in the bottom-right corner of the application window.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note about views:**<br>
+
+- Some commands are only available in specific views.
+  If a command is entered in the wrong view, the application will automatically switch to the correct view.
+
+- The current view is remembered across reboots of the application.
+
+- For command-specific view requirements, please refer to the [Command Summary](#Command-Summary) section.
+
+</div>
+
+---
+
+### Types of Views
+
+#### **STUDENT view**
+
+For managing students and their tutorial enrollment.  
+![STUDENT view screenshot](images/student_view.png)
+
+#### **TUTORIAL view**
+
+For managing tutorials and their assignments.  
+![TUTORIAL view screenshot](images/tutorial_view.png)
+
+#### **ATTENDANCE view**
+
+For tracking student attendance.  
+![ATTENDANCE view screenshot](images/attendance_view.png)
+
+#### **SUBMISSION view**
+
+For managing student submissions and their statuses.  
+![SUBMISSION view screenshot](images/submission_view.png)
+
+#### **SINGLE_STUDENT view**
+
+For viewing comprehensive details of a specific student.  
+![SINGLE_STUDENT view screenshot](images/single_student_view.png)
+
+---
+
+### Switching Views
+
+The user can switch between views using the following commands:
+
+| Command           | View                    |
+| ----------------- | ----------------------- |
+| `list`            | **STUDENT view**        |
+| `tutorial list`   | **TUTORIAL view**       |
+| `attendance list` | **ATTENDANCE view**     |
+| `submission list` | **SUBMISSION view**     |
+| `view INDEX`      | **SINGLE_STUDENT view** |
+
+For more information on these commands, please refer to the [Commands](#Commands) section.
+
+---
+
 # Commands
 
 List of commands are found below
@@ -591,8 +656,8 @@ Updates the completion status of specified student submissions.
 ### Command - Listing attendance: `attendance list`
 
 Displays attendance records for students or tutorials.
-You can be in any mode to execute this command,
-but different modes have different behaviors.
+You can be in any view to execute this command,
+but different views have different behaviors.
 
 **Format**:  
 `attendance list [INDEX]`
@@ -838,7 +903,7 @@ _View Planned resolutions in Developer Guide for more information_
 
 ## Command Summary
 
-| **Action**                     | **Mode**                                        | **Format, Examples**                                                                                                                                  |
+| **Action**                     | **Required View**                               | **Format, Examples**                                                                                                                                  |
 | ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Student Management**         |                                                 |                                                                                                                                                       |
 | `Add student`                  |                                                 | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |
