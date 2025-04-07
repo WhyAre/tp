@@ -671,7 +671,8 @@ but different views have different behaviors.
 **Behavior**:
 
 - Without index: shows all attendance records
-- With index: shows records for specified student/tutorial
+- With index while in student/tutorial view: shows records for specified student/tutorial
+- With index while in other views: error is shown asking user to change to a valid view.
 - Multiple entries possible per student (across different tutorials)
 - Invalid input defaults to full attendance list
 - Displays:
