@@ -155,20 +155,37 @@ How the parsing works:
 
 **API** : [`Model.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.svg" width="450" />
+<img src="images/ModelClassDiagram.svg" width="550" />
+
+(Implementation within the addressbook will be discussed in another section)
 
 The `Model` component,
 
-- stores the address book data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object).
-- stores the currently 'selected' `Student` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the address book data, `Student`, `Tutorial`, `Attendance` and `Submission`.
+- stores the currently 'selected' `Student`, `Tutorial`, `Attendance` and `Submission` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-- does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+- does not depend on any of the other three components (as the `Model` represents data entities of the domain,
+they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Student` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Student` needing their own `Tag` objects.<br>
+#### AddressBook Component
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+The above diagram shows how the `AddressBook` class, and `ModelManager` classes interact with 
+the `Tutorial`, `Student`, `Attendance` and `Submission` class.
+This section will describe the interaction between these classes.
 
-</div>
+<img src="images/AddressBookClassDiagram.svg" width="450" />
+
+In the `AddressBook` class,
+between each `(Student, Tutorial)` Pair,
+there is one `Attendance` object.
+Each `Attendance` object stores an array of integers,
+where the `i`th index represents the `i`'th lesson,
+and the value in the `i`th index could be 0 or 1,
+representing whether the student was present during that lesson.
+Between each `(Assignment, Student)` pair,
+there is a `Submission` object.
+In each `Submission` object is an enum that represents the submission status of that assignment,
+for a particular student.
 
 ### Storage component
 
