@@ -66,6 +66,9 @@ The current view is indicated in the bottom-right corner of the application wind
 
 - The current view is remembered across reboots of the application.
 
+- The terms **"view"** and **"mode"** are used interchangeably in TAskbook.
+  They refer to the same concept.
+
 - For command-specific view requirements, please refer to the [Features](#features) section.
 
 </div>
