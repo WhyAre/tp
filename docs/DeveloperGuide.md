@@ -11,7 +11,16 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+TAskbook is a brownfield software project based off [AddressBook Level-3](https://github.com/se-edu/addressbook-level3),
+taken under the CS2103 Software Engineering module held by the School of Computing at the National University of Singapore.
+
+- Java Dependencies
+  - Jackson for JSON-related operations
+  - Javafx for GUI
+  - JUnit5 for testing
+- Documentation
+  - Jekyll for static site generation
+  - PlantUML for diagramming
 
 ---
 
@@ -146,26 +155,43 @@ How the parsing works:
 
 **API** : [`Model.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.svg" width="450" />
+<img src="images/ModelClassDiagram.svg" width="550" />
+
+(Implementation within the addressbook will be discussed in another section)
 
 The `Model` component,
 
-- stores the address book data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object).
-- stores the currently 'selected' `Student` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the address book data, `Student`, `Tutorial`, `Attendance` and `Submission`.
+- stores the currently 'selected' `Student`, `Tutorial`, `Attendance` and `Submission` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-- does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+- does not depend on any of the other three components (as the `Model` represents data entities of the domain,
+  they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Student` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Student` needing their own `Tag` objects.<br>
+#### AddressBook Component
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+The above diagram shows how the `AddressBook` class, and `ModelManager` classes interact with
+the `Tutorial`, `Student`, `Attendance` and `Submission` class.
+This section will describe the interaction between these classes.
 
-</div>
+<img src="images/AddressBookClassDiagram.svg" width="450" />
+
+In the `AddressBook` class,
+between each `(Student, Tutorial)` Pair,
+there is one `Attendance` object.
+Each `Attendance` object stores an array of integers,
+where the `i`th index represents the `i`'th lesson,
+and the value in the `i`th index could be 0 or 1,
+representing whether the student was present during that lesson.
+Between each `(Assignment, Student)` pair,
+there is a `Submission` object.
+In each `Submission` object is an enum that represents the submission status of that assignment,
+for a particular student.
 
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<img src="images/StorageClassDiagram.png" width="550" />
+<img src="images/StorageClassDiagram.png" width="800" />
 
 The `Storage` component,
 
@@ -193,101 +219,6 @@ for executing the 3 key commands for functionalities related to students in TAsk
 #### `delete` Command
 
 ![Interactions Inside the Logic and Model Component for the `delete` Command](images/student-related/DeleteStudentSequenceDiagram.svg)
-
----
-
-## **Implementation**
-
-This section describes some noteworthy details on how certain features are implemented.
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-- `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-- `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th student in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new student. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-- **Alternative 1 (current choice):** Saves the entire address book.
-
-  - Pros: Easy to implement.
-  - Cons: May have performance issues in terms of memory usage.
-
-- **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  - Pros: Will use less memory (e.g. for `delete`, just save the student being deleted).
-  - Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 ---
 
@@ -349,9 +280,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## **Use cases**
 
-(For all use cases below, the **System** is the `Taskbook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `TAskbook` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Add student
+#### Use case: UC01 - Add student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -370,7 +301,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Edit student
+#### Use case: UC02 - Edit student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -391,7 +322,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student
+#### Use case: UC03 - Delete student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -412,7 +343,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List students
+#### Use case: UC04 - List students
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -431,7 +362,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Find students
+#### Use case: UC05 - Find students
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -450,7 +381,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Search for students
+#### Use case: UC06 - Search for students
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -471,7 +402,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: View student
+#### Use case: UC07 - View student
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -492,7 +423,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List tutorial slots
+#### Use case: UC08 - List tutorial slots
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -511,7 +442,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Create a tutorial slot
+#### Use case: UC09 - Create a tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -533,7 +464,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete a tutorial slot
+#### Use case: UC10 - Delete a tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -555,7 +486,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Add student to tutorial slot
+#### Use case: UC11 - Add student to tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -579,7 +510,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student from tutorial slot
+#### Use case: UC12 - Delete student from tutorial slot
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -606,7 +537,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Search for students
+#### Use case: UC13 - Search for students
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -627,7 +558,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List attendances
+#### Use case: UC14 - List attendances
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -652,7 +583,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Mark attendance
+#### Use case: UC15 - Mark attendance
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -676,7 +607,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Unmark attendance
+#### Use case: UC16 - Unmark attendance
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -700,7 +631,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Add assignment
+#### Use case: UC17 - Add assignment
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -725,7 +656,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete assignment
+#### Use case: UC18 - Delete assignment
 
 **System**: Taskbook<br>
 **Actor**: User
@@ -750,7 +681,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Set submission
+#### Use case: UC19 - Set submission
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -767,7 +698,7 @@ _{Explain here how the data archiving feature will be implemented}_
   - 1a1. System displays an error message
   - 1a2. Use case continues at step 1
 
-#### Use case: Export data
+#### Use case: UC20 - Export data
 
 **System**: TAskbook <br>
 **Actor**: User
@@ -791,28 +722,19 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Non-Functional Requirements
 
-1.  The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  The system should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  The system should respond within 2 seconds.
-5.  The system should only be for a single user.
-6.  The system's data should be stored locally.
-7.  The system should work without requiring an installer.
-8.  The system should not require a remote server.
-9.  The system's GUI should work well for standard screen resolutions 1920x1080 and higher.
-10. The system should be easy to use for a user who has no experience using an address book software.
-11. The system should not interfere with other software.
-12. The system should save data automatically after each modification in the address book.
-13. The system's saved data should still be accessible even if it crashes.
-14. The system should not require a database management system for storing data.
-15. The system should be able to handle invalid commands without crashing.
-16. The system's features should be easy to test.
-17. The system's commands should not cause confusion (i.e. not ambiguous).
-18. The system should be at most 100MB in size.
-19. The system should only require one JAR file.
-20. A user who has not used the software for a while should be able to use it efficiently immediately after returning to it.
-21. The User Guide and Developer Guide should be PDF-friendly.
-22. The system should be able to read a save file provided it is in the correct path and has the correct name.
+1. The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+1. The system should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
+1. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. The system should respond within 2 seconds.
+1. The system should only be for a single user.
+1. The system's data should be stored locally.
+1. The system should work without requiring an installer.
+1. The system should not require a remote server.
+1. The system should save data automatically after each modification in the address book.
+1. The system should not require a database management system for storing data.
+1. The system should be able to handle invalid commands without crashing.
+1. The system should be at most 100MB in size.
+1. The system should only require one JAR file.
 
 ### Glossary
 
