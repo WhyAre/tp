@@ -7,9 +7,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID_STUDENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -20,6 +22,7 @@ import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.StudentID;
 import seedu.address.model.student.TelegramHandle;
+import seedu.address.model.tutorial.Tutorial;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -35,7 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE,
-                        PREFIX_EMAIL, PREFIX_HANDLE, PREFIX_DETAILS);
+                        PREFIX_EMAIL, PREFIX_HANDLE, PREFIX_DETAILS, PREFIX_TUTORIAL_NAME);
 
         if (!argMultimap.allPresent(PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HANDLE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -46,16 +49,17 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_ID_STUDENT, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_HANDLE);
+                        PREFIX_HANDLE, PREFIX_DETAILS);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         StudentID studentId = ParserUtil.parseStudentId(argMultimap.getValue(PREFIX_ID_STUDENT).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         TelegramHandle handle = ParserUtil.parseTelegramHandle(argMultimap.getValue(PREFIX_HANDLE).get());
+        Set<Tutorial> tutorialList = ParserUtil.parseTutorials(argMultimap.getAllValues(PREFIX_TUTORIAL_NAME));
         Optional<String> detailsOptional = argMultimap.getValue(PREFIX_DETAILS);
         Details details = detailsOptional.map(ParserUtil::parseDetails).orElse(new Details(""));
 
-        Student student = new Student(name, studentId, phone, email, handle, new HashSet<>(), details);
+        Student student = new Student(name, studentId, phone, email, handle, tutorialList, details);
 
         return new AddCommand(student);
     }
