@@ -48,7 +48,7 @@ TAskbook can get your student management tasks done faster than traditional GUI 
 
    - `exit`: Exits the app.
 
-1. Refer to the [Feature formats](#features) below for details of each command.
+1. Refer to the [Commands](#Commands) section below for details of each command.
 
 ---
 
