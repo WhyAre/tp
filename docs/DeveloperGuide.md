@@ -1161,14 +1161,14 @@ Team size: 6 (maximum 12 enhancements)
    We plan to store these extra parameters in the user preferences,
    so that these information are preserved across restarts.
 
-1. **More specific  error message for `tutorial add-student` command**:
+1. **More specific error message for `tutorial add-student` command**:
    Since it is possible to specify multiple indexes,
    in the event of a failure, it does not specify which one of the indexes fail.
    One of the examples is "The student index provided is invalid".
    We plan to include the student index in the error message,
    such as "The student index 3 provided is invalid".
 
-1. **More specific  error message for `tutorial delete-student` command**:
+1. **More specific error message for `tutorial delete-student` command**:
    Since it is possible to specify multiple indexes,
    in the event of a failure, it does not specify which one of the indexes fail.
    One of the examples is "The student index provided is invalid".
@@ -1187,4 +1187,3 @@ Team size: 6 (maximum 12 enhancements)
 <!-- 1. **Proper handling of minimized help windows with new instances:** -->
 <!--    Currently, the  -->
 <!--    We plan to detect and restore/minimize state on help commands -->
-
