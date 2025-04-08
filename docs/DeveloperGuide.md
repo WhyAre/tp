@@ -1143,56 +1143,39 @@ testers are expected to do more *exploratory* testing.
 
 Team size: 6 (maximum 12 enhancements)
 
-1. Tutorial-Submission Synchronization:  
-   Automatically update submission records when students are added/removed from tutorials using t/ tag in add/edit commands.  
-   _Example_: edit 1 t/CS2103_T01 will now sync all CS2103_T01 submissions.
+1. **Add more export options**:
+   Currently, it is only possible to export `students`
+   and `tutorials`. In the future, we plan to support exporting of `submissions`
+   and `attendances` into `submissions.csv` and `attendance.csv` respectively.
 
-2. Persistent Description Field:  
-   Save student descriptions between sessions in the data file.  
-   _Implementation_: New "description" field in student JSON structure.
+1. **Auto-resizing of windows**:
+   Currently, there is a character limit on strings,
+   so that the UI does not break.
+   In the future, we intend to make the user interface support longer characters,
+   such as auto-expanding panes to fit content, or to have scrollable panels.
 
-3. Export Completeness:  
-   Include full submission histories and attendance records in exports.  
-   _New Files_:
+1. **Preservation of view state**:
+   Currently, the view is persisted beyond app restarts.
+   However, states in the view is not persisted,
+   such as the current filter in the view.
+   We plan to store these extra parameters in the user preferences,
+   so that these information are preserved across restarts.
 
-   - submissions.csv (all submission states with timestamps)
-   - attendance.csv (weekly records per student-tutorial pair)
+1. **More specific  error message for `tutorial add-student` command**:
+   Since it is possible to specify multiple indexes,
+   in the event of a failure, it does not specify which one of the indexes fail.
+   One of the examples is "The student index provided is invalid".
+   We plan to include the student index in the error message,
+   such as "The student index 3 provided is invalid".
 
-4. Enhanced Error Messages:  
-   Specific warnings for:
+1. **More specific  error message for `tutorial delete-student` command**:
+   Since it is possible to specify multiple indexes,
+   in the event of a failure, it does not specify which one of the indexes fail.
+   One of the examples is "The student index provided is invalid".
+   We plan to include the student index in the error message,
+   such as "The student index 3 provided is invalid".
 
-   - Invalid parameters (show expected format)
-   - Duplicate tutorial additions ("Tutorial already exists: CS2103\*T01")
+<!-- 1. **Proper handling of minimized help windows with new instances:** -->
+<!--    Currently, the  -->
+<!--    We plan to detect and restore/minimize state on help commands -->
 
-   _Example_:
-
-   - tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
-
-5. Window Auto-Resizing:  
-   Dynamic UI adjustment for long content (names, descriptions, assignments).  
-   _Thresholds_:
-
-   - Auto-expand for >15 character assignments
-   - Scrollable panels for >30 character descriptions
-
-6. Data Preloading:  
-   Load student data on application startup instead of first list command.
-
-7. Session State Preservation:  
-   Maintain temporary data between app restarts:
-
-   - Active filters
-   - Description edits
-   - Current view preferences
-
-   _Storage_: New session.json file in data directory.
-
-8. Help Window Management:  
-   Proper handling of minimized help windows with new instances.  
-   _Fix_: Detect and restore/minimize state on help commands
-
-9. Support variable number of weeks for attendance:  
-   Provide options for user to:
-   - Add weeks to a tutorial's attendance (i.e. Week 14)
-   - Remove weeks from a tutorial's attendance
-   - Set the number of weeks for a tutorial's attendance to a specified number (i.e. 15 weeks)
