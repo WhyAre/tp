@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -64,7 +65,7 @@ public class SetSubmissionCommand extends Command {
 
         assert model.check();
 
-        var msg = String.join("\n", result);
+        var msg = result.stream().distinct().collect(Collectors.joining("\n"));
         if (hasError) {
             throw new CommandException(msg);
         }

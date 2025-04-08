@@ -7,6 +7,7 @@ import static seedu.address.logic.Messages.MESSAGE_TUTORIAL_INDEX_NOT_FOUND;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -88,7 +89,7 @@ public class AddAssignmentCommand extends Command {
         assert model.check();
 
         if (hasErrors) {
-            var res = String.join("\n", msgs);
+            var res = msgs.stream().distinct().collect(Collectors.joining("\n"));
             throw new CommandException(res);
         }
 

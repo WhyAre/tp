@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_IDX;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -85,7 +86,7 @@ public class DeleteAssignmentCommand extends Command {
         }
 
         if (hasErrors) {
-            var res = String.join("\n", msgs);
+            var res = msgs.stream().distinct().collect(Collectors.joining("\n"));
             throw new CommandException(res);
         }
 
