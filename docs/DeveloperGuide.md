@@ -1165,6 +1165,15 @@ Team size: 6 (maximum 12 enhancements)
    a parameter even though it might not be a flag that is accepted in the
    current command.
 
+1. **Supporting variable number of weeks for attendance**:
+   Currently, the number of weeks for attendances is limited from week 3 to
+   week 13.
+   In the future, we plan to provide options for user to:
+   - Add weeks to a tutorial's attendance (i.e. Week 14)
+   - Remove weeks from a tutorial's attendance
+   - Set the number of weeks for a tutorial's attendance to a specified number
+     (i.e. 15 weeks)
+
 <!-- 1. **Proper handling of minimized help windows with new instances:** -->
 <!--    Currently, the  -->
 <!--    We plan to detect and restore/minimize state on help commands -->
