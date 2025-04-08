@@ -864,36 +864,11 @@ Therefore, edit the data file only if you are confident that you can update it c
 
 ## Known issues
 
-1. **Multi-screen display**:  
-   When moving the application between screens, the GUI may open off-screen.  
-   _Fix_: Delete `preferences.json` before restarting.
+These document changes that are not planned in current version of the product.
 
-2. **Help Window**:  
-   Minimized help windows don't restore properly when reopening help.  
-   _Fix_: Manually restore the window.
-
-3. **Data Synchronization (v1.5)**:
-
-   - Add the ability to edit tutorial by using Tutorial tags (`t/`)
-   - Student descriptions are session-only (lost on app restart)
-
-4. **Data Export (v1.5)**:
-
-   - Doesn't include:
-     - Submission histories
-     - Attendance records
-   - Limited to current session data
-
-5. **Interface Issues**:
-
-   - Window resizing required for long assignment names (>5 chars)
-   - Tutorial indexes change after filtering/sorting
-
-6. **System Limitations**:
-   - No bulk operations across multiple tutorials
-   - Orphaned submissions may exist after deletions
-
-_View Planned resolutions in Developer Guide for more information_
+1. Opening the app in full screen,
+   and constantly typing `help` and closing the help window for many times.
+   Eventually the app will crash.
 
 ## Command Summary
 
