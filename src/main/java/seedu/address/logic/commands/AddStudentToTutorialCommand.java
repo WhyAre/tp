@@ -6,6 +6,7 @@ import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -85,7 +86,8 @@ public class AddStudentToTutorialCommand extends Command {
 
         }
         if (!errMsg.isEmpty()) {
-            throw new CommandException("Warning: %s".formatted(errMsg.toString()));
+            var msg = errMsg.stream().distinct().collect(Collectors.joining("\n"));
+            throw new CommandException("Warning: %s".formatted(msg));
         }
 
         assert model.check();
