@@ -37,7 +37,8 @@ public class SampleDataUtil {
                             new Email("irfan@example.com"), new TelegramHandle("@irfaaan"),
                             getTutorialSet("CS2106-T37")),
             new Student(new Name("Roy Balakrishnan"), new StudentID("A0805307V"), new Phone("92624417"),
-                            new Email("royb@example.com"), new TelegramHandle("@roybala"), getTutorialSet("CS2106-T37"))};
+                            new Email("royb@example.com"), new TelegramHandle("@roybala"),
+                            getTutorialSet("CS2106-T37"))};
     }
 
     public static Tutorial[] getSampleTutorials() {
