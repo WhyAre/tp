@@ -15,12 +15,12 @@ TAskbook is a brownfield software project based off [AddressBook Level-3](https:
 taken under the CS2103 Software Engineering module held by the School of Computing at the National University of Singapore.
 
 - Java Dependencies
-  - Jackson for JSON-related operations
-  - Javafx for GUI
-  - JUnit5 for testing
+  - [Jackson](https://github.com/FasterXML/jackson) for JSON-related operations
+  - [Javafx](https://github.com/openjdk/jfx) for GUI
+  - [JUnit5](https://github.com/junit-team/junit5) for testing
 - Documentation
-  - Jekyll for static site generation
-  - PlantUML for diagramming
+  - [Jekyll](https://github.com/jekyll/jekyll) for static site generation
+  - [PlantUML](https://github.com/plantuml/plantuml) for diagramming
 
 ---
 
