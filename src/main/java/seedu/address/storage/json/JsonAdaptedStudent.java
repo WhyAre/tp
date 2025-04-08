@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.student.Details;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
@@ -30,6 +31,7 @@ public class JsonAdaptedStudent {
     private final String phone;
     private final String email;
     private final String handle;
+    private final String description;
     private final List<JsonAdaptedTutorial> tutorials = new ArrayList<>();
 
     /**
@@ -38,13 +40,14 @@ public class JsonAdaptedStudent {
     @JsonCreator
     public JsonAdaptedStudent(@JsonProperty("name") String name, @JsonProperty("studentId") String studentId,
                     @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-                    @JsonProperty("handle") String handle,
+                    @JsonProperty("handle") String handle, @JsonProperty("description") String description,
                     @JsonProperty("tutorials") List<JsonAdaptedTutorial> tutorials) {
         this.name = name;
         this.id = studentId;
         this.phone = phone;
         this.email = email;
         this.handle = handle;
+        this.description = description;
         if (tutorials != null) {
             this.tutorials.addAll(tutorials);
         }
@@ -59,6 +62,7 @@ public class JsonAdaptedStudent {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         handle = source.getHandle().handle;
+        description = source.getDetails().value;
         tutorials.addAll(source.getTutorials().stream().map(JsonAdaptedTutorial::new).collect(Collectors.toList()));
     }
 
@@ -118,8 +122,15 @@ public class JsonAdaptedStudent {
         }
         final TelegramHandle modelHandle = new TelegramHandle(handle);
 
+        if (description == null) {
+            throw new IllegalValueException(
+                            String.format(MISSING_FIELD_MESSAGE_FORMAT, TelegramHandle.class.getSimpleName()));
+        }
+        final Details modelDetails = new Details(description);
+
         final Set<Tutorial> modelTutorials = new HashSet<>(studentTutorials);
-        return new Student(modelName, modelStudentId, modelPhone, modelEmail, modelHandle, modelTutorials);
+        return new Student(modelName, modelStudentId, modelPhone, modelEmail, modelHandle, modelTutorials,
+                        modelDetails);
     }
 
 }

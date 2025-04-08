@@ -206,10 +206,6 @@ Adds a student to the address book.
 
 - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
 
-> **Warning:**
->
-> - As of v1.5, description attribute is temporary for the session and will disappear on reboot of app
-
 ---
 
 #### Command - Listing all students: `list`

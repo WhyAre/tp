@@ -5,6 +5,7 @@
       "phone": "98765432",
       "email": "johnd@example.com",
       "handle": "@benson_meier",
+      "description": "",
       "tutorials": [
         {
           "name": "CS2106-T02"
@@ -20,6 +21,7 @@
       "phone": "95352563",
       "email": "heinz@example.com",
       "handle": "@carl_kurz",
+      "description": "",
       "tutorials": [],
       "id": "A0388094Q"
     },
@@ -28,6 +30,7 @@
       "phone": "87652533",
       "email": "cornelia@example.com",
       "handle": "@dannn_mayor",
+      "description": "",
       "tutorials": [
         {
           "name": "CS2106-T37"
@@ -40,6 +43,7 @@
       "phone": "94823224",
       "email": "werner@example.com",
       "handle": "@ellem",
+      "description": "",
       "tutorials": [],
       "id": "A0172925M"
     },
@@ -48,6 +52,7 @@
       "phone": "94820427",
       "email": "lydia@example.com",
       "handle": "@kunz_fiona",
+      "description": "",
       "tutorials": [
         {
           "name": "CS2106-T37"
@@ -60,6 +65,7 @@
       "phone": "91182442",
       "email": "anna@example.com",
       "handle": "@the_best_george",
+      "description": "",
       "tutorials": [],
       "id": "A0443446N"
     }
@@ -89,6 +95,7 @@
         "phone": "94351253",
         "email": "alice@example.com",
         "handle": "@alice_pauline",
+        "description": "",
         "tutorials": [
           {
             "name": "CS2103-T1"
@@ -106,6 +113,7 @@
         "phone": "94351253",
         "email": "alice@example.com",
         "handle": "@alice_pauline",
+        "description": "",
         "tutorials": [
           {
             "name": "CS2103-T1"
@@ -136,6 +144,7 @@
         "phone": "98765432",
         "email": "johnd@example.com",
         "handle": "@benson_meier",
+        "description": "",
         "tutorials": [
           {
             "name": "CS2106-T02"
@@ -169,6 +178,7 @@
         "phone": "98765432",
         "email": "johnd@example.com",
         "handle": "@benson_meier",
+        "description": "",
         "tutorials": [
           {
             "name": "CS2106-T02"
@@ -202,6 +212,7 @@
         "phone": "87652533",
         "email": "cornelia@example.com",
         "handle": "@dannn_mayor",
+        "description": "",
         "tutorials": [
           {
             "name": "CS2106-T37"
@@ -232,6 +243,7 @@
         "phone": "94820427",
         "email": "lydia@example.com",
         "handle": "@kunz_fiona",
+        "description": "",
         "tutorials": [
           {
             "name": "CS2106-T37"
