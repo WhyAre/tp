@@ -833,6 +833,9 @@ Generates CSV files of system data for external use.
 - First row contains column headers
 - Files are overwritten silently
 - Export directory must exist
+- If the destination file is opened in another application
+  (more precisely, the application holds a file handle to the destination file),
+  the file may not be overwritten, and export will be unsuccessful.
 - Partial exports may occur if data is corrupted
 </div>
 
