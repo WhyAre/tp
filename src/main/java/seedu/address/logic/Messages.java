@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.student.Student;
+import seedu.address.model.tutorial.Tutorial;
 
 /**
  * Container for user visible messages.
@@ -49,7 +50,9 @@ public class Messages {
                         .append(student.getPhone()).append("; Email: ").append(student.getEmail())
                         .append("; Telegram Handle: ").append(student.getHandle()).append("; Details: ")
                         .append(student.getDetails()).append("; Tutorials: ");
-        student.getTutorials().forEach(builder::append);
+        builder.append(student.getTutorials().stream()
+                .map(Tutorial::name)
+                .collect(Collectors.joining(", ")));
         return builder.toString();
     }
 }
