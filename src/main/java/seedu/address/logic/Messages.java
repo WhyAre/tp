@@ -50,9 +50,7 @@ public class Messages {
                         .append(student.getPhone()).append("; Email: ").append(student.getEmail())
                         .append("; Telegram Handle: ").append(student.getHandle()).append("; Details: ")
                         .append(student.getDetails()).append("; Tutorials: ");
-        builder.append(student.getTutorials().stream()
-                .map(Tutorial::name)
-                .collect(Collectors.joining(", ")));
+        builder.append(student.getTutorials().stream().map(Tutorial::name).collect(Collectors.joining(", ")));
         return builder.toString();
     }
 }
