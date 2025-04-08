@@ -1155,22 +1155,25 @@ Team size: 6 (maximum 12 enhancements)
    Include full submission histories and attendance records in exports.  
    _New Files_:
 
-- submissions.csv (all submission states with timestamps)
-- attendance.csv (weekly records per student-tutorial pair)
+   - submissions.csv (all submission states with timestamps)
+   - attendance.csv (weekly records per student-tutorial pair)
 
 4. Enhanced Error Messages:  
    Specific warnings for:
 
-- Invalid parameters (show expected format)
-- Duplicate tutorial additions ("Tutorial already exists: CS2103*T01")  
-  \_Example*: tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
+   - Invalid parameters (show expected format)
+   - Duplicate tutorial additions ("Tutorial already exists: CS2103\*T01")
+
+   _Example_:
+
+   - tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
 
 5. Window Auto-Resizing:  
    Dynamic UI adjustment for long content (names, descriptions, assignments).  
    _Thresholds_:
 
-- Auto-expand for >15 character assignments
-- Scrollable panels for >30 character descriptions
+   - Auto-expand for >15 character assignments
+   - Scrollable panels for >30 character descriptions
 
 6. Data Preloading:  
    Load student data on application startup instead of first list command.
@@ -1178,11 +1181,18 @@ Team size: 6 (maximum 12 enhancements)
 7. Session State Preservation:  
    Maintain temporary data between app restarts:
 
-- Active filters
-- Description edits
-- Current view preferences  
-  _Storage_: New session.json file in data directory.
+   - Active filters
+   - Description edits
+   - Current view preferences
+
+   _Storage_: New session.json file in data directory.
 
 8. Help Window Management:  
    Proper handling of minimized help windows with new instances.  
    _Fix_: Detect and restore/minimize state on help commands
+
+9. Support variable number of weeks for attendance:  
+   Provide options for user to:
+   - Add weeks to a tutorial's attendance (i.e. Week 14)
+   - Remove weeks from a tutorial's attendance
+   - Set the number of weeks for a tutorial's attendance to a specified number (i.e. 15 weeks)

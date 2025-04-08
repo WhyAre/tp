@@ -66,7 +66,6 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[homepage](http://www.comp.nus.edu.sg/~cwc099)]
 [[github](https://github.com/AnAfterthought)]
-[[portfolio](team/anafterthought.md)]
 
 - Role: Developer
 - Responsibilities: Deliverables and deadlines
