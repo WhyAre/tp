@@ -1175,6 +1175,15 @@ Team size: 6 (maximum 12 enhancements)
    We plan to include the student index in the error message,
    such as "The student index 3 provided is invalid".
 
+1. **Improving the parser**: Currently, if the user types in an unknown parameter,
+   the parser will assume it is part of the previous option.
+   For example, assuming the `o/` flag is invalid,
+   the command `edit 1 n/newName o/someOption` will treat the name as
+   `newName o/someOption` instead of cutting off before the `o/`.
+   This can be fixed by tweaking the parser to split on any token that looks like
+   a parameter even though it might not be a flag that is accepted in the
+   current command.
+
 <!-- 1. **Proper handling of minimized help windows with new instances:** -->
 <!--    Currently, the  -->
 <!--    We plan to detect and restore/minimize state on help commands -->
